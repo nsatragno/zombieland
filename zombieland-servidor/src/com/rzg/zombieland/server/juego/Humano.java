@@ -1,5 +1,6 @@
 package com.rzg.zombieland.server.juego;
 
+
 /**
  * Cobarde animal que solo sabe correr por su vida.
  * @author nicolas
