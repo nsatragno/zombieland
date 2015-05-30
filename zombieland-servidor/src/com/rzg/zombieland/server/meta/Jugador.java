@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server;
+package com.rzg.zombieland.server.meta;
 
 import java.util.List;
 
@@ -9,19 +9,6 @@ import java.util.List;
  *
  */
 public class Jugador {
-    /**
-     * Crea un nuevo jugador.
-     * 
-     * @param nombre
-     * @param clave
-     * @param validacionClave
-     * @param preguntaSecreta
-     */
-    public Jugador(String nombre, String clave, String validacionClave,
-                   String preguntaSecreta, String respuestaSecreta) {
-        // TODO implementar.
-    }
-    
     /**
      * Verifica nombre y clave del jugador, y devuelve un objeto jugador si logró
      * iniciar sesión. 
@@ -52,6 +39,19 @@ public class Jugador {
 
     // Resultados de partidas históricos.
     private List<ResultadoPartida> historicoPartidas;
+    
+    /**
+     * Crea un nuevo jugador.
+     * 
+     * @param nombre
+     * @param clave
+     * @param validacionClave
+     * @param preguntaSecreta
+     */
+    public Jugador(String nombre, String clave, String validacionClave,
+                   String preguntaSecreta, String respuestaSecreta) {
+        // TODO implementar.
+    }
 
     /**
      * @return las partidas que lleva jugadas históricamente.

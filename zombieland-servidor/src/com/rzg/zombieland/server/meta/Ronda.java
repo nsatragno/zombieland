@@ -1,4 +1,6 @@
-package com.rzg.zombieland.server;
+package com.rzg.zombieland.server.meta;
+
+import com.rzg.zombieland.server.juego.Tablero;
 
 /**
  * La ronda es cada una de las «instancias» de juego. Cada partida está formada por varias rondas,

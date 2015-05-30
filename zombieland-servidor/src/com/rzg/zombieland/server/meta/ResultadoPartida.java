@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server;
+package com.rzg.zombieland.server.meta;
 
 /**
  * Almacena el resultado de una partida para un solo jugador con fin de registrar estadísticas.

@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server;
+package com.rzg.zombieland.server.meta;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +20,9 @@ public class Partida {
         EN_ESPERA("En espera"), 
         
         // La partida está en progreso.
-        ACTIVA("Activa");
+        ACTIVA("Activa"),
+        
+        FINALIZADA("Finalizada");
         
         private String descripcion;
         
@@ -68,5 +70,15 @@ public class Partida {
      */
     public Partida(Partida partida) {
         // TODO implementar.
+    }
+    
+    /**
+     * Devuelve el resultado de una partida para un jugador.
+     * @param jugador - el jugador para el que se quieren obtener los resultados.
+     * @return el resultado de la partida.
+     */
+    public ResultadoPartida getResultadoPartida(Jugador jugador) {
+        // TODO implementar.
+        return null;
     }
 }
