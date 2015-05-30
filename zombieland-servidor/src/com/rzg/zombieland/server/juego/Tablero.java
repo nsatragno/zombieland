@@ -2,8 +2,8 @@ package com.rzg.zombieland.server.juego;
 
 import java.util.List;
 
-import com.rzg.zombieland.server.comunicacion.ProyeccionTablero;
-import com.rzg.zombieland.server.misc.Coordenada;
+import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
+import com.rzg.zombieland.comunes.misc.Coordenada;
 
 /**
  * El tablero de juego, que contiene obstáculos, humanos y zombies.

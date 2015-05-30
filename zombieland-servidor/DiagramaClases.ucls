@@ -12,7 +12,7 @@
   </enumeration>  
   <class id="2" language="java" name="com.rzg.zombieland.server.meta.Jugador" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/meta/Jugador.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="671" y="829"/>    
+    <position height="-1" width="-1" x="713" y="710"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,16 +21,16 @@
   </class>  
   <class id="3" language="java" name="com.rzg.zombieland.server.meta.Ronda" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/meta/Ronda.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="492" y="111"/>    
+    <position height="-1" width="-1" x="474" y="97"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="4" language="java" name="com.rzg.zombieland.server.misc.Movimiento" project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/misc/Movimiento.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="480" y="620"/>    
+  <enumeration id="4" language="java" name="com.rzg.zombieland.comunes.misc.Movimiento" project="zombieland-comunes" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/misc/Movimiento.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="479" y="710"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </enumeration>  
   <class id="5" language="java" name="com.rzg.zombieland.server.meta.Partida" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/meta/Partida.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="730" y="100"/>    
+    <position height="-1" width="-1" x="730" y="99"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -49,7 +49,7 @@
   <class id="6" language="java" name="com.rzg.zombieland.server.meta.ResultadoPartida" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/meta/ResultadoPartida.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="897" y="832"/>    
+    <position height="-1" width="-1" x="1007" y="710"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -59,7 +59,7 @@
   <class id="7" language="java" name="com.rzg.zombieland.server.juego.EntidadTablero" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/juego/EntidadTablero.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="174" y="443"/>    
+    <position height="-1" width="-1" x="143" y="512"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -68,7 +68,7 @@
   </class>  
   <class id="8" language="java" name="com.rzg.zombieland.server.juego.Personaje" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/juego/Personaje.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="259" y="625"/>    
+    <position height="-1" width="-1" x="141" y="710"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -77,7 +77,7 @@
   </class>  
   <class id="9" language="java" name="com.rzg.zombieland.server.juego.Obstaculo" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/juego/Obstaculo.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="39" y="622"/>    
+    <position height="-1" width="-1" x="-130" y="710"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -86,7 +86,7 @@
   </class>  
   <class id="10" language="java" name="com.rzg.zombieland.server.juego.Humano" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/juego/Humano.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="320" y="902"/>    
+    <position height="-1" width="-1" x="374" y="898"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -95,7 +95,7 @@
   </class>  
   <class id="11" language="java" name="com.rzg.zombieland.server.juego.Tablero" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/juego/Tablero.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="488" y="287"/>    
+    <position height="-1" width="-1" x="474" y="286"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -104,100 +104,100 @@
   </class>  
   <class id="12" language="java" name="com.rzg.zombieland.server.juego.Zombie" project="zombieland-servidor" 
     file="/zombieland-servidor/src/com/rzg/zombieland/server/juego/Zombie.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="93" y="898"/>    
+    <position height="-1" width="-1" x="143" y="898"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="com.rzg.zombieland.server.misc.Coordenada" project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/misc/Coordenada.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="151" y="251"/>    
+  <class id="13" language="java" name="com.rzg.zombieland.comunes.misc.Coordenada" project="zombieland-comunes" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/misc/Coordenada.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="143" y="305"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="com.rzg.zombieland.server.comunicacion.ProyeccionTablero" 
+  <class id="14" language="java" name="com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero" 
     project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/comunicacion/ProyeccionTablero.java" binary="false" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/comunicacion/ProyeccionTablero.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-143" y="239"/>    
+    <position height="-1" width="-1" x="-143" y="278"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="com.rzg.zombieland.server.comunicacion.PeticionDatos" 
+  <class id="15" language="java" name="com.rzg.zombieland.comunes.comunicacion.PeticionDatos" 
     project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/comunicacion/PeticionDatos.java" binary="false" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/comunicacion/PeticionDatos.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-373" y="310"/>    
+    <position height="-1" width="-1" x="-366" y="485"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="16" language="java" name="com.rzg.zombieland.server.comunicacion.PeticionDatos.TipoPeticion" 
+  <enumeration id="16" language="java" name="com.rzg.zombieland.comunes.comunicacion.PeticionDatos.TipoPeticion" 
     project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/comunicacion/PeticionDatos.java" binary="false" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/comunicacion/PeticionDatos.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-405" y="502"/>    
+    <position height="-1" width="-1" x="-366" y="645"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="17" language="java" name="com.rzg.zombieland.server.comunicacion.Enviable" project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/comunicacion/Enviable.java" binary="false" 
+  <class id="17" language="java" name="com.rzg.zombieland.comunes.comunicacion.Enviable" project="zombieland-comunes" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/comunicacion/Enviable.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-378" y="51"/>    
+    <position height="-1" width="-1" x="-366" y="51"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="com.rzg.zombieland.server.comunicacion.POJOEntidad" project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/comunicacion/POJOEntidad.java" binary="false" 
+  <class id="18" language="java" name="com.rzg.zombieland.comunes.comunicacion.POJOEntidad" project="zombieland-comunes" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/comunicacion/POJOEntidad.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-150" y="428"/>    
+    <position height="-1" width="-1" x="-143" y="485"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="com.rzg.zombieland.server.comunicacion.Comando" project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/comunicacion/Comando.java" binary="false" 
+  <class id="19" language="java" name="com.rzg.zombieland.comunes.comunicacion.Comando" project="zombieland-comunes" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/comunicacion/Comando.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-645" y="319"/>    
+    <position height="-1" width="-1" x="-621" y="496"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="com.rzg.zombieland.server.comunicacion.POJOJugador" project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/comunicacion/POJOJugador.java" binary="false" 
+  <class id="20" language="java" name="com.rzg.zombieland.comunes.comunicacion.POJOJugador" project="zombieland-comunes" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/comunicacion/POJOJugador.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-631" y="189"/>    
+    <position height="-1" width="-1" x="-621" y="253"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="com.rzg.zombieland.server.comunicacion.PeticionCliente" 
+  <class id="21" language="java" name="com.rzg.zombieland.comunes.comunicacion.PeticionCliente" 
     project="zombieland-comunes" 
-    file="/zombieland-comunes/src/com/rzg/zombieland/server/comunicacion/PeticionCliente.java" binary="false" 
+    file="/zombieland-comunes/src/com/rzg/zombieland/comunes/comunicacion/PeticionCliente.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-372" y="188"/>    
+    <position height="-1" width="-1" x="-366" y="251"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -205,245 +205,265 @@
     </display>  
   </class>  
   <association id="22">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="23" name="posicion"/>      
-      <multiplicity id="24" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <nesting id="26">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="16"/>  
-  </nesting>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="28">    
-    <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="29" name="jugador"/>      
-      <multiplicity id="30" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="31">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="21"/>  
-  </generalization>  
-  <association id="33">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="34" name="coordenada"/>      
-      <multiplicity id="35" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="36">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="37" name="matriz">        
-        <position height="0" width="0" x="-35" y="117"/>      
+      <attribute id="23" name="matriz">        
+        <position height="0" width="0" x="15" y="178"/>      
       </attribute>      
-      <multiplicity id="38" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-35" y="117"/>      
+      <multiplicity id="24" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="15" y="178"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="39">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="40" name="tipo"/>      
-      <multiplicity id="41" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="42">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <association id="43">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="44" name="tablero">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </attribute>      
-      <multiplicity id="45" minimum="0" maximum="1">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="46">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="47" name="personajes">        
-        <position height="0" width="0" x="33" y="3"/>      
-      </attribute>      
-      <multiplicity id="48" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="33" y="3"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="49">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="1"/>  
-  </nesting>  
-  <association id="50">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="51" name="esquinaSuperiorIzquierda"/>      
-      <multiplicity id="52" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="53">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="54" name="historicoPartidas">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </attribute>      
-      <multiplicity id="55" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="56">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <association id="57">    
-    <bendpoint x="669" y="215"/>    
-    <bendpoint x="669" y="404"/>    
-    <bendpoint x="669" y="539"/>    
-    <bendpoint x="669" y="692"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="58" name="administrador">        
-        <position height="16" width="73" x="704" y="656"/>      
-      </attribute>      
-      <multiplicity id="59" minimum="0" maximum="1">        
-        <position height="14" width="23" x="783" y="658"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="60">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="61" name="rondas">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </attribute>      
-      <multiplicity id="62" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="63">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="64" name="tablero">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </attribute>      
-      <multiplicity id="65" minimum="0" maximum="1">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="66">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="67" name="jugador">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </attribute>      
-      <multiplicity id="68" minimum="0" maximum="1">        
-        <position height="0" width="0" x="31" y="-11"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="69">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="21"/>  
-  </generalization>  
-  <generalization id="70">    
+  <generalization id="25">    
     <end type="SOURCE" refId="21"/>    
     <end type="TARGET" refId="17"/>  
   </generalization>  
-  <association id="71">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="72" name="esquinaInferiorDerecha"/>      
-      <multiplicity id="73" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="74">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="75" name="siguienteMovimiento">        
-        <position height="0" width="0" x="31" y="-11"/>      
+  <association id="26">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="27" name="tablero">        
+        <position height="0" width="0" x="24" y="-12"/>      
       </attribute>      
-      <multiplicity id="76" minimum="0" maximum="1">        
-        <position height="0" width="0" x="31" y="-11"/>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="24" y="-12"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="77">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="17"/>  
-  </generalization>  
-  <association id="78">    
+  <association id="29">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="79" name="estado">        
+      <attribute id="30" name="estado">        
         <position height="0" width="0" x="31" y="-11"/>      
       </attribute>      
-      <multiplicity id="80" minimum="0" maximum="1">        
+      <multiplicity id="31" minimum="0" maximum="1">        
         <position height="0" width="0" x="31" y="-11"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="81">    
-    <bendpoint x="690" y="215"/>    
-    <bendpoint x="690" y="404"/>    
-    <bendpoint x="690" y="539"/>    
-    <bendpoint x="690" y="692"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="82" name="jugadores">        
-        <position height="16" width="56" x="597" y="656"/>      
+  <association id="32">    
+    <bendpoint x="10" y="214"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="33" name="esquinaSuperiorIzquierda">        
+        <position height="16" width="131" x="-57" y="184"/>      
       </attribute>      
-      <multiplicity id="83" minimum="0" maximum="2147483647">        
-        <position height="14" width="21" x="659" y="655"/>      
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="50" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <generalization id="36">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="37">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="38" name="jugador">        
+        <position height="0" width="0" x="10" y="2"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="1">        
+        <position height="0" width="0" x="10" y="2"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="41" name="jugador">        
+        <position height="0" width="0" x="73" y="-147"/>      
+      </attribute>      
+      <multiplicity id="42" minimum="0" maximum="1">        
+        <position height="0" width="0" x="73" y="-147"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="84">    
+  <association id="43">    
     <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="85" name="entidades"/>      
-      <multiplicity id="86" minimum="0" maximum="2147483647"/>    
+      <attribute id="44" name="entidades">        
+        <position height="0" width="0" x="0" y="-25"/>      
+      </attribute>      
+      <multiplicity id="45" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="-25"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="46">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="47" name="coordenada">        
+        <position height="0" width="0" x="50" y="0"/>      
+      </attribute>      
+      <multiplicity id="48" minimum="0" maximum="1">        
+        <position height="0" width="0" x="50" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="50" name="historicoPartidas">        
+        <position height="0" width="0" x="141" y="-133"/>      
+      </attribute>      
+      <multiplicity id="51" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="141" y="-133"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="52">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="53" name="siguienteMovimiento">        
+        <position height="0" width="0" x="54" y="53"/>      
+      </attribute>      
+      <multiplicity id="54" minimum="0" maximum="1">        
+        <position height="0" width="0" x="54" y="53"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="55">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="56" name="posicion">        
+        <position height="0" width="0" x="50" y="0"/>      
+      </attribute>      
+      <multiplicity id="57" minimum="0" maximum="1">        
+        <position height="0" width="0" x="50" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <bendpoint x="1" y="255"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="59" name="esquinaInferiorDerecha">        
+        <position height="16" width="121" x="-56" y="164"/>      
+      </attribute>      
+      <multiplicity id="60" minimum="0" maximum="1">        
+        <position height="0" width="0" x="50" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="62" name="personajes">        
+        <position height="0" width="0" x="-85" y="111"/>      
+      </attribute>      
+      <multiplicity id="63" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-85" y="111"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="64">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="16"/>  
+  </nesting>  
+  <association id="65">    
+    <bendpoint x="689" y="228"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="66" name="jugadores">        
+        <position height="16" width="56" x="602" y="557"/>      
+      </attribute>      
+      <multiplicity id="67" minimum="0" maximum="2147483647">        
+        <position height="14" width="21" x="666" y="558"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="68">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <association id="69">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="70" name="tablero">        
+        <position height="0" width="0" x="24" y="-12"/>      
+      </attribute>      
+      <multiplicity id="71" minimum="0" maximum="1">        
+        <position height="0" width="0" x="24" y="-12"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="72">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <nesting id="73">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </nesting>  
+  <association id="74">    
+    <bendpoint x="761" y="227"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="75" name="administrador">        
+        <position height="16" width="73" x="741" y="555"/>      
+      </attribute>      
+      <multiplicity id="76" minimum="0" maximum="1">        
+        <position height="14" width="23" x="824" y="555"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="78">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="79" name="rondas">        
+        <position height="0" width="0" x="13" y="-13"/>      
+      </attribute>      
+      <multiplicity id="80" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="13" y="-13"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="81">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <association id="82">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="83" name="tipo">        
+        <position height="0" width="0" x="0" y="61"/>      
+      </attribute>      
+      <multiplicity id="84" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="61"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="85">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

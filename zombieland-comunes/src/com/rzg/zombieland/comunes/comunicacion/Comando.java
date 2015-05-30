@@ -1,6 +1,6 @@
-package com.rzg.zombieland.server.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion;
 
-import com.rzg.zombieland.server.misc.Movimiento;
+import com.rzg.zombieland.comunes.misc.Movimiento;
 
 
 /**

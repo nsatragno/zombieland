@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion;
 
 /**
  * Define un componente que puede enviarse a través de un socket. 

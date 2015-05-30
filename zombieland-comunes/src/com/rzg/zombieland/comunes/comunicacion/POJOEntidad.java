@@ -1,6 +1,6 @@
-package com.rzg.zombieland.server.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion;
 
-import com.rzg.zombieland.server.misc.Coordenada;
+import com.rzg.zombieland.comunes.misc.Coordenada;
 
 /**
  * Contiene los datos de una entidad que se envían a través de la red.

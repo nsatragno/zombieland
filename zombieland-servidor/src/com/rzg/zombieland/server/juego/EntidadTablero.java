@@ -1,6 +1,6 @@
 package com.rzg.zombieland.server.juego;
 
-import com.rzg.zombieland.server.misc.Coordenada;
+import com.rzg.zombieland.comunes.misc.Coordenada;
 
 /**
  * Elemento que vive en un tablero. 

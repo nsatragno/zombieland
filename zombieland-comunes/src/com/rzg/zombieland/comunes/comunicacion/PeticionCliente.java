@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion;
 
 /**
  * Representa una petición iniciada por un cliente.

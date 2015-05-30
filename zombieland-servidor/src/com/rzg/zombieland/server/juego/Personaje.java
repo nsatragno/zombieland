@@ -2,8 +2,8 @@ package com.rzg.zombieland.server.juego;
 
 import java.util.UUID;
 
+import com.rzg.zombieland.comunes.misc.Movimiento;
 import com.rzg.zombieland.server.meta.Jugador;
-import com.rzg.zombieland.server.misc.Movimiento;
 
 /**
  * Representa una entidad del tablero controlada por un jugador.

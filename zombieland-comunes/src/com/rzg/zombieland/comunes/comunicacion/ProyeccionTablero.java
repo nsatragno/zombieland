@@ -1,8 +1,8 @@
-package com.rzg.zombieland.server.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion;
 
 import java.util.List;
 
-import com.rzg.zombieland.server.misc.Coordenada;
+import com.rzg.zombieland.comunes.misc.Coordenada;
 
 /**
  * Proyecta la parte del tablero que un personaje puede ver.

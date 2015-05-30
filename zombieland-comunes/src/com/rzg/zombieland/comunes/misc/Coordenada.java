@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.misc;
+package com.rzg.zombieland.comunes.misc;
 
 /**
  * Coordenada X e Y en un tablero.

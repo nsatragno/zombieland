@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.misc;
+package com.rzg.zombieland.comunes.misc;
 
 /**
  * Representa los movimientos que puede realizar un personaje. 
