@@ -6,11 +6,12 @@ package com.rzg.zombieland.comunes.comunicacion;
  *
  */
 public abstract class PeticionCliente extends Enviable {
-    // Jugador que realiza la petición.
-    private POJOJugador jugador;
+    // TODO agregar token autenticación.
     
-    protected PeticionCliente(Byte[] bytes) {
+    public PeticionCliente(String bytes) {
         super(bytes);
         // TODO Auto-generated constructor stub
     }
+    
+    protected PeticionCliente() { }
 }

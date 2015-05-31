@@ -10,11 +10,17 @@ public abstract class Enviable {
      * Crea un objeto enviable a partir de los bytes dados.
      * @return
      */
-    public Enviable(Byte[] bytes) { }
+    protected Enviable(String bytes) { }
+    
+    /**
+     * Constructor por defecto.
+     * @param object
+     */
+    protected Enviable() { }
     
     /**
      * Convierte el objeto en bytes para su envío.
      * @return una cadena de bytes para su envío.
      */
-    public abstract Byte[] serializar();
+    public abstract String serializar();
 }

@@ -9,7 +9,7 @@ import com.rzg.zombieland.comunes.misc.Movimiento;
  *
  */
 public class Comando extends PeticionCliente {
-    public Comando(Byte[] bytes) {
+    public Comando(String bytes) {
         super(bytes);
         // TODO deserealizar.
     }
@@ -18,7 +18,7 @@ public class Comando extends PeticionCliente {
     private Movimiento movimiento;
     
     @Override
-    public Byte[] serializar() {
+    public String serializar() {
         // TODO implementar.
         return null;
     }

@@ -8,7 +8,6 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  *
  */
 public class POJOEntidad {
-    
     // El nombre de esta entidad. Puede ser, por ejemplo, el nombre del jugador que controla al
     // personaje.
     private String etiqueta;

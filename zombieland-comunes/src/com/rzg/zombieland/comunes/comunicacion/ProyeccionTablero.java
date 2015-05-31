@@ -21,13 +21,13 @@ public class ProyeccionTablero extends Enviable {
     // Entidades visibles del tablero.
     private List<POJOEntidad> entidades;
 
-    public ProyeccionTablero(Byte[] bytes) {
+    public ProyeccionTablero(String bytes) {
         super(bytes);
         // TODO Auto-generated constructor stub
     }
     
     @Override
-    public Byte[] serializar() {
+    public String serializar() {
         // TODO Auto-generated method stub
         return null;
     }
