@@ -1,10 +1,10 @@
 package com.rzg.zombieland.server.persistencia;
 
-import org.hamcrest.BaseDescription;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.rzg.zombieland.server.meta.Jugador;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
 
 /**
@@ -26,6 +26,7 @@ public class HibernateSingleton {
         .setProperty("hibernate.connection.url", "jdbc:hsqldb:file:" + nombreDB)
         .setProperty("hibernate.hbm2ddl.auto", test ? "create" : "update")
         .addAnnotatedClass(ResultadoPartida.class)
+        .addAnnotatedClass(Jugador.class)
         .configure("com/rzg/zombieland/server/persistencia/hibernate.config.xml")
         .buildSessionFactory();
     }
@@ -59,9 +60,10 @@ public class HibernateSingleton {
     }
     
     /**
-     * Cierra la conexión con la DB para que se pueda cerrar el programa.
+     * Cierra la conexión con la DB. Es necesario para que se pueda cerrar el programa.
      */
     public static void cerrarConexion() {
         getInstancia().sessionFactory.close();
+        instancia = null;
     }
 }
