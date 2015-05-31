@@ -44,11 +44,17 @@ public class Partida {
     // Listado de jugadores unidos a la partida. Incluye al |administrador|.
     private List<Jugador> jugadores;
     
+    // Listado de espectadores viendo la partida.
+    private List<Jugador> espectadores;
+    
     // Indica el estado actual de la partida.
     private Estado estado;
     
     // Rondas de la partida, editables hasta que arranca. 
     private List<Ronda> rondas;
+    
+    // La cantidad máxima de jugadores permitida. La partida arrancará cuando se alcance.
+    private int cantidadMaximaJugadores;
     
     // El número de ronda actual. Empieza por cero.
     private int numeroRondaActual;
