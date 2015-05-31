@@ -40,13 +40,10 @@ public class RecpecionPeticionTest {
     private final static String LINEA_DEVOLUCION = "Chau socket :)";
     private final static String LINEA_ENVIO = "Hola Socket :)";
 
-    private static CyclicBarrier lock;
-    
     @BeforeClass
     public static void prepararServidor() 
             throws ZombielandException, UnknownHostException, IOException {
-        lock = new CyclicBarrier(2);
-        servicioEscucha = new ServicioEscucha(lock);
+        servicioEscucha = new ServicioEscucha();
         servicioEscucha.start();
         ControladorVacio.setLineaDevolucion(LINEA_DEVOLUCION);
     }
@@ -74,10 +71,10 @@ public class RecpecionPeticionTest {
     
     @Test
     public void testRecepcionRegistrarCliente() throws IOException, InterruptedException, BrokenBarrierException {
-        lock.await();
         salida.write(Enviable.TEST);
-        String lineaEntrada = entrada.readLine();
         salida.println(LINEA_ENVIO);
+        salida.flush();
+        String lineaEntrada = entrada.readLine();
         assertEquals(lineaEntrada, LINEA_DEVOLUCION);
         assertEquals(LINEA_ENVIO, ControladorVacio.getUltimaLineaProcesada());
     }

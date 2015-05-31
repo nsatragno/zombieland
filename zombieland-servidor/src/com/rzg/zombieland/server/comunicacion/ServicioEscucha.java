@@ -24,9 +24,6 @@ public class ServicioEscucha extends Thread {
     // Indica si el hilo está corriendo.
     private boolean corriendo;
     
-    // Lock opcional para notificar del fin de la incialización del hilo.
-    private CyclicBarrier lock;
-    
     public ServicioEscucha() throws ZombielandException {
         super("ServicioEscucha");
         corriendo = true;
@@ -41,16 +38,11 @@ public class ServicioEscucha extends Thread {
         }
     }
     
-    public ServicioEscucha(CyclicBarrier lock) throws ZombielandException {
-        this();
-        this.lock = lock;
-    }
-
     @Override
     public void run() {
         while (corriendo) {
             try {
-                new HiloEscucha(serverSocket.accept(), lock).start();
+                new HiloEscucha(serverSocket.accept()).start();
             } catch (IOException e) {
                 Log.error("Ocurrió un error al intentar abrir la conexión con un nuevo cliente: ");
                 Log.error(e.getMessage());

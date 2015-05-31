@@ -7,15 +7,15 @@ package com.rzg.zombieland.comunes.misc;
  *
  */
 public abstract class Log {
-    public static void debug(String mensaje) {
+    public static void debug(Object mensaje) {
         System.out.println("[DEBUG] " + mensaje);
     }
     
-    public static void info(String mensaje) {
+    public static void info(Object mensaje) {
         System.out.println("[INFO] " + mensaje);
     }
 
-    public static void error(String mensaje) {
+    public static void error(Object mensaje) {
         System.err.println("[ERROR] " + mensaje);
     }
 }
