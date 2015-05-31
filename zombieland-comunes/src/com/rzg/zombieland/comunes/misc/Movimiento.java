@@ -5,6 +5,11 @@ package com.rzg.zombieland.comunes.misc;
  * @author nicolas
  *
  */
-public enum Movimiento {
-    NORTE, ESTE, SUR, OESTE, NINGUNO;
+public class Movimiento {
+	public enum Tipo {
+		NORTE, ESTE, SUR, OESTE, NINGUNO;
+	}
+
+	// Tiempo en el que se recibe la orden de movimiento, para poder determinar el orden de estos.
+	private long tiempoDeMovimientoMillis;
 }

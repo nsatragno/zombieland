@@ -53,6 +53,7 @@ public class ServicioEscucha extends Thread {
     }
     
     public void cerrar() {
+    	// TODO este código es azúcar no más, no funciona.
         corriendo = false;
     }
 }
