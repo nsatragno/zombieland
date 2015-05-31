@@ -1,8 +1,7 @@
 package com.rzg.zombieland.server.controlador;
 
-import java.security.InvalidParameterException;
-
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Responde a una acción del cliente.
@@ -10,20 +9,28 @@ import com.rzg.zombieland.comunes.comunicacion.Enviable;
  *
  */
 public abstract class Controlador {
+    public static class ComandoDesconocidoException extends ZombielandException {
+        private static final long serialVersionUID = -8914691837771387774L;
+
+        public ComandoDesconocidoException(String error) {
+            super(error);
+        }
+    }
     /**
      * Devuelve un controlador de acuerdo a la línea leída. 
      * @param linea
      * @return
+     * @throws ComandoDesconocidoException 
      */
-    public static Controlador crear(int codigo) {
+    public static Controlador crear(int codigo) throws ComandoDesconocidoException {
         switch (codigo) {
         case Enviable.TEST:
             return new ControladorVacio();
         case Enviable.REGISTRAR_JUGADOR:
             return new ControladorRegistrarCliente();
         default:
-            throw new InvalidParameterException(
-                    String.format("El código %h no corresponde con "
+            throw new ComandoDesconocidoException(
+                    String.format("El código 0x%X no corresponde con "
                                 + "ninguno de los comandos conocidos", codigo));
         }
     }

@@ -9,8 +9,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -70,7 +68,7 @@ public class RecpecionPeticionTest {
     }
     
     @Test
-    public void testRecepcionRegistrarCliente() throws IOException, InterruptedException, BrokenBarrierException {
+    public void testRecepcionPeticion() throws IOException, InterruptedException, BrokenBarrierException {
         salida.write(Enviable.TEST);
         salida.println(LINEA_ENVIO);
         salida.flush();
@@ -79,4 +77,13 @@ public class RecpecionPeticionTest {
         assertEquals(LINEA_ENVIO, ControladorVacio.getUltimaLineaProcesada());
     }
 
+    @Test
+    public void testRecepcionPeticionNoConocida() throws IOException, InterruptedException, BrokenBarrierException {
+        salida.write(0xFF);
+        salida.println(LINEA_ENVIO);
+        salida.flush();
+        String lineaEntrada = entrada.readLine();
+        assertEquals(lineaEntrada, Enviable.LINEA_ERROR);
+        assertEquals(null, ControladorVacio.getUltimaLineaProcesada());
+    }
 }

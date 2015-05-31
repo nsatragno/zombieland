@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.server.controlador.Controlador;
+import com.rzg.zombieland.server.controlador.Controlador.ComandoDesconocidoException;
 
 /**
  * Clase que se ocupa de la comunicación con un cliente en particular.
@@ -43,13 +45,18 @@ public class HiloEscucha extends Thread {
             // Fin del stream.
             if (codigo == -1)
                 return;
-            Controlador controlador = Controlador.crear(codigo);
             
-            Log.debug("Comando:");
-            String contenido = in.readLine();
-            Log.debug(contenido);
-            out.println(controlador.procesar(contenido));
-            socket.close();
+            try {
+                Controlador controlador = Controlador.crear(codigo);
+                Log.debug("Contenido:");
+                String contenido = in.readLine();
+                Log.debug(contenido);
+                out.println(controlador.procesar(contenido));
+                socket.close();
+            } catch (ComandoDesconocidoException e) {
+                out.println(Enviable.LINEA_ERROR);
+            }
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
