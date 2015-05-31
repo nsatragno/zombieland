@@ -12,4 +12,7 @@ public class Movimiento {
 
 	// Tiempo en el que se recibe la orden de movimiento, para poder determinar el orden de estos.
 	private long tiempoDeMovimientoMillis;
+	
+	// El tipo de movimiento.
+	private Tipo tipo;
 }

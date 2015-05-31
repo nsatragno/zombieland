@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
@@ -55,6 +56,10 @@ public class Jugador {
     // Indica el ranking del jugador en la tabla general.
     @Column
     private int ranking;
+    
+    // La imagen que representa el personaje del jugador en la partida.
+    @Column
+    private Avatar avatar;
 
     // Resultados de partidas históricos.
     @OneToMany
