@@ -25,6 +25,7 @@
 			<artifactId>junit</artifactId>
 			<type>maven-plugin</type>
 			<version>RELEASE</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>

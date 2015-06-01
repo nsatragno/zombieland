@@ -25,9 +25,9 @@ public abstract class Controlador {
     public static Controlador crear(int codigo) throws ComandoDesconocidoException {
         switch (codigo) {
         case Enviable.TEST:
-            return new ControladorVacio();
+            return new ControladorTest();
         case Enviable.REGISTRAR_JUGADOR:
-            return new ControladorRegistrarCliente();
+            return new ControladorRegistro();
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

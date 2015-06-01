@@ -2,13 +2,13 @@ package com.rzg.zombieland.server.meta;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.rzg.zombieland.comunes.comunicacion.POJORegistro;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
@@ -32,12 +32,8 @@ public class Jugador {
         return null;
     }
     
-    // ID que identifica unívocamente al jugador.
-    @Id
-    private UUID id;
-
     // Nombre de usuario.
-    @Column
+    @Id
     private String nombre;
 
     // Clave de acceso al sistema.
@@ -106,14 +102,14 @@ public class Jugador {
         
         if (errores.size() > 0)
             throw new ZombielandException("Por favor, revise los campos indicados", errores);
-        
-        id = UUID.randomUUID();
     }
     
-    public UUID getId() {
-        return id;
+    public Jugador(POJORegistro registro) throws ZombielandException {
+        this(registro.getNombre(), registro.getClave(),
+             registro.getClave(), registro.getPreguntaSecreta(),
+             registro.getRespuestaSecreta());
     }
-
+    
     /**
      * @return las partidas que lleva jugadas históricamente.
      */
@@ -135,15 +131,27 @@ public class Jugador {
         if (obj == null) return false;
         if (!(obj instanceof Jugador)) return false;
         Jugador otro = (Jugador)obj;
-        return id.equals(otro.id) &&
-               nombre.equals(otro.nombre) &&
+        return nombre.equals(otro.nombre) &&
                clave.equals(otro.clave) &&
                preguntaSecreta.equals(otro.preguntaSecreta) &&
                respuestaSecreta.equals(otro.respuestaSecreta) &&
                ranking == otro.ranking;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public String getPreguntaSecreta() {
+        return preguntaSecreta;
+    }
+    
+    
+    public String getRespuestaSecreta() {
+        return respuestaSecreta;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 }

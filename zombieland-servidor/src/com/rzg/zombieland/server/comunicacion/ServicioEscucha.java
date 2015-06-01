@@ -2,28 +2,27 @@ package com.rzg.zombieland.server.comunicacion;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
+import java.net.SocketException;
 
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Escucha conexiones entrantes y lanza hilos para manejarlas.
+ * 
  * @author nicolas
  *
  */
 public class ServicioEscucha extends Thread {
     // El puerto en el que se escucha.
     private final int puerto = 2048;
-    
-    // Generador de sockets.  
+
+    // Generador de sockets.
     private final ServerSocket serverSocket;
-    
+
     // Indica si el hilo está corriendo.
     private boolean corriendo;
-    
+
     public ServicioEscucha() throws ZombielandException {
         super("ServicioEscucha");
         corriendo = true;
@@ -34,15 +33,19 @@ public class ServicioEscucha extends Thread {
             Log.error(e.getMessage());
             Log.error("Stacktrace: ");
             e.printStackTrace();
-            throw new ZombielandException("No se pudo iniciar el servidor: " + e.getLocalizedMessage());
+            throw new ZombielandException("No se pudo iniciar el servidor: "
+                    + e.getLocalizedMessage());
         }
     }
-    
+
     @Override
     public void run() {
         while (corriendo) {
             try {
                 new HiloEscucha(serverSocket.accept()).start();
+            } catch (SocketException e) {
+                // Esperada.
+                return;
             } catch (IOException e) {
                 Log.error("Ocurrió un error al intentar abrir la conexión con un nuevo cliente: ");
                 Log.error(e.getMessage());
@@ -51,9 +54,13 @@ public class ServicioEscucha extends Thread {
             }
         }
     }
-    
+
     public void cerrar() {
-    	// TODO este código es azúcar no más, no funciona.
         corriendo = false;
+        if (serverSocket != null)
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+            }
     }
 }

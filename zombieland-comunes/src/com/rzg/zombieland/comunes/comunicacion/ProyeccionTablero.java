@@ -10,6 +10,20 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  *
  */
 public class ProyeccionTablero extends Enviable {
+    /**
+     * Identifica una entidad de la proyección.
+     * @author nicolas
+     *
+     */
+    private class POJOEntidad {
+        // El nombre de esta entidad. Puede ser, por ejemplo, el nombre del jugador que controla al
+        // personaje.
+        private String etiqueta;
+        
+        // La coordenada de la entidad.
+        private Coordenada coordenada;
+    }
+    
     // Tamaño total del tablero.
     private int ancho;
     private int largo;
@@ -20,15 +34,4 @@ public class ProyeccionTablero extends Enviable {
     
     // Entidades visibles del tablero.
     private List<POJOEntidad> entidades;
-
-    public ProyeccionTablero(String bytes) {
-        super(bytes);
-        // TODO Auto-generated constructor stub
-    }
-    
-    @Override
-    public String serializar() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

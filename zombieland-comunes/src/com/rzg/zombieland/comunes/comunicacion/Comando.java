@@ -8,18 +8,7 @@ import com.rzg.zombieland.comunes.misc.Movimiento;
  * @author nicolas
  *
  */
-public class Comando extends PeticionCliente {
-    public Comando(String bytes) {
-        super(bytes);
-        // TODO deserealizar.
-    }
-
+public class Comando extends Enviable {
     // Indica el movimiento que el jugador realizó.
     private Movimiento movimiento;
-    
-    @Override
-    public String serializar() {
-        // TODO implementar.
-        return null;
-    }
 }

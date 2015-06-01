@@ -1,7 +1,5 @@
 package com.rzg.zombieland.server.persistencia;
 
-import java.util.UUID;
-
 import com.rzg.zombieland.server.meta.Jugador;
 
 /**
@@ -9,7 +7,7 @@ import com.rzg.zombieland.server.meta.Jugador;
  * @author nicolas
  *
  */
-public class JugadorDao extends Dao<Jugador, UUID> {
+public class JugadorDao extends Dao<Jugador, String> {
     public JugadorDao() {
         super(Jugador.class);
     }
