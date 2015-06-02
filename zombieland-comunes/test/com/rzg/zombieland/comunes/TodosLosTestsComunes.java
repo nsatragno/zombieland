@@ -9,6 +9,6 @@ import com.rzg.zombieland.comunes.comunicacion.POJORegistroTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({POJORegistroTest.class})
-public class TodosLosTests {
+public class TodosLosTestsComunes {
 
 }

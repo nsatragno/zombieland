@@ -7,7 +7,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.comunicacion.POJORegistro;
-import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.ServicioEscucha;
 import com.rzg.zombieland.server.meta.Jugador;

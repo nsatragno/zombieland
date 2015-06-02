@@ -3,8 +3,6 @@ package com.rzg.zombieland.cliente.comunicacion;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
@@ -36,22 +34,24 @@ public class PeticionTest {
         }
     }
     
-    @BeforeClass
-    public static void lanzarServidor() throws ZombielandException {
+    @Test
+    public void testPeticionesFatiga() throws ZombielandException, InterruptedException {
         ControladorTest.setLineaDevolucion(LINEA_DEVOLUCION);
         servicio = new ServicioEscucha();
-        servicio.start();   
+        servicio.start();
+        
+        for (int i = 0; i < 1000; i++) {
+            ObjetoPeticionTest peticion = new ObjetoPeticionTest();
+            assertEquals(LINEA_DEVOLUCION, peticion.enviar());
+            assertTrue(ControladorTest.proceso(MENSAJE_TEST));
+        }
+        
+        servicio.cerrar();
+        servicio.join();
     }
     
-    @Test
-    public void testPeticion() throws ZombielandException {
-        ObjetoPeticionTest peticion = new ObjetoPeticionTest();
-        assertEquals(peticion.enviar(), LINEA_DEVOLUCION);
-        assertTrue(ControladorTest.proceso(MENSAJE_TEST));
-    }
-
-    @AfterClass
-    public static void terminarServidor() throws ZombielandException {
-        servicio.cerrar();   
+    @Test(expected = ZombielandException.class)
+    public void testPeticionSinConexion() throws ZombielandException, InterruptedException {
+        new ObjetoPeticionTest().enviar();
     }
 }

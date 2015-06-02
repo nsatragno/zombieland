@@ -54,8 +54,10 @@ public class HiloEscucha extends Thread {
                 Log.debug(codigo);
                 
                 // Condición de fin del stream.
-                if (codigo == -1)
+                if (codigo == -1) {
+                    Log.debug("Cerrando hilo escucha: llegó el -1");
                     return;
+                }
                 
                 try {
                     Controlador controlador = Controlador.crear(codigo);
@@ -69,6 +71,8 @@ public class HiloEscucha extends Thread {
                 }
             }   
         } catch (SocketException e) {
+            Log.debug("Cerrando hilo de escucha " + getName() + ":");
+            Log.debug("Motivo: " + e.getMessage());
             // Esperada, se usa para cerrar el Thread.
             return;
         } catch (IOException e) {
