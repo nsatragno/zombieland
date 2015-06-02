@@ -50,7 +50,7 @@ public class ServicioEscucha extends Thread {
     public void run() {
         while (corriendo) {
             try {
-                HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), ControladorServidorFactory.getInstancia());
+                HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), new ControladorServidorFactory());
                 hilo.start();
                 hilosEscucha.add(hilo);
             } catch (SocketException e) {

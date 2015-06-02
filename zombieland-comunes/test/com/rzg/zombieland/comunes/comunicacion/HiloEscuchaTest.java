@@ -24,7 +24,7 @@ public class HiloEscuchaTest {
     public void testCerrar() throws InterruptedException, UnknownHostException, IOException, ZombielandException {
         ServerSocket serverSocket = new ServerSocket(2048);
         Socket socket = new Socket("localhost", 2048);
-        HiloEscucha escucha = new HiloEscucha(socket, ControladorTestFactory.getInstancia());
+        HiloEscucha escucha = new HiloEscucha(socket, new ControladorTestFactory());
         escucha.start();
         assertTrue(escucha.isAlive());
         escucha.cerrar();

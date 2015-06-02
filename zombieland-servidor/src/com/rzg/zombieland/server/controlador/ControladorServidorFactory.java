@@ -12,10 +12,6 @@ import com.rzg.zombieland.comunes.controlador.Controlador.ComandoDesconocidoExce
  *
  */
 public class ControladorServidorFactory implements ControladorFactory {
-    private static ControladorServidorFactory instancia;
-    
-    private ControladorServidorFactory() { }
-    
     /**
      * Devuelve un controlador de acuerdo a la línea leída. 
      * @param linea
@@ -34,15 +30,5 @@ public class ControladorServidorFactory implements ControladorFactory {
                     String.format("El código 0x%X no corresponde con "
                                 + "ninguno de los comandos conocidos", codigo));
         }
-    }
-
-    /**
-     * Devuelve una instancia de la factory controladora.
-     * @return
-     */
-    public static ControladorFactory getInstancia() {
-        if (instancia == null)
-            instancia = new ControladorServidorFactory();
-        return instancia;
     }
 }
