@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.controlador.ControladorServidorFactory;
 
 /**
  * Escucha conexiones entrantes y lanza hilos para manejarlas.
@@ -49,7 +50,7 @@ public class ServicioEscucha extends Thread {
     public void run() {
         while (corriendo) {
             try {
-                HiloEscucha hilo = new HiloEscucha(serverSocket.accept());
+                HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), ControladorServidorFactory.getInstancia());
                 hilo.start();
                 hilosEscucha.add(hilo);
             } catch (SocketException e) {

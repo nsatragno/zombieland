@@ -1,7 +1,9 @@
-package com.rzg.zombieland.server.controlador;
+package com.rzg.zombieland.comunes.controlador;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.rzg.zombieland.comunes.controlador.Controlador;
 
 /**
  * Un controlador que no hace nada para testing.

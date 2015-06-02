@@ -5,10 +5,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.rzg.zombieland.comunes.comunicacion.POJORegistroTest;
+import com.rzg.zombieland.comunes.comunicacion.SuiteComunicacion;
 
 @RunWith(Suite.class)
-@SuiteClasses({POJORegistroTest.class})
+@SuiteClasses({SuiteComunicacion.class})
 public class TodosLosTestsComunes {
 
 }

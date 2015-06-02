@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
+import com.rzg.zombieland.comunes.controlador.ControladorTest;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.ServicioEscucha;
-import com.rzg.zombieland.server.controlador.ControladorTest;
 
 public class PeticionTest {
     

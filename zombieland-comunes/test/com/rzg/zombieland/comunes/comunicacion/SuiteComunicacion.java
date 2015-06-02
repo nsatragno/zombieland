@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ POJORegistroTest.class })
+@SuiteClasses({ POJORegistroTest.class, HiloEscuchaTest.class })
 public class SuiteComunicacion {
 
 }

@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,10 +7,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 
-import com.rzg.zombieland.comunes.comunicacion.Enviable;
+import com.rzg.zombieland.comunes.controlador.Controlador;
+import com.rzg.zombieland.comunes.controlador.ControladorFactory;
+import com.rzg.zombieland.comunes.controlador.Controlador.ComandoDesconocidoException;
 import com.rzg.zombieland.comunes.misc.Log;
-import com.rzg.zombieland.server.controlador.Controlador;
-import com.rzg.zombieland.server.controlador.Controlador.ComandoDesconocidoException;
 
 /**
  * Clase que se ocupa de la comunicación con un cliente en particular.
@@ -26,17 +26,21 @@ public class HiloEscucha extends Thread {
     // Indica si el hilo se está ejecutando.
     private boolean corriendo;
     
+    // Fábrica de controladores.
+    private ControladorFactory controladorFactory;
+    
     /**
      * Construye un hilo de escucha.
      * 
      * @param socket
      *            - el socket con el que se escuchará al cliente.
      */
-    public HiloEscucha(Socket socket) {
+    public HiloEscucha(Socket socket, ControladorFactory controladorFactory) {
         super("HiloEscucha: " + socket.getInetAddress());
         corriendo = true;
         Log.debug("Aceptando nueva conexión de " + socket.getInetAddress());
         this.socket = socket;
+        this.controladorFactory = controladorFactory;
     }
     
     @Override
@@ -60,7 +64,7 @@ public class HiloEscucha extends Thread {
                 }
                 
                 try {
-                    Controlador controlador = Controlador.crear(codigo);
+                    Controlador controlador = controladorFactory.crear(codigo);
                     Log.debug("Contenido:");
                     String contenido = in.readLine();
                     Log.debug(contenido);

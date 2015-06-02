@@ -19,8 +19,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
+import com.rzg.zombieland.comunes.controlador.ControladorTest;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.controlador.ControladorTest;
 
 /**
  * Prueba la recepción completa de una petición.
