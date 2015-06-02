@@ -7,6 +7,11 @@ import org.junit.Test;
 
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
+/**
+ * Prueba iniciar y cerrar un servicio de escucha.
+ * @author nicolas
+ *
+ */
 public class ServicioEscuchaTest {
 
     @Test

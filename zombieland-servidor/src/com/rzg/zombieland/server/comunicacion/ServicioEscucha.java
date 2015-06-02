@@ -3,6 +3,9 @@ package com.rzg.zombieland.server.comunicacion;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
@@ -22,10 +25,14 @@ public class ServicioEscucha extends Thread {
 
     // Indica si el hilo está corriendo.
     private boolean corriendo;
-
+    
+    // Mantiene una referencia a los hilos que creó para cerrarlos. 
+    private List<HiloEscucha> hilosEscucha;
+    
     public ServicioEscucha() throws ZombielandException {
         super("ServicioEscucha");
         corriendo = true;
+        hilosEscucha = new ArrayList<HiloEscucha>();
         try {
             serverSocket = new ServerSocket(puerto);
         } catch (IOException e) {
@@ -42,9 +49,21 @@ public class ServicioEscucha extends Thread {
     public void run() {
         while (corriendo) {
             try {
-                new HiloEscucha(serverSocket.accept()).start();
+                HiloEscucha hilo = new HiloEscucha(serverSocket.accept());
+                hilo.start();
+                hilosEscucha.add(hilo);
             } catch (SocketException e) {
-                // Esperada.
+                // Esperada. La usamos para salir.
+                for (HiloEscucha hilo : hilosEscucha) {
+                    hilo.cerrar();
+                    try {
+                        hilo.join();
+                    } catch (InterruptedException e1) {
+                        Log.error("No se pudo unir al hilo de escucha hijo:");
+                        Log.error(e1.getMessage());
+                        e1.printStackTrace();
+                    }
+                }
                 return;
             } catch (IOException e) {
                 Log.error("Ocurrió un error al intentar abrir la conexión con un nuevo cliente: ");

@@ -22,7 +22,12 @@ import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.controlador.ControladorTest;
 
-public class RecpecionPeticionTest {
+/**
+ * Prueba la recepción completa de una petición.
+ * @author nicolas
+ *
+ */
+public class RecepecionPeticionTest {
 
     // El servicio de escucha que se prueba.
     private static ServicioEscucha servicioEscucha;
@@ -63,8 +68,9 @@ public class RecpecionPeticionTest {
     }
     
     @AfterClass
-    public static void cerrarServidor() throws IOException {
+    public static void cerrarServidor() throws IOException, InterruptedException {
         servicioEscucha.cerrar();
+        servicioEscucha.join();
     }
     
     @Test
