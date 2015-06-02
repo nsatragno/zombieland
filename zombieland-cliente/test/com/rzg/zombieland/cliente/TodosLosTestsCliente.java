@@ -8,6 +8,6 @@ import com.rzg.zombieland.cliente.comunicacion.SuiteComunicacion;
 
 @RunWith(Suite.class)
 @SuiteClasses({SuiteComunicacion.class})
-public class TodosLosTests {
+public class TodosLosTestsCliente {
     
 }

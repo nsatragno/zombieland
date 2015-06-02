@@ -10,6 +10,6 @@ import com.rzg.zombieland.server.persistencia.SuitePersistencia;
 
 @RunWith(Suite.class)
 @SuiteClasses({SuitePersistencia.class, SuiteMeta.class, SuiteComunicacion.class})
-public class TodosLosTests {
+public class TodosLosTestsServidor {
     
 }
