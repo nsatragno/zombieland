@@ -1,2 +1,2 @@
 # zombieland
-Proyecto de Programación Avanzada - UNLaM
+Juego en red de zombies en un mundo post apocalíptico.
