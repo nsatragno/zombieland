@@ -14,6 +14,9 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Font;
 
 /**
  * Interfaz completa de inicio de sesión.
@@ -87,7 +90,7 @@ public class InterfazInicioSesion extends JPanel {
 				// de la pregunta y respuesta de seguridad.
 			}
 		});
-		btnIngresar.setBounds(60, 217, 139, 23);
+		btnIngresar.setBounds(60, 217, 139, 34);
 		frmZombielandV.getContentPane().add(btnIngresar);
 		
 		userField = new JTextField();
@@ -125,5 +128,15 @@ public class InterfazInicioSesion extends JPanel {
 		JLabel lblUniteAZombieland = new JLabel("Unite a Zombieland!");
 		lblUniteAZombieland.setBounds(27, 30, 154, 37);
 		frmZombielandV.getContentPane().add(lblUniteAZombieland);
+		
+		JButton btnO = new JButton("Olvid\u00F3 su clave?");
+		btnO.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Se direccionará a la pantalla de recuperación de clave
+				// haciendo uso de la pregunta de seguridad.
+			}
+		});
+		btnO.setBounds(209, 217, 126, 34);
+		frmZombielandV.getContentPane().add(btnO);
 	}
 }
