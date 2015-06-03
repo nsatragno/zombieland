@@ -1,22 +1,21 @@
 package com.rzg.zombieland.cliente.interfazInicioSesion;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Font;
+import javax.swing.JMenuBar;
 
 /**
  * Interfaz completa de inicio de sesión.
@@ -62,7 +61,7 @@ public class InterfazInicioSesion extends JPanel {
 	private void initialize() {
 		frmZombielandV = new JFrame();
 		frmZombielandV.setTitle("Zombieland v1.0 - Inicio de sesi\u00F3n");
-		frmZombielandV.setBounds(100, 100, 450, 300);
+		frmZombielandV.setBounds(100, 100, 450, 325);
 		frmZombielandV.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmZombielandV.getContentPane().setLayout(null);
 		
@@ -138,5 +137,47 @@ public class InterfazInicioSesion extends JPanel {
 		});
 		btnO.setBounds(209, 217, 126, 34);
 		frmZombielandV.getContentPane().add(btnO);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frmZombielandV.setJMenuBar(menuBar);
+		
+		JMenu mnArchivo = new JMenu("Archivo");
+		menuBar.add(mnArchivo);
+		
+		JMenuItem mntmIniciarSesion = new JMenuItem("Iniciar Sesion");
+		mnArchivo.add(mntmIniciarSesion);
+		
+		JMenuItem mntmRegistrarse = new JMenuItem("Registrarse");
+		mnArchivo.add(mntmRegistrarse);
+		
+		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mnArchivo.add(mntmSalir);
+		
+		JMenu mnPartida = new JMenu("Partida");
+		menuBar.add(mnPartida);
+		
+		JMenuItem mntmJugar = new JMenuItem("Jugar");
+		mnPartida.add(mntmJugar);
+		
+		JMenuItem mntmVerPartidas = new JMenuItem("Ver Partidas");
+		mnPartida.add(mntmVerPartidas);
+		
+		JMenu mnCuenta = new JMenu("Cuenta");
+		menuBar.add(mnCuenta);
+		
+		JMenuItem mntmDatos = new JMenuItem("Datos");
+		mnCuenta.add(mntmDatos);
+		
+		JMenuItem mntmEstadsticas = new JMenuItem("Estad\u00EDsticas");
+		mnCuenta.add(mntmEstadsticas);
+		
+		JMenu mnAyuda = new JMenu("Ayuda");
+		menuBar.add(mnAyuda);
+		
+		JMenuItem mntmCmoJugar = new JMenuItem("C\u00F3mo Jugar");
+		mnAyuda.add(mntmCmoJugar);
+		
+		JMenuItem mntmGoogleame = new JMenuItem("Googleame");
+		mnAyuda.add(mntmGoogleame);
 	}
 }

@@ -3,6 +3,8 @@ package com.rzg.zombieland.cliente.interfazRegistro;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -15,6 +17,8 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
+
+import javax.swing.JMenuBar;
 
 /**
  * Interfaz de registro de usuario.
@@ -59,14 +63,14 @@ public class InterfazRegistro extends JPanel {
 	private void initialize() {
 		frmZombielandV = new JFrame();
 		frmZombielandV.setTitle("Zombieland v.1.0 - Registro");
-		frmZombielandV.setBounds(100, 100, 450, 300);
+		frmZombielandV.setBounds(100, 100, 450, 325);
 		frmZombielandV.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmZombielandV.getContentPane().setLayout(null);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(InterfazRegistro.class.getResource
 				("/com/rzg/zombieland/cliente/interfazRegistro/zombie.png")));
-		label.setBounds(342, 0, 105, 262);
+		label.setBounds(337, 0, 105, 262);
 		frmZombielandV.getContentPane().add(label);
 		
 		JButton btnRegistrar = new JButton("Registrar!");
@@ -137,5 +141,47 @@ public class InterfazRegistro extends JPanel {
 		lblRzg.setForeground(SystemColor.controlShadow);
 		lblRzg.setBounds(287, 248, 63, 14);
 		frmZombielandV.getContentPane().add(lblRzg);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frmZombielandV.setJMenuBar(menuBar);
+		
+		JMenu mnArchivo = new JMenu("Archivo");
+		menuBar.add(mnArchivo);
+		
+		JMenuItem mntmIniciarSesion = new JMenuItem("Iniciar Sesion");
+		mnArchivo.add(mntmIniciarSesion);
+		
+		JMenuItem mntmRegistrarse = new JMenuItem("Registrarse");
+		mnArchivo.add(mntmRegistrarse);
+		
+		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mnArchivo.add(mntmSalir);
+		
+		JMenu mnPartida = new JMenu("Partida");
+		menuBar.add(mnPartida);
+		
+		JMenuItem mntmJugar = new JMenuItem("Jugar");
+		mnPartida.add(mntmJugar);
+		
+		JMenuItem mntmVerPartidas = new JMenuItem("Ver Partidas");
+		mnPartida.add(mntmVerPartidas);
+		
+		JMenu mnCuenta = new JMenu("Cuenta");
+		menuBar.add(mnCuenta);
+		
+		JMenuItem mntmDatos = new JMenuItem("Datos");
+		mnCuenta.add(mntmDatos);
+		
+		JMenuItem mntmEstadsticas = new JMenuItem("Estad\u00EDsticas");
+		mnCuenta.add(mntmEstadsticas);
+		
+		JMenu mnAyuda = new JMenu("Ayuda");
+		menuBar.add(mnAyuda);
+		
+		JMenuItem mntmCmoJugar = new JMenuItem("C\u00F3mo Jugar");
+		mnAyuda.add(mntmCmoJugar);
+		
+		JMenuItem mntmGoogleame = new JMenuItem("Googleame");
+		mnAyuda.add(mntmGoogleame);
 	}
 }
