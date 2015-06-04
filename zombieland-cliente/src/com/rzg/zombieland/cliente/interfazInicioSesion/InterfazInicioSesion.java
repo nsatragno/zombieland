@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.rzg.zombieland.cliente.Main;
+
 /**
  * Interfaz completa de inicio de sesión.
  * @author Manuel
@@ -31,27 +33,13 @@ public class InterfazInicioSesion extends JPanel {
 	private JTextField userField;
 	private JPasswordField passwordField_1;
 	private static final int intentos = 0; // Se incrementará cuando el password sea incorrecto
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InterfazInicioSesion window = new InterfazInicioSesion();
-					window.frmZombielandV.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private Main main;
 
 	/**
 	 * Create the application.
 	 */
-	public InterfazInicioSesion() {
+	public InterfazInicioSesion(Main main) {
+	    this.main = main;
 		initialize();
 	}
 
@@ -59,24 +47,21 @@ public class InterfazInicioSesion extends JPanel {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmZombielandV = new JFrame();
-		frmZombielandV.setTitle("Zombieland v1.0 - Inicio de sesi\u00F3n");
-		frmZombielandV.setBounds(100, 100, 450, 325);
-		frmZombielandV.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmZombielandV.getContentPane().setLayout(null);
+		setBounds(100, 100, 450, 325);
+		setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setBounds(10, 161, 92, 14);
-		frmZombielandV.getContentPane().add(lblUsuario);
+		add(lblUsuario);
 		
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(10, 192, 92, 14);
-		frmZombielandV.getContentPane().add(lblPassword);
+		add(lblPassword);
 		
 		JLabel lblError = new JLabel("");
 		lblError.setForeground(Color.RED);
 		lblError.setBounds(252, 192, 172, 14);
-		frmZombielandV.getContentPane().add(lblError);
+		add(lblError);
 		
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
@@ -90,43 +75,43 @@ public class InterfazInicioSesion extends JPanel {
 			}
 		});
 		btnIngresar.setBounds(60, 217, 139, 34);
-		frmZombielandV.getContentPane().add(btnIngresar);
+		add(btnIngresar);
 		
 		userField = new JTextField();
 		userField.setBounds(112, 158, 115, 20);
-		frmZombielandV.getContentPane().add(userField);
+		add(userField);
 		userField.setColumns(10);
 		
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setBounds(112, 189, 115, 20);
-		frmZombielandV.getContentPane().add(passwordField_1);
+		add(passwordField_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(InterfazInicioSesion.class.getResource("/com/rzg/zombieland/cliente/interfazInicioSesion/Zombieland.png")));
 		lblNewLabel.setBounds(252, 0, 159, 179);
-		frmZombielandV.getContentPane().add(lblNewLabel);
+		add(lblNewLabel);
 		
 		JLabel lblMsg = new JLabel("No tenes un usuario?");
 		lblMsg.setBounds(27, 11, 200, 37);
-		frmZombielandV.getContentPane().add(lblMsg);
+		add(lblMsg);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// Aquí se enviará a la página de creación de un usuario nuevo.
+            public void actionPerformed(ActionEvent arg0) {
+			    main.irARegistro();
 			}
 		});
 		btnRegistrarse.setBounds(98, 69, 116, 30);
-		frmZombielandV.getContentPane().add(btnRegistrarse);
+		add(btnRegistrarse);
 		
 		JLabel lblRzg = new JLabel("RZG - 2015");
 		lblRzg.setForeground(SystemColor.controlShadow);
 		lblRzg.setBounds(369, 248, 110, 14);
-		frmZombielandV.getContentPane().add(lblRzg);
+		add(lblRzg);
 		
 		JLabel lblUniteAZombieland = new JLabel("Unite a Zombieland!");
 		lblUniteAZombieland.setBounds(27, 30, 154, 37);
-		frmZombielandV.getContentPane().add(lblUniteAZombieland);
+		add(lblUniteAZombieland);
 		
 		JButton btnO = new JButton("Olvid\u00F3 su clave?");
 		btnO.addActionListener(new ActionListener() {
@@ -136,48 +121,6 @@ public class InterfazInicioSesion extends JPanel {
 			}
 		});
 		btnO.setBounds(209, 217, 126, 34);
-		frmZombielandV.getContentPane().add(btnO);
-		
-		JMenuBar menuBar = new JMenuBar();
-		frmZombielandV.setJMenuBar(menuBar);
-		
-		JMenu mnArchivo = new JMenu("Archivo");
-		menuBar.add(mnArchivo);
-		
-		JMenuItem mntmIniciarSesion = new JMenuItem("Iniciar Sesion");
-		mnArchivo.add(mntmIniciarSesion);
-		
-		JMenuItem mntmRegistrarse = new JMenuItem("Registrarse");
-		mnArchivo.add(mntmRegistrarse);
-		
-		JMenuItem mntmSalir = new JMenuItem("Salir");
-		mnArchivo.add(mntmSalir);
-		
-		JMenu mnPartida = new JMenu("Partida");
-		menuBar.add(mnPartida);
-		
-		JMenuItem mntmJugar = new JMenuItem("Jugar");
-		mnPartida.add(mntmJugar);
-		
-		JMenuItem mntmVerPartidas = new JMenuItem("Ver Partidas");
-		mnPartida.add(mntmVerPartidas);
-		
-		JMenu mnCuenta = new JMenu("Cuenta");
-		menuBar.add(mnCuenta);
-		
-		JMenuItem mntmDatos = new JMenuItem("Datos");
-		mnCuenta.add(mntmDatos);
-		
-		JMenuItem mntmEstadsticas = new JMenuItem("Estad\u00EDsticas");
-		mnCuenta.add(mntmEstadsticas);
-		
-		JMenu mnAyuda = new JMenu("Ayuda");
-		menuBar.add(mnAyuda);
-		
-		JMenuItem mntmCmoJugar = new JMenuItem("C\u00F3mo Jugar");
-		mnAyuda.add(mntmCmoJugar);
-		
-		JMenuItem mntmGoogleame = new JMenuItem("Googleame");
-		mnAyuda.add(mntmGoogleame);
+		add(btnO);
 	}
 }
