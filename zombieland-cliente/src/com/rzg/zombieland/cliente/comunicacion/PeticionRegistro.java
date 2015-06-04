@@ -3,6 +3,7 @@ package com.rzg.zombieland.cliente.comunicacion;
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.POJORegistro;
+import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.comunicacion.RespuestaRegistro;
 
 /**
@@ -30,7 +31,7 @@ public class PeticionRegistro extends Peticion<RespuestaRegistro> {
     }
 
     @Override
-    protected RespuestaRegistro procesarRespuesta(String respuesta) {
+    protected RespuestaRegistro generarRespuesta(String respuesta) {
         Gson gson = new Gson();
         return gson.fromJson(respuesta, RespuestaRegistro.class);
     }

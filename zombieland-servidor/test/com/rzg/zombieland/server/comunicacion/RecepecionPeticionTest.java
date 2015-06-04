@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.UUID;
 import java.util.concurrent.BrokenBarrierException;
 
 import org.junit.After;
@@ -41,14 +42,13 @@ public class RecepecionPeticionTest {
     
     private final String host = "localhost";
     private final int puerto = 2048;
-    private final static String LINEA_DEVOLUCION = "Chau socket :)";
+    private final static String LINEA_ENVIO = "Chau socket :)";
 
     @BeforeClass
     public static void prepararServidor() 
             throws ZombielandException, UnknownHostException, IOException {
         servicioEscucha = new ServicioEscucha();
         servicioEscucha.start();
-        ControladorTest.setLineaDevolucion(LINEA_DEVOLUCION);
     }
     
     @Before
@@ -75,12 +75,17 @@ public class RecepecionPeticionTest {
     
     @Test
     public void testRecepcionPeticion() throws IOException, InterruptedException, BrokenBarrierException {
-        final String LINEA_ENVIO = "testRecepcionPeticion";
         salida.write(Enviable.TEST);
+        UUID uuid = UUID.randomUUID();
+        salida.println(uuid);
         salida.println(LINEA_ENVIO);
         salida.flush();
+        int codigoRespuesta = entrada.read();
+        String uuidRecibido = entrada.readLine();
         String lineaEntrada = entrada.readLine();
-        assertEquals(lineaEntrada, LINEA_DEVOLUCION);
+        assertEquals(codigoRespuesta, Enviable.RESPUESTA);
+        assertEquals(lineaEntrada, LINEA_ENVIO);
+        assertEquals(uuid.toString(), uuidRecibido);
         assertTrue(ControladorTest.proceso(LINEA_ENVIO));
     }
 
@@ -88,10 +93,16 @@ public class RecepecionPeticionTest {
     public void testRecepcionPeticionNoConocida() throws IOException, InterruptedException, BrokenBarrierException {
         final String LINEA_ENVIO = "testRecepcionPeticionNoConocida";
         salida.write(0xFF);
+        UUID uuid = UUID.randomUUID();
+        salida.println(uuid);
         salida.println(LINEA_ENVIO);
         salida.flush();
+        int codigoRespuesta = entrada.read();
+        String uuidRecibido = entrada.readLine();
         String lineaEntrada = entrada.readLine();
+        assertEquals(codigoRespuesta, Enviable.RESPUESTA);
         assertEquals(lineaEntrada, Enviable.LINEA_ERROR);
+        assertEquals(uuid.toString(), uuidRecibido);
         assertFalse(ControladorTest.proceso(LINEA_ENVIO));
     }
 }

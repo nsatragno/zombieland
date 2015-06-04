@@ -6,11 +6,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import com.rzg.zombieland.comunes.controlador.Controlador;
-import com.rzg.zombieland.comunes.controlador.ControladorFactory;
 import com.rzg.zombieland.comunes.controlador.Controlador.ComandoDesconocidoException;
+import com.rzg.zombieland.comunes.controlador.ControladorFactory;
 import com.rzg.zombieland.comunes.misc.Log;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Clase que se ocupa de la comunicación con un cliente en particular.
@@ -29,6 +33,9 @@ public class HiloEscucha extends Thread {
     // Fábrica de controladores.
     private ControladorFactory controladorFactory;
     
+    // Mapea las peticiones para su respuesta.
+    private Map<UUID, Peticion<?>> mapaPeticiones;
+    
     /**
      * Construye un hilo de escucha.
      * 
@@ -41,6 +48,7 @@ public class HiloEscucha extends Thread {
         Log.debug("Aceptando nueva conexión de " + socket.getInetAddress());
         this.socket = socket;
         this.controladorFactory = controladorFactory;
+        mapaPeticiones = new HashMap<UUID, Peticion<?>>();
     }
     
     @Override
@@ -64,19 +72,33 @@ public class HiloEscucha extends Thread {
                 }
                 
                 try {
-                    Controlador controlador = controladorFactory.crear(codigo);
-                    Log.debug("Contenido:");
-                    String contenido = in.readLine();
-                    Log.debug(contenido);
-                    out.println(controlador.procesar(contenido));
-                    socket.close();
+                    // Si el servidor envía una respuesta, resolvemos la petición que teníamos
+                    // relacionada.
+                    if (codigo == Enviable.RESPUESTA) {
+                        mapaPeticiones.remove(UUID.fromString(in.readLine())).
+                            procesarRespuesta(in.readLine());
+                        continue;
+                    }
+                    String uuid = in.readLine();
+                    synchronized (this) {
+                        out.write(Enviable.RESPUESTA);
+                        out.println(uuid);
+                        Controlador controlador = controladorFactory.crear(codigo);
+                        Log.debug("Contenido:");
+                        String contenido = in.readLine();
+                        Log.debug(contenido);
+                        out.println(controlador.procesar(contenido));
+                    }
                 } catch (ComandoDesconocidoException e) {
-                    out.println(Enviable.LINEA_ERROR);
+                    synchronized (this) {
+                        out.println(Enviable.LINEA_ERROR);
+                    }
                 }
-            }   
+            }
+            socket.close();
         } catch (SocketException e) {
-            Log.debug("Cerrando hilo de escucha " + getName() + ":");
-            Log.debug("Motivo: " + e.getMessage());
+            Log.info("Cerrando hilo de escucha " + getName() + ":");
+            Log.info("Motivo: " + e.getMessage());
             // Esperada, se usa para cerrar el Thread.
             return;
         } catch (IOException e) {
@@ -85,7 +107,30 @@ public class HiloEscucha extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Envía la petición al otro lado de la conexión.
+     * @param peticion
+     * @throws ZombielandException 
+     */
+    public void enviarPeticion(Peticion<?> peticion) throws ZombielandException {
+        try {
+            mapaPeticiones.put(peticion.getID(), peticion);
+            PrintWriter salida = new PrintWriter(socket.getOutputStream());
+            Log.debug("Enviando petición");
+            synchronized (this) {
+                salida.write(peticion.getCodigoPeticion());
+                salida.println(peticion.getID().toString());
+                salida.println(peticion.getMensajePeticion());
+                salida.flush();
+            }
+        } catch (IOException e) {
+            Log.error("Error de conexión:");
+            Log.error(e.getMessage());
+            e.printStackTrace();
+            throw new ZombielandException("No se pudo comunicar con el otro extremo al enviar una petición");
+        }
+    }
     /**
      * Cierra el hilo de escucha.
      */

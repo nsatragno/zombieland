@@ -11,6 +11,7 @@ public abstract class Enviable {
     // Constantes de tipos de peticiones.
     public static final int TEST = 0x0;
     public static final int REGISTRAR_JUGADOR = 0x1;
+    public static final int RESPUESTA = 0x2;
     
     // Mensaje de respuesta que significa que ha ocurrido un error.
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
