@@ -33,9 +33,6 @@ public class InterfazLobby extends JFrame
 	private JPanel contentPane;
 	private JTable tableParametros;
 	private JTable tableJugadores;
-	private JTextField textFieldNombrePartida;
-	private JTextField textFieldCantJugadores;
-	private JTextField textFieldCantRondas;
 
 	/**
 	 * Launch the application.
@@ -66,7 +63,7 @@ public class InterfazLobby extends JFrame
 	{
 		setTitle("Lobby");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 50, 1200, 1000);
+		setBounds(150, 1, 1024, 768);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -228,65 +225,18 @@ public class InterfazLobby extends JFrame
 		panelJug.add(tableJugadores.getTableHeader(), BorderLayout.NORTH);
 		panelJug.add(tableJugadores, BorderLayout.CENTER);
 		
-		// ESTO DEBERIA SER SOLO VISIBLE PARA EL ADMINISTRADOR DE LA PARTIDA
-		
-		JLabel lblLimiteJugadores = new JLabel("Cantidad de Jugadores:");
-		lblLimiteJugadores.setForeground(Color.DARK_GRAY);
-		lblLimiteJugadores.setFont(new Font("Sylfaen", Font.PLAIN, 16));
-		lblLimiteJugadores.setBounds(831, 172, 164, 14);
-		contentPane.add(lblLimiteJugadores);
-		
-		JLabel lblLimiteRondas = new JLabel("Cantidad de Rondas:");
-		lblLimiteRondas.setForeground(Color.DARK_GRAY);
-		lblLimiteRondas.setFont(new Font("Sylfaen", Font.PLAIN, 16));
-		lblLimiteRondas.setBounds(831, 210, 164, 14);
-		contentPane.add(lblLimiteRondas);
-		
-		JLabel lblNombrePartida = new JLabel("Nombre Partida:");
-		lblNombrePartida.setForeground(Color.DARK_GRAY);
-		lblNombrePartida.setFont(new Font("Sylfaen", Font.PLAIN, 16));
-		lblNombrePartida.setBounds(831, 135, 119, 14);
-		contentPane.add(lblNombrePartida);
-		
-		
-		JLabel lblCreacinPartida = new JLabel("Creaci\u00F3n Partida");
-		lblCreacinPartida.setFont(new Font("Verdana", Font.PLAIN, 26));
-		lblCreacinPartida.setBounds(833, 48, 217, 51);
-		contentPane.add(lblCreacinPartida);
-		
-		textFieldNombrePartida = new JTextField();
-		textFieldNombrePartida.setBounds(1022, 132, 170, 20);
-		contentPane.add(textFieldNombrePartida);
-		textFieldNombrePartida.setColumns(10);
-		
-		textFieldCantJugadores = new JTextField();
-		textFieldCantJugadores.setBounds(1022, 169, 170, 20);
-		contentPane.add(textFieldCantJugadores);
-		textFieldCantJugadores.setColumns(10);
-		
-		textFieldCantRondas = new JTextField();
-		textFieldCantRondas.setBounds(1022, 207, 170, 20);
-		contentPane.add(textFieldCantRondas);
-		textFieldCantRondas.setColumns(10);
-		
-		JButton btnAceptarCambios = new JButton("Aceptar");
-		btnAceptarCambios.setBounds(884, 276, 89, 23);
-		contentPane.add(btnAceptarCambios);
-		
-		JButton btnCancelarCambios = new JButton("Cancelar");
-		btnCancelarCambios.setBounds(1052, 276, 89, 23);
-		contentPane.add(btnCancelarCambios);
-		
-		// TERMINA PARTE DE CREAR PARTIDA
-		
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
-		label.setBounds(1200, 697, 63, 14);
+		label.setBounds(932, 688, 63, 14);
 		contentPane.add(label);
 		
 		JLabel lblZombie = new JLabel("");
 		lblZombie.setIcon(new ImageIcon(InterfazLobby.class.getResource("/com/rzg/zombieland/cliente/interfazLobby/zombie.png")));
-		lblZombie.setBounds(900, 11, 401, 783);
+		lblZombie.setBounds(699, 11, 401, 783);
 		contentPane.add(lblZombie);
+		
+		JButton btnPersonalizar = new JButton("Modifica tu Partida!");
+		btnPersonalizar.setBounds(862, 30, 144, 28);
+		contentPane.add(btnPersonalizar);
 	}
 }
