@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.awt.Font;
 
 /**
  * Interfaz de registro de usuario.
@@ -61,14 +62,15 @@ public class InterfazRegistro extends JPanel {
 	private void initialize() {
 		frmZombielandV = new JFrame();
 		frmZombielandV.setTitle("Zombieland v.1.0 - Registro");
-		frmZombielandV.setBounds(100, 100, 450, 325);
+		frmZombielandV.setBounds(100, 100, 800, 600);
+		frmZombielandV.setResizable(false);
 		frmZombielandV.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmZombielandV.getContentPane().setLayout(null);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(InterfazRegistro.class.getResource
 				("/com/rzg/zombieland/cliente/interfazRegistro/zombie.png")));
-		label.setBounds(337, 0, 105, 262);
+		label.setBounds(690, 214, 129, 353);
 		frmZombielandV.getContentPane().add(label);
 		
 		JButton btnRegistrar = new JButton("Registrar!");
@@ -80,7 +82,7 @@ public class InterfazRegistro extends JPanel {
 				// a la página de inicio de sesión.
 			}
 		});
-		btnRegistrar.setBounds(20, 159, 112, 37);
+		btnRegistrar.setBounds(20, 387, 245, 55);
 		frmZombielandV.getContentPane().add(btnRegistrar);
 		
 		JButton btnVolverAlInicio = new JButton("Volver al inicio de sesi\u00F3n");
@@ -89,36 +91,44 @@ public class InterfazRegistro extends JPanel {
 				// Al clickear aquí se volverá a la página de inicio de sesión
 			}
 		});
-		btnVolverAlInicio.setBounds(10, 228, 189, 23);
+		btnVolverAlInicio.setBounds(20, 473, 245, 49);
 		frmZombielandV.getContentPane().add(btnVolverAlInicio);
 		
 		JLabel lblNombreDeUsuario = new JLabel("Nombre de usuario:");
-		lblNombreDeUsuario.setBounds(10, 23, 122, 14);
+		lblNombreDeUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNombreDeUsuario.setBounds(10, 23, 160, 26);
 		frmZombielandV.getContentPane().add(lblNombreDeUsuario);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(10, 48, 122, 14);
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblPassword.setBounds(10, 58, 147, 18);
 		frmZombielandV.getContentPane().add(lblPassword);
 		
 		JLabel lblConfirmaPassword = new JLabel("Confirma Password:");
-		lblConfirmaPassword.setBounds(10, 73, 122, 14);
+		lblConfirmaPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblConfirmaPassword.setBounds(10, 85, 160, 26);
 		frmZombielandV.getContentPane().add(lblConfirmaPassword);
 		
 		JLabel lblPreguntaDeSeguridad = new JLabel("Pregunta de seguridad");
-		lblPreguntaDeSeguridad.setBounds(10, 98, 139, 14);
+		lblPreguntaDeSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblPreguntaDeSeguridad.setBounds(10, 122, 205, 26);
 		frmZombielandV.getContentPane().add(lblPreguntaDeSeguridad);
 		
 		JLabel lblRespuestaDeSeguridad = new JLabel("Respuesta de seguridad:");
-		lblRespuestaDeSeguridad.setBounds(10, 123, 160, 14);
+		lblRespuestaDeSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblRespuestaDeSeguridad.setBounds(10, 160, 181, 26);
 		frmZombielandV.getContentPane().add(lblRespuestaDeSeguridad);
-		textField_1.setBounds(180, 23, 139, 17);
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textField_1.setBounds(225, 23, 157, 21);
 		frmZombielandV.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
-		passwordField.setBounds(180, 48, 139, 17);
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		passwordField.setBounds(225, 56, 157, 21);
 		frmZombielandV.getContentPane().add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(180, 73, 139, 17);
+		passwordField_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		passwordField_1.setBounds(225, 89, 157, 21);
 		frmZombielandV.getContentPane().add(passwordField_1);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
@@ -127,17 +137,18 @@ public class InterfazRegistro extends JPanel {
 																"Mejor amigo de la infancia?", 
 																"A que escuela primaria fue?", 
 																"Nombre de su primer mascota?"}));
-		comboBox.setBounds(148, 95, 191, 20);
+		comboBox.setBounds(225, 127, 191, 20);
 		frmZombielandV.getContentPane().add(comboBox);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(180, 123, 139, 17);
+		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textField_2.setBounds(225, 164, 157, 21);
 		frmZombielandV.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
 		JLabel lblRzg = new JLabel("RZG - 2015");
 		lblRzg.setForeground(SystemColor.controlShadow);
-		lblRzg.setBounds(287, 248, 63, 14);
+		lblRzg.setBounds(709, 526, 63, 14);
 		frmZombielandV.getContentPane().add(lblRzg);
 		
 		JMenuBar menuBar = new JMenuBar();

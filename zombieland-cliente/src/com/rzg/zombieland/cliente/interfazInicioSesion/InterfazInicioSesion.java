@@ -64,6 +64,7 @@ public class InterfazInicioSesion extends JPanel {
 		frmZombielandV.setBounds(100, 100, 450, 325);
 		frmZombielandV.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmZombielandV.getContentPane().setLayout(null);
+		frmZombielandV.setResizable(false);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setBounds(10, 161, 92, 14);
