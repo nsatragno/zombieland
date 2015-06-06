@@ -16,10 +16,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
+import java.awt.Rectangle;
 
 public class ModificaPartida extends JFrame
 {
-
+   /**
+    * @author Ivan
+    */
 	private JPanel contentPane;
 	private JTextField textFieldNombrePartida;
 	private JTextField textFieldCantJugadores;
@@ -52,34 +55,35 @@ public class ModificaPartida extends JFrame
 	 */
 	public ModificaPartida()
 	{
+		setResizable(false);
+		setTitle("Personalizaci\u00F3n de Partida - Zombieland v.1.0");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(650, 100, 400, 430);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		// ESTO DEBERIA SER SOLO VISIBLE PARA EL ADMINISTRADOR DE LA PARTIDA
-		
 		JLabel lblCreacinPartida = new JLabel("Personaliza tu Partida");
+		lblCreacinPartida.setForeground(Color.LIGHT_GRAY);
 		lblCreacinPartida.setFont(new Font("Verdana", Font.PLAIN, 26));
-		lblCreacinPartida.setBounds(10, 20, 326, 44);
+		lblCreacinPartida.setBounds(13, 28, 326, 44);
 		contentPane.add(lblCreacinPartida);
 		
 		JLabel lblLimiteJugadores = new JLabel("Cantidad de Jugadores:");
-		lblLimiteJugadores.setForeground(Color.DARK_GRAY);
+		lblLimiteJugadores.setForeground(Color.WHITE);
 		lblLimiteJugadores.setFont(new Font("Sylfaen", Font.PLAIN, 16));
 		lblLimiteJugadores.setBounds(30, 170, 164, 14);
 		contentPane.add(lblLimiteJugadores);
 				
 		JLabel lblLimiteRondas = new JLabel("Cantidad de Rondas:");
-		lblLimiteRondas.setForeground(Color.DARK_GRAY);
+		lblLimiteRondas.setForeground(Color.WHITE);
 		lblLimiteRondas.setFont(new Font("Sylfaen", Font.PLAIN, 16));
 		lblLimiteRondas.setBounds(30, 230, 164, 14);
 				contentPane.add(lblLimiteRondas);
 				
 		JLabel lblNombrePartida = new JLabel("Nombre Partida:");
-		lblNombrePartida.setForeground(Color.DARK_GRAY);
+		lblNombrePartida.setForeground(Color.WHITE);
 		lblNombrePartida.setFont(new Font("Sylfaen", Font.PLAIN, 16));
 		lblNombrePartida.setBounds(30, 110, 119, 14);
 		contentPane.add(lblNombrePartida);
@@ -115,21 +119,21 @@ public class ModificaPartida extends JFrame
 		textFieldCantRondas.setColumns(10);
 				
 		JButton btnAceptarCambios = new JButton("Aceptar");
-		btnAceptarCambios.setBounds(50, 300, 89, 23);
+		btnAceptarCambios.setBounds(50, 300, 175, 40);
 		contentPane.add(btnAceptarCambios);
 				
 		JButton btnCancelarCambios = new JButton("Cancelar");
-		btnCancelarCambios.setBounds(250, 300, 89, 23);
+		btnCancelarCambios.setBounds(250, 300, 175, 40);
 		contentPane.add(btnCancelarCambios);
 		
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
-		label.setBounds(319, 371, 63, 14);
+		label.setBounds(637, 537, 63, 14);
 		contentPane.add(label);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setIcon(new ImageIcon(ModificaPartida.class.getResource("/com/rzg/zombieland/cliente/modificarPartida/zombie-fondo.png")));
-		lblFondo.setBounds(-100, 0, 500, 430);
+		lblFondo.setBounds(0, 0, 944, 574);
 		contentPane.add(lblFondo);
 	}
 }
