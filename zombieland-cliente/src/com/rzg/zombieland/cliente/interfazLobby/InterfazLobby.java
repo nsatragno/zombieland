@@ -61,9 +61,10 @@ public class InterfazLobby extends JFrame
 	 */
 	public InterfazLobby()
 	{
-		setTitle("Lobby");
+		setResizable(false);
+		setTitle("Lobby de Partidas - Zombieland v.1.0");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(150, 1, 1024, 768);
+		setBounds(100, 100, 800, 600);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -113,40 +114,49 @@ public class InterfazLobby extends JFrame
 		contentPane.setLayout(null);
 		
 		JLabel lblRecomendacion1 = new JLabel("- El juego comenzar\u00E1 cuando la cantidad de jugadores requerida esten en l\u00EDnea.");
-		lblRecomendacion1.setBounds(320, 109, 497, 28);
+		lblRecomendacion1.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion1.setBounds(320, 89, 497, 20);
 		lblRecomendacion1.setVerticalAlignment(SwingConstants.TOP);
 		contentPane.add(lblRecomendacion1);
 		
 		JLabel lblRecomendacion2 = new JLabel("- El juego consistir\u00E1 de las rondas indicadas por el administrador.");
-		lblRecomendacion2.setBounds(320, 135, 386, 14);
+		lblRecomendacion2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion2.setBounds(320, 114, 386, 14);
 		contentPane.add(lblRecomendacion2);
 		
 		JLabel lblRecomendacion3 = new JLabel("- El zombi busca humanos, el humano escapa de los zombies.");
-		lblRecomendacion3.setBounds(320, 160, 389, 14);
+		lblRecomendacion3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion3.setBounds(320, 139, 389, 14);
 		contentPane.add(lblRecomendacion3);
 		
 		JLabel lblRecomendacion4 = new JLabel("- Evita los obst\u00E1culos!");
-		lblRecomendacion4.setBounds(320, 185, 389, 14);
+		lblRecomendacion4.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion4.setBounds(320, 164, 389, 14);
 		contentPane.add(lblRecomendacion4);
 		
 		JLabel lblRecomendacion5 = new JLabel("- Los turnos son de 5 segundos cada uno, as\u00ED que pensa tu movimiento r\u00E1pido!");
-		lblRecomendacion5.setBounds(320, 210, 466, 14);
+		lblRecomendacion5.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion5.setBounds(320, 189, 466, 14);
 		contentPane.add(lblRecomendacion5);
 		
 		JLabel lblRecomendacion6 = new JLabel("- Si un humano es convertido la nueva tarea del jugador va a ser atrapar a los humanos.");
-		lblRecomendacion6.setBounds(320, 235, 497, 14);
+		lblRecomendacion6.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion6.setBounds(320, 214, 497, 14);
 		contentPane.add(lblRecomendacion6);
 		
 		JLabel lblRecomendacion7 = new JLabel("- Una ronda termina cuando todos los humanos fueron convertidos a zombies.");
-		lblRecomendacion7.setBounds(320, 285, 466, 14);
+		lblRecomendacion7.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion7.setBounds(320, 264, 466, 14);
 		contentPane.add(lblRecomendacion7);
 		
 		JLabel lblRecomendacion8 = new JLabel("- El juego termina cuando todas las rondas fueron terminadas.");
-		lblRecomendacion8.setBounds(320, 310, 415, 14);
+		lblRecomendacion8.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion8.setBounds(320, 289, 415, 14);
 		contentPane.add(lblRecomendacion8);
 		
 		JLabel lblRecomendacion9 = new JLabel("- Acordate que tenes la opci\u00F3n de no hacer ning\u00FAn movimiento.");
-		lblRecomendacion9.setBounds(320, 260, 402, 14);
+		lblRecomendacion9.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblRecomendacion9.setBounds(320, 239, 402, 14);
 		contentPane.add(lblRecomendacion9);
 		
 		JLabel lblTitulo = new JLabel("TITULO PARTIDA");
@@ -197,14 +207,15 @@ public class InterfazLobby extends JFrame
 		panel.add(tableParametros, BorderLayout.CENTER);
 		
 		JPanel panelJug = new JPanel();
-		panelJug.setBounds(10, 434, 164, 266);
+		panelJug.setBounds(10, 389, 164, 125);
 		panelJug.setLayout(new BorderLayout());
 		contentPane.add(panelJug);
 		
 		tableJugadores = new JTable();
+		tableJugadores.setRowSelectionAllowed(false);
 		tableJugadores.setGridColor(Color.BLACK);
 		tableJugadores.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tableJugadores.setRowHeight(50);
+		tableJugadores.setRowHeight(20);
 		tableJugadores.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -227,12 +238,12 @@ public class InterfazLobby extends JFrame
 		
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
-		label.setBounds(932, 688, 63, 14);
+		label.setBounds(672, 527, 63, 14);
 		contentPane.add(label);
 		
 		JLabel lblZombie = new JLabel("");
 		lblZombie.setIcon(new ImageIcon(InterfazLobby.class.getResource("/com/rzg/zombieland/cliente/interfazLobby/zombie.png")));
-		lblZombie.setBounds(699, 11, 401, 783);
+		lblZombie.setBounds(681, 199, 176, 408);
 		contentPane.add(lblZombie);
 		
 		JButton btnPersonalizar = new JButton("Modifica tu Partida!");

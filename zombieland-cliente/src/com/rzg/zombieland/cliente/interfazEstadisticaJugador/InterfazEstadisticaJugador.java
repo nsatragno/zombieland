@@ -35,6 +35,7 @@ public class InterfazEstadisticaJugador extends JFrame
 				{
 					InterfazEstadisticaJugador frame = new InterfazEstadisticaJugador();
 					frame.setVisible(true);
+					frame.setResizable(false);
 				}
 				catch (Exception e)
 				{

@@ -17,6 +17,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
 
 /**
  * Interfaz de Listado de Partidas
@@ -58,7 +59,7 @@ public class InterfazListadoPartidas extends JFrame
 	{
 		setTitle("Listado de Partidas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 600);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -102,33 +103,34 @@ public class InterfazListadoPartidas extends JFrame
 		JMenuItem mntmGoogleame = new JMenuItem("Googleame");
 		mnAyuda.add(mntmGoogleame);
 		contentPane = new JPanel();
-		contentPane.setBackground(UIManager.getColor("CheckBox.foreground"));
+		contentPane.setForeground(Color.WHITE);
+		contentPane.setBackground(UIManager.getColor("Panel.background"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JButton btnUnirse = new JButton("Unirse");
-		btnUnirse.setBounds(131, 197, 89, 23);
+		btnUnirse.setBounds(288, 430, 175, 40);
 		contentPane.add(btnUnirse);
 		
 		JButton btnCrearPartida = new JButton("Crear Partida");
 		btnCrearPartida.setBackground(UIManager.getColor("Button.disabledForeground"));
-		btnCrearPartida.setBounds(40, 51, 123, 23);
+		btnCrearPartida.setBounds(39, 30, 175, 40);
 		contentPane.add(btnCrearPartida);
 		
 		JButton btnJugar = new JButton("JUGAR");
-		btnJugar.setBounds(32, 197, 89, 23);
+		btnJugar.setBounds(77, 430, 175, 40);
 		contentPane.add(btnJugar);
 		
 		JButton btnObservar = new JButton("Observar");
-		btnObservar.setBounds(230, 197, 89, 23);
+		btnObservar.setBounds(512, 430, 175, 40);
 		contentPane.add(btnObservar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setToolTipText("");
-		scrollPane.setBounds(32, 90, 307, 96);
+		scrollPane.setBounds(66, 95, 631, 318);
 		contentPane.add(scrollPane);
 		
 		tablaPartidas = new JTable();
@@ -160,7 +162,7 @@ public class InterfazListadoPartidas extends JFrame
 		
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
-		label.setBounds(362, 220, 110, 14);
+		label.setBounds(702, 516, 110, 14);
 		contentPane.add(label);
 	}
 }

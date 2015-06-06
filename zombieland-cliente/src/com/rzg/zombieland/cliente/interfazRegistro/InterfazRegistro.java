@@ -82,7 +82,7 @@ public class InterfazRegistro extends JPanel {
 				// a la página de inicio de sesión.
 			}
 		});
-		btnRegistrar.setBounds(20, 387, 245, 55);
+		btnRegistrar.setBounds(20, 387, 175, 40);
 		frmZombielandV.getContentPane().add(btnRegistrar);
 		
 		JButton btnVolverAlInicio = new JButton("Volver al inicio de sesi\u00F3n");
@@ -91,7 +91,7 @@ public class InterfazRegistro extends JPanel {
 				// Al clickear aquí se volverá a la página de inicio de sesión
 			}
 		});
-		btnVolverAlInicio.setBounds(20, 473, 245, 49);
+		btnVolverAlInicio.setBounds(20, 473, 175, 40);
 		frmZombielandV.getContentPane().add(btnVolverAlInicio);
 		
 		JLabel lblNombreDeUsuario = new JLabel("Nombre de usuario:");

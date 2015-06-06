@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.awt.Font;
 
 /**
  * Interfaz completa de inicio de sesión.
@@ -61,23 +62,20 @@ public class InterfazInicioSesion extends JPanel {
 	private void initialize() {
 		frmZombielandV = new JFrame();
 		frmZombielandV.setTitle("Zombieland v1.0 - Inicio de sesi\u00F3n");
-		frmZombielandV.setBounds(100, 100, 450, 325);
+		frmZombielandV.setBounds(100, 100, 800, 600);
 		frmZombielandV.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmZombielandV.getContentPane().setLayout(null);
 		frmZombielandV.setResizable(false);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(10, 161, 92, 14);
+		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblUsuario.setBounds(251, 192, 92, 42);
 		frmZombielandV.getContentPane().add(lblUsuario);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(10, 192, 92, 14);
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPassword.setBounds(251, 246, 110, 17);
 		frmZombielandV.getContentPane().add(lblPassword);
-		
-		JLabel lblError = new JLabel("");
-		lblError.setForeground(Color.RED);
-		lblError.setBounds(252, 192, 172, 14);
-		frmZombielandV.getContentPane().add(lblError);
 		
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
@@ -90,25 +88,28 @@ public class InterfazInicioSesion extends JPanel {
 				// de la pregunta y respuesta de seguridad.
 			}
 		});
-		btnIngresar.setBounds(60, 217, 139, 34);
+		btnIngresar.setBounds(184, 292, 175, 40);
 		frmZombielandV.getContentPane().add(btnIngresar);
 		
 		userField = new JTextField();
-		userField.setBounds(112, 158, 115, 20);
+		userField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		userField.setBounds(389, 203, 139, 20);
 		frmZombielandV.getContentPane().add(userField);
 		userField.setColumns(10);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(112, 189, 115, 20);
+		passwordField_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		passwordField_1.setBounds(389, 244, 139, 20);
 		frmZombielandV.getContentPane().add(passwordField_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(InterfazInicioSesion.class.getResource("/com/rzg/zombieland/cliente/interfazInicioSesion/Zombieland.png")));
-		lblNewLabel.setBounds(252, 0, 159, 179);
+		lblNewLabel.setBounds(325, 11, 159, 179);
 		frmZombielandV.getContentPane().add(lblNewLabel);
 		
 		JLabel lblMsg = new JLabel("No tenes un usuario?");
-		lblMsg.setBounds(27, 11, 200, 37);
+		lblMsg.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblMsg.setBounds(251, 379, 200, 37);
 		frmZombielandV.getContentPane().add(lblMsg);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
@@ -117,16 +118,17 @@ public class InterfazInicioSesion extends JPanel {
 				// Aquí se enviará a la página de creación de un usuario nuevo.
 			}
 		});
-		btnRegistrarse.setBounds(98, 69, 116, 30);
+		btnRegistrarse.setBounds(445, 398, 175, 40);
 		frmZombielandV.getContentPane().add(btnRegistrarse);
 		
 		JLabel lblRzg = new JLabel("RZG - 2015");
 		lblRzg.setForeground(SystemColor.controlShadow);
-		lblRzg.setBounds(369, 248, 110, 14);
+		lblRzg.setBounds(701, 526, 110, 14);
 		frmZombielandV.getContentPane().add(lblRzg);
 		
 		JLabel lblUniteAZombieland = new JLabel("Unite a Zombieland!");
-		lblUniteAZombieland.setBounds(27, 30, 154, 37);
+		lblUniteAZombieland.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblUniteAZombieland.setBounds(251, 416, 219, 37);
 		frmZombielandV.getContentPane().add(lblUniteAZombieland);
 		
 		JButton btnO = new JButton("Olvid\u00F3 su clave?");
@@ -136,7 +138,7 @@ public class InterfazInicioSesion extends JPanel {
 				// haciendo uso de la pregunta de seguridad.
 			}
 		});
-		btnO.setBounds(209, 217, 126, 34);
+		btnO.setBounds(445, 292, 175, 40);
 		frmZombielandV.getContentPane().add(btnO);
 		
 		JMenuBar menuBar = new JMenuBar();
