@@ -12,8 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.text.DefaultCaret;
 
 import net.miginfocom.swing.MigLayout;
@@ -23,15 +25,35 @@ import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.ServicioEscucha;
 
+/**
+ * Interfaz principal del servidor.
+ * @author nicolas
+ *
+ */
 public class Principal implements EscuchaLog {
-
+	// Constantes de texto de botones.
 	private static final String TEXTO_DETENER_SERVIDOR = "Detener servidor";
 	private static final String TEXTO_INICIAR_SERVIDOR = "Iniciar servidor";
+	
+	// Frame principal.
 	private JFrame frame;
+	
+	// Servicio de escucha. Es null mientras no haya arrancado.
 	private ServicioEscucha servicio;
+	
+	// El nivel de log para mostrar en la interfaz.
 	private int nivelLog = Log.DEBUG;
+	
+	// TextArea que muestra el log.
 	private JTextArea log;
+	
+	// Entrada para el puerto.
+	private JTextField puerto;
+	
+	// Con este botón se arranca y detiene el servidor.
 	private JButton botonIniciar;
+	
+	// Scroll para el TextArea de log.
 	private JScrollPane scroll;
 
 	/**
@@ -120,6 +142,9 @@ public class Principal implements EscuchaLog {
 		Label titulo = new Label("Servidor Zombieland");
 		titulo.setFont(new Font("tahoma", Font.BOLD,20));
 		
+		puerto = new JTextField("2048");
+		puerto.setColumns(10);
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,18 +153,27 @@ public class Principal implements EscuchaLog {
 		frame.getContentPane().setLayout(new MigLayout());
 		frame.getContentPane().add(titulo, "span 2, wrap, growx");
 		frame.getContentPane().add(new Label("Nivel de log"));
-		frame.getContentPane().add(lista, "wrap");
-		frame.getContentPane().add(scroll, "wrap, span 2");
-		frame.getContentPane().add(botonIniciar, "align center, span 2");
+		frame.getContentPane().add(lista);
+		frame.getContentPane().add(new Label("Puerto"));
+		frame.getContentPane().add(puerto, "wrap");
+		frame.getContentPane().add(scroll, "wrap, span 4");
+		frame.getContentPane().add(botonIniciar, "align center, span 4");
 	}
 	
+	/**
+	 * Arranca y detiene al servidor.
+	 */
 	private void toggleServidor() {
 		if (servicio == null) {
 			// Arrancamos el servidor.
 			try {
-				servicio = new ServicioEscucha();
+				int puerto = Integer.parseInt(this.puerto.getText());
+				servicio = new ServicioEscucha(puerto);
 				servicio.start();
+				this.puerto.setEditable(false);
 				botonIniciar.setText(TEXTO_DETENER_SERVIDOR);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(frame, "El puerto no es válido");
 			} catch (ZombielandException e) {
 				servicio = null;
 			}
@@ -151,6 +185,7 @@ public class Principal implements EscuchaLog {
 				Log.info("Servidor cerrado con éxito");
 				servicio = null;
 				botonIniciar.setText(TEXTO_INICIAR_SERVIDOR);
+				this.puerto.setEditable(true);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

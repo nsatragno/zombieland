@@ -18,9 +18,9 @@ import com.rzg.zombieland.server.controlador.ControladorServidorFactory;
  *
  */
 public class ServicioEscucha extends Thread {
-    // El puerto en el que se escucha.
-    private final int puerto = 2048;
-
+	// El puerto por defecto para el constructor sin argumentos.
+    private final static int PUERTO_POR_DEFECTO = 2048;
+    
     // Generador de sockets.
     private final ServerSocket serverSocket;
 
@@ -30,7 +30,12 @@ public class ServicioEscucha extends Thread {
     // Mantiene una referencia a los hilos que creó para cerrarlos. 
     private List<HiloEscucha> hilosEscucha;
     
-    public ServicioEscucha() throws ZombielandException {
+    /**
+     * Crea un servicio de escucha para un puerto determinado.
+     * @param puerto
+     * @throws ZombielandException
+     */
+    public ServicioEscucha(int puerto) throws ZombielandException {
         super("ServicioEscucha");
         Log.info("Arrancando servidor");
         corriendo = true;
@@ -40,12 +45,19 @@ public class ServicioEscucha extends Thread {
         } catch (IOException e) {
             Log.error("No se pudo abrir el socket: ");
             Log.error(e.getMessage());
-            Log.error("Stacktrace: ");
             e.printStackTrace();
             throw new ZombielandException("No se pudo iniciar el servidor: "
                     + e.getLocalizedMessage());
         }
     }
+    
+    /**
+     * Crea un servicio de escucha con el puerto por defecto.
+     * @throws ZombielandException
+     */
+    public ServicioEscucha() throws ZombielandException {
+    	this(PUERTO_POR_DEFECTO);
+	}
 
     @Override
     public void run() {
@@ -71,7 +83,6 @@ public class ServicioEscucha extends Thread {
             } catch (IOException e) {
                 Log.error("Ocurrió un error al intentar abrir la conexión con un nuevo cliente: ");
                 Log.error(e.getMessage());
-                Log.error("Stacktrace: ");
                 e.printStackTrace();
             }
         }
