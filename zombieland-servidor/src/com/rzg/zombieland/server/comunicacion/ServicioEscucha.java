@@ -32,6 +32,7 @@ public class ServicioEscucha extends Thread {
     
     public ServicioEscucha() throws ZombielandException {
         super("ServicioEscucha");
+        Log.info("Arrancando servidor");
         corriendo = true;
         hilosEscucha = new ArrayList<HiloEscucha>();
         try {
@@ -48,6 +49,7 @@ public class ServicioEscucha extends Thread {
 
     @Override
     public void run() {
+    	Log.info("Servidor arrancado");
         while (corriendo) {
             try {
                 HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), new ControladorServidorFactory());
@@ -76,6 +78,7 @@ public class ServicioEscucha extends Thread {
     }
 
     public void cerrar() {
+    	Log.info("Cerrando servidor");
         corriendo = false;
         if (serverSocket != null)
             try {
