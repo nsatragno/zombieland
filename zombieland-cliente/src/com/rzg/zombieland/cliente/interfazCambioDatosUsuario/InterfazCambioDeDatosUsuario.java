@@ -28,6 +28,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
+import java.awt.Font;
 
 /**
  * 
@@ -69,31 +70,36 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 	public InterfazCambioDeDatosUsuario() {
 		setTitle("Cambiar Datos De Usuario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblNombreDeUsuario = new JLabel("Nombre de Usuario:");
-		lblNombreDeUsuario.setBounds(10, 11, 163, 22);
+		lblNombreDeUsuario.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNombreDeUsuario.setBounds(20, 22, 220, 22);
 		contentPane.add(lblNombreDeUsuario);
 
 		JLabel lblContrasea = new JLabel("Nueva Contrase\u00F1a:");
-		lblContrasea.setBounds(10, 62, 163, 22);
+		lblContrasea.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblContrasea.setBounds(20, 76, 220, 22);
 		contentPane.add(lblContrasea);
 
 		JLabel lblVerificacionDeContrasea = new JLabel(
 				"Verificacion de Contrase\u00F1a:");
-		lblVerificacionDeContrasea.setBounds(10, 95, 163, 22);
+		lblVerificacionDeContrasea.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblVerificacionDeContrasea.setBounds(20, 109, 261, 22);
 		contentPane.add(lblVerificacionDeContrasea);
 
 		JLabel lblPreguntaDeSeguridad = new JLabel("Pregunta de Seguridad:");
-		lblPreguntaDeSeguridad.setBounds(10, 133, 138, 22);
+		lblPreguntaDeSeguridad.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblPreguntaDeSeguridad.setBounds(20, 161, 220, 22);
 		contentPane.add(lblPreguntaDeSeguridad);
 
 		JLabel lblRespuestaDeSeguridad = new JLabel("Respuesta de Seguridad:");
-		lblRespuestaDeSeguridad.setBounds(10, 166, 163, 22);
+		lblRespuestaDeSeguridad.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblRespuestaDeSeguridad.setBounds(20, 194, 220, 22);
 		contentPane.add(lblRespuestaDeSeguridad);
 
 		textUsuario = new JTextField("nombreAct");
@@ -106,12 +112,12 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 			}
 		});
 
-		textUsuario.setBounds(183, 12, 86, 20);
+		textUsuario.setBounds(305, 23, 160, 20);
 		contentPane.add(textUsuario);
 		textUsuario.setColumns(10);
 
 		textPreg = new JTextField("ACT");
-		textPreg.setBounds(183, 134, 86, 20);
+		textPreg.setBounds(305, 164, 160, 20);
 		contentPane.add(textPreg);
 		textPreg.setColumns(10);
 		// Cuando clickeo el campo se borra lo que esta escrito.
@@ -124,7 +130,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		});
 
 		textRta = new JTextField("RTA");
-		textRta.setBounds(183, 167, 86, 20);
+		textRta.setBounds(305, 195, 160, 20);
 		contentPane.add(textRta);
 		textRta.setColumns(10);
 		// Cuando clickeo el campo se borra lo que esta escrito.
@@ -142,7 +148,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 				//
 			}
 		});
-		btnModificar.setBounds(141, 214, 128, 23);
+		btnModificar.setBounds(446, 491, 128, 23);
 		contentPane.add(btnModificar);
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -151,23 +157,24 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(320, 214, 89, 23);
+		btnCancelar.setBounds(672, 491, 89, 23);
 		contentPane.add(btnCancelar);
 
 		JLabel lblNewLabel = new JLabel("Seleccione Avatar:");
-		lblNewLabel.setBounds(292, 11, 116, 22);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(20, 248, 220, 22);
 		contentPane.add(lblNewLabel);
 
 		JRadioButton rdbtnPJ1 = new JRadioButton("");
-		rdbtnPJ1.setBounds(381, 40, 47, 34);
+		rdbtnPJ1.setBounds(30, 294, 47, 34);
 		contentPane.add(rdbtnPJ1);
 
 		JRadioButton rdbtnPJ2 = new JRadioButton("");
-		rdbtnPJ2.setBounds(381, 95, 47, 34);
+		rdbtnPJ2.setBounds(189, 294, 47, 34);
 		contentPane.add(rdbtnPJ2);
 
 		JRadioButton rdbtnPJ3 = new JRadioButton("");
-		rdbtnPJ3.setBounds(381, 152, 47, 36);
+		rdbtnPJ3.setBounds(334, 294, 47, 36);
 		contentPane.add(rdbtnPJ3);
 
 		// Agrego los rdbtn al grupo de botones, para que solo se pueda
@@ -178,14 +185,37 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 
 		pass = new JPasswordField();
 		pass.setToolTipText("");
-		pass.setBounds(183, 63, 86, 20);
+		pass.setBounds(305, 79, 160, 20);
 		contentPane.add(pass);
 
 		// pass.setToolTipText("Mas de 4 digitos.");
 
 		passVerificacion = new JPasswordField("");
-		passVerificacion.setBounds(183, 96, 85, 20);
+		passVerificacion.setBounds(306, 112, 159, 20);
 		contentPane.add(passVerificacion);
+
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1
+				.setIcon(new ImageIcon(
+						InterfazCambioDeDatosUsuario.class
+								.getResource("/com/rzg/zombieland/cliente/interfazCambioDatosUsuario/mujer.png")));
+		lblNewLabel_1.setBounds(334, 361, 73, 74);
+		contentPane.add(lblNewLabel_1);
+
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2
+				.setIcon(new ImageIcon(
+						InterfazCambioDeDatosUsuario.class
+								.getResource("/com/rzg/zombieland/cliente/interfazCambioDatosUsuario/poli.png")));
+		lblNewLabel_2.setBounds(20, 355, 79, 80);
+		contentPane.add(lblNewLabel_2);
+
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(
+				InterfazCambioDeDatosUsuario.class
+						.getResource("/com/rzg/zombieland/cliente/interfazCambioDatosUsuario/dsn.png")));
+		label.setBounds(175, 341, 73, 94);
+		contentPane.add(label);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
