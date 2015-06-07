@@ -25,9 +25,16 @@ public class HibernateSingleton {
         sessionFactory = new Configuration()
         .setProperty("hibernate.connection.url", "jdbc:hsqldb:file:" + nombreDB)
         .setProperty("hibernate.hbm2ddl.auto", test ? "create" : "update")
+        .setProperty("driver_class", "org.hsqldb.jdbcDriver")
+        .setProperty("hibernate.connection.username", "sa")
+        .setProperty("hibernate.connection.password", "cambiar")
+        .setProperty("hibernate.connection.pool_size", "1")
+        .setProperty("hibernate.connection.dialect", "org.hibernate.dialect.HSQLDialect")
+        .setProperty("current_session_context_class", "thread")
+        .setProperty("show_sql", "false")
+        .setProperty("cache.provider_class", "org.hibernate.cache.NoCacheProvider")
         .addAnnotatedClass(ResultadoPartida.class)
         .addAnnotatedClass(Jugador.class)
-        .configure("com/rzg/zombieland/server/persistencia/hibernate.config.xml")
         .buildSessionFactory();
     }
     
