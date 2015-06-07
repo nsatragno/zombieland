@@ -5,15 +5,11 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -214,16 +210,9 @@ public class TableroPrueba extends JFrame {
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		BufferedImage img;
-		try {
-			img = ImageIO
-					.read(new File(
-							"C:\\Users\\Manuel\\Desktop"
-									+ "\\Java - Ejercicios\\zombieland\\zombieland-cliente"
-									+ "\\src\\com\\rzg\\zombieland\\cliente\\interfazTablero\\poli.png"));
-			g.drawImage(img, x, y, 40, 40, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Image img = new ImageIcon(
+				TableroPrueba.class.getResource("/com/rzg/zombieland/"
+						+ "cliente/interfazTablero/poli.png")).getImage();
+		g.drawImage(img, x, y, 40, 40, null);
 	}
 }
