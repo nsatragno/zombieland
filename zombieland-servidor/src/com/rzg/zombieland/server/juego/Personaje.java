@@ -1,11 +1,6 @@
 package com.rzg.zombieland.server.juego;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.util.UUID;
-
-import javax.swing.JPanel;
 
 import com.rzg.zombieland.comunes.misc.Movimiento;
 import com.rzg.zombieland.server.meta.Jugador;

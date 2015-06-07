@@ -5,8 +5,12 @@
 	<artifactId>zombieland-cliente</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Cliente Zombieland</name>
+	<properties>
+       <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+    </properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>test</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

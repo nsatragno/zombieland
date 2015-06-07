@@ -3,8 +3,6 @@ package com.rzg.zombieland.comunes.controlador;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.rzg.zombieland.comunes.controlador.Controlador;
-
 /**
  * Un controlador que devuelve lo mismo que se envió para testing.
  * @author nicolas

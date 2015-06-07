@@ -1,16 +1,15 @@
 package com.rzg.zombieland.cliente.interfazEstadisticaJugador;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.SystemColor;
+
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 /**
  * Interfaz de registro de usuario.

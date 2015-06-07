@@ -1,5 +1,6 @@
 package com.rzg.zombieland.cliente.interfazListadoDePartidas;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
@@ -17,7 +18,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
 
 /**
  * Interfaz de Listado de Partidas

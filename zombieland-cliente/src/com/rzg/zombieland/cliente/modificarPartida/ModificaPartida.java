@@ -5,18 +5,15 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.UIManager;
-import javax.swing.SwingConstants;
-import java.awt.Rectangle;
 
 public class ModificaPartida extends JFrame
 {
