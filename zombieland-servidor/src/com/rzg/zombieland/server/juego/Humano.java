@@ -9,8 +9,8 @@ package com.rzg.zombieland.server.juego;
 public class Humano extends Personaje {
 
     // TODO definir sprite.
-    private final String SPRITE = "humano.jpg";
-    
+    private final String SPRITE = "humano.png";
+ 
     @Override
     public String getSprite() {
         return SPRITE;
@@ -20,5 +20,5 @@ public class Humano extends Personaje {
     public void colisionar(EntidadTablero entidad) {
         // TODO Auto-generated method stub
     }
-
+  
 }

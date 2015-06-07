@@ -71,7 +71,7 @@ public class InterfazInicioSesion extends JPanel {
 		add(passwordField_1);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(InterfazInicioSesion.class.getResource("/com/rzg/zombieland/cliente/interfazInicioSesion/Zombieland.png")));
+		lblNewLabel.setIcon(new ImageIcon(InterfazInicioSesion.class.getResource("/com/rzg/zombieland/cliente/interfaz/zombieland.png")));
 		lblNewLabel.setBounds(325, 11, 159, 179);
 		add(lblNewLabel);
 		

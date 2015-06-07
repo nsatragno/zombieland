@@ -1,33 +1,35 @@
 package com.rzg.zombieland.cliente.interfazTablero;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
-import java.awt.Panel;
+import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
-
 import java.awt.Cursor;
-
-import javax.swing.ImageIcon;
-
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
-public class InterfazTablero extends JPanel {
+/**
+ * Interfaz de tablero.
+ * @author Manuel
+ */
+
+public class InterfazTablero extends JPanel{
 
 	private JFrame frame;
 	private JTable table;
@@ -51,13 +53,15 @@ public class InterfazTablero extends JPanel {
 	/**
 	 * Create the application.
 	 */
+	
 	public InterfazTablero() {
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -67,16 +71,10 @@ public class InterfazTablero extends JPanel {
 		frame.getContentPane().setLayout(null);
 		
 		JLabel label = new JLabel("");
+		label.setBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
 		label.setIcon(new ImageIcon(InterfazTablero.class.getResource("/com/rzg/zombieland/cliente/interfazTablero/Pasto.png")));
 		label.setBounds(33, 25, 500, 509);
 		frame.getContentPane().add(label);
-		
-		Panel panel = new Panel();
-		panel.setFont(null);
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(33, 25, 500, 500);
-		frame.getContentPane().add(panel);
-		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JButton button = new JButton("");
 		button.addKeyListener(new KeyAdapter() {
@@ -96,7 +94,7 @@ public class InterfazTablero extends JPanel {
 		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		button.setBounds(640, 395, 45, 45);
 		frame.getContentPane().add(button);
-		
+
 		JButton button_1 = new JButton("");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
