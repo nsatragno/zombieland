@@ -15,7 +15,7 @@ public class PeticionRegistroTest extends PeticionTestHarness {
     
     @Test
     public void testPeticion() throws ZombielandException, InterruptedException, ExecutionException {
-        POJORegistro registro = new POJORegistro("Carlos", "123456789","Nombre de mi papá", "Bob");
+        POJORegistro registro = new POJORegistro("Carlos", "123456789","Nombre de mi papa", "Bob");
         PeticionRegistro peticion = new PeticionRegistro(registro);
         hiloEscucha.enviarPeticion(peticion);
         assertEquals(true, peticion.getRespuesta().get().getPeticionExitosa());

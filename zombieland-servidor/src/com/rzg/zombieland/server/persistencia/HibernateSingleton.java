@@ -23,7 +23,7 @@ public class HibernateSingleton {
      */
     private HibernateSingleton(String nombreDB) {
         sessionFactory = new Configuration()
-        .setProperty("hibernate.connection.url", "jdbc:hsqldb:file:" + nombreDB)
+        .setProperty("hibernate.connection.url", (test ? "jdbc:hsqldb:mem:" : "jdbc:hsqldb:file:") + nombreDB)
         .setProperty("hibernate.hbm2ddl.auto", test ? "create" : "update")
         .setProperty("driver_class", "org.hsqldb.jdbcDriver")
         .setProperty("hibernate.connection.username", "sa")
