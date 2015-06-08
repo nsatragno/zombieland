@@ -8,6 +8,10 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.Jugador;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 
+/**
+ * Controla el registro de usuario. 
+ * @author nicolas
+ */
 public class ControladorRegistro extends Controlador {
 
     @Override

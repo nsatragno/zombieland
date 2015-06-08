@@ -8,9 +8,17 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  *
  */
 public abstract class Controlador {
+    /**
+     * Indica que el comando solicitado no está en el sistema.
+     * @author nicolas
+     */
     public static class ComandoDesconocidoException extends ZombielandException {
         private static final long serialVersionUID = -8914691837771387774L;
 
+        /**
+         * Constructor con mensaje de error.
+         * @param error
+         */
         public ComandoDesconocidoException(String error) {
             super(error);
         }
@@ -19,7 +27,7 @@ public abstract class Controlador {
     /**
      * Procesa la petición definida por la línea enviada.
      * @param linea
-     * @return
+     * @return la respuesta que se debe imprimir en el búfer de salida.
      */
     public abstract String procesar(String linea);
 }

@@ -18,7 +18,9 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Clase que se ocupa de la comunicación con un cliente en particular.
- * 
+ * Una vez que se arranca el hilo, se escucha constantemente. Enviar una petición desde otro hilo
+ * es thread-safe (bueno, supuestamente). Ver comentarios en implementación para conocer detalles
+ * del protocolo.
  * @author nicolas
  *
  */
@@ -37,15 +39,15 @@ public class HiloEscucha extends Thread {
     private Map<UUID, Peticion<?>> mapaPeticiones;
     
     /**
-     * Construye un hilo de escucha.
-     * 
-     * @param socket
-     *            - el socket con el que se escuchará al cliente.
+     * Comienza a escuchar en el socket dado, delegando las peticiones a la fábrica de
+     * controladores. El socket ya debe estar abierto.
+     * @param socket - el socket con el que se escuchará al cliente.
+     * @param controladorFactory - fábrica de controladores inyectada.
      */
     public HiloEscucha(Socket socket, ControladorFactory controladorFactory) {
         super("HiloEscucha: " + socket.getInetAddress());
         corriendo = true;
-        Log.debug("Aceptando nueva conexión de " + socket.getInetAddress());
+        Log.debug("Estableciendo nueva conexión con " + socket.getInetAddress());
         this.socket = socket;
         this.controladorFactory = controladorFactory;
         mapaPeticiones = new HashMap<UUID, Peticion<?>>();
@@ -58,14 +60,16 @@ public class HiloEscucha extends Thread {
         try (@SuppressWarnings("resource")
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             @SuppressWarnings("resource")
+            // Obtengo un reader de entrada.
              BufferedReader in = new BufferedReader(new InputStreamReader(
                  socket.getInputStream()))) {
             while (corriendo) {
+                // El hilo se detendrá acá hasta que el otro extremo envíe un código de petición. 
                 int codigo = in.read();
                 Log.debug("Recibiendo datos en HiloEscucha " + this + ". Código:");
                 Log.debug(codigo);
                 
-                // Condición de fin del stream.
+                // -1 indica que el otro extremo cerró la conexión.
                 if (codigo == -1) {
                     Log.debug("Cerrando hilo escucha: llegó el -1");
                     return;
@@ -73,32 +77,58 @@ public class HiloEscucha extends Thread {
                 
                 try {
                     // Si el servidor envía una respuesta, resolvemos la petición que teníamos
-                    // relacionada.
+                    // relacionada. Primero buscamos la buscamos en el mapa de peticiones de
+                    // acuerdo al ID que nos envió el otro extremo, luego la quitamos y le enviamos
+                    // la respuesta para que la procese.
                     if (codigo == Enviable.RESPUESTA) {
                         mapaPeticiones.remove(UUID.fromString(in.readLine())).
                             procesarRespuesta(in.readLine());
                         continue;
                     }
+                    // Si llegamos acá, la petición no viene de una respuesta. Obtenemos el ID
+                    // generado por el cliente de la petición para que la pueda identificar.
                     String uuid = in.readLine();
+                    // Este bloque es sincronizado para que si otro hilo intenta enviar una
+                    // respuesta sobre esta instancia de escucha mientras nosotros estamos
+                    // escribiendo en el socket, los mensajes no se intercalen y rompan el
+                    // protocolo.
                     synchronized (this) {
+                        // En esta sección se puede ver el protocolo de envío de respuestas.
+                        // Escribimos el código de las respuestas para que el cliente pueda
+                        // identificar el mensaje apropiadamente.
                         out.write(Enviable.RESPUESTA);
+                        // Escribimos el mismo UUID que nos dio el otro extremo.
                         out.println(uuid);
+                        // Obtengo un controlador que es quien tomará las acciones apropiadas para
+                        // la petición, como mover a un personaje o registrar un jugador.
                         Controlador controlador = controladorFactory.crear(codigo);
                         Log.debug("Contenido:");
+                        // La próxima línea es el cuerpo de la petición. Su formato varía de 
+                        // acuerdo al tipo de petición y lo sabe manejar el controlador.
                         String contenido = in.readLine();
                         Log.debug(contenido);
+                        // Obtenemos la respuesta a partir del controlador.
                         String respuesta = controlador.procesar(contenido);
                         Log.debug("Respuesta:");
                         Log.debug(respuesta);
+                        // Escribimos la respuesta en el búfer de salida...
                         out.println(respuesta);
+                        // ...y nos aseguramos de que se limpie de una vez para evitar deadlocks
+                        // en los tests.
                         out.flush();
                     }
                 } catch (ComandoDesconocidoException e) {
+                    // Esto no debería suceder jamás de los jamases, a menos que se corte la
+                    // conexión en el medio del envío del código de comando... en cualquier caso,
+                    // debemos poder manejar el error.
                     synchronized (this) {
+                        Log.error("Se envió un comando desconocido: " + e.getMessage());
+                        e.printStackTrace();
                         out.println(Enviable.LINEA_ERROR);
                     }
                 }
             }
+            // Ya no estamos más corriendo. Cerramos el socket y nos vamos a dormir.
             socket.close();
         } catch (SocketException e) {
             Log.info("Cerrando hilo de escucha " + getName() + ":");
@@ -119,10 +149,16 @@ public class HiloEscucha extends Thread {
      */
     public void enviarPeticion(Peticion<?> peticion) throws ZombielandException {
         try {
+            // Antes de enviar la petición, la almacenamos en un mapa identificada por un ID
+            // generado aleatoriamente para poder identificar su respuesta. Es importante notar que
+            // la vuelta de la petición desde el otro extremo se maneja en otro hilo, por lo que la
+            // respuesta debe resolverse asíncronamete mediante una promesa.
             mapaPeticiones.put(peticion.getID(), peticion);
             PrintWriter salida = new PrintWriter(socket.getOutputStream());
             Log.debug("Enviando petición");
+            // Ver comentarios en run() sobre el synchronized. 
             synchronized (this) {
+                // El protocolo de envío de peticiones es sencillo: código, ID, contenido.
                 salida.write(peticion.getCodigoPeticion());
                 salida.println(peticion.getID().toString());
                 salida.println(peticion.getMensajePeticion());
