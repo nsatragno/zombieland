@@ -44,6 +44,12 @@ public class RecepecionPeticionTest {
     private final int puerto = 2048;
     private final static String LINEA_ENVIO = "Chau socket :)";
 
+    /**
+     * Levanta al servidor para el test.
+     * @throws ZombielandException
+     * @throws UnknownHostException
+     * @throws IOException
+     */
     @BeforeClass
     public static void prepararServidor() 
             throws ZombielandException, UnknownHostException, IOException {
@@ -51,6 +57,11 @@ public class RecepecionPeticionTest {
         servicioEscucha.start();
     }
     
+    /**
+     * Levanta al cliente para el test.
+     * @throws UnknownHostException
+     * @throws IOException
+     */
     @Before
     public void prepararCliente() throws UnknownHostException, IOException {
         socket = new Socket(host, puerto);
@@ -59,6 +70,10 @@ public class RecepecionPeticionTest {
         entrada = new BufferedReader(reader);
     }
     
+    /**
+     * Mata al cliente.
+     * @throws IOException
+     */
     @After
     public void cerrarCliente() throws IOException {
         entrada.close();
@@ -67,12 +82,23 @@ public class RecepecionPeticionTest {
         socket.close();
     }
     
+    /**
+     * Mata al servidor.
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @AfterClass
     public static void cerrarServidor() throws IOException, InterruptedException {
         servicioEscucha.cerrar();
         servicioEscucha.join();
     }
     
+    /**
+     * Intenta recibir una petición de pruebas, que solo devuelve un eco.
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws BrokenBarrierException
+     */
     @Test
     public void testRecepcionPeticion() throws IOException, InterruptedException, BrokenBarrierException {
         salida.write(Enviable.TEST);
@@ -89,6 +115,12 @@ public class RecepecionPeticionTest {
         assertTrue(ControladorTest.proceso(LINEA_ENVIO));
     }
 
+    /**
+     * Envía una petición desconocida y esperar un error por respuesta.
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws BrokenBarrierException
+     */
     @Test
     public void testRecepcionPeticionNoConocida() throws IOException, InterruptedException, BrokenBarrierException {
         final String LINEA_ENVIO = "testRecepcionPeticionNoConocida";

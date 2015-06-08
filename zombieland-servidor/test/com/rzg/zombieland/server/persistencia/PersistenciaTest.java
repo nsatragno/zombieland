@@ -15,25 +15,41 @@ import org.junit.Test;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.Jugador;
 
+/**
+ * Arnés básico para los tests de persistencia. Si se desea testear una nueva entidad, bastará con 
+ * crear un test que herede de este clase para testear CRUD en la DB. 
+ * @author nicolas
+ *
+ * @param <T> - El tipo de objeto que se testea.
+ * @param <T_ID> - El tipo de ID del objeto que se testea.
+ */
 public abstract class PersistenciaTest<T, T_ID extends Serializable> {
 
+    /**
+     * Constructor por defecto.
+     */
     public PersistenciaTest() {
         super();
     }
 
+    /**
+     * Configura Hibernate para test.
+     */
     @Before
     public void before() {
         HibernateSingleton.setTest();
     }
 
+    /**
+     * Cierra la conexión de Hibernate.
+     */
     @After
     public void after() {
         HibernateSingleton.cerrarConexion();
     }
     
     /**
-     * Genera un objeto con valores aleatorios para persistir como test.
-     * @return
+     * @return un objeto con valores aleatorios para persistir como test. 
      * @throws ZombielandException
      */
     protected abstract T generarObjeto() throws ZombielandException;
@@ -41,14 +57,12 @@ public abstract class PersistenciaTest<T, T_ID extends Serializable> {
     /**
      * Modifica valores del objeto aleatoriamente.
      * @param objeto
-     * @return 
      * @throws ZombielandException
      */
     protected abstract void actualizarObjeto(T objeto) throws ZombielandException;
     
     /**
-     * Devuelve el Dao correspondiente a este objeto.
-     * @return
+     * @return el Dao correspondiente a este objeto.
      */
     protected abstract Dao<T, T_ID> getDao();
     
@@ -59,9 +73,7 @@ public abstract class PersistenciaTest<T, T_ID extends Serializable> {
     protected abstract T_ID getIdObjeto(T objeto);
     
     /**
-     * Devuelve un jugador aleatorio.
-     * TODO mover a otro lado.
-     * @return
+     * @return un jugador aleatorio.
      * @throws ZombielandException 
      */
     protected Jugador generarJugador() throws ZombielandException {

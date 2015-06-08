@@ -60,7 +60,7 @@ public class HibernateSingleton {
     
     /**
      * Abre una sesión de Hibernate. ¡No olvides cerrarla!
-     * @return
+     * @return la sesión.
      */
     public Session openSession() {
         return sessionFactory.openSession();

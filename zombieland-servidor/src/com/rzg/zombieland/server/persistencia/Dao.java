@@ -8,6 +8,8 @@ import org.hibernate.Session;
 /**
  * Administra la persistencia de un objeto.
  * @author nicolas
+ * @param <T> El tipo de objeto que se persiste.
+ * @param <T_ID> El tipo del ID del objeto que se persiste.
  *
  */
 public abstract class Dao<T, T_ID extends Serializable> {
@@ -30,7 +32,7 @@ public abstract class Dao<T, T_ID extends Serializable> {
     
     /**
      * Devuelve una sesión de Hibernate, abriéndola si es necesario.
-     * @return
+     * @return la sesión de hibernate.
      */
     private Session getSession() {
         if (session == null) {
@@ -41,9 +43,8 @@ public abstract class Dao<T, T_ID extends Serializable> {
     }
     
     /**
-     * Devuelve un objeto según su ID.
      * @param id
-     * @return
+     * @return un objeto según su ID.
      */
     public T getObjeto(T_ID id) {
         return getSession().get(klass, id);
@@ -75,8 +76,7 @@ public abstract class Dao<T, T_ID extends Serializable> {
     }
 
     /**
-     * Devuelve un listado de objetos sin filtrar.
-     * @return
+     * @return un listado de objetos sin filtrar.
      */
     @SuppressWarnings("unchecked")
     public List<T> getListado() {

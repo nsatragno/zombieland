@@ -3,13 +3,13 @@ package com.rzg.zombieland.server.persistencia;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.Jugador;
 
+/**
+ * Test de persistencia para la entidad Jugador.
+ * @author nicolas
+ *
+ */
 public class JugadorTest extends PersistenciaTest<Jugador, String> {
 
-    /**
-     * Genera un jugador con parámetros aleatorios.
-     * @return
-     * @throws ZombielandException
-     */
     @Override
     protected Jugador generarObjeto() throws ZombielandException {
         return generarJugador();

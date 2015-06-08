@@ -25,7 +25,7 @@ public class Jugador {
      * iniciar sesión. 
      * @param nombre
      * @param clave
-     * @return
+     * @return el jugador, o null si los parámetros de inicio de sesión no son válidos.
      */
     public static Jugador iniciarSesion(String nombre, String clave) {
         // TODO implementar.
@@ -104,6 +104,11 @@ public class Jugador {
             throw new ZombielandException("Por favor, revise los campos indicados", errores);
     }
     
+    /**
+     * Crea un jugador a través del POJO que lo representa, validando todos sus atributos.
+     * @param registro
+     * @throws ZombielandException
+     */
     public Jugador(POJORegistro registro) throws ZombielandException {
         this(registro.getNombre(), registro.getClave(),
              registro.getClave(), registro.getPreguntaSecreta(),
@@ -138,19 +143,31 @@ public class Jugador {
                ranking == otro.ranking;
     }
 
+    /**
+     * @return el nombre del jugador.
+     */
     public String getNombre() {
         return nombre;
     }
     
+    /**
+     * @return la pregunta de seguridad que el jugador eligió al registrarse.
+     */
     public String getPreguntaSecreta() {
         return preguntaSecreta;
     }
     
-    
+    /**
+     * @return la respuesta de seguridad que el jugador eligió al registrarse.
+     */
     public String getRespuestaSecreta() {
         return respuestaSecreta;
     }
 
+    /**
+     * Establece la clave del jugador.
+     * @param clave
+     */
     public void setClave(String clave) {
         this.clave = clave;
     }

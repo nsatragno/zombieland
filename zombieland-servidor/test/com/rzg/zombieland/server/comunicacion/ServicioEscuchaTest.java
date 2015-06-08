@@ -18,6 +18,11 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  */
 public class ServicioEscuchaTest {
 
+    /**
+     * Intenta cerrar el hilo antes de que comience a escuchar.
+     * @throws ZombielandException
+     * @throws InterruptedException
+     */
     @Test
     public void testCerrarRapido() throws ZombielandException, InterruptedException {
         ServicioEscucha escucha = new ServicioEscucha();
@@ -28,6 +33,11 @@ public class ServicioEscuchaTest {
         assertFalse(escucha.isAlive());
     }
     
+    /**
+     * Cierra el hilo luego de que empiece a escuchar. 
+     * @throws ZombielandException
+     * @throws InterruptedException
+     */
     @Test
     public void testCerrarRetrasado() throws ZombielandException, InterruptedException {
         ServicioEscucha escucha = new ServicioEscucha();
@@ -39,6 +49,13 @@ public class ServicioEscuchaTest {
         assertFalse(escucha.isAlive());
     }
 
+    /**
+     * Intenta cerrar el hilo que se abre desde el servicio de escucha.
+     * @throws InterruptedException
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws ZombielandException
+     */
     @Test
     public void testCerrarHiloEscuchaDesdeServicioEscucha() throws InterruptedException, UnknownHostException, IOException, ZombielandException {
         ServicioEscucha servicio = new ServicioEscucha();

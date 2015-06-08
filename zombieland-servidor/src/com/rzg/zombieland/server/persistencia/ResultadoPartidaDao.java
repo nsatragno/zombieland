@@ -10,6 +10,9 @@ import com.rzg.zombieland.server.meta.ResultadoPartida;
  *
  */
 public class ResultadoPartidaDao extends Dao<ResultadoPartida, UUID> {
+    /**
+     * Crea un ResultadoPartidaDao.
+     */
     public ResultadoPartidaDao() {
         super(ResultadoPartida.class);
     }

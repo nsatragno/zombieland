@@ -59,6 +59,7 @@ public class Principal implements EscuchaLog {
 
 	/**
 	 * Launch the application.
+	 * @param args - argumentos de la aplicación.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

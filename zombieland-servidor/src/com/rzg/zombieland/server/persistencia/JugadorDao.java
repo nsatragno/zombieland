@@ -8,6 +8,9 @@ import com.rzg.zombieland.server.meta.Jugador;
  *
  */
 public class JugadorDao extends Dao<Jugador, String> {
+    /**
+     * Crea un JugadorDao.
+     */
     public JugadorDao() {
         super(Jugador.class);
     }
