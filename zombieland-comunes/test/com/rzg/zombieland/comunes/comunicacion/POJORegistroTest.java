@@ -2,9 +2,11 @@ package com.rzg.zombieland.comunes.comunicacion;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.gson.Gson;
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 
 public class POJORegistroTest {
 
@@ -15,8 +17,15 @@ public class POJORegistroTest {
             + "preguntaSecreta: 'nombre de mi madre',"
             + "respuestaSecreta: 'maria'"
            +"}";
-    private final POJORegistro registro = 
-            new POJORegistro("Juan", "1234", "nombre de mi madre", "maria");
+    private POJORegistro registro; 
+    
+    public POJORegistroTest()  {
+        try {
+            registro = new POJORegistro("Juan", "1234", "nombre de mi madre", "maria");
+        } catch (ParametrosNoValidosException e) {
+            Assert.fail();
+        }
+    }
     
     @Test
     public void testDeserializar() {

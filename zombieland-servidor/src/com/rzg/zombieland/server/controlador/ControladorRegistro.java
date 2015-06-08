@@ -21,9 +21,9 @@ public class ControladorRegistro extends Controlador {
             if (existente != null)
                 throw new ZombielandException("El usuario ya existe");
             dao.guardarObjeto(jugador);
-            return gson.toJson(new RespuestaRegistro(true));
+            return gson.toJson(new RespuestaRegistro());
         } catch (ZombielandException e) {
-            return gson.toJson(new RespuestaRegistro(false));
+            return gson.toJson(new RespuestaRegistro(e.getMessage()));
         } finally {
             dao.cerrarSesion();
         }

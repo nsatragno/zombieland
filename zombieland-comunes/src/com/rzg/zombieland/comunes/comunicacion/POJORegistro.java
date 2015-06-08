@@ -1,5 +1,10 @@
 package com.rzg.zombieland.comunes.comunicacion;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+
 
 
 /**
@@ -21,11 +26,27 @@ public class POJORegistro extends Enviable {
     public POJORegistro(String nombre,
                        String clave,
                        String preguntaSecreta,
-                       String respuestaSecreta) {
+                       String respuestaSecreta) throws ParametrosNoValidosException {
+        List<String> errores = new ArrayList<String>();
+        
+        if (nombre.isEmpty())
+            errores.add("El nombre no puede ser vacío");
         this.nombre = nombre;
+        
+        if (clave.isEmpty())
+            errores.add("La clave no puede ser vacía");
         this.clave = clave;
+        
+        if (preguntaSecreta.isEmpty())
+            errores.add("La pregunta secreta no puede ser vacía");
         this.preguntaSecreta = preguntaSecreta;
+        
+        if (respuestaSecreta.isEmpty())
+            errores.add("La respuesta secreta no puede ser vacía");
         this.respuestaSecreta = respuestaSecreta;
+        
+        if (errores.size() != 0)
+            throw new ParametrosNoValidosException("registro de jugador", errores);
     }
     
     public String getNombre() {

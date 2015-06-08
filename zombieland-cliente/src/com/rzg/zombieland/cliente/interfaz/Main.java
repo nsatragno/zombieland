@@ -13,6 +13,7 @@ import javax.swing.JPanel;
  */
 public class Main extends JFrame {
 
+    public static final String CONEXION = "conexion";
 	public static final String REGISTRO = "registro";
 	public static final String INICIO_SESION = "inicioSesion";
 	
@@ -52,6 +53,7 @@ public class Main extends JFrame {
 		JPanel contentPane = new JPanel();
 		cardLayout = new CardLayout();
 		contentPane.setLayout(cardLayout);
+		contentPane.add(new InterfazConexionServidor(), CONEXION);
 		contentPane.add(new InterfazInicioSesion(), INICIO_SESION);
 		contentPane.add(new InterfazRegistro(), REGISTRO);
 		setJMenuBar(new MenuZombieland());

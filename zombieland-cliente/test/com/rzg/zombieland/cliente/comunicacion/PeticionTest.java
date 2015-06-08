@@ -48,7 +48,7 @@ public class PeticionTest extends PeticionTestHarness {
     @Test
     public void testPeticionSimple() throws ZombielandException, InterruptedException, ExecutionException {
         ObjetoPeticionTest peticion = new ObjetoPeticionTest(MENSAJE_TEST);
-        hiloEscucha.enviarPeticion(peticion);
+        ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
         assertEquals(MENSAJE_TEST, peticion.getRespuesta().get());
         assertTrue(ControladorTest.proceso(MENSAJE_TEST));
     }
@@ -60,7 +60,7 @@ public class PeticionTest extends PeticionTestHarness {
         for (int i = 0; i < 1000; i++) {
             String mensaje = Integer.toString(random.nextInt());
             ObjetoPeticionTest peticion = new ObjetoPeticionTest(mensaje);
-            hiloEscucha.enviarPeticion(peticion);
+            ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
             peticion.getRespuesta().thenAccept(new Consumer<String>() {
                 public void accept(String mensajeRecibido) {
                     assertEquals(mensaje, mensajeRecibido);

@@ -87,7 +87,11 @@ public class HiloEscucha extends Thread {
                         Log.debug("Contenido:");
                         String contenido = in.readLine();
                         Log.debug(contenido);
-                        out.println(controlador.procesar(contenido));
+                        String respuesta = controlador.procesar(contenido);
+                        Log.debug("Respuesta:");
+                        Log.debug(respuesta);
+                        out.println(respuesta);
+                        out.flush();
                     }
                 } catch (ComandoDesconocidoException e) {
                     synchronized (this) {
