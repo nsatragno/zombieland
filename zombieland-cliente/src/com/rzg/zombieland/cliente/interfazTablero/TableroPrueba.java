@@ -222,6 +222,6 @@ public class TableroPrueba extends JFrame {
 		Image img = new ImageIcon(
 				TableroPrueba.class.getResource("/com/rzg/zombieland/"
 						+ "cliente/interfazTablero/poli.png")).getImage();
-		g.drawImage(img, x, y, 20, 20, null);
+		g.drawImage(img, x, y, tamañoCasilleros, tamañoCasilleros, null);
 	}
 }

@@ -1,7 +1,10 @@
 package com.rzg.zombieland.comunes.comunicacion;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+
+import org.jdeferred.Deferred;
+import org.jdeferred.Promise;
+import org.jdeferred.impl.DeferredObject;
 
 /**
  * Modela una petición realizada al servidor.
@@ -14,11 +17,11 @@ public abstract class Peticion<Respuesta> {
     private UUID id;
     
     // Promesa que se llena con la respuesta.
-    private CompletableFuture<Respuesta> promesa;
-    
+    private Deferred promesa;
+     
     public Peticion() {
         this.id = UUID.randomUUID();
-        promesa = new CompletableFuture<Respuesta>();
+        promesa = new DeferredObject();
     }
     /**
      * Devuelve el mensaje de una petición.
@@ -53,8 +56,8 @@ public abstract class Peticion<Respuesta> {
      * Devuelve la promesa de la respuesta.
      * @return
      */
-    public CompletableFuture<Respuesta> getRespuesta() {
-        return promesa;
+    public Promise getRespuesta() {
+        return promesa.promise();
     }
     
     /**
@@ -62,6 +65,6 @@ public abstract class Peticion<Respuesta> {
      * @param respuesta
      */
     public void procesarRespuesta(String respuesta) {
-        promesa.complete(generarRespuesta(respuesta));
+        promesa.resolve(generarRespuesta(respuesta));
     }
 }

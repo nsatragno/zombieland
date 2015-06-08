@@ -5,7 +5,6 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-import java.util.function.Consumer;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -16,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.PeticionRegistro;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
@@ -158,10 +159,11 @@ public class InterfazRegistro extends JPanel {
             PeticionRegistro peticion = new PeticionRegistro(pojoRegistro);
             ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
             imagenCargando.setVisible(true);
-            peticion.getRespuesta().thenAccept(new Consumer<RespuestaRegistro>() {
-                public void accept(RespuestaRegistro respuesta) {
-                    manejarRespuestaRegistro(respuesta);
-                };
+            peticion.getRespuesta().then(new DoneCallback<RespuestaRegistro>() {
+				@Override
+				public void onDone(RespuestaRegistro respuesta) {
+					manejarRespuestaRegistro(respuesta);
+				};
             });
         } catch (ParametrosNoValidosException e) {
             JOptionPane.showMessageDialog(getParent(), e.getMensaje(), "Registro Zombieland",

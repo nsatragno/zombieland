@@ -8,8 +8,8 @@ import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
+import org.jdeferred.DoneCallback;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
@@ -47,26 +47,36 @@ public class PeticionTest extends PeticionTestHarness {
 
     @Test
     public void testPeticionSimple() throws ZombielandException, InterruptedException, ExecutionException {
+    	final CountDownLatch latch = new CountDownLatch(1);
         ObjetoPeticionTest peticion = new ObjetoPeticionTest(MENSAJE_TEST);
         ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
-        assertEquals(MENSAJE_TEST, peticion.getRespuesta().get());
-        assertTrue(ControladorTest.proceso(MENSAJE_TEST));
+        peticion.getRespuesta().then(new DoneCallback<String>() {
+
+			@Override
+			public void onDone(String arg0) {
+				assertEquals(MENSAJE_TEST, arg0);
+				assertTrue(ControladorTest.proceso(MENSAJE_TEST));
+				latch.countDown();
+			}
+		});
+        latch.await(1, TimeUnit.SECONDS);
     }
     
     @Test
     public void testPeticionesFatiga() throws ZombielandException, InterruptedException, ExecutionException {
         Random random = new Random();
-        CountDownLatch latch = new CountDownLatch(1000);
+        final CountDownLatch latch = new CountDownLatch(1000);
         for (int i = 0; i < 1000; i++) {
-            String mensaje = Integer.toString(random.nextInt());
+            final String mensaje = Integer.toString(random.nextInt());
             ObjetoPeticionTest peticion = new ObjetoPeticionTest(mensaje);
             ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
-            peticion.getRespuesta().thenAccept(new Consumer<String>() {
-                public void accept(String mensajeRecibido) {
-                    assertEquals(mensaje, mensajeRecibido);
+            peticion.getRespuesta().then(new DoneCallback<String>() {
+				@Override
+				public void onDone(String mensajeRecibido) {
+					assertEquals(mensaje, mensajeRecibido);
                     latch.countDown();
-                }
-            });
+				}
+			});
         }
         latch.await(1, TimeUnit.SECONDS);
         if (latch.getCount() != 0)
