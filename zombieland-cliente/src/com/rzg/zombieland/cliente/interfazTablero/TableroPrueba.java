@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,8 +33,12 @@ public class TableroPrueba extends JFrame {
 	private JFrame frame;
 	private JTable table;
 	private JPanel contentPane;
-	private int x = 50;
-	private int y = 60;
+	private static int x = 40;
+	private static int y = 60;
+	private static int tamañoCasilleros = 20; // Es decir, casilleros de 20x20
+	// Nótese que este valor será util para definir el movimiento de los jugadores,
+	// el tamaño de la matriz y el tamaño de los avatars.
+	private int matrizTablero[][]; // Matriz que representará a los elementos del tablero.
 
 	/**
 	 * Launch the application.
@@ -69,23 +75,14 @@ public class TableroPrueba extends JFrame {
 		label.setIcon(new ImageIcon(
 				TableroPrueba.class
 						.getResource("/com/rzg/zombieland/cliente/interfazTablero/Pasto.png")));
-		label.setBounds(33, 25, 500, 490);
+		label.setBounds(25, 25, 510, 510);
 		getContentPane().add(label);
 
 		JButton button = new JButton("");
-		// button.addKeyListener(new KeyAdapter() {
-		// @Override
-		// public void keyPressed(KeyEvent e) {
-		// if (e.getKeyCode() == KeyEvent.VK_UP) {
-		// y -= 40;
-		// repaint();
-		// }
-		// }
-		// });
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (y - 40 > 50) {
-					y -= 40;
+				if (y - tamañoCasilleros >= 60) {
+					y -= tamañoCasilleros;
 					repaint();
 				}
 			}
@@ -98,11 +95,20 @@ public class TableroPrueba extends JFrame {
 		button.setBounds(640, 377, 45, 45);
 		getContentPane().add(button);
 
+//		addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				if (e.getKeyCode() == KeyEvent.VK_0) {
+//					button.doClick();
+//				}
+//			}
+//		});
+		
 		JButton button_1 = new JButton("");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (x - 40 > 40) {
-					x -= 40;
+				if (x - tamañoCasilleros >= 40) {
+					x -= tamañoCasilleros;
 					repaint();
 				}
 			}
@@ -111,7 +117,7 @@ public class TableroPrueba extends JFrame {
 		// @Override
 		// public void keyPressed(KeyEvent e) {
 		// if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-		// x -= 40;
+		// x -= tamañoCasilleros;
 		// repaint();
 		// }
 		// }
@@ -127,14 +133,14 @@ public class TableroPrueba extends JFrame {
 		// button_2.addKeyListener(new KeyAdapter() {
 		// @Override
 		// public void keyPressed(KeyEvent e) {
-		// x += 40;
+		// x += tamañoCasilleros;
 		// repaint();
 		// }
 		// });
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (x + 40 < 500) {
-					x += 40;
+				if (x + tamañoCasilleros <= 520) {
+					x += tamañoCasilleros;
 					repaint();
 				}
 			}
@@ -151,15 +157,15 @@ public class TableroPrueba extends JFrame {
 		// @Override
 		// public void keyPressed(KeyEvent e) {
 		// if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-		// y += 40;
+		// y += tamañoCasilleros;
 		// repaint();
 		// }
 		// }
 		// });
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (y + 40 < 520) {
-					y += 40;
+				if (y + tamañoCasilleros <= 550) {
+					y += tamañoCasilleros;
 					repaint();
 				}
 			}
@@ -204,14 +210,18 @@ public class TableroPrueba extends JFrame {
 		table.setBounds(0, 0, 193, 304);
 		panelJug.add(table.getTableHeader(), BorderLayout.NORTH);
 		panelJug.add(table, BorderLayout.CENTER);
+		
+		matrizTablero = new int [510/tamañoCasilleros][510/tamañoCasilleros];
 
 	}
+	
+	
 
 	public void paint(Graphics g) {
 		super.paint(g);
 		Image img = new ImageIcon(
 				TableroPrueba.class.getResource("/com/rzg/zombieland/"
 						+ "cliente/interfazTablero/poli.png")).getImage();
-		g.drawImage(img, x, y, 40, 40, null);
+		g.drawImage(img, x, y, 20, 20, null);
 	}
 }
