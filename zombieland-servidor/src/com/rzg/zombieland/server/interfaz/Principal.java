@@ -24,6 +24,7 @@ import com.rzg.zombieland.comunes.misc.EscuchaLog;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.ServicioEscucha;
+import com.rzg.zombieland.server.persistencia.HibernateSingleton;
 
 /**
  * Interfaz principal del servidor.
@@ -164,6 +165,8 @@ public class Principal implements EscuchaLog {
 	 * Arranca y detiene al servidor.
 	 */
 	private void toggleServidor() {
+	    // TODO borrar para producción!!!
+	    HibernateSingleton.setTest();
 		if (servicio == null) {
 			// Arrancamos el servidor.
 			try {
