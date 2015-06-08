@@ -8,6 +8,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.rzg.zombieland.cliente.interfazListadoDePartidas.InterfazListadoPartidas;
+
 /**
  * 
  */
@@ -16,8 +18,10 @@ public class Main extends JFrame {
     public static final String CONEXION = "conexion";
 	public static final String REGISTRO = "registro";
 	public static final String INICIO_SESION = "inicioSesion";
+	public static final String LISTADO_PARTIDAS = "listadoPartidas";
 	
 	private static final long serialVersionUID = -8977109460614792967L;
+	
 	private CardLayout cardLayout;
 
 	// El frame principal de la aplicación.
@@ -56,6 +60,7 @@ public class Main extends JFrame {
 		contentPane.add(new InterfazConexionServidor(), CONEXION);
 		contentPane.add(new InterfazInicioSesion(), INICIO_SESION);
 		contentPane.add(new InterfazRegistro(), REGISTRO);
+		contentPane.add(new InterfazListadoPartidas(), LISTADO_PARTIDAS);
 		setJMenuBar(new MenuZombieland());
 		setContentPane(contentPane);
 	}

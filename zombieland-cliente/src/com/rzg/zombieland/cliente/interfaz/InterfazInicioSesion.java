@@ -48,12 +48,7 @@ public class InterfazInicioSesion extends JPanel {
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Aquí se validarán los datos (Usuario - Contraseña)
-				// Si son correctos, se enviará al lobby de partidas.
-				// Si son incorrectos, se enviará un mensaje de error
-				// en lblError, y se incrementará en 1 el contador de 'intentos'.
-				// Si 'intentos' = 3, se tomarán las medidas propuestas
-				// de la pregunta y respuesta de seguridad.
+				Main.irA(Main.LISTADO_PARTIDAS);
 			}
 		});
 		btnIngresar.setBounds(184, 292, 175, 40);
