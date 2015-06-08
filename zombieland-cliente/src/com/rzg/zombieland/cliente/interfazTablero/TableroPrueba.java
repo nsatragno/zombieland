@@ -8,8 +8,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +20,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
+import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
+import com.rzg.zombieland.comunes.misc.Coordenada;
+
 /**
  * Interfaz de tablero.
  * 
@@ -30,15 +32,16 @@ import javax.swing.table.DefaultTableModel;
 
 public class TableroPrueba extends JFrame {
 
+	private static ProyeccionTablero proyeccion = new ProyeccionTablero();
 	private JFrame frame;
 	private JTable table;
 	private JPanel contentPane;
 	private static int x = 40;
 	private static int y = 60;
-	private static int tamañoCasilleros = 20; // Es decir, casilleros de 20x20
+	private static int tamañoCasilleros = 40; // Es decir, casilleros de 20x20
 	// Nótese que este valor será util para definir el movimiento de los jugadores,
 	// el tamaño de la matriz y el tamaño de los avatars.
-	private int matrizTablero[][]; // Matriz que representará a los elementos del tablero.
+	private POJOEntidad matrizTablero[][]; // Matriz que representará a los elementos del tablero.
 
 	/**
 	 * Launch the application.
@@ -75,14 +78,21 @@ public class TableroPrueba extends JFrame {
 		label.setIcon(new ImageIcon(
 				TableroPrueba.class
 						.getResource("/com/rzg/zombieland/cliente/interfazTablero/Pasto.png")));
-		label.setBounds(25, 25, 510, 510);
+		label.setBounds(25, 25, proyeccion.getAncho(), proyeccion.getLargo());
 		getContentPane().add(label);
-
+		
+		matrizTablero = 
+				new POJOEntidad [proyeccion.getAncho()/tamañoCasilleros][proyeccion.getLargo()/tamañoCasilleros];
+		matrizTablero[0][0] = proyeccion.new POJOEntidad("Player 1",proyeccion.getEsqSupIzq()); // Posicion inicial
+		
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (y - tamañoCasilleros >= 60) {
+				if (y - tamañoCasilleros >= proyeccion.getEsqSupIzq().getY()) {
+					matrizTablero[x/tamañoCasilleros - 1][y/tamañoCasilleros - 1] = null; //Java se encarga
 					y -= tamañoCasilleros;
+					matrizTablero[x/tamañoCasilleros - 1][y/tamañoCasilleros - 1] = 
+							proyeccion.new POJOEntidad("Player 1",new Coordenada(x,y));
 					repaint();
 				}
 			}
@@ -107,8 +117,11 @@ public class TableroPrueba extends JFrame {
 		JButton button_1 = new JButton("");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (x - tamañoCasilleros >= 40) {
+				if (x - tamañoCasilleros >= proyeccion.getEsqSupIzq().getX()) {
+					matrizTablero[x/tamañoCasilleros - 1][y/tamañoCasilleros - 1] = null;
 					x -= tamañoCasilleros;
+					matrizTablero[x/tamañoCasilleros - 1][y/tamañoCasilleros - 1] = 
+							proyeccion.new POJOEntidad("Player 1",new Coordenada(x,y));
 					repaint();
 				}
 			}
@@ -139,8 +152,11 @@ public class TableroPrueba extends JFrame {
 		// });
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (x + tamañoCasilleros <= 520) {
+				if (x + tamañoCasilleros <= proyeccion.getEsqInfDer().getX() - tamañoCasilleros) {
+					matrizTablero[x/tamañoCasilleros - 1][y/tamañoCasilleros - 1] = null;
 					x += tamañoCasilleros;
+					matrizTablero[x/tamañoCasilleros - 1][y/tamañoCasilleros - 1] = 
+							proyeccion.new POJOEntidad("Player 1",new Coordenada(x,y));
 					repaint();
 				}
 			}
@@ -164,8 +180,11 @@ public class TableroPrueba extends JFrame {
 		// });
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (y + tamañoCasilleros <= 550) {
+				if (y + tamañoCasilleros <= proyeccion.getEsqInfDer().getY() - tamañoCasilleros) {
+					matrizTablero[x/tamañoCasilleros - 1][y/tamañoCasilleros - 1] = null;
 					y += tamañoCasilleros;
+					matrizTablero[x/tamañoCasilleros - 1][y/tamañoCasilleros - 1] = 
+							proyeccion.new POJOEntidad("Player 1",new Coordenada(x,y));
 					repaint();
 				}
 			}
@@ -210,14 +229,11 @@ public class TableroPrueba extends JFrame {
 		table.setBounds(0, 0, 193, 304);
 		panelJug.add(table.getTableHeader(), BorderLayout.NORTH);
 		panelJug.add(table, BorderLayout.CENTER);
-		
-		matrizTablero = new int [510/tamañoCasilleros][510/tamañoCasilleros];
 
 	}
 	
-	
-
-	public void paint(Graphics g) {
+	public void paint(Graphics g)  // SE ENCARGA DE DIBUJAR LA PROYECCION. LLAMAR AL METODO PAINTPROYECCION.
+	{
 		super.paint(g);
 		Image img = new ImageIcon(
 				TableroPrueba.class.getResource("/com/rzg/zombieland/"
