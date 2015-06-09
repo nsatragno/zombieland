@@ -1,5 +1,8 @@
 package com.rzg.zombieland.comunes.comunicacion;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.List;
 
 import com.rzg.zombieland.comunes.misc.Coordenada;
@@ -33,8 +36,11 @@ public class ProyeccionTablero extends Enviable // Hacer constructor.
 			this.etiqueta = etiqueta;
 			this.coordenada = coordenada;
 		}
+		public Coordenada getCoordenada(){
+			return coordenada;
+		}
 	}
-
+	
 	// Tamaño total del tablero - Ancho de la matriz
 	private int ancho;
 	private int largo;
@@ -46,6 +52,19 @@ public class ProyeccionTablero extends Enviable // Hacer constructor.
 	// Entidades visibles del tablero.
 	private List<POJOEntidad> entidades;
 
+	public ProyeccionTablero() {
+		
+	}
+	
+	public ProyeccionTablero(int ancho, int largo, Coordenada esquinaSuperiorIzquierda, 
+			Coordenada esquinaInferiorDerecha, List<POJOEntidad> entidades) {
+		this.ancho = ancho;
+		this.largo = largo;
+		this.esquinaInferiorDerecha = esquinaInferiorDerecha;
+		this.esquinaSuperiorIzquierda = esquinaSuperiorIzquierda;
+		this.entidades = entidades;
+	}
+	
 	public int getAncho()
 	{
 		return ancho;
@@ -58,12 +77,32 @@ public class ProyeccionTablero extends Enviable // Hacer constructor.
 
 	public Coordenada getEsqSupIzq()
 	{
-		// TODO Auto-generated method stub
 		return esquinaSuperiorIzquierda;
 	}
 	public Coordenada getEsqInfDer()
 	{
-		// TODO Auto-generated method stub
 		return esquinaInferiorDerecha;
+	}
+	public List<POJOEntidad> getEntidades() {
+		return entidades;
+	}
+
+	public void paint(Graphics g,Image img,int tamañoCasilleros) {
+		for (POJOEntidad entidad : entidades) {
+			g.drawImage(img, entidad.getCoordenada().getX(), entidad
+					.getCoordenada().getY(), tamañoCasilleros,
+					tamañoCasilleros, null);
+		}
+		// La famosa 'Proyeccion'
+		g.setColor(Color.BLACK);
+		// Son 4 rectangulos. Uno arriba, uno abajo y 2 a cada lado.
+		g.fillRect(35,55,ancho,esquinaSuperiorIzquierda.getY() - 55);
+		g.fillRect(35,esquinaInferiorDerecha.getY(),ancho,555 - esquinaInferiorDerecha.getY());
+		g.fillRect(35,esquinaSuperiorIzquierda.getY(),
+				esquinaSuperiorIzquierda.getX() - 35,
+				esquinaInferiorDerecha.getY() - esquinaSuperiorIzquierda.getY());
+		g.fillRect(esquinaInferiorDerecha.getX(),esquinaSuperiorIzquierda.getY(), 
+				533 - esquinaSuperiorIzquierda.getX() - (esquinaInferiorDerecha.getX() - esquinaSuperiorIzquierda.getX()),
+				esquinaInferiorDerecha.getY() - esquinaSuperiorIzquierda.getY());
 	}
 }
