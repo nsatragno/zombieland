@@ -1,6 +1,7 @@
 package com.rzg.zombieland.cliente.interfazRankingGeneral;
 
 import java.awt.EventQueue;
+
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -16,8 +17,17 @@ import javax.swing.JTabbedPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * 
+ * @author Nicolas L
+ *
+ */
 public class InterfazRankingGeneral extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8691556315140111325L;
 	private JPanel contentPane;
 
 	/**
