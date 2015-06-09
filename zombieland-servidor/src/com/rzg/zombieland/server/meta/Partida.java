@@ -3,6 +3,8 @@ package com.rzg.zombieland.server.meta;
 import java.util.List;
 import java.util.UUID;
 
+import com.rzg.zombieland.server.sesion.Jugador;
+
 /**
  * Define una partida. La partida empieza cuando es creada por un jugador y termina cuando el
  * último jugador es convertido en zombie.

@@ -20,8 +20,8 @@ import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.PeticionRegistro;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
-import com.rzg.zombieland.comunes.comunicacion.POJORegistro;
-import com.rzg.zombieland.comunes.comunicacion.RespuestaRegistro;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaRegistro;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 

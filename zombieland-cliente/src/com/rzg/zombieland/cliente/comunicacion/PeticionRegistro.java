@@ -2,9 +2,9 @@ package com.rzg.zombieland.cliente.comunicacion;
 
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
-import com.rzg.zombieland.comunes.comunicacion.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
-import com.rzg.zombieland.comunes.comunicacion.RespuestaRegistro;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaRegistro;
 
 /**
  * Modela una petición de registro de nuevo jugador.

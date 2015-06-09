@@ -4,8 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.rzg.zombieland.server.meta.Jugador;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Maneja una sesión de Hibernate.

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.rzg.zombieland.server.sesion.Jugador;
+
 /**
  * Almacena el resultado de una partida para un solo jugador con fin de registrar estadísticas.
  * @author nicolas

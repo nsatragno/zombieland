@@ -1,6 +1,6 @@
 package com.rzg.zombieland.server.persistencia;
 
-import com.rzg.zombieland.server.meta.Jugador;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Administra la persistencia de un jugador.

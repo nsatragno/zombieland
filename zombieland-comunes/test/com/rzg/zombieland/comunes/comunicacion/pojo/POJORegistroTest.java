@@ -1,4 +1,4 @@
-package com.rzg.zombieland.comunes.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion.pojo;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,8 +6,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.gson.Gson;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 
+/**
+ * Verifica el funcionamiento del POJO de registro.
+ * @author nicolas
+ *
+ */
 public class POJORegistroTest {
 
     private final String jsonRegistro = 
@@ -19,6 +25,9 @@ public class POJORegistroTest {
            +"}";
     private POJORegistro registro; 
     
+    /**
+     * Crea un POJORegistro para usar en todos los tests.
+     */
     public POJORegistroTest()  {
         try {
             registro = new POJORegistro("Juan", "1234", "nombre de mi madre", "maria");
@@ -27,6 +36,9 @@ public class POJORegistroTest {
         }
     }
     
+    /**
+     * Prueba deserealizar un pojo de registro.
+     */
     @Test
     public void testDeserializar() {
         Gson gson = new Gson();
@@ -34,6 +46,9 @@ public class POJORegistroTest {
         assertEquals(registroDeserializado, registro);
     }
     
+    /**
+     * Prueba serializar un pojo de registro.
+     */
     @Test
     public void testSerializar() {
         Gson gson = new Gson();
