@@ -13,10 +13,10 @@ import com.rzg.zombieland.comunes.controlador.ControladorTest;
  */
 public class ControladorServidorFactory implements ControladorFactory {
     /**
-     * Devuelve un controlador de acuerdo a la línea leída. 
      * @param linea
-     * @return
-     * @throws ComandoDesconocidoException 
+     * @return un controlador de acuerdo a la línea leída.
+     * @throws ComandoDesconocidoException si el código no se corresponde con ningún controlador
+     *         existente.
      */
     @Override
     public Controlador crear(int codigo) throws ComandoDesconocidoException {
@@ -25,6 +25,8 @@ public class ControladorServidorFactory implements ControladorFactory {
             return new ControladorTest();
         case Enviable.REGISTRAR_JUGADOR:
             return new ControladorRegistro();
+        case Enviable.INICIAR_SESION:
+            return new ControladorInicioSesion();
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

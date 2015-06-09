@@ -20,6 +20,13 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  */
 public class HiloEscuchaTest {
 
+    /**
+     * Intenta cerrar un hilo de escucha y verifica que haga el join efectivamente.
+     * @throws InterruptedException
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws ZombielandException
+     */
     @Test
     public void testCerrar() throws InterruptedException, UnknownHostException, IOException, ZombielandException {
         ServerSocket serverSocket = new ServerSocket(2048);

@@ -1,8 +1,9 @@
-package com.rzg.zombieland.comunes.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 
 
@@ -23,6 +24,14 @@ public class POJORegistro extends Enviable {
     private String preguntaSecreta;
     private String respuestaSecreta;
     
+    /**
+     * Constructor por atributos.
+     * @param nombre - el nombre del jugador que se registra.
+     * @param clave - la clave del jugador que se registra.
+     * @param preguntaSecreta - pregunta de seguridad.
+     * @param respuestaSecreta - respuesta de seguridad
+     * @throws ParametrosNoValidosException si alguno de los datos falta.
+     */
     public POJORegistro(String nombre,
                        String clave,
                        String preguntaSecreta,
@@ -49,18 +58,30 @@ public class POJORegistro extends Enviable {
             throw new ParametrosNoValidosException("registro de jugador", errores);
     }
     
+    /**
+     * @return el nombre del jugador.
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * @return la clave del jugador, ¡no el hash!
+     */
     public String getClave() {
         return clave;
     }
 
+    /**
+     * @return la pregunta secreta elegida.
+     */
     public String getPreguntaSecreta() {
         return preguntaSecreta;
     }
 
+    /**
+     * @return la respuesta secreta elegida.
+     */
     public String getRespuestaSecreta() {
         return respuestaSecreta;
     }

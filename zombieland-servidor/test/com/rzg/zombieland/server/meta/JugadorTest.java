@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Tests para el modelo de jugador.

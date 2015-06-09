@@ -31,6 +31,9 @@ public class ParametrosNoValidosException extends Exception {
         Log.info(getMensaje());
     }
     
+    /**
+     * @return un mensaje amigable para el usuario del error.
+     */
     public String getMensaje() {
         StringBuilder mensaje = new StringBuilder("Parámetros no válidos para ");
         mensaje.append(nombreObjeto);
@@ -40,5 +43,12 @@ public class ParametrosNoValidosException extends Exception {
             mensaje.append("\n");
         }
         return mensaje.toString();
+    }
+    
+    /**
+     * @return la cantidad de parámetros no válidos. 
+     */
+    public int getCantidadParametros() {
+        return parametros.size();
     }
 }

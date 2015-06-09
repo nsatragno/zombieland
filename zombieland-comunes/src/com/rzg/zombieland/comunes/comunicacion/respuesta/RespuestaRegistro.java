@@ -1,4 +1,4 @@
-package com.rzg.zombieland.comunes.comunicacion;
+package com.rzg.zombieland.comunes.comunicacion.respuesta;
 
 /**
  * Representa la respuesta de una petición de registro.
@@ -27,10 +27,16 @@ public class RespuestaRegistro {
         this.mensajeError = mensajeError;
     }
     
+    /**
+     * @return true si la petición fue exitosa, false de lo contrario.
+     */
     public boolean fuePeticionExitosa() {
         return peticionExitosa;
     }
     
+    /**
+     * @return el mensaje de error, si existe.
+     */
     public String getMensajeError() {
         return mensajeError;
     }

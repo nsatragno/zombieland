@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.meta.Jugador;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Arnés básico para los tests de persistencia. Si se desea testear una nueva entidad, bastará con 

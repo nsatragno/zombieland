@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.meta;
+package com.rzg.zombieland.server.sesion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.rzg.zombieland.comunes.comunicacion.POJORegistro;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.meta.ResultadoPartida;
 
 /**
  * Modela al usuario del cliente de Zombieland.

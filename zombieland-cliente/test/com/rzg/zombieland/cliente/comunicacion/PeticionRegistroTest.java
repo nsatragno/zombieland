@@ -9,12 +9,12 @@ import java.util.concurrent.TimeUnit;
 import org.jdeferred.DoneCallback;
 import org.junit.Test;
 
-import com.rzg.zombieland.comunes.comunicacion.POJORegistro;
-import com.rzg.zombieland.comunes.comunicacion.RespuestaRegistro;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaRegistro;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.meta.Jugador;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 public class PeticionRegistroTest extends PeticionTestHarness {
     

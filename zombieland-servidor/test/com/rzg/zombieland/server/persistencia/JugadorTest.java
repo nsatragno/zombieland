@@ -1,7 +1,7 @@
 package com.rzg.zombieland.server.persistencia;
 
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.meta.Jugador;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Test de persistencia para la entidad Jugador.

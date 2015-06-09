@@ -1,12 +1,12 @@
 package com.rzg.zombieland.server.controlador;
 
 import com.google.gson.Gson;
-import com.rzg.zombieland.comunes.comunicacion.POJORegistro;
-import com.rzg.zombieland.comunes.comunicacion.RespuestaRegistro;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaRegistro;
 import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.meta.Jugador;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Controla el registro de usuario. 

@@ -4,8 +4,8 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.meta.Jugador;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Tests de persistencia de ResultadoPartida.
