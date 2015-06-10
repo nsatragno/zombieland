@@ -55,7 +55,7 @@ public class TableroPrueba extends JFrame {
 	private POJOEntidad matrizTablero[][]; // Matriz que representará a los
 											// elementos del tablero.
 
-	private Image img; // Avatar
+	private Image[] img; // Avatares
 
 	/**
 	 * Launch the application.
@@ -78,6 +78,7 @@ public class TableroPrueba extends JFrame {
 	 */
 
 	public TableroPrueba() {
+		setTitle("Zombieland - Tablero de Juego");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -86,10 +87,12 @@ public class TableroPrueba extends JFrame {
 		contentPane.setLayout(null);
 		setBounds(100, 100, 800, 600);
 
-		img = new ImageIcon(
-				TableroPrueba.class.getResource("/com/rzg/zombieland/"
-						+ "cliente/interfazTablero/poli.png")).getImage();
+		img = new Image[4];
+		for(int i = 0; i < 4; i++) {
+		img[i] = new ImageIcon(TableroPrueba.class.getResource("/com/rzg/zombieland/"
+							  + "cliente/interfazTablero/avatar" + (i+1) + ".png")).getImage();
 
+		}
 		JLabel label = new JLabel("");
 		label.setBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK,
 				Color.BLACK, Color.BLACK, Color.BLACK));
@@ -256,22 +259,36 @@ public class TableroPrueba extends JFrame {
 		table.setBounds(0, 0, 193, 304);
 		panelJug.add(table.getTableHeader(), BorderLayout.NORTH);
 		panelJug.add(table, BorderLayout.CENTER);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon(TableroPrueba.class.getResource("/com/rzg/zombieland/cliente/interfazTablero/fondo.png")));
+		label_1.setForeground(Color.BLACK);
+		label_1.setBackground(Color.BLACK);
+		label_1.setBounds(25, 11, 500, 15);
+		contentPane.add(label_1);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setIcon(new ImageIcon(TableroPrueba.class.getResource("/com/rzg/zombieland/cliente/interfazTablero/fondo.png")));
+		label_2.setBackground(Color.BLACK);
+		label_2.setBounds(25, 524, 500, 15);
+		contentPane.add(label_2);
 
 	}
 
 	public void paint(Graphics g) {
 		super.paint(g);
 		java.util.List<POJOEntidad> entidades = new ArrayList<POJOEntidad>();
-		for (int i = 0; i < 3; i++) // Creo 3 entidades de prueba para la lista.
+		for (int i = 0; i < 4; i++) // Creo 4 entidades de prueba para la lista.
 		{
 			entidades.add(proyeccion.new POJOEntidad("Player" + i,
-					new Coordenada(tamañoCasilleros + tamañoCasilleros * 5 * i,
-							80 + tamañoCasilleros * 5 * i)));
+					new Coordenada(ESQUINA_SUP_IZQUIERDA.getX() + 5 + tamañoCasilleros * i * 2,
+							ESQUINA_SUP_IZQUIERDA.getY() + 5 + tamañoCasilleros * i * 2)
+							,img [i]));
 		}
 		// Acá voy sacando las coordenadas de los personajes para, en funcion de
 		// ellas calcular el rectangulo (proyeccion) a su alrededor.
 		// PARA VER LAS PROYECCIONES DE LOS 3 PERSONAJES CAMBIAR EL INDICE DEL GET ( 0 - 1 - 2 )
-		Coordenada aux = entidades.get(0).getCoordenada();
+		Coordenada aux = entidades.get(2).getCoordenada();
 		// Uso el operador ternario para no salirme del tablero.
 		Coordenada esquinaSupIzq = new Coordenada(
 				aux.getX() - 2 * tamañoCasilleros < 35 ? 35 : aux.getX()
@@ -284,8 +301,9 @@ public class TableroPrueba extends JFrame {
 				aux.getY() + 3 * tamañoCasilleros > 555 ? 555 : aux.getY() + 3
 						* tamañoCasilleros);
 		// Creo un objeto proyeccion de prueba, y luego llamo al método paint.
-		ProyeccionTablero proyeccionPrueba = new ProyeccionTablero(498, 498,
+		ProyeccionTablero proyeccionPrueba = new ProyeccionTablero(DIMENSION - 2, DIMENSION - 2,
 				esquinaSupIzq, esquinaInfDer, entidades);
-		proyeccionPrueba.paint(g, img, tamañoCasilleros);
+		proyeccionPrueba.paint(g, img, tamañoCasilleros,
+							   ESQUINA_SUP_IZQUIERDA,ESQUINA_INF_DERECHA);
 	}
 }
