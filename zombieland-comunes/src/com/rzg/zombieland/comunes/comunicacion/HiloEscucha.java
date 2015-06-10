@@ -59,8 +59,8 @@ public class HiloEscucha extends Thread {
         // https://bugs.eclipse.org/bugs/show_bug.cgi?id=371614
         try (@SuppressWarnings("resource")
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            @SuppressWarnings("resource")
-            // Obtengo un reader de entrada.
+             @SuppressWarnings("resource")
+             // Obtengo un reader de entrada.
              BufferedReader in = new BufferedReader(new InputStreamReader(
                  socket.getInputStream()))) {
             while (corriendo) {
@@ -74,25 +74,25 @@ public class HiloEscucha extends Thread {
                     Log.debug("Cerrando hilo escucha: llegó el -1");
                     return;
                 }
-                
+                // Este bloque es sincronizado para que si otro hilo intenta enviar una
+                // respuesta sobre esta instancia de escucha mientras nosotros estamos
+                // escribiendo en el socket, los mensajes no se intercalen y rompan el
+                // protocolo.                
                 try {
-                    // Si el servidor envía una respuesta, resolvemos la petición que teníamos
-                    // relacionada. Primero buscamos la buscamos en el mapa de peticiones de
-                    // acuerdo al ID que nos envió el otro extremo, luego la quitamos y le enviamos
-                    // la respuesta para que la procese.
-                    if (codigo == Enviable.RESPUESTA) {
-                        mapaPeticiones.remove(UUID.fromString(in.readLine())).
-                            procesarRespuesta(in.readLine());
-                        continue;
-                    }
-                    // Si llegamos acá, la petición no viene de una respuesta. Obtenemos el ID
-                    // generado por el cliente de la petición para que la pueda identificar.
-                    String uuid = in.readLine();
-                    // Este bloque es sincronizado para que si otro hilo intenta enviar una
-                    // respuesta sobre esta instancia de escucha mientras nosotros estamos
-                    // escribiendo en el socket, los mensajes no se intercalen y rompan el
-                    // protocolo.
                     synchronized (this) {
+                        // Si el servidor envía una respuesta, resolvemos la petición que teníamos
+                        // relacionada. Primero buscamos la buscamos en el mapa de peticiones de
+                        // acuerdo al ID que nos envió el otro extremo, luego la quitamos y le enviamos
+                        // la respuesta para que la procese.
+                        if (codigo == Enviable.RESPUESTA) {
+                            mapaPeticiones.remove(UUID.fromString(in.readLine())).
+                                procesarRespuesta(in.readLine());
+                            continue;
+                        }
+                        // Si llegamos acá, la petición no viene de una respuesta. Obtenemos el ID
+                        // generado por el cliente de la petición para que la pueda identificar.
+                        String uuid = in.readLine();
+                        
                         // En esta sección se puede ver el protocolo de envío de respuestas.
                         // Escribimos el código de las respuestas para que el cliente pueda
                         // identificar el mensaje apropiadamente.

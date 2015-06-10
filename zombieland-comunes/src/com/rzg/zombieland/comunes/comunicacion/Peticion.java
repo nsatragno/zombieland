@@ -10,6 +10,7 @@ import org.jdeferred.impl.DeferredObject;
  * Modela una petición realizada al servidor.
  * 
  * @author nicolas
+ * @param <Respuesta> el tipo de objeto respuesta de la petición.
  *
  */
 public abstract class Peticion<Respuesta> {
@@ -17,46 +18,44 @@ public abstract class Peticion<Respuesta> {
     private UUID id;
     
     // Promesa que se llena con la respuesta.
-    private Deferred promesa;
+    private Deferred<Respuesta, Object, Respuesta> promesa;
      
+    /**
+     * Construye la petición asingándole un ID aleatorio y creando la promsa.
+     */
     public Peticion() {
         this.id = UUID.randomUUID();
-        promesa = new DeferredObject();
+        promesa = new DeferredObject<Respuesta, Object, Respuesta>();
     }
     /**
-     * Devuelve el mensaje de una petición.
-     * 
-     * @return
+     * @return el mensaje de una petición.
      */
     protected abstract String getMensajePeticion();
 
     /**
-     * Devuelve el código de la petición.
-     * 
-     * @return
+     * @return el código de la petición.
      */
     protected abstract int getCodigoPeticion();
 
     /**
-     * Procesa una respuesta y devuelve un producto para su consumo.
+     * Procesa una respuesta. 
      * 
      * @param respuesta
-     * @return
+     * @return el resultado de procesar la respuesta.
      */
     protected abstract Respuesta generarRespuesta(String respuesta);
     
     /**
-     * Devuelve un ID único de petición.
+     * @return un ID único de petición.
      */
     public UUID getID() {
         return id;
     }
     
     /**
-     * Devuelve la promesa de la respuesta.
-     * @return
+     * @return la promesa de la respuesta.
      */
-    public Promise getRespuesta() {
+    public Promise<Respuesta, Object, Respuesta> getRespuesta() {
         return promesa.promise();
     }
     
