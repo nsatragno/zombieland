@@ -1,5 +1,9 @@
 package com.rzg.zombieland.cliente.interfaz;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -7,14 +11,13 @@ import javax.swing.JMenuItem;
 import com.rzg.zombieland.cliente.interfazCambioDatosUsuario.InterfazCambioDeDatosUsuario;
 import com.rzg.zombieland.cliente.interfazEstadisticaJugador.InterfazEstadisticaJugador;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-
 public class MenuZombieland extends JMenuBar {
 	private static final long serialVersionUID = -2766617470499185657L;
 
+	// Interfaces secundarias.
+	private InterfazEstadisticaJugador estadisticas;
+    private InterfazCambioDeDatosUsuario cambioDatos;
+	
 	public MenuZombieland() {
 
 		JMenu mnArchivo = new JMenu("Archivo");
@@ -70,17 +73,11 @@ public class MenuZombieland extends JMenuBar {
 
 		final JMenuItem mntmDatos = new JMenuItem("Datos");
 		mntmDatos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				InterfazCambioDeDatosUsuario CambioDatos = new InterfazCambioDeDatosUsuario();
-				CambioDatos.addWindowListener(new WindowCloseListener() {
 
-					@Override
-					public void windowClosed(WindowEvent e) {
-						mntmDatos.setEnabled(true);
-					}
-				});
-				mntmDatos.setEnabled(false);
-				CambioDatos.setVisible(true);
+            public void actionPerformed(ActionEvent e) {
+                if (cambioDatos == null)
+                    cambioDatos = new InterfazCambioDeDatosUsuario();
+				cambioDatos.setVisible(true);
 			}
 
 		});
@@ -88,17 +85,11 @@ public class MenuZombieland extends JMenuBar {
 
 		final JMenuItem mntmEstadsticas = new JMenuItem("Estad\u00EDsticas");
 		mntmEstadsticas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				InterfazEstadisticaJugador Estadisticas = new InterfazEstadisticaJugador();
-				Estadisticas.addWindowListener(new WindowCloseListener() {
-
-					@Override
-					public void windowClosed(WindowEvent e) {
-						mntmDatos.setEnabled(true);
-					}
-				});
-				mntmEstadsticas.setEnabled(false);
-				Estadisticas.setVisible(true);
+            public void actionPerformed(ActionEvent e) {
+				if (estadisticas == null)
+				    estadisticas = new InterfazEstadisticaJugador();
+				estadisticas.actualizar();
+				estadisticas.setVisible(true);
 			}
 
 		});

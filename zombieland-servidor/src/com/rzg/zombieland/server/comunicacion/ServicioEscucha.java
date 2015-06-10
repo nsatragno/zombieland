@@ -88,6 +88,9 @@ public class ServicioEscucha extends Thread {
         }
     }
 
+    /**
+     * Cierra al servicio de escucha, limpiando todos los recursos que adquirió.
+     */
     public void cerrar() {
     	Log.info("Cerrando servidor");
         corriendo = false;

@@ -23,6 +23,10 @@ public abstract class Personaje extends EntidadTablero {
     // Tablero en el que el personaje está inscrito.
     private Tablero tablero;
     
+    /**
+     * Establece el siguiente movimiento del personaje.
+     * @param siguienteMovimiento - el siguiente movimiento.
+     */
     public void setSiguienteMovimiento(Movimiento siguienteMovimiento) {
         this.siguienteMovimiento = siguienteMovimiento;
     }

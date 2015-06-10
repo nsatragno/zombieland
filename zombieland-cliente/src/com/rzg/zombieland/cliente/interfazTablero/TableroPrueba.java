@@ -288,7 +288,7 @@ public class TableroPrueba extends JFrame {
 		// Acá voy sacando las coordenadas de los personajes para, en funcion de
 		// ellas calcular el rectangulo (proyeccion) a su alrededor.
 		// PARA VER LAS PROYECCIONES DE LOS 3 PERSONAJES CAMBIAR EL INDICE DEL GET ( 0 - 1 - 2 )
-		Coordenada aux = entidades.get(2).getCoordenada();
+		Coordenada aux = entidades.get(1).getCoordenada();
 		// Uso el operador ternario para no salirme del tablero.
 		Coordenada esquinaSupIzq = new Coordenada(
 				aux.getX() - 2 * tamañoCasilleros < 35 ? 35 : aux.getX()

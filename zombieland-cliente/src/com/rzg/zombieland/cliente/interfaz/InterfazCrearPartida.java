@@ -115,7 +115,7 @@ public class InterfazCrearPartida extends JPanel
 		add(label);
 		
 		JLabel lblFondo = new JLabel("");
-		lblFondo.setIcon(new ImageIcon(InterfazCrearPartida.class.getResource("/com/rzg/zombieland/cliente/Interfaz/zombie-fondo.png")));
+		lblFondo.setIcon(new ImageIcon("/imagenes/zombie-fondo.png"));
 		lblFondo.setBounds(0, 0, 944, 574);
 		add(lblFondo);
 	}

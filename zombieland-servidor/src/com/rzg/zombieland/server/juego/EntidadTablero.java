@@ -18,9 +18,13 @@ public abstract class EntidadTablero {
     
     /**
      * Hace colisionar esta entidad con otra, posiblemente afectándolas.
+     * @param entidad la entidad con la que se está colisionando.
      */
     public abstract void colisionar(EntidadTablero entidad);
     
+    /**
+     * @return la posición actual en el tablero de la entidad.
+     */
     public Coordenada getPosicion() {
         return posicion;
     }

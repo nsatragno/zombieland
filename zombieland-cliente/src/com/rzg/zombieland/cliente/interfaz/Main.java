@@ -6,20 +6,51 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.rzg.zombieland.cliente.interfazRankingGeneral.InterfazRankingGeneral;
+
 /**
  * 
  */
 public class Main extends JFrame {
 
+    /**
+     * Pantalla en la que se establece la conexión con el servidor.
+     */
     public static final String CONEXION = "conexion";
+    
+	/**
+	 * Pantalla de registro de jugador. 
+	 */
 	public static final String REGISTRO = "registro";
-	public static final String INICIO_SESION = "inicioSesion";
-	public static final String LISTADO_PARTIDAS = "listadoPartidas";
-	public static final String LOBBY = "lobby";
-	private static final long serialVersionUID = -8977109460614792967L;
-	public static final String CREAR_PARTIDA = "crearPartida";
-
 	
+	/**
+	 * Pantalla de inicio de sesión.
+	 */
+	public static final String INICIO_SESION = "inicioSesion";
+	
+	/**
+	 * Pantalla de listado de partidas.
+	 */
+	public static final String LISTADO_PARTIDAS = "listadoPartidas";
+	
+	/**
+	 * Pantalla en la que los jugadores esperan que inicie la partida.
+	 */
+	public static final String LOBBY = "lobby";
+	
+	/**
+	 * Pantalla de creación de nueva partida.
+	 */
+	public static final String CREAR_PARTIDA = "crearPartida";
+	
+	/**
+     * Pantalla de ranking del top de jugadores.
+     */
+    public static final String RANKING_GENERAL = "rankingGeneral";
+	
+    private static final long serialVersionUID = -8977109460614792967L;
+	
+    // Mantiene todas las pantallas del workflow principal en la misma ventana.
 	private CardLayout cardLayout;
 
 	// El frame principal de la aplicación.
@@ -27,6 +58,7 @@ public class Main extends JFrame {
 	
 	/**
 	 * Launch the application.
+	 * @param args 
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -40,7 +72,11 @@ public class Main extends JFrame {
 			}
 		});
 	}
-	
+
+	/**
+	 * Navega a la pantalla dada.
+	 * @param pantalla - obtener a partir de las constantes definidas en esta clase.
+	 */
 	public static void irA(String pantalla) {
 		frame.cardLayout.show(frame.getContentPane(), pantalla);
 	}
@@ -61,6 +97,7 @@ public class Main extends JFrame {
 		contentPane.add(new InterfazListadoPartidas(), LISTADO_PARTIDAS);
 		contentPane.add(new InterfazLobby(), LOBBY);
 		contentPane.add(new InterfazCrearPartida(), CREAR_PARTIDA);
+		contentPane.add(new InterfazRankingGeneral(), RANKING_GENERAL);
 		setJMenuBar(new MenuZombieland());
 		setContentPane(contentPane);
 	}

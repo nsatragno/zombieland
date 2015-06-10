@@ -2,17 +2,12 @@ package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -167,7 +162,7 @@ public class InterfazLobby extends JPanel
 		add(label);
 		
 		JLabel lblZombie = new JLabel("");
-		lblZombie.setIcon(new ImageIcon(InterfazLobby.class.getResource("/com/rzg/zombieland/cliente/interfaz/zombie.png")));
+		lblZombie.setIcon(new ImageIcon("imagenes/zombie2.png"));
 		lblZombie.setBounds(681, 199, 176, 408);
 		add(lblZombie);
 		

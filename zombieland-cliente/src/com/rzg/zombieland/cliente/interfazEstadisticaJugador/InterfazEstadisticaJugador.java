@@ -1,6 +1,5 @@
 package com.rzg.zombieland.cliente.interfazEstadisticaJugador;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 
@@ -11,38 +10,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.rzg.zombieland.comunes.misc.Log;
+
 /**
  * Interfaz de registro de usuario.
  * @author Ivan
  */
-
 public class InterfazEstadisticaJugador extends JFrame
 {
 
-	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					InterfazEstadisticaJugador frame = new InterfazEstadisticaJugador();
-					frame.setVisible(true);
-					frame.setResizable(false);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private static final long serialVersionUID = 1655454656454L;
+    private JPanel contentPane;
 
 	/**
 	 * Create the frame.
@@ -121,4 +99,12 @@ public class InterfazEstadisticaJugador extends JFrame
 		lblImagen.setBounds(39, 304, 277, 126);
 		contentPane.add(lblImagen);
 	}
+
+	/**
+	 * TODO escribir este método.
+	 * Actualiza la interfaz de estadísticas.
+	 */
+    public void actualizar() {
+        Log.error("MÉTODO ACTUALIZAR NO IMPLEMENTADO!!!1UNO");
+    }
 }
