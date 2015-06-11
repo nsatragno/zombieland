@@ -130,11 +130,11 @@ public class Principal implements EscuchaLog {
 		menuBar.add(menu);
 		
 		log = new JTextArea();
-		DefaultCaret caret = (DefaultCaret)log.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		log.setEditable(false);
 		log.setRows(40);
 		log.setColumns(200);
+	    DefaultCaret caret = (DefaultCaret)log.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 	
 		Log.agregarEscuchador(this);
 		

@@ -8,9 +8,19 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import org.jdeferred.DoneCallback;
+
+import com.rzg.zombieland.cliente.comunicacion.PeticionInicioSesion;
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaLogin;
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Interfaz completa de inicio de sesión.
@@ -20,8 +30,8 @@ import javax.swing.JTextField;
 public class InterfazInicioSesion extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField userField;
-	private JPasswordField passwordField_1;
+	private JTextField fieldUsuario;
+	private JPasswordField fieldPassword;
 
 	/**
 	 * Create the application.
@@ -47,26 +57,27 @@ public class InterfazInicioSesion extends JPanel {
 		
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Main.irA(Main.LISTADO_PARTIDAS);
-			}
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        login();
+		    }
 		});
 		btnIngresar.setBounds(184, 292, 175, 40);
 		add(btnIngresar);
 		
-		userField = new JTextField();
-		userField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		userField.setBounds(389, 203, 139, 20);
-		add(userField);
-		userField.setColumns(10);
+		fieldUsuario = new JTextField();
+		fieldUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		fieldUsuario.setBounds(389, 203, 139, 20);
+		add(fieldUsuario);
+		fieldUsuario.setColumns(10);
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		passwordField_1.setBounds(389, 244, 139, 20);
-		add(passwordField_1);
+		fieldPassword = new JPasswordField();
+		fieldPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		fieldPassword.setBounds(389, 244, 139, 20);
+		add(fieldPassword);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(InterfazInicioSesion.class.getResource("/com/rzg/zombieland/cliente/interfaz/zombieland.png")));
+		lblNewLabel.setIcon(new ImageIcon("/imagenes/zombieland.png"));
 		lblNewLabel.setBounds(325, 11, 159, 179);
 		add(lblNewLabel);
 		
@@ -104,4 +115,42 @@ public class InterfazInicioSesion extends JPanel {
 		btnO.setBounds(445, 292, 175, 40);
 		add(btnO);
 	}
+	
+	/**
+	 * Realiza el inicio de sesión y muestra los carteles apropiados.
+	 */
+	public void login() {
+        try {
+            POJOInicioSesion pojo = 
+                    new POJOInicioSesion(fieldUsuario.getText(),
+                                         new String(fieldPassword.getPassword()));
+            PeticionInicioSesion peticion = new PeticionInicioSesion(pojo);
+            ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
+            final InterfazInicioSesion _this = this;
+            peticion.getRespuesta().done(new DoneCallback<RespuestaLogin>() {
+                @Override
+                public void onDone(RespuestaLogin respuesta) {
+                    if (respuesta.fuePeticionExitosa()) {
+                        Main.irA(Main.LISTADO_PARTIDAS);
+                        return;
+                    }
+                    JOptionPane.showMessageDialog(_this,
+                            respuesta.getMensajeError(),
+                            "Inicio sesión Zombieland",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            });
+            
+        } catch (ParametrosNoValidosException e) {
+            JOptionPane.showMessageDialog(this,
+                                          e.getMensaje(),
+                                          "Inicio sesión Zombieland",
+                                          JOptionPane.WARNING_MESSAGE);
+        } catch (ZombielandException e) {
+            JOptionPane.showMessageDialog(this,
+                                          e.getMessage(),
+                                          "Inicio sesión Zombieland",
+                                          JOptionPane.ERROR_MESSAGE);   
+        }
+    }
 }
