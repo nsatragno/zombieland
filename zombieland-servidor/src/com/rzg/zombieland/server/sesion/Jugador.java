@@ -12,6 +12,7 @@ import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
+import com.rzg.zombieland.server.persistencia.JugadorDao;
 
 /**
  * Modela al usuario del cliente de Zombieland.
@@ -29,7 +30,13 @@ public class Jugador {
      * @return el jugador, o null si los parámetros de inicio de sesión no son válidos.
      */
     public static Jugador iniciarSesion(String nombre, String clave) {
-        // TODO implementar.
+        JugadorDao dao = new JugadorDao();
+        Jugador jugador = dao.getObjeto(nombre);
+        dao.cerrarSesion();
+        if (jugador == null)
+            return null;
+        if (jugador.getClave().equals(clave))
+            return jugador;
         return null;
     }
     
@@ -163,6 +170,13 @@ public class Jugador {
      */
     public String getRespuestaSecreta() {
         return respuestaSecreta;
+    }
+    
+    /**
+     * @return la clave en texto plano del jugador.
+     */
+    public String getClave() {
+        return clave;
     }
 
     /**

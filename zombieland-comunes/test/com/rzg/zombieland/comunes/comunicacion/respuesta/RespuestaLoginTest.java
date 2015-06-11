@@ -18,8 +18,7 @@ public class RespuestaLoginTest {
      */
     @Test
     public void testRespuestaExitosa() {
-        RespuestaLogin respuesta = new RespuestaLogin("token", null);
-        assertEquals("token", respuesta.getToken());
+        RespuestaLogin respuesta = new RespuestaLogin();
         assertEquals(null, respuesta.getMensajeError());
         assertTrue(respuesta.fuePeticionExitosa());
     }
@@ -29,8 +28,7 @@ public class RespuestaLoginTest {
      */
     @Test
     public void testRespuestaNoExitosa() {
-        RespuestaLogin respuesta = new RespuestaLogin(null, "error 500");
-        assertEquals(null, respuesta.getToken());
+        RespuestaLogin respuesta = new RespuestaLogin("error 500");
         assertEquals("error 500", respuesta.getMensajeError());
         assertFalse(respuesta.fuePeticionExitosa());
     }
@@ -40,15 +38,15 @@ public class RespuestaLoginTest {
      */
     @Test(expected = InvalidParameterException.class)
     public void testRespuestaNoValida() {
-        new RespuestaLogin("token", "error 500");
+        new RespuestaLogin("");
     }
     
     /**
      * Intenta construir una respuesta vacía.
      */
-    @Test(expected = InvalidParameterException.class)
+    @Test(expected = NullPointerException.class)
     public void testRespuestaVacia() {
-        new RespuestaLogin(null, null);
+        new RespuestaLogin(null);
     }
 
         

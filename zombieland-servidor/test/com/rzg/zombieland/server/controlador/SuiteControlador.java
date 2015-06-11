@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ ControladorRegistroTest.class })
+@SuiteClasses({ ControladorRegistroTest.class, ControladorInicioSesion.class })
 public class SuiteControlador {
 
 }
