@@ -57,7 +57,7 @@ public class InterfazRegistro extends JPanel {
     private void initialize() {
         setLayout(null);
         JLabel label = new JLabel("");
-        label.setIcon(new ImageIcon("imagenes/zombie.png"));
+        label.setIcon(new ImageIcon("imagenes/zombie2.png"));
         label.setBounds(690, 214, 129, 353);
         add(label);
 
