@@ -8,9 +8,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import com.rzg.zombieland.cliente.interfazCambioDatosUsuario.InterfazCambioDeDatosUsuario;
-import com.rzg.zombieland.cliente.interfazEstadisticaJugador.InterfazEstadisticaJugador;
-
 public class MenuZombieland extends JMenuBar {
 	private static final long serialVersionUID = -2766617470499185657L;
 
@@ -53,8 +50,7 @@ public class MenuZombieland extends JMenuBar {
 		JMenuItem mntmJugar = new JMenuItem("Jugar");
 		mntmJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// OJO aca hay que hacer que entre a una partida de forma
-				// aleatoria.
+				// TODO aca hay que hacer que entre a una partida de forma aleatoria.
 				Main.irA(Main.LOBBY);
 			}
 		});
@@ -83,7 +79,8 @@ public class MenuZombieland extends JMenuBar {
 		});
 		mnCuenta.add(mntmDatos);
 
-		final JMenuItem mntmEstadsticas = new JMenuItem("Estad\u00EDsticas");
+		final JMenu mnEstadsticas = new JMenu("Estad\u00EDsticas");
+		final JMenuItem mntmEstadsticas = new JMenuItem("Mis Estad\u00EDsticas");
 		mntmEstadsticas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				if (estadisticas == null)
@@ -93,7 +90,19 @@ public class MenuZombieland extends JMenuBar {
 			}
 
 		});
-		mnCuenta.add(mntmEstadsticas);
+		
+		final JMenuItem mntmEstadsticasGlob = new JMenuItem("Estad\u00EDsticas Globales");
+		mntmEstadsticasGlob.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+				Main.irA(Main.RANKING_GENERAL);
+				//TODO VER cuando se actualiza el ranking general
+			}
+
+		});
+            
+		mnEstadsticas.add(mntmEstadsticas);
+		mnEstadsticas.add(mntmEstadsticasGlob);
+		mnCuenta.add(mnEstadsticas);
 
 		JMenu mnAyuda = new JMenu("Ayuda");
 		add(mnAyuda);

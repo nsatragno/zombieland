@@ -32,6 +32,7 @@ public class InterfazInicioSesion extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField fieldUsuario;
 	private JPasswordField fieldPassword;
+	private InterfazRecuperaContrasenia recupera;
 
 	/**
 	 * Create the application.
@@ -108,8 +109,9 @@ public class InterfazInicioSesion extends JPanel {
 		JButton btnO = new JButton("Olvid\u00F3 su clave?");
 		btnO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// Se direccionará a la pantalla de recuperación de clave
-				// haciendo uso de la pregunta de seguridad.
+				if(recupera == null)
+					recupera = new InterfazRecuperaContrasenia();
+				recupera.setVisible(true);
 			}
 		});
 		btnO.setBounds(445, 292, 175, 40);

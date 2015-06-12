@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.interfazCambioDatosUsuario;
+package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -21,8 +21,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import com.rzg.zombieland.cliente.interfaz.Main;
-
 /**
  * 
  * 
@@ -43,6 +41,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazCambioDeDatosUsuario() {
+		setResizable(false);
 		setTitle("Cambiar Datos De Usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -171,24 +170,18 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1
-				.setIcon(new ImageIcon(
-						InterfazCambioDeDatosUsuario.class
-								.getResource("/com/rzg/zombieland/cliente/interfazCambioDatosUsuario/mujer.png")));
+				.setIcon(new ImageIcon("imagenes/mujer.png"));
 		lblNewLabel_1.setBounds(695, 341, 73, 74);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2
-				.setIcon(new ImageIcon(
-						InterfazCambioDeDatosUsuario.class
-								.getResource("/com/rzg/zombieland/cliente/interfazCambioDatosUsuario/poli.png")));
+				.setIcon(new ImageIcon("imagenes/poli.png"));
 		lblNewLabel_2.setBounds(695, 76, 79, 80);
 		contentPane.add(lblNewLabel_2);
 
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(
-				InterfazCambioDeDatosUsuario.class
-						.getResource("/com/rzg/zombieland/cliente/interfazCambioDatosUsuario/dsn.png")));
+		label.setIcon(new ImageIcon("imagenes/dsn.png"));
 		label.setBounds(695, 194, 73, 94);
 		contentPane.add(label);
 

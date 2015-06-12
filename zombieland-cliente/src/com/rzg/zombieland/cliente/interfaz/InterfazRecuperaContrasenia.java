@@ -1,11 +1,11 @@
-package com.rzg.zombieland.cliente.interfazRecuperaContrasenia;
+package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.SystemColor;
 
-import javax.swing.ImageIcon;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Font;
 
 /**
  * Interfaz de recuperar contraseña.
@@ -23,44 +22,21 @@ import java.awt.Font;
  * @author Ivan
  */
 
-public class RecuperaContrasenia extends JFrame
+public class InterfazRecuperaContrasenia extends JFrame
 {
-
 	private JPanel contentPane;
 	private JTextField textFieldUsuario;
 	private JComboBox<String> preguntaSeguridad;
 	private JTextField textFieldResp;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					RecuperaContrasenia frame = new RecuperaContrasenia();
-					frame.setVisible(true);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public RecuperaContrasenia()
+	public InterfazRecuperaContrasenia()
 	{
 		setResizable(false);
 		setTitle("Recuperaci\u00F3n de Contrase\u00F1a");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(275, 180, 500, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

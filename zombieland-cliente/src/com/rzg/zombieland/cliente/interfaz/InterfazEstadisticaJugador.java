@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.interfazEstadisticaJugador;
+package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -27,6 +27,7 @@ public class InterfazEstadisticaJugador extends JFrame
 	 */
 	public InterfazEstadisticaJugador()
 	{
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 475);
 		contentPane = new JPanel();
@@ -95,7 +96,7 @@ public class InterfazEstadisticaJugador extends JFrame
 		contentPane.add(lblJugadosJugador);
 		
 		JLabel lblImagen = new JLabel("");
-		lblImagen.setIcon(new ImageIcon(InterfazEstadisticaJugador.class.getResource("/com/rzg/zombieland/cliente/interfazEstadisticaJugador/zombie.png")));
+		lblImagen.setIcon(new ImageIcon("imagenes/zombieEstadisticasJug.png"));
 		lblImagen.setBounds(39, 304, 277, 126);
 		contentPane.add(lblImagen);
 	}

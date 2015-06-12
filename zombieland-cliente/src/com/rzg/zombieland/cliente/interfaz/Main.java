@@ -6,8 +6,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.rzg.zombieland.cliente.interfazRankingGeneral.InterfazRankingGeneral;
-
 /**
  * 
  */
@@ -85,6 +83,7 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
+		setResizable(false);
 		setTitle("Zombieland");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);

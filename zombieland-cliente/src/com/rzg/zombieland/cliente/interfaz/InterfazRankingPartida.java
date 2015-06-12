@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.interfazRankingPartida;
+package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -62,7 +62,7 @@ public class InterfazRankingPartida {
 		frmRanking.getContentPane().add(lblPartida);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(InterfazRankingPartida.class.getResource("/com/rzg/zombieland/cliente/interfazRankingPartida/fondo.png")));
+		label.setIcon(new ImageIcon("imagenes/fondoRankPartida.png"));
 		label.setBounds(10, 335, 800, 255);
 		frmRanking.getContentPane().add(label);
 		

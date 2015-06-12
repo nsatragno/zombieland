@@ -1,19 +1,22 @@
 package com.rzg.zombieland.cliente.interfaz;
 
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.Label;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-
-import net.miginfocom.swing.MigLayout;
 
 /**
  * Interfaz que lanza un HiloEscucha según parámetros de usuario.
@@ -43,30 +46,54 @@ public class InterfazConexionServidor extends JPanel {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		setLayout(null);
+		
+		JLabel titulo = new JLabel("Conectar al servidor");
+		titulo.setForeground(Color.WHITE);
+		titulo.setBounds(25, 24, 227, 40);
+		titulo.setFont(new Font("tahoma", Font.BOLD,20));
+		add(titulo);
+		
+		JLabel lblPuerto = new JLabel ("Puerto:");
+		lblPuerto.setBounds(35, 87, 80, 30);
+		lblPuerto.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPuerto.setForeground(Color.WHITE);
+		add(lblPuerto);
+		
+		puerto = new JTextField("2048");
+		puerto.setHorizontalAlignment(SwingConstants.CENTER);
+		puerto.setBorder(new LineBorder(Color.DARK_GRAY));
+		puerto.setForeground(Color.WHITE);
+		puerto.setBackground(Color.BLACK);
+		puerto.setBounds(135, 87, 117, 30);
+		puerto.setColumns(10);
+		add(puerto);
+		
+		JLabel lblHost = new JLabel ("Host:");
+		lblHost.setBounds(35, 120, 80, 30);
+		lblHost.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHost.setForeground(Color.WHITE);
+		add(lblHost);
+		
+		host = new JTextField("localhost");
+		host.setHorizontalAlignment(SwingConstants.CENTER);
+		host.setBorder(new LineBorder(Color.DARK_GRAY));
+		host.setBackground(Color.BLACK);
+		host.setForeground(Color.WHITE);
+		host.setBounds(135, 120, 117, 30);
+        host.setColumns(10);
+        add(host);
+		
 		botonConectar = new JButton("Conectar");
+		botonConectar.setBounds(80, 200, 120, 30);
 		botonConectar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				conectar();
 			}
 		});
-		
-		Label titulo = new Label("Conectar al servidor");
-		titulo.setFont(new Font("tahoma", Font.BOLD,20));
-		
-		puerto = new JTextField("2048");
-		puerto.setColumns(10);
-		
-		host = new JTextField("localhost");
-        host.setColumns(10);
-		
-		setLayout(new MigLayout("", "push[align center][align center][align center]push", "push[][][]push"));
-		add(titulo, "span 2, wrap");
-		add(new Label("Host"));
-		add(host, "wrap");
-		add(new Label("Puerto"));
-		add(puerto, "wrap");
-		add(botonConectar, "aligny center, span 4");
+		add(botonConectar);
 	}
 	
 	/**
@@ -87,5 +114,13 @@ public class InterfazConexionServidor extends JPanel {
                                           "Conexión Zombieland",
                                           JOptionPane.ERROR_MESSAGE);
 	    }
+	}
+	
+	@Override
+	public void paint (Graphics g){
+		ImageIcon imagenFondo = new ImageIcon("imagenes/fondoServidor.png");
+		g.drawImage(imagenFondo.getImage(), 0, -35, 800, 600, null);
+		setOpaque(false);
+		super.paint(g);
 	}
 }
