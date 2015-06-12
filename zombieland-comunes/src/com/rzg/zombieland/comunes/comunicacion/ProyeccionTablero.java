@@ -119,7 +119,7 @@ public class ProyeccionTablero extends Enviable {
 		// La famosa 'Proyeccion'
 		// Primero ajustamos la transparencia, a pedido de Iván.
 		AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-				0.6f);
+				0.8f);
 		g2D.setComposite(ac);
 		// Son 4 rectangulos. Uno arriba, uno abajo y 2 a cada lado.
 		g2D.fillRect(margenIzquierdo, margenSuperior, anchoReal,

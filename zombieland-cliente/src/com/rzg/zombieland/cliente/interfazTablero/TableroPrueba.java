@@ -23,6 +23,7 @@ import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
+import javax.swing.JLabel;
 
 /**
  * Interfaz de tablero.
@@ -163,7 +164,7 @@ public class TableroPrueba extends JFrame {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Movimiento hacia la derecha
-				if (coordenadaX + 1 <= CASILLEROS)
+				if (coordenadaX + 1 <= CASILLEROS - 1)
 					coordenadaX++;
 				repaint();
 			}
@@ -188,7 +189,7 @@ public class TableroPrueba extends JFrame {
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Movimiento hacia abajo
-				if (coordenadaY + 1 <= CASILLEROS)
+				if (coordenadaY + 1 <= CASILLEROS - 1)
 					coordenadaY++;
 				repaint();
 			}
@@ -201,7 +202,7 @@ public class TableroPrueba extends JFrame {
 		getContentPane().add(button_3);
 
 		JPanel panelJug = new JPanel();
-		panelJug.setBounds(563, 46, 193, 175);
+		panelJug.setBounds(561, 34, 193, 175);
 		getContentPane().add(panelJug);
 		panelJug.setLayout(new BorderLayout());
 
@@ -234,6 +235,11 @@ public class TableroPrueba extends JFrame {
 		table.setBounds(0, 0, 193, 304);
 		panelJug.add(table.getTableHeader(), BorderLayout.NORTH);
 		panelJug.add(table, BorderLayout.CENTER);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("imagenes/fondo1.png"));
+		label.setBounds(0, 11, 784, 589);
+		contentPane.add(label);
 	}
 
 	public void paint(Graphics g) {
