@@ -18,16 +18,14 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  * @author nicolas
  *
  */
-public class ProyeccionTablero extends Enviable // Hacer constructor.
-{
+public class ProyeccionTablero extends Enviable {
 	/**
 	 * Identifica una entidad de la proyección.
 	 * 
 	 * @author nicolas
 	 *
 	 */
-	public class POJOEntidad
-	{
+	public class POJOEntidad {
 		// El nombre de esta entidad. Puede ser, por ejemplo, el nombre del
 		// jugador que controla al
 		// personaje.
@@ -39,22 +37,19 @@ public class ProyeccionTablero extends Enviable // Hacer constructor.
 		// El avatar de la misma.
 		private Avatar avatar;
 
-		public POJOEntidad(String etiqueta, Coordenada coordenada, Avatar avatar)
-		{
+		public POJOEntidad(String etiqueta, Coordenada coordenada, Avatar avatar) {
 			this.etiqueta = etiqueta;
 			this.coordenada = coordenada;
 			this.avatar = avatar;
 		}
 
-		public Coordenada getCoordenada()
-		{
+		public Coordenada getCoordenada() {
 			return coordenada;
 		}
 	}
 
-	// Tamaño total del tablero - Ancho de la matriz en casilleros
-	private int ancho;
-	private int largo;
+	// Tamaño total del tablero - Ancho/largo de la matriz en casilleros
+	private int casilleros;
 
 	// Las esquina que esta proyección revela del mapa.
 	private Coordenada esquinaSuperiorIzquierda;
@@ -63,57 +58,61 @@ public class ProyeccionTablero extends Enviable // Hacer constructor.
 	// Entidades visibles del tablero.
 	private List<POJOEntidad> entidades;
 
-	public ProyeccionTablero()
-	{
+	private boolean primeraVez = true;
+
+	public ProyeccionTablero() {
 
 	}
 
 	/**
-	 * @param ancho
-	 *            en casilleros
-	 * @param largo
-	 *            en casilleros
+	 * @param casilleros
+	 *            ancho / largo en casilleros
 	 * @param esquinaSuperiorIzquierda
+	 *            de la proyeccion
+	 * @param esquinaInferiorDerecha
 	 *            de la proyeccion
 	 * @param entidades
 	 */
-	public ProyeccionTablero(int ancho, int largo,
-			Coordenada esquinaSuperiorIzquierda, List<POJOEntidad> entidades)
-	{
-		this.ancho = ancho;
-		this.largo = largo;
+	public ProyeccionTablero(int casilleros,
+			Coordenada esquinaSuperiorIzquierda,
+			Coordenada esquinaInferiorDerecha, List<POJOEntidad> entidades) {
+		this.casilleros = casilleros;
 		this.esquinaSuperiorIzquierda = esquinaSuperiorIzquierda;
+		this.esquinaInferiorDerecha = esquinaInferiorDerecha;
 		this.entidades = entidades;
 	}
 
-	public List<POJOEntidad> getEntidades()
-	{
+	public List<POJOEntidad> getEntidades() {
 		return entidades;
 	}
 
 	public void paint(Graphics g, Image[] img, int anchoTablero,
-			int margenIzquierdo, int margenSuperior, ImageIcon fondo)
-	{
-		int anchoCasillero = anchoTablero / ancho;
+			int margenIzquierdo, int margenSuperior, ImageIcon fondo) {
+		int anchoCasillero = anchoTablero / casilleros;
+		int anchoReal = getAnchoEfectivo(anchoTablero);
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setColor(Color.BLACK);
-		// La cuadrícula
-		for (int i = 0; i <= ancho; i++)
-		{
-			g2D.drawLine(margenIzquierdo + anchoCasillero * i, margenSuperior,
-					margenIzquierdo + anchoCasillero * i, margenSuperior + getAnchoEfectivo(anchoTablero));
-			g2D.drawLine(margenIzquierdo,margenSuperior + anchoCasillero * i, 
-					margenIzquierdo + getAnchoEfectivo(anchoTablero), margenSuperior + anchoCasillero * i);
+		// La cuadrícula y el fondo -- ESTA ES LA SOLUCION --
+		if (primeraVez) {
+			g.drawImage(fondo.getImage(), margenIzquierdo, margenSuperior,
+					getAnchoEfectivo(anchoTablero),
+					getAnchoEfectivo(anchoTablero), null);
+			for (int i = 0; i <= casilleros; i++) {
+				g2D.drawLine(margenIzquierdo + anchoCasillero * i,
+						margenSuperior, margenIzquierdo + anchoCasillero * i,
+						margenSuperior + anchoReal);
+				g2D.drawLine(margenIzquierdo, margenSuperior + anchoCasillero
+						* i, margenIzquierdo + anchoReal, margenSuperior
+						+ anchoCasillero * i);
+			}
+			primeraVez = false;
 		}
-		
 		int j = 0;
-		for (POJOEntidad entidad : entidades)
-		{
-			g.drawImage(img[j], entidad.getCoordenada().getX() * anchoCasillero + margenIzquierdo,
-					entidad.getCoordenada().getY() * anchoCasillero + margenSuperior, 
-					anchoCasillero,
-					anchoCasillero,
-					null);
+		for (POJOEntidad entidad : entidades) {
+			g.drawImage(img[j], entidad.getCoordenada().getX() * anchoCasillero
+					+ margenIzquierdo, entidad.getCoordenada().getY()
+					* anchoCasillero + margenSuperior, anchoCasillero,
+					anchoCasillero, null);
 			j++;
 		}
 
@@ -123,28 +122,27 @@ public class ProyeccionTablero extends Enviable // Hacer constructor.
 				0.6f);
 		g2D.setComposite(ac);
 		// Son 4 rectangulos. Uno arriba, uno abajo y 2 a cada lado.
-		// Los +-4 son para encajar bien en la cuadricula.
-		g2D.fillRect(margenIzquierdo, margenSuperior, getAnchoEfectivo(anchoTablero),
+		g2D.fillRect(margenIzquierdo, margenSuperior, anchoReal,
 				esquinaSuperiorIzquierda.getY() * anchoCasillero);
-		g2D.fillRect(margenIzquierdo,margenSuperior + esquinaSuperiorIzquierda.getY() + 6 * anchoCasillero ,
-				getAnchoEfectivo(anchoTablero), getAnchoEfectivo(anchoTablero));
-//		g2D.fillRect(esqSupIzq.getX(), esquinaSuperiorIzquierda.getY() - 4,
-//				esquinaSuperiorIzquierda.getX() - esqSupIzq.getX() - 4,
-//				esquinaInferiorDerecha.getY() - esquinaSuperiorIzquierda.getY());
-//		g2D.fillRect(
-//				esquinaInferiorDerecha.getX() - 4,
-//				esquinaSuperiorIzquierda.getY() - 4,
-//				esqInfDer.getX()
-//						- esquinaSuperiorIzquierda.getX() // Le resto 2 por un
-//															// pequeño error de
-//															// cuadricula
-//						- (esquinaInferiorDerecha.getX() - esquinaSuperiorIzquierda
-//								.getX()), esquinaInferiorDerecha.getY()
-//						- esquinaSuperiorIzquierda.getY());
+		g2D.fillRect(margenIzquierdo, esquinaInferiorDerecha.getY()
+				* anchoCasillero + margenSuperior, anchoReal, anchoReal
+				- esquinaInferiorDerecha.getY() * anchoCasillero);
+		g2D.fillRect(margenIzquierdo, esquinaSuperiorIzquierda.getY()
+				* anchoCasillero + margenSuperior,
+				esquinaSuperiorIzquierda.getX() * anchoCasillero,
+				esquinaInferiorDerecha.getY() * anchoCasillero
+						- esquinaSuperiorIzquierda.getY() * anchoCasillero);
+		g2D.fillRect(esquinaInferiorDerecha.getX() * anchoCasillero
+				+ margenIzquierdo, esquinaSuperiorIzquierda.getY()
+				* anchoCasillero + margenSuperior, anchoReal
+				- esquinaInferiorDerecha.getX() * anchoCasillero,
+				esquinaInferiorDerecha.getY() * anchoCasillero
+						- esquinaSuperiorIzquierda.getY() * anchoCasillero);
 	}
 
-	public int getAnchoEfectivo(int dimension)
-	{
-		return dimension - dimension % ancho;
+	// Este método devuelve siempre el ancho necesario del tablero
+	// para que los casilleros entren justo (elimina los excedentes)
+	public int getAnchoEfectivo(int dimension) {
+		return dimension - dimension % casilleros;
 	}
 }

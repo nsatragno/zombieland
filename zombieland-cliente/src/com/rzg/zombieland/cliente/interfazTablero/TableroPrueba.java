@@ -6,7 +6,6 @@ import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,10 +13,8 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -33,20 +30,32 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  * @author Manuel
  */
 
-public class TableroPrueba extends JFrame
-{
+public class TableroPrueba extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	// Creo este objeto para poder crear objetos del tipo POJOEntidad
 	// y armar la lista para construir la proyeccion de prueba.
 	private static ProyeccionTablero proyeccion = new ProyeccionTablero();
 	private ProyeccionTablero proyeccionPrueba;
+
 	private JFrame frame;
 	private JTable table;
 	private JPanel contentPane;
-	private static final int DIMENSION = 500;
+
+	// Constantes
+	private static final int DIMENSION = 500; // Dimension en pixeles del
+												// tablero
 	private static final int MARGEN_IZQUIERDO = 35;
 	private static final int MARGEN_SUPERIOR = 55;
+	private static int CASILLEROS = 10; // Casilleros del tablero a lo alto y a
+										// lo ancho.
+
+	// Este boolean evita repintar todas las veces el fondo.
 	private boolean primeraVez = true;
+
+	// variables de prueba para el movimiento.
+	private int coordenadaX;
+	private int coordenadaY;
 
 	private Image[] img; // Avatares
 	private ImageIcon fondo;
@@ -54,19 +63,13 @@ public class TableroPrueba extends JFrame
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
 					TableroPrueba frame = new TableroPrueba();
 					frame.setVisible(true);
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -77,8 +80,7 @@ public class TableroPrueba extends JFrame
 	 * Initialize the contents of the frame.
 	 */
 
-	public TableroPrueba()
-	{
+	public TableroPrueba() {
 		setTitle("Zombieland - Tablero de Juego");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -89,8 +91,7 @@ public class TableroPrueba extends JFrame
 		setBounds(100, 100, 800, 600);
 
 		img = new Image[4];
-		for (int i = 0; i < 4; i++)
-		{
+		for (int i = 0; i < 4; i++) {
 			img[i] = new ImageIcon(
 					TableroPrueba.class.getResource("/com/rzg/zombieland/"
 							+ "cliente/interfazTablero/avatar" + (i + 1)
@@ -101,20 +102,12 @@ public class TableroPrueba extends JFrame
 		fondo = new ImageIcon("imagenes/pasto.png");
 
 		JButton button = new JButton("");
-		button.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				// if (y - tamañoCasilleros >= proyeccion.getEsqSupIzq().getY())
-				// {
-				// matrizTablero[x / tamañoCasilleros - 1][y
-				// / tamañoCasilleros - 1] = null; // Java se encarga
-				// y -= tamañoCasilleros;
-				// matrizTablero[x / tamañoCasilleros - 1][y
-				// / tamañoCasilleros - 1] = proyeccion.new POJOEntidad(
-				// "Player 1", new Coordenada(x, y));
-				// repaint();
-				// }
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Movimiento hacia arriba.
+				if (coordenadaY - 1 >= 0)
+					coordenadaY--;
+				repaint();
 			}
 		});
 
@@ -135,20 +128,12 @@ public class TableroPrueba extends JFrame
 		// });
 
 		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				// if (x - tamañoCasilleros >= proyeccion.getEsqSupIzq().getX())
-				// {
-				// matrizTablero[x / tamañoCasilleros - 1][y
-				// / tamañoCasilleros - 1] = null;
-				// x -= tamañoCasilleros;
-				// matrizTablero[x / tamañoCasilleros - 1][y
-				// / tamañoCasilleros - 1] = proyeccion.new POJOEntidad(
-				// "Player 1", new Coordenada(x, y));
-				// repaint();
-				// }
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Movimiento hacia la izquierda
+				if (coordenadaX - 1 >= 0)
+					coordenadaX--;
+				repaint();
 			}
 		});
 		// button_1.addKeyListener(new KeyAdapter() {
@@ -175,20 +160,12 @@ public class TableroPrueba extends JFrame
 		// repaint();
 		// }
 		// });
-		button_2.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				// if (x + tamañoCasilleros <= proyeccion.getEsqInfDer().getX()
-				// - tamañoCasilleros) {
-				// matrizTablero[x / tamañoCasilleros - 1][y
-				// / tamañoCasilleros - 1] = null;
-				// x += tamañoCasilleros;
-				// matrizTablero[x / tamañoCasilleros - 1][y
-				// / tamañoCasilleros - 1] = proyeccion.new POJOEntidad(
-				// "Player 1", new Coordenada(x, y));
-				// repaint();
-				// }
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Movimiento hacia la derecha
+				if (coordenadaX + 1 <= CASILLEROS)
+					coordenadaX++;
+				repaint();
 			}
 		});
 		button_2.setIcon(new ImageIcon(
@@ -208,20 +185,12 @@ public class TableroPrueba extends JFrame
 		// }
 		// }
 		// });
-		button_3.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				// if (y + tamañoCasilleros <= proyeccion.getEsqInfDer().getY()
-				// - tamañoCasilleros) {
-				// matrizTablero[x / tamañoCasilleros - 1][y
-				// / tamañoCasilleros - 1] = null;
-				// y += tamañoCasilleros;
-				// matrizTablero[x / tamañoCasilleros - 1][y
-				// / tamañoCasilleros - 1] = proyeccion.new POJOEntidad(
-				// "Player 1", new Coordenada(x, y));
-				// repaint();
-				// }
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Movimiento hacia abajo
+				if (coordenadaY + 1 <= CASILLEROS)
+					coordenadaY++;
+				repaint();
 			}
 		});
 		button_3.setIcon(new ImageIcon(
@@ -244,19 +213,17 @@ public class TableroPrueba extends JFrame
 		table.setModel(new DefaultTableModel(
 				new Object[][] { { null, null }, { null, null },
 						{ null, null }, { null, null }, { null, null }, },
-				new String[] { "Personaje", "Puntaje" })
-		{
+				new String[] { "Personaje", "Puntaje" }) {
+			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] { String.class, Object.class };
 
-			public Class getColumnClass(int columnIndex)
-			{
+			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 
 			boolean[] columnEditables = new boolean[] { false, false };
 
-			public boolean isCellEditable(int row, int column)
-			{
+			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
@@ -269,22 +236,21 @@ public class TableroPrueba extends JFrame
 		panelJug.add(table, BorderLayout.CENTER);
 	}
 
-	public void paint(Graphics g)
-	{
+	public void paint(Graphics g) {
+		super.paint(g);
 		java.util.List<POJOEntidad> entidades = new ArrayList<POJOEntidad>();
-		entidades.add(proyeccion.new POJOEntidad("Player1",
-				new Coordenada(3, 5), Avatar.HOMBRE));
-		Coordenada esquinaSupIzq = new Coordenada(2, 3);
-		ProyeccionTablero proyeccionPrueba = new ProyeccionTablero(16, 16,
-				esquinaSupIzq, entidades);
-		if (primeraVez)
-		{
-			super.paint(g);
-			g.drawImage(fondo.getImage(), MARGEN_IZQUIERDO, MARGEN_SUPERIOR,
-					proyeccionPrueba.getAnchoEfectivo(DIMENSION),
-					proyeccionPrueba.getAnchoEfectivo(DIMENSION), null);
-			primeraVez = false;
-		}
+		entidades.add(proyeccion.new POJOEntidad("Player1", new Coordenada(
+				coordenadaX, coordenadaY), Avatar.HOMBRE));
+		entidades.add(proyeccion.new POJOEntidad("Player2",
+				new Coordenada(7, 6), Avatar.MUJER));
+		Coordenada esquinaSupIzq = new Coordenada(
+				coordenadaX - 2 >= 0 ? coordenadaX - 2 : 0,
+				coordenadaY - 2 >= 0 ? coordenadaY - 2 : 0);
+		Coordenada esquinaInfDer = new Coordenada(
+				coordenadaX + 3 <= CASILLEROS ? coordenadaX + 3 : CASILLEROS,
+				coordenadaY + 3 <= CASILLEROS ? coordenadaY + 3 : CASILLEROS);
+		ProyeccionTablero proyeccionPrueba = new ProyeccionTablero(CASILLEROS,
+				esquinaSupIzq, esquinaInfDer, entidades);
 		proyeccionPrueba.paint(g, img, DIMENSION, MARGEN_IZQUIERDO,
 				MARGEN_SUPERIOR, fondo);
 	}
