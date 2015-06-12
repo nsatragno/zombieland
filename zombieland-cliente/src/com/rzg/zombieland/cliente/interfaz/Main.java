@@ -37,6 +37,11 @@ public class Main extends JFrame {
 	public static final String LOBBY = "lobby";
 	
 	/**
+	 *  Pantalla de tablero.
+	 */
+	public static final String TABLERO = "tablero";
+	
+	/**
 	 * Pantalla de creación de nueva partida.
 	 */
 	public static final String CREAR_PARTIDA = "crearPartida";
@@ -95,6 +100,7 @@ public class Main extends JFrame {
 		contentPane.add(new InterfazRegistro(), REGISTRO);
 		contentPane.add(new InterfazListadoPartidas(), LISTADO_PARTIDAS);
 		contentPane.add(new InterfazLobby(), LOBBY);
+		contentPane.add(new TableroTest(), TABLERO);
 		contentPane.add(new InterfazCrearPartida(), CREAR_PARTIDA);
 		contentPane.add(new InterfazRankingGeneral(), RANKING_GENERAL);
 		setJMenuBar(new MenuZombieland());

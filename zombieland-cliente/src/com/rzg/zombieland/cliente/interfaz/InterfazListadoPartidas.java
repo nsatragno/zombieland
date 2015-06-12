@@ -59,7 +59,7 @@ public class InterfazListadoPartidas extends JPanel {
 		btnJugar.setBounds(77, 430, 175, 40);
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.irA(Main.LOBBY);
+				Main.irA(Main.TABLERO);
 			}
 		});
 		add(btnJugar);

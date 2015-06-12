@@ -1,9 +1,8 @@
-package com.rzg.zombieland.cliente.interfazTablero;
+package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
@@ -23,7 +22,6 @@ import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
-import javax.swing.JLabel;
 
 /**
  * Interfaz de tablero.
@@ -31,28 +29,24 @@ import javax.swing.JLabel;
  * @author Manuel
  */
 
-public class TableroPrueba extends JFrame {
+public class TableroTest extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	// Creo este objeto para poder crear objetos del tipo POJOEntidad
 	// y armar la lista para construir la proyeccion de prueba.
 	private static ProyeccionTablero proyeccion = new ProyeccionTablero();
+	@SuppressWarnings("unused")
 	private ProyeccionTablero proyeccionPrueba;
-
-	private JFrame frame;
+	
 	private JTable table;
-	private JPanel contentPane;
 
 	// Constantes
 	private static final int DIMENSION = 500; // Dimension en pixeles del
 												// tablero
-	private static final int MARGEN_IZQUIERDO = 35;
-	private static final int MARGEN_SUPERIOR = 55;
+	private static final int MARGEN_IZQUIERDO = 10;
+	private static final int MARGEN_SUPERIOR = 30;
 	private static int CASILLEROS = 10; // Casilleros del tablero a lo alto y a
 										// lo ancho.
-
-	// Este boolean evita repintar todas las veces el fondo.
-	private boolean primeraVez = true;
 
 	// variables de prueba para el movimiento.
 	private int coordenadaX;
@@ -61,49 +55,21 @@ public class TableroPrueba extends JFrame {
 	private Image[] img; // Avatares
 	private ImageIcon fondo;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TableroPrueba frame = new TableroPrueba();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-
-	public TableroPrueba() {
-		setTitle("Zombieland - Tablero de Juego");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	public TableroTest() {
+		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLayout(null);
 		setBounds(100, 100, 800, 600);
 
 		img = new Image[4];
 		for (int i = 0; i < 4; i++) {
-			img[i] = new ImageIcon(
-					TableroPrueba.class.getResource("/com/rzg/zombieland/"
-							+ "cliente/interfazTablero/avatar" + (i + 1)
-							+ ".png")).getImage();
+			img[i] = new ImageIcon("imagenes/avatar" + (i + 1) + ".png").getImage();
 
 		}
 
 		fondo = new ImageIcon("imagenes/pasto.png");
 
-		JButton button = new JButton("");
-		button.addActionListener(new ActionListener() {
+		JButton moveUp = new JButton("");
+		moveUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Movimiento hacia arriba.
 				if (coordenadaY - 1 >= 0)
@@ -112,12 +78,10 @@ public class TableroPrueba extends JFrame {
 			}
 		});
 
-		button.setIcon(new ImageIcon(
-				TableroPrueba.class
-						.getResource("/com/rzg/zombieland/cliente/interfazTablero/FlechaArriba.png")));
-		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button.setBounds(640, 377, 45, 45);
-		getContentPane().add(button);
+		moveUp.setIcon(new ImageIcon("imagenes/FlechaArriba.png"));
+		moveUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		moveUp.setBounds(640, 377, 45, 45);
+		add(moveUp);
 
 		// addKeyListener(new KeyAdapter() {
 		// @Override
@@ -128,8 +92,8 @@ public class TableroPrueba extends JFrame {
 		// }
 		// });
 
-		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener() {
+		JButton moveLeft = new JButton("");
+		moveLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Movimiento hacia la izquierda
 				if (coordenadaX - 1 >= 0)
@@ -146,14 +110,12 @@ public class TableroPrueba extends JFrame {
 		// }
 		// }
 		// });
-		button_1.setIcon(new ImageIcon(
-				TableroPrueba.class
-						.getResource("/com/rzg/zombieland/cliente/interfazTablero/FlechaIzquierda.png")));
-		button_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button_1.setBounds(587, 423, 45, 45);
-		getContentPane().add(button_1);
+		moveLeft.setIcon(new ImageIcon("imagenes/FlechaIzquierda.png"));
+		moveLeft.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		moveLeft.setBounds(587, 423, 45, 45);
+		add(moveLeft);
 
-		JButton button_2 = new JButton("");
+		JButton moveRight = new JButton("");
 		// button_2.addKeyListener(new KeyAdapter() {
 		// @Override
 		// public void keyPressed(KeyEvent e) {
@@ -161,7 +123,7 @@ public class TableroPrueba extends JFrame {
 		// repaint();
 		// }
 		// });
-		button_2.addActionListener(new ActionListener() {
+		moveRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Movimiento hacia la derecha
 				if (coordenadaX + 1 <= CASILLEROS - 1)
@@ -169,14 +131,12 @@ public class TableroPrueba extends JFrame {
 				repaint();
 			}
 		});
-		button_2.setIcon(new ImageIcon(
-				TableroPrueba.class
-						.getResource("/com/rzg/zombieland/cliente/interfazTablero/FlechaDerecha.png")));
-		button_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button_2.setBounds(689, 423, 45, 45);
-		getContentPane().add(button_2);
+		moveRight.setIcon(new ImageIcon("imagenes/FlechaDerecha.png"));
+		moveRight.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		moveRight.setBounds(689, 423, 45, 45);
+		add(moveRight);
 
-		JButton button_3 = new JButton("");
+		JButton moveDown = new JButton("");
 		// button_3.addKeyListener(new KeyAdapter() {
 		// @Override
 		// public void keyPressed(KeyEvent e) {
@@ -186,7 +146,7 @@ public class TableroPrueba extends JFrame {
 		// }
 		// }
 		// });
-		button_3.addActionListener(new ActionListener() {
+		moveDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Movimiento hacia abajo
 				if (coordenadaY + 1 <= CASILLEROS - 1)
@@ -194,16 +154,14 @@ public class TableroPrueba extends JFrame {
 				repaint();
 			}
 		});
-		button_3.setIcon(new ImageIcon(
-				TableroPrueba.class
-						.getResource("/com/rzg/zombieland/cliente/interfazTablero/FlechaAbajo.png")));
-		button_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button_3.setBounds(640, 471, 45, 45);
-		getContentPane().add(button_3);
+		moveDown.setIcon(new ImageIcon("imagenes/FlechaAbajo.png"));
+		moveDown.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		moveDown.setBounds(640, 471, 45, 45);
+		add(moveDown);
 
 		JPanel panelJug = new JPanel();
 		panelJug.setBounds(561, 34, 193, 175);
-		getContentPane().add(panelJug);
+		add(panelJug);
 		panelJug.setLayout(new BorderLayout());
 
 		table = new JTable();
@@ -216,8 +174,10 @@ public class TableroPrueba extends JFrame {
 						{ null, null }, { null, null }, { null, null }, },
 				new String[] { "Personaje", "Puntaje" }) {
 			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { String.class, Object.class };
 
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -236,10 +196,10 @@ public class TableroPrueba extends JFrame {
 		panelJug.add(table.getTableHeader(), BorderLayout.NORTH);
 		panelJug.add(table, BorderLayout.CENTER);
 		
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("imagenes/fondo1.png"));
-		label.setBounds(0, 11, 784, 589);
-		contentPane.add(label);
+		JLabel labelFondo = new JLabel("");
+		labelFondo.setIcon(new ImageIcon("imagenes/fondo1.png"));
+		labelFondo.setBounds(0, 0, 800, 600);
+		add(labelFondo);
 	}
 
 	public void paint(Graphics g) {
