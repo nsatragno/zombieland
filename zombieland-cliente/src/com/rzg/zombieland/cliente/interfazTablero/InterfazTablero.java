@@ -70,9 +70,7 @@ public class InterfazTablero extends JPanel {
 		JLabel label = new JLabel("");
 		label.setBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK,
 				Color.BLACK, Color.BLACK, Color.BLACK));
-		label.setIcon(new ImageIcon(
-				InterfazTablero.class
-						.getResource("/com/rzg/zombieland/cliente/interfazTablero/Pasto.png")));
+		label.setIcon(new ImageIcon("imagenes/Pasto.png"));
 		label.setBounds(33, 25, 500, 509);
 		frame.getContentPane().add(label);
 
@@ -167,7 +165,7 @@ public class InterfazTablero extends JPanel {
 
 		table = new JTable();
 		table.setGridColor(Color.BLACK);
-		table.setRowHeight(30);
+		table.setRowHeight(31);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setModel(new DefaultTableModel(
 				new Object[][] { { null, null }, { null, null },

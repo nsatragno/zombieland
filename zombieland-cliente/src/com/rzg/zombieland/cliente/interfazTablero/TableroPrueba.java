@@ -209,7 +209,7 @@ public class TableroPrueba extends JFrame {
 		table = new JTable();
 		table.setRowSelectionAllowed(false);
 		table.setGridColor(Color.BLACK);
-		table.setRowHeight(30);
+		table.setRowHeight(31);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setModel(new DefaultTableModel(
 				new Object[][] { { null, null }, { null, null },

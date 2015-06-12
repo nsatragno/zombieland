@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
 /**
  * 
@@ -27,6 +28,7 @@ public class InterfazRankingGeneral extends JPanel {
 	 * Create the frame.
 	 */
 	public InterfazRankingGeneral() {
+		setBackground(Color.BLACK);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 
@@ -40,11 +42,13 @@ public class InterfazRankingGeneral extends JPanel {
 		scrollPane.setViewportView(tabbedPane);
 
 		JLabel lblNewLabel = new JLabel("Nombre de Usuario");
+		lblNewLabel.setForeground(Color.GRAY);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setBounds(40, 21, 205, 27);
 		add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Puntaje");
+		lblNewLabel_1.setForeground(Color.GRAY);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel_1.setBounds(668, 12, 95, 44);
 		add(lblNewLabel_1);

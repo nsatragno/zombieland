@@ -118,7 +118,7 @@ public class InterfazConexionServidor extends JPanel {
 	
 	@Override
 	public void paint (Graphics g){
-		ImageIcon imagenFondo = new ImageIcon("imagenes/fondoServidor.png");
+		ImageIcon imagenFondo = new ImageIcon("imagenes/Fondos/fondoServidor.png");
 		g.drawImage(imagenFondo.getImage(), 0, -35, 800, 600, null);
 		setOpaque(false);
 		super.paint(g);
