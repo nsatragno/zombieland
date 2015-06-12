@@ -44,29 +44,39 @@ public class InterfazRecuperaContrasenia extends JFrame
 		contentPane.setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario.setForeground(Color.WHITE);
 		lblUsuario.setBounds(90, 75, 79, 14);
 		contentPane.add(lblUsuario);
 		
 		JLabel lblPregunta = new JLabel("Pregunta de Seguridad");
+		lblPregunta.setForeground(Color.WHITE);
 		lblPregunta.setBounds(90, 115, 132, 14);
 		contentPane.add(lblPregunta);
 		
 		JLabel lblRespuesta = new JLabel("Respuesta");
+		lblRespuesta.setForeground(Color.WHITE);
 		lblRespuesta.setBounds(90, 155, 110, 14);
 		contentPane.add(lblRespuesta);
 		
 		JLabel labelContrasenia = new JLabel("");
+		labelContrasenia.setForeground(Color.RED);
 		labelContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
-		labelContrasenia.setBorder(new LineBorder(new Color(0, 0, 0)));
+		labelContrasenia.setBorder(new LineBorder(Color.GRAY));
 		labelContrasenia.setBounds(120, 266, 270, 20);
 		contentPane.add(labelContrasenia);
 		
 		textFieldUsuario = new JTextField();
+		textFieldUsuario.setOpaque(false);
+		textFieldUsuario.setBorder(new LineBorder(Color.GRAY));
+		textFieldUsuario.setForeground(Color.WHITE);
 		textFieldUsuario.setBounds(270, 75, 125, 20);
 		contentPane.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 		
 		preguntaSeguridad = new JComboBox<String>();
+		preguntaSeguridad.setBackground(Color.BLACK);
+		preguntaSeguridad.setOpaque(false);
+		preguntaSeguridad.setForeground(Color.WHITE);
         preguntaSeguridad.setModel(new DefaultComboBoxModel<String>(new String[] { "",
                 "Cual es su color favorito?", "Mejor amigo de la infancia?",
                 "A que escuela primaria fue?", "Nombre de su primer mascota?" }));
@@ -74,27 +84,36 @@ public class InterfazRecuperaContrasenia extends JFrame
         getContentPane().add(preguntaSeguridad);
 		
 		textFieldResp = new JTextField();
+		textFieldResp.setForeground(Color.WHITE);
+		textFieldResp.setBorder(new LineBorder(Color.GRAY));
+		textFieldResp.setOpaque(false);
 		textFieldResp.setColumns(10);
 		textFieldResp.setBounds(270, 155, 125, 20);
 		contentPane.add(textFieldResp);
 		
 		JLabel lblRzg = new JLabel("RZG - 2015");
         lblRzg.setForeground(SystemColor.controlShadow);
-        lblRzg.setBounds(419, 301, 63, 14);
+        lblRzg.setBounds(421, 293, 63, 14);
         getContentPane().add(lblRzg);
         
         JButton btnRecuperar = new JButton("Recuperar");
         btnRecuperar.setBounds(195, 205, 135, 30);
         contentPane.add(btnRecuperar);
         
-        JLabel lblImagen = new JLabel("");
-        lblImagen.setIcon(new ImageIcon("imagenes/zombie-silueta.png"));
-        lblImagen.setBounds(0, -5, 110, 316);
-        contentPane.add(lblImagen);
-        
         JLabel lblTitulo = new JLabel("Recupera tu contrase\u00F1a");
+        lblTitulo.setForeground(Color.LIGHT_GRAY);
         lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 22));
         lblTitulo.setBounds(90, 16, 340, 33);
         contentPane.add(lblTitulo);
+        
+        JLabel lblImagen = new JLabel("");
+        lblImagen.setIcon(new ImageIcon("imagenes/zombie-silueta.png"));
+        lblImagen.setBounds(-5, -30, 100, 386);
+        contentPane.add(lblImagen);
+        
+        JLabel lblFondo = new JLabel("");
+        lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-contraseña.png"));
+        lblFondo.setBounds(-400, 0, 925, 386);
+        contentPane.add(lblFondo);
 	}
 }

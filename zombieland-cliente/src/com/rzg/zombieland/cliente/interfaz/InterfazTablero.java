@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  * @author Manuel
  */
 
-public class TableroTest extends JPanel {
+public class InterfazTablero extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	// Creo este objeto para poder crear objetos del tipo POJOEntidad
@@ -55,7 +56,7 @@ public class TableroTest extends JPanel {
 	private Image[] img; // Avatares
 	private ImageIcon fondo;
 
-	public TableroTest() {
+	public InterfazTablero() {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		setBounds(100, 100, 800, 600);
@@ -158,6 +159,11 @@ public class TableroTest extends JPanel {
 		moveDown.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveDown.setBounds(640, 471, 45, 45);
 		add(moveDown);
+		
+		JLabel label = new JLabel("RZG - 2015");
+		label.setForeground(SystemColor.textInactiveText);
+		label.setBounds(700, 515, 63, 14);
+		add(label);
 
 		JPanel panelJug = new JPanel();
 		panelJug.setBounds(561, 34, 193, 175);

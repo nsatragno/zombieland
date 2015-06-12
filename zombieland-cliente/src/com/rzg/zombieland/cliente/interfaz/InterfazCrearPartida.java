@@ -1,7 +1,6 @@
 package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -111,7 +109,7 @@ public class InterfazCrearPartida extends JPanel
 		
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
-		label.setBounds(637, 537, 63, 14);
+		label.setBounds(700, 515, 63, 14);
 		add(label);
 		
 		JLabel lblFondo = new JLabel("");

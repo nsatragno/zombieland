@@ -2,7 +2,10 @@ package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,8 +16,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * Interfaz de Listado de Partidas
@@ -109,10 +110,15 @@ public class InterfazListadoPartidas extends JPanel {
 		tablaPartidas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablaPartidas.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(tablaPartidas);
-
+		
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
-		label.setBounds(702, 516, 110, 14);
+		label.setBounds(700, 515, 110, 14);
 		add(label);
+
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 800, 600);
+		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-lista-partidas.png"));
+		add(lblFondo);
 	}
 }

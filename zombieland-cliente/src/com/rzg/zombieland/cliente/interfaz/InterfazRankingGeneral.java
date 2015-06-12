@@ -1,6 +1,8 @@
 package com.rzg.zombieland.cliente.interfaz;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,7 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
 
 /**
  * 
@@ -56,6 +57,11 @@ public class InterfazRankingGeneral extends JPanel {
 		JButton btnVolver = new JButton("Volver al Lobby");
 		btnVolver.setBounds(40, 325, 121, 35);
 		add(btnVolver);
+		
+		JLabel label = new JLabel("RZG - 2015");
+		label.setForeground(SystemColor.textInactiveText);
+		label.setBounds(700, 515, 63, 14);
+		add(label);
 
 		JLabel lblNewLabel_2 = new JLabel("New label");
 		lblNewLabel_2

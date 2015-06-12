@@ -1,5 +1,6 @@
 package com.rzg.zombieland.cliente.interfaz;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import org.jdeferred.DoneCallback;
 
@@ -56,11 +58,6 @@ public class InterfazRegistro extends JPanel {
      */
     private void initialize() {
         setLayout(null);
-        JLabel label = new JLabel("");
-        label.setIcon(new ImageIcon("imagenes/zombie2.png"));
-        label.setBounds(690, 214, 129, 353);
-        add(label);
-
         JButton btnRegistrar = new JButton("Registrar!");
         btnRegistrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -80,8 +77,9 @@ public class InterfazRegistro extends JPanel {
         add(btnVolverAlInicio);
 
         JLabel lblNombreDeUsuario = new JLabel("Nombre de usuario:");
+        lblNombreDeUsuario.setForeground(Color.LIGHT_GRAY);
         lblNombreDeUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblNombreDeUsuario.setBounds(10, 23, 160, 26);
+        lblNombreDeUsuario.setBounds(10, 40, 160, 30);
         add(lblNombreDeUsuario);
         
         ImageIcon icon = new ImageIcon("imagenes/loading.gif");
@@ -92,54 +90,80 @@ public class InterfazRegistro extends JPanel {
         add(imagenCargando);
 
         JLabel lblPassword = new JLabel("Password:");
+        lblPassword.setForeground(Color.LIGHT_GRAY);
         lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblPassword.setBounds(10, 58, 147, 18);
+        lblPassword.setBounds(10, 80, 160, 30);
         add(lblPassword);
 
         JLabel lblConfirmaPassword = new JLabel("Confirma Password:");
+        lblConfirmaPassword.setForeground(Color.LIGHT_GRAY);
         lblConfirmaPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblConfirmaPassword.setBounds(10, 85, 160, 26);
+        lblConfirmaPassword.setBounds(10, 120, 160, 30);
         add(lblConfirmaPassword);
 
         JLabel lblPreguntaDeSeguridad = new JLabel("Pregunta de seguridad");
+        lblPreguntaDeSeguridad.setForeground(Color.LIGHT_GRAY);
         lblPreguntaDeSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblPreguntaDeSeguridad.setBounds(10, 122, 205, 26);
+        lblPreguntaDeSeguridad.setBounds(10, 160, 200, 30);
         add(lblPreguntaDeSeguridad);
 
         JLabel lblRespuestaDeSeguridad = new JLabel("Respuesta de seguridad:");
+        lblRespuestaDeSeguridad.setForeground(Color.LIGHT_GRAY);
         lblRespuestaDeSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblRespuestaDeSeguridad.setBounds(10, 160, 181, 26);
+        lblRespuestaDeSeguridad.setBounds(10, 200, 200, 30);
         add(lblRespuestaDeSeguridad);
-        nombreDeUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        nombreDeUsuario.setBounds(225, 23, 157, 21);
-        add(nombreDeUsuario);
+        
+        nombreDeUsuario.setBackground(Color.BLACK);
+        nombreDeUsuario.setForeground(Color.WHITE);
         nombreDeUsuario.setColumns(10);
+        nombreDeUsuario.setBorder(new LineBorder(new Color(51, 153, 51)));
+        nombreDeUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        nombreDeUsuario.setBounds(225, 40, 160, 30);
+        add(nombreDeUsuario);
+        
+        password.setBorder(new LineBorder(new Color(51, 153, 51)));
+        password.setForeground(Color.WHITE);
+        password.setBackground(Color.BLACK);
         password.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        password.setBounds(225, 56, 157, 21);
+        password.setBounds(225, 80, 160, 30);
         add(password);
 
         verificacionPassword = new JPasswordField();
+        verificacionPassword.setForeground(Color.WHITE);
+        verificacionPassword.setBackground(Color.BLACK);
+        verificacionPassword.setBorder(new LineBorder(new Color(51, 153, 51)));
         verificacionPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        verificacionPassword.setBounds(225, 89, 157, 21);
+        verificacionPassword.setBounds(225, 120, 160, 30);
         add(verificacionPassword);
 
         preguntaSeguridad = new JComboBox<String>();
+        preguntaSeguridad.setBorder(new LineBorder(new Color(51, 153, 51)));
+        preguntaSeguridad.setForeground(Color.WHITE);
+        preguntaSeguridad.setBackground(Color.BLACK);
         preguntaSeguridad.setModel(new DefaultComboBoxModel<String>(new String[] { "",
                 "Cual es su color favorito?", "Mejor amigo de la infancia?",
                 "A que escuela primaria fue?", "Nombre de su primer mascota?" }));
-        preguntaSeguridad.setBounds(225, 127, 191, 20);
+        preguntaSeguridad.setBounds(225, 160, 200, 30);
         add(preguntaSeguridad);
 
         respuestaSeguridad = new JTextField();
-        respuestaSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        respuestaSeguridad.setBounds(225, 164, 157, 21);
-        add(respuestaSeguridad);
+        respuestaSeguridad.setBackground(Color.BLACK);
+        respuestaSeguridad.setForeground(Color.WHITE);
         respuestaSeguridad.setColumns(10);
+        respuestaSeguridad.setBorder(new LineBorder(new Color(51, 153, 51)));
+        respuestaSeguridad.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        respuestaSeguridad.setBounds(225, 200, 160, 30);
+        add(respuestaSeguridad);
 
         JLabel lblRzg = new JLabel("RZG - 2015");
         lblRzg.setForeground(SystemColor.controlShadow);
-        lblRzg.setBounds(709, 526, 63, 14);
+        lblRzg.setBounds(700, 515, 63, 14);
         add(lblRzg);
+        
+        JLabel lblFondo = new JLabel("");
+        lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-reg-usuario.png"));
+        lblFondo.setBounds(0, 0, 800, 600);
+        add(lblFondo);
     }
 
     /**

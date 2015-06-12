@@ -158,16 +158,12 @@ public class InterfazLobby extends JPanel
 		
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
-		label.setBounds(672, 527, 63, 14);
+		label.setBounds(700, 515, 63, 14);
 		add(label);
 		
 		JLabel lblZombie = new JLabel("");
 		lblZombie.setIcon(new ImageIcon("imagenes/zombie2.png"));
 		lblZombie.setBounds(681, 199, 176, 408);
 		add(lblZombie);
-		
-		JButton btnPersonalizar = new JButton("Modifica tu Partida!");
-		btnPersonalizar.setBounds(862, 30, 144, 28);
-		add(btnPersonalizar);
 	}
 }

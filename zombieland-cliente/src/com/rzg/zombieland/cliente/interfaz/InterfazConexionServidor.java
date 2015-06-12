@@ -17,6 +17,7 @@ import javax.swing.border.LineBorder;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import java.awt.SystemColor;
 
 /**
  * Interfaz que lanza un HiloEscucha según parámetros de usuario.
@@ -34,6 +35,7 @@ public class InterfazConexionServidor extends JPanel {
 	
 	// Con este botón se conecta al servidor.
 	private JButton botonConectar;
+	private JLabel label;
 	
 	/**
 	 * Create the application.
@@ -94,6 +96,11 @@ public class InterfazConexionServidor extends JPanel {
 			}
 		});
 		add(botonConectar);
+		
+		label = new JLabel("RZG - 2015");
+		label.setForeground(SystemColor.textInactiveText);
+		label.setBounds(700, 515, 63, 14);
+		add(label);
 	}
 	
 	/**

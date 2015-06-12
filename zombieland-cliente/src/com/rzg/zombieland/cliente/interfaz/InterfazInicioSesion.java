@@ -1,6 +1,7 @@
 package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -98,7 +99,7 @@ public class InterfazInicioSesion extends JPanel {
 		
 		JLabel lblRzg = new JLabel("RZG - 2015");
 		lblRzg.setForeground(SystemColor.controlShadow);
-		lblRzg.setBounds(701, 526, 110, 14);
+		lblRzg.setBounds(700, 515, 110, 14);
 		add(lblRzg);
 		
 		JLabel lblUniteAZombieland = new JLabel("Unite a Zombieland!");
@@ -155,4 +156,12 @@ public class InterfazInicioSesion extends JPanel {
                                           JOptionPane.ERROR_MESSAGE);   
         }
     }
+	
+	@Override
+	public void paint (Graphics g){
+		ImageIcon imagenFondo = new ImageIcon("imagenes/Fondos/fondo-inicio-sesion.png");
+		g.drawImage(imagenFondo.getImage(), 0, -50, 800, 600, null);
+		setOpaque(false);
+		super.paint(g);
+	}
 }
