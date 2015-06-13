@@ -9,9 +9,6 @@ import com.rzg.zombieland.server.juego.Tablero;
  *
  */
 public class Ronda {
-    // Nombre de la ronda, dado por el administrador del sistema.
-    private String nombre;
-    
     // El tablero que contiene el estado actual del juego.
     private Tablero tablero;
 }

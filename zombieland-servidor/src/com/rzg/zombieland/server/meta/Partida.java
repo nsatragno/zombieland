@@ -1,8 +1,10 @@
 package com.rzg.zombieland.server.meta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
@@ -18,20 +20,31 @@ public class Partida {
      *
      */
     public enum Estado {
-        // Todavía no ha arrancado, está en la fase de espera de jugadores.
+        /**
+         * Todavía no ha arrancado, está en la fase de espera de jugadores.
+         */
         EN_ESPERA("En espera"), 
         
-        // La partida está en progreso.
+        /**
+         *  La partida está en progreso.
+         */
         ACTIVA("Activa"),
         
+        /**
+         * La partida ha finalizado.
+         */
         FINALIZADA("Finalizada");
         
+        // Una descripción amigable para el usuario del estado.
         private String descripcion;
         
         private Estado(String descripcion) {
             this.descripcion = descripcion;
         }
         
+        /**
+         * @return una descripción amigable para el usuario.
+         */
         public String getDescripcion() {
             return descripcion;
         }
@@ -66,19 +79,57 @@ public class Partida {
     
     /**
      * Crea una partida nueva a partir de un administrador.
-     * @param administrador
+     * @param administrador - el jugador que crea la partida.
+     * @param datosPartida - el POJO que viene del cliente con los datos de la partida.
+     * @throws NullPointerException si el administrador o los datos de partida son null.
      */
-    public Partida(Jugador administrador) {
-        this.administrador = administrador;
+    public Partida(Jugador administrador, POJOCreacionPartida datosPartida) {
+        this(administrador, getLista(administrador), new ArrayList<Jugador>(),
+             datosPartida.getCantidadRondas(), datosPartida.getCantidadMaximaJugadores());
     }
     
+    /**
+     * @param administrador - el administrador que creó la partida.
+     * @return una lista de jugadores a partir del administrador.
+     */
+    private static List<Jugador> getLista(Jugador administrador) {
+        List<Jugador> listado = new ArrayList<Jugador>(1);
+        listado.add(administrador);
+        return listado;
+    }
+
     /**
      * Crea una partida nueva a partir de la partida anterior.
      * @param partida
      */
     public Partida(Partida partida) {
-        // TODO implementar.
+        this(partida.administrador, partida.jugadores, partida.espectadores,
+             partida.rondas.size(), partida.cantidadMaximaJugadores);
     }
+    
+    /**
+     * Constructor por parámetros.
+     * @param administrador
+     * @param jugadores
+     * @param espectadores
+     * @param cantidadRondas
+     * @param cantidadMaximaJugadores
+     */
+    private Partida(Jugador administrador, List<Jugador> jugadores, List<Jugador> espectadores,
+                    int cantidadRondas, int cantidadMaximaJugadores) {
+        if (administrador == null)
+            throw new NullPointerException();
+        id = UUID.randomUUID();
+        estado = Estado.EN_ESPERA;
+        rondas = new ArrayList<Ronda>();
+        for (int i = 0; i < cantidadRondas; i++)
+            rondas.add(new Ronda());
+    }
+    
+    /**
+     * Constructor sin parámetros para Hibernate.
+     */
+    public Partida() { }
     
     /**
      * Devuelve el resultado de una partida para un jugador.
