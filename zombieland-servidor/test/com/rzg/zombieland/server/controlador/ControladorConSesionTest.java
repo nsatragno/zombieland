@@ -2,10 +2,8 @@ package com.rzg.zombieland.server.controlador;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
@@ -38,14 +36,6 @@ public class ControladorConSesionTest {
 
         private Sesion sesion;
         
-        public ManejadorSesionImpl() {
-            try {
-                sesion = new Sesion(new Jugador("a", "b", "c", "d", "e"));
-            } catch (ParametrosNoValidosException e) {
-                Assert.fail("La construcción del jugador no debería haber lanzado una excepción");
-            }
-        }
-        
         @Override
         public void setSesion(Sesion sesion) {
             this.sesion = sesion;
@@ -64,7 +54,10 @@ public class ControladorConSesionTest {
      */
     @Test
     public void testSesionValida() throws ZombielandException {
-        ControladorConSesionImpl controlador = new ControladorConSesionImpl(new ManejadorSesionImpl());
+        Sesion sesion = new Sesion(new Jugador("a", "b", "b", "d", "e"));
+        ManejadorSesion manejador = new ManejadorSesionImpl();
+        manejador.setSesion(sesion);
+        ControladorConSesionImpl controlador = new ControladorConSesionImpl(manejador);
         assertEquals(ControladorConSesionImpl.MENSAJE_LINEA_PROCESADA, controlador.procesar("test"));
     }
 
@@ -74,6 +67,6 @@ public class ControladorConSesionTest {
      */
     @Test(expected = ZombielandException.class)
     public void testDatosSesionNula() throws ZombielandException {
-        new ControladorConSesionImpl(null);
+        new ControladorConSesionImpl(new ManejadorSesionImpl());
     }
 }

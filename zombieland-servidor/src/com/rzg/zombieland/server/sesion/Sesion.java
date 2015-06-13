@@ -18,8 +18,11 @@ public class Sesion {
     /**
      * Construye una sesión a partir del jugador.
      * @param jugador
+     * @throws NullPointerException si el jugador es nulo.
      */
     public Sesion(Jugador jugador) {
+        if (jugador == null)
+            throw new NullPointerException("El jugador no puede ser null");
         this.jugador = jugador;
         id = UUID.randomUUID();
     }

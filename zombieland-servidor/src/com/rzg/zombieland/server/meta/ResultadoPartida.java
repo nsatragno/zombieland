@@ -44,6 +44,7 @@ public class ResultadoPartida {
      * Crea un nuevo resultado de partida.
      * @param puntos
      * @param ranking
+     * @param jugador 
      */
     public ResultadoPartida(int puntos, int ranking, Jugador jugador) {
         if (puntos < 0)
@@ -61,10 +62,24 @@ public class ResultadoPartida {
         id = UUID.randomUUID();
     }
     
+    /**
+     * @return los puntos del resultado de la partida.
+     */
     public int getPuntos() {
         return puntos;
     }
     
+    /**
+     * Actualiza los puntos del resultado de partida con el nuevo valor.
+     * @param puntos
+     */
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+    
+    /**
+     * @return la posición en el que el jugador quedó dentro de la partida.
+     */
     public int getRanking() {
         return ranking;
     }
@@ -75,10 +90,9 @@ public class ResultadoPartida {
                 + ", jugador=" + jugador + "]";
     }
 
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
-    }
-
+    /**
+     * @return el ID único de resultado de partida.
+     */
     public UUID getId() {
         return id;
     }

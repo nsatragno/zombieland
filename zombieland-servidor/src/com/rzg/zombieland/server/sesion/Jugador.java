@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
-import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 
