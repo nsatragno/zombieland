@@ -77,7 +77,7 @@ public class ControladorInicioSesionTest {
     @Test
     public void testInicioValido() throws ZombielandException, ParametrosNoValidosException {
         Manejador manejador = new Manejador();
-        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador);
+        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, null);
         POJOInicioSesion pojo = new POJOInicioSesion(jugadorValido.getNombre(), jugadorValido.getClave());
         Gson gson = new Gson();
         controlador.procesar(gson.toJson(pojo));
@@ -95,7 +95,7 @@ public class ControladorInicioSesionTest {
     @Test
     public void testInicioNombreNoValido() throws ZombielandException, ParametrosNoValidosException {
         Manejador manejador = new Manejador();
-        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador);
+        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, null);
         POJOInicioSesion pojo = new POJOInicioSesion("asd", jugadorValido.getClave());
         Gson gson = new Gson();
         controlador.procesar(gson.toJson(pojo));
@@ -111,7 +111,7 @@ public class ControladorInicioSesionTest {
     @Test
     public void testInicioClaveNoValida() throws ZombielandException, ParametrosNoValidosException {
         Manejador manejador = new Manejador();
-        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador);
+        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, null);
         POJOInicioSesion pojo = new POJOInicioSesion(jugadorValido.getNombre(), "claveNoValida");
         Gson gson = new Gson();
         controlador.procesar(gson.toJson(pojo));

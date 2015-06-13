@@ -26,7 +26,7 @@ class ManejadorSesionImpl implements ManejadorSesion {
      */
     public void crearSesion() {
         try {
-            sesion = new Sesion(new Jugador("a", "b", "b", "d", "e"));
+            sesion = new Sesion(new Jugador("a", "b", "b", "d", "e"), null);
         } catch (ParametrosNoValidosException e) {
             Assert.fail(e.getMensaje());
         }

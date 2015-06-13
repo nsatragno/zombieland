@@ -27,7 +27,7 @@ public class SesionTest {
      */
     @Test
     public void testDatosValidos() {
-        Sesion sesion = new Sesion(jugadorValido);
+        Sesion sesion = new Sesion(jugadorValido, null);
         Assert.assertEquals(jugadorValido, sesion.getJugador());
     }
 
@@ -36,7 +36,7 @@ public class SesionTest {
      */
     @Test(expected = NullPointerException.class)
     public void testJugadorNull() {
-        new Sesion(null);
+        new Sesion(null, null);
     }
 
 }

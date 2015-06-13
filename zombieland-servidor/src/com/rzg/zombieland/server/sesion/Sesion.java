@@ -2,6 +2,7 @@ package com.rzg.zombieland.server.sesion;
 
 import java.util.UUID;
 
+import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.server.meta.Partida;
 
 /**
@@ -20,12 +21,15 @@ public class Sesion {
     // La partida a la que está asociada el jugador. Puede ser null.
     private Partida partida;
     
+    // El hilo que está atendiendo la sesión.
+    private HiloEscucha hilo;
+    
     /**
      * Construye una sesión a partir del jugador.
      * @param jugador
      * @throws NullPointerException si el jugador es nulo.
      */
-    public Sesion(Jugador jugador) {
+    public Sesion(Jugador jugador, HiloEscucha hilo) {
         if (jugador == null)
             throw new NullPointerException("El jugador no puede ser null");
         this.jugador = jugador;
@@ -60,5 +64,12 @@ public class Sesion {
      */
     public void setPartida(Partida partida) {
         this.partida = partida;
+    }
+    
+    /**
+     * @return el hilo de escucha.
+     */
+    public HiloEscucha getHilo() {
+    	return hilo;
     }
 }

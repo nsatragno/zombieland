@@ -1,11 +1,11 @@
 package com.rzg.zombieland.server.controlador;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
+import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.controlador.Controlador.ComandoDesconocidoException;
 import com.rzg.zombieland.comunes.controlador.ControladorFactory;
 import com.rzg.zombieland.comunes.controlador.ControladorTest;
-import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
 import com.rzg.zombieland.server.sesion.Sesion;
 
@@ -18,6 +18,9 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
     
     // La sesión del jugador.
     private Sesion sesion;
+    
+    // El hilo que usa esta fábrica de controladores.
+    private HiloEscucha hilo;
     
     /**
      * @param linea
@@ -33,7 +36,7 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
         case Enviable.REGISTRAR_JUGADOR:
             return new ControladorRegistro();
         case Enviable.INICIAR_SESION:
-            return new ControladorInicioSesion(this);
+            return new ControladorInicioSesion(this, hilo);
         case Enviable.CREAR_PARTIDA:
             return new ControladorCrearPartida(this);
         default:
@@ -41,6 +44,10 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
                     String.format("El código 0x%X no corresponde con "
                                 + "ninguno de los comandos conocidos", codigo));
         }
+    }
+    
+    public void setHiloEscucha(HiloEscucha hilo) {
+    	this.hilo = hilo;
     }
 
     @Override
