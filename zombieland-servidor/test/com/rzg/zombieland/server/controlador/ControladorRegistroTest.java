@@ -33,10 +33,10 @@ public class ControladorRegistroTest {
     
     /**
      * Hace el setup del test.
-     * @throws ZombielandException no debería.
+     * @throws ParametrosNoValidosException
      */
     @Before
-    public void setUp() throws ZombielandException {
+    public void setUp() throws ParametrosNoValidosException {
         controlador = new ControladorRegistro();
         HibernateSingleton.setTest();
         dao = new JugadorDao();

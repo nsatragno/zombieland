@@ -48,9 +48,10 @@ public class ControladorInicioSesionTest {
     /**
      * Inicializa el test cargando datos previos en la DB.
      * @throws ZombielandException 
+     * @throws ParametrosNoValidosException 
      */
     @Before
-    public void setUp() throws ZombielandException {
+    public void setUp() throws ParametrosNoValidosException {
         HibernateSingleton.setTest();
         JugadorDao dao = new JugadorDao();
         jugadorValido = new Jugador("juan", "1234", "1234", "a", "b");

@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.sesion.Jugador;
 
@@ -52,7 +53,7 @@ public abstract class PersistenciaTest<T, T_ID extends Serializable> {
      * @return un objeto con valores aleatorios para persistir como test. 
      * @throws ZombielandException
      */
-    protected abstract T generarObjeto() throws ZombielandException;
+    protected abstract T generarObjeto() throws ParametrosNoValidosException;
     
     /**
      * Modifica valores del objeto aleatoriamente.
@@ -74,9 +75,9 @@ public abstract class PersistenciaTest<T, T_ID extends Serializable> {
     
     /**
      * @return un jugador aleatorio.
-     * @throws ZombielandException 
+     * @throws ParametrosNoValidosException
      */
-    protected Jugador generarJugador() throws ZombielandException {
+    protected Jugador generarJugador() throws ParametrosNoValidosException {
         Random random = new Random();
         String clave = Integer.toString(random.nextInt());
         return new Jugador(Integer.toString(random.nextInt()),
@@ -88,10 +89,10 @@ public abstract class PersistenciaTest<T, T_ID extends Serializable> {
     
     /**
      * Crea un jugador y lo trae de la DB.
-     * @throws ZombielandException
+     * @throws ParametrosNoValidosException 
      */
     @Test
-    public void testCrearYRecuperarJugador() throws ZombielandException {
+    public void testCrearYRecuperarJugador() throws ParametrosNoValidosException {
         T objeto = generarObjeto();
         Dao<T, T_ID> dao = getDao();
         dao.guardarObjeto(objeto);
@@ -103,10 +104,10 @@ public abstract class PersistenciaTest<T, T_ID extends Serializable> {
     
     /**
      * Guarda un conjunto de jugadores y los recupera a todos, verificando su existencia.
-     * @throws ZombielandException
+     * @throws ParametrosNoValidosException 
      */
     @Test
-    public void testGetListadoJugadores() throws ZombielandException {
+    public void testGetListadoJugadores() throws ParametrosNoValidosException {
         List<T> objetos = new ArrayList<T>();
         Dao<T, T_ID> dao = getDao();
         for (int i = 0; i < 10; i++) {
@@ -124,10 +125,11 @@ public abstract class PersistenciaTest<T, T_ID extends Serializable> {
     
     /**
      * Guarda un objeto en la DB, lo actualiza y luego lo recupera.
-     * @throws ZombielandException
+     * @throws ParametrosNoValidosException 
+     * @throws ZombielandException 
      */
     @Test
-    public void testUpdateObjeto() throws ZombielandException {
+    public void testUpdateObjeto() throws ParametrosNoValidosException, ZombielandException {
         T objeto = generarObjeto();
         Dao<T, T_ID> dao = getDao();
         dao.guardarObjeto(objeto);

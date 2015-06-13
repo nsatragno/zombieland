@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.misc.Avatar;
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
@@ -84,10 +85,10 @@ public class Jugador {
      * @param validacionClave
      * @param preguntaSecreta
      * @param respuestaSecreta
-     * @throws ZombielandException si algún parámetro no es válido.
+     * @throws ParametrosNoValidosException si algún parámetro no es válido.
      */
     public Jugador(String nombre, String clave, String validacionClave,
-                   String preguntaSecreta, String respuestaSecreta) throws ZombielandException {
+                   String preguntaSecreta, String respuestaSecreta) throws ParametrosNoValidosException {
         List<String> errores = new ArrayList<String>();
         
         if (nombre == null || nombre.equals(""))
@@ -109,15 +110,15 @@ public class Jugador {
         this.respuestaSecreta = respuestaSecreta;
         
         if (errores.size() > 0)
-            throw new ZombielandException("Por favor, revise los campos indicados", errores);
+            throw new ParametrosNoValidosException("Jugador", errores);
     }
     
     /**
      * Crea un jugador a través del POJO que lo representa, validando todos sus atributos.
      * @param registro
-     * @throws ZombielandException
+     * @throws ParametrosNoValidosException 
      */
-    public Jugador(POJORegistro registro) throws ZombielandException {
+    public Jugador(POJORegistro registro) throws ParametrosNoValidosException {
         this(registro.getNombre(), registro.getClave(),
              registro.getClave(), registro.getPreguntaSecreta(),
              registro.getRespuestaSecreta());

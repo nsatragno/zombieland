@@ -1,5 +1,6 @@
 package com.rzg.zombieland.server.persistencia;
 
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.sesion.Jugador;
 
@@ -11,7 +12,7 @@ import com.rzg.zombieland.server.sesion.Jugador;
 public class JugadorTest extends PersistenciaTest<Jugador, String> {
 
     @Override
-    protected Jugador generarObjeto() throws ZombielandException {
+    protected Jugador generarObjeto() throws ParametrosNoValidosException {
         return generarJugador();
     }
 

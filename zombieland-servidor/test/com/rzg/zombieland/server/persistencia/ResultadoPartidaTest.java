@@ -3,6 +3,7 @@ package com.rzg.zombieland.server.persistencia;
 import java.util.Random;
 import java.util.UUID;
 
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
 import com.rzg.zombieland.server.sesion.Jugador;
@@ -15,7 +16,7 @@ import com.rzg.zombieland.server.sesion.Jugador;
 public class ResultadoPartidaTest extends PersistenciaTest<ResultadoPartida, UUID> {
 
     @Override
-    protected ResultadoPartida generarObjeto() throws ZombielandException {
+    protected ResultadoPartida generarObjeto() throws ParametrosNoValidosException {
         Random random = new Random();
         // Ya debe existir un jugaro en la DB para poder guardar al resultado de partida.
         Jugador jugador = generarJugador();

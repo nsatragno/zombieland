@@ -28,6 +28,7 @@ public abstract class Controlador {
      * Procesa la petición definida por la línea enviada.
      * @param linea
      * @return la respuesta que se debe imprimir en el búfer de salida.
+     * @throws ZombielandException 
      */
     public abstract String procesar(String linea);
 }

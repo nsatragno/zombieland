@@ -8,7 +8,7 @@ import java.util.List;
  * @author nicolas
  *
  */
-public class ParametrosNoValidosException extends Exception {
+public class ParametrosNoValidosException extends ZombielandException {
     private static final long serialVersionUID = 2748734264163995657L;
 
     // Listado de parámetros no válidos.
