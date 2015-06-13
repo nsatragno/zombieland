@@ -26,7 +26,7 @@ public class ControladorCrearPartidaTest {
         manejador.crearSesion();
         ControladorCrearPartida controlador = new ControladorCrearPartida(manejador);
         Gson gson = new Gson();
-        POJOCreacionPartida pojo = new POJOCreacionPartida(5, 10, "comer cerebros");
+        POJOCreacionPartida pojo = new POJOCreacionPartida(10, 5, "comer cerebros");
         
         Assert.assertNull(manejador.getSesion().getPartida());
         
