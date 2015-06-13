@@ -6,6 +6,7 @@ import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.Partida;
+import com.rzg.zombieland.server.meta.ServicioPartidas;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
 
 /**
@@ -29,6 +30,7 @@ public class ControladorCrearPartida extends ControladorConSesion {
         Gson gson = new Gson();
         POJOCreacionPartida pojo = gson.fromJson(linea, POJOCreacionPartida.class);
         Partida partida = new Partida(getSesion().getJugador(), pojo);
+        ServicioPartidas.getInstancia().addPartida(partida);
         getSesion().setPartida(partida);
         Log.debug("El jugador " + getSesion().getJugador().getNombre() + " ha creado una partida.");
         return gson.toJson(new RespuestaGenerica());

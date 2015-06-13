@@ -6,6 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartidaTest;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesionTest;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOLobbyTest;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistroTest;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaLoginTest;
 
@@ -16,7 +17,7 @@ import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaLoginTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ POJORegistroTest.class, HiloEscuchaTest.class, RespuestaLoginTest.class,
-                POJOInicioSesionTest.class, POJOCreacionPartidaTest.class })
+                POJOInicioSesionTest.class, POJOCreacionPartidaTest.class, POJOLobbyTest.class })
 public class SuiteComunicacion {
 
 }

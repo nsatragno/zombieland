@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.meta.ServicioPartidas;
 
 /**
  * Verifica el correcto funcionamiento del controlador de creación de partida.
@@ -35,6 +36,7 @@ public class ControladorCrearPartidaTest {
         
         Assert.assertTrue(objetoRespuesta.fuePeticionExitosa());
         Assert.assertNotNull(manejador.getSesion().getPartida());
+        Assert.assertEquals(1, ServicioPartidas.getInstancia().getPartidas().size());
     }
 
 }

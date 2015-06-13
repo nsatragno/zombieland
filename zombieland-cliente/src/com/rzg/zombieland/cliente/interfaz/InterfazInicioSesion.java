@@ -18,6 +18,7 @@ import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.PeticionInicioSesion;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
@@ -124,7 +125,7 @@ public class InterfazInicioSesion extends JPanel {
 	 */
 	public void login() {
         try {
-            POJOInicioSesion pojo = 
+            final POJOInicioSesion pojo = 
                     new POJOInicioSesion(fieldUsuario.getText(),
                                          new String(fieldPassword.getPassword()));
             PeticionInicioSesion peticion = new PeticionInicioSesion(pojo);
@@ -134,6 +135,7 @@ public class InterfazInicioSesion extends JPanel {
                 @Override
                 public void onDone(RespuestaGenerica respuesta) {
                     if (respuesta.fuePeticionExitosa()) {
+                        Estado.getInstancia().setNombreJugador(pojo.getNombre());
                         Main.irA(Main.LISTADO_PARTIDAS);
                         return;
                     }
