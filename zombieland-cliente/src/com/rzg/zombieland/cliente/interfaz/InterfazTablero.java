@@ -203,7 +203,7 @@ public class InterfazTablero extends JPanel {
 		panelJug.add(table, BorderLayout.CENTER);
 		
 		JLabel labelFondo = new JLabel("");
-		labelFondo.setIcon(new ImageIcon("imagenes/Fondo/fondo-tablero.png"));
+		labelFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-tablero.png"));
 		labelFondo.setBounds(0, 0, 800, 600);
 		add(labelFondo);
 	}
