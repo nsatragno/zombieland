@@ -5,6 +5,7 @@ import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.controlador.Controlador.ComandoDesconocidoException;
 import com.rzg.zombieland.comunes.controlador.ControladorFactory;
 import com.rzg.zombieland.comunes.controlador.ControladorTest;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
 import com.rzg.zombieland.server.sesion.Sesion;
 
@@ -33,6 +34,8 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
             return new ControladorRegistro();
         case Enviable.INICIAR_SESION:
             return new ControladorInicioSesion(this);
+        case Enviable.CREAR_PARTIDA:
+            return new ControladorCrearPartida(this);
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

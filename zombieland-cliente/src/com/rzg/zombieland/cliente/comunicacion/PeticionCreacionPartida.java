@@ -2,26 +2,25 @@ package com.rzg.zombieland.cliente.comunicacion;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 
 /**
- * Define una petición del cliente para autenticarse.
+ * Modela una petición de creación de partida. 
  * @author nicolas
- *
  */
-public class PeticionInicioSesion extends Peticion<POJOInicioSesion, RespuestaGenerica> {
-    
+public class PeticionCreacionPartida extends Peticion<POJOCreacionPartida, RespuestaGenerica> {
+
     /**
-     * Construye una petición de login para el POJO indicado.
+     * Constructor heredado.
      * @param pojo
      */
-    public PeticionInicioSesion(POJOInicioSesion pojo) {
+    public PeticionCreacionPartida(POJOCreacionPartida pojo) {
         super(pojo, RespuestaGenerica.class);
     }
 
     @Override
     protected int getCodigoPeticion() {
-        return Enviable.INICIAR_SESION;
+        return Enviable.CREAR_PARTIDA;
     }
 }

@@ -128,7 +128,7 @@ public class InterfazInicioSesion extends JPanel {
                     new POJOInicioSesion(fieldUsuario.getText(),
                                          new String(fieldPassword.getPassword()));
             PeticionInicioSesion peticion = new PeticionInicioSesion(pojo);
-            ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
+            ServicioCliente.enviarPeticion(peticion);
             final InterfazInicioSesion _this = this;
             peticion.getRespuesta().done(new DoneCallback<RespuestaGenerica>() {
                 @Override

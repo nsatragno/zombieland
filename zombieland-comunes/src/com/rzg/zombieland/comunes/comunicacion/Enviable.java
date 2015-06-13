@@ -28,6 +28,11 @@ public abstract class Enviable {
     public static final int INICIAR_SESION = 0x3;
     
     /**
+     * Crear una nueva partida que administra el jugador.
+     */
+    public static final int CREAR_PARTIDA = 0x4;
+    
+    /**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";

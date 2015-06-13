@@ -26,15 +26,15 @@ public class PeticionTest extends PeticionTestHarness {
     
     private final static String MENSAJE_TEST = "Mensaje test! :D";
     
-    private static class ObjetoPeticionTest extends Peticion<String> {
+    private static class ObjetoPeticionTest extends Peticion<String, String> {
         
         private String mensajeTest;
         
         public ObjetoPeticionTest(String mensajeTest) {
+            super(mensajeTest, String.class);
             this.mensajeTest = mensajeTest;
         }
         
-        @Override
         protected String getMensajePeticion() {
             return mensajeTest;
         }
@@ -45,7 +45,7 @@ public class PeticionTest extends PeticionTestHarness {
         }
 
         @Override
-        protected String generarRespuesta(String respuesta) {
+        public String generarRespuesta(String respuesta) {
             return respuesta;
         }
     }
@@ -93,7 +93,7 @@ public class PeticionTest extends PeticionTestHarness {
 				}
 			});
         }
-        latch.await(1, TimeUnit.SECONDS);
+        assertTrue(latch.await(2, TimeUnit.SECONDS));
         if (latch.getCount() != 0)
             fail("No retornaron todas las peticiones o tardaron demasiado");
     }

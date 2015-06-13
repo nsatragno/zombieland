@@ -14,8 +14,8 @@ import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
  */
 public class POJOCreacionPartidaTest {
 
-    private final static int CANTIDAD_JUGADORES_VALIDA = 10;
-    private final static int CANTIDAD_RONDAS_VALIDA = 5;
+    private final static int CANTIDAD_JUGADORES_VALIDA = 5;
+    private final static int CANTIDAD_RONDAS_VALIDA = 10;
     
     /**
      * Verifica los valores creando un pojo con datos válidos.
@@ -24,7 +24,7 @@ public class POJOCreacionPartidaTest {
     @Test
     public void testParametrosValidos() throws ParametrosNoValidosException {
         POJOCreacionPartida pojo = 
-                new POJOCreacionPartida(CANTIDAD_RONDAS_VALIDA, CANTIDAD_JUGADORES_VALIDA);
+                new POJOCreacionPartida(CANTIDAD_RONDAS_VALIDA, CANTIDAD_JUGADORES_VALIDA, "a");
         assertEquals(CANTIDAD_RONDAS_VALIDA, pojo.getCantidadRondas());
         assertEquals(CANTIDAD_JUGADORES_VALIDA, pojo.getCantidadMaximaJugadores());
     }
@@ -38,14 +38,14 @@ public class POJOCreacionPartidaTest {
     public void testCantidadRondasFueraDeLosLimites() {
         try {
             new POJOCreacionPartida(POJOCreacionPartida.CANTIDAD_MAXIMA_RONDAS + 1,
-                                    CANTIDAD_JUGADORES_VALIDA);
+                                    CANTIDAD_JUGADORES_VALIDA, "a");
             fail("Debería haber lanzado una excepción");
         } catch (ParametrosNoValidosException  e) {
             // Esperada.
         }
         try {
             new POJOCreacionPartida(POJOCreacionPartida.CANTIDAD_MINIMA_RONDAS - 1,
-                                    CANTIDAD_JUGADORES_VALIDA);
+                                    CANTIDAD_JUGADORES_VALIDA, "a");
             fail("Debería haber lanzado una excepción");
         } catch (ParametrosNoValidosException  e) {
             // Esperada.
@@ -60,14 +60,14 @@ public class POJOCreacionPartidaTest {
     public void testCantidadJugadoresFueraDeLosLimites() {
         try {
             new POJOCreacionPartida(CANTIDAD_RONDAS_VALIDA,
-                                    POJOCreacionPartida.CANTIDAD_MAXIMA_JUGADORES + 1);
+                                    POJOCreacionPartida.CANTIDAD_MAXIMA_JUGADORES + 1, "a");
             fail("Debería haber lanzado una excepción");
         } catch (ParametrosNoValidosException  e) {
             // Esperada.
         }
         try {
             new POJOCreacionPartida(CANTIDAD_RONDAS_VALIDA,
-                                    POJOCreacionPartida.CANTIDAD_MINIMA_JUGADORES - 1);
+                                    POJOCreacionPartida.CANTIDAD_MINIMA_JUGADORES - 1, "a");
             fail("Debería haber lanzado una excepción");
         } catch (ParametrosNoValidosException  e) {
             // Esperada.
@@ -83,7 +83,7 @@ public class POJOCreacionPartidaTest {
     public void testCantidadDeJugadoresNoMultiploDeCantidadPartidas() {
         try {
             new POJOCreacionPartida(CANTIDAD_RONDAS_VALIDA,
-                                    CANTIDAD_JUGADORES_VALIDA - 1);
+                                    CANTIDAD_JUGADORES_VALIDA - 1, "a");
             fail("Debería haber lanzado una excepción");
         } catch (ParametrosNoValidosException  e) {
             // Esperada.
@@ -97,10 +97,10 @@ public class POJOCreacionPartidaTest {
      */
     @Test
     public void testTodosLosErrores() throws ParametrosNoValidosException {
-        final int CANTIDAD_ERRORES_ESPERADOS = 3;
+        final int CANTIDAD_ERRORES_ESPERADOS = 4;
         try {
             new POJOCreacionPartida(POJOCreacionPartida.CANTIDAD_MINIMA_RONDAS - 15,
-                                    POJOCreacionPartida.CANTIDAD_MINIMA_JUGADORES - 17);
+                                    POJOCreacionPartida.CANTIDAD_MINIMA_JUGADORES - 17, "");
             fail("Debería haber lanzado una excepción");
         } catch (ParametrosNoValidosException  e) {
             assertEquals(CANTIDAD_ERRORES_ESPERADOS, e.getCantidadParametros());

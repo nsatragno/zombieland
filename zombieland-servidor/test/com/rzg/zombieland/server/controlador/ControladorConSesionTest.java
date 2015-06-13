@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.google.gson.Gson;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
 
@@ -24,7 +26,7 @@ public class ControladorConSesionTest {
         }
 
         @Override
-        public String procesar(String linea) {
+        public String procesarAutenticado(String linea) {
             return MENSAJE_LINEA_PROCESADA;
         }
 
@@ -43,11 +45,13 @@ public class ControladorConSesionTest {
     }
 
     /**
-     * Verifica que intentar usar el controlador con una sesión nula lance una excepción.
+     * Verifica que intentar usar el controlador con una sesión nula devuelve un mensaje de error.
      * @throws ZombielandException 
      */
-    @Test(expected = ZombielandException.class)
+    @Test
     public void testDatosSesionNula() throws ZombielandException {
-        new ControladorConSesionImpl(new ManejadorSesionImpl());
+        String respuesta = new ControladorConSesionImpl(new ManejadorSesionImpl()).procesar("lala");
+        assertEquals(ControladorConSesion.MENSAJE_NO_AUTENTICADO,
+                     new Gson().fromJson(respuesta, RespuestaGenerica.class).getMensajeError()); 
     }
 }

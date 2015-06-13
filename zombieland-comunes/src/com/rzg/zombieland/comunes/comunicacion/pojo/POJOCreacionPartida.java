@@ -35,11 +35,13 @@ public class POJOCreacionPartida {
     // Parámetros de la partida.
     private int cantidadRondas;
     private int cantidadMaximaJugadores;
+    private String nombre;
 
     /**
      * Crea un POJO de creación de partida.
      * @param cantidadRondas - la cantidad de rondas a la que se juega la partida.
      * @param cantidadMaximaJugadores - la cantidad máxima de jugadores para la partida.
+     * @param nombre el nombre de la partida.
      * @throws ParametrosNoValidosException si
      * <ul>
      *  <li>La cantidad de rondas no está entre 
@@ -47,9 +49,11 @@ public class POJOCreacionPartida {
      *  <li>La cantidad de jugadores no está entre 
      *      CANTIDAD_MINIMA_JUGADORES y CANTIDAD_MAXIMA_JUGADORES</li>
      *  <li>La cantidad máxima de jugadores no es un múltiplo de la cantidad de rondas</li>
+     *  <li>El nombre es null o vacío</li>
      * </ul>
      */
-    public POJOCreacionPartida(int cantidadRondas, int cantidadMaximaJugadores) throws ParametrosNoValidosException {
+    public POJOCreacionPartida(int cantidadRondas, int cantidadMaximaJugadores, String nombre)
+            throws ParametrosNoValidosException {
         List<String> errores = new ArrayList<String>();
         if (cantidadRondas < CANTIDAD_MINIMA_RONDAS) {
             errores.add("La cantidad de rondas es inferior a la mínima "
@@ -67,12 +71,15 @@ public class POJOCreacionPartida {
             errores.add("La cantidad de jugadores es superior a la máxima "
                       + "(" + CANTIDAD_MAXIMA_JUGADORES + ")");
         }
-        if (cantidadRondas == 0 || cantidadMaximaJugadores % cantidadRondas != 0)
+        if (nombre == null || nombre.isEmpty())
+            errores.add("El nombre no puede estar vacío");
+        if (cantidadRondas == 0 || cantidadRondas % cantidadMaximaJugadores != 0)
             errores.add("La cantidad de jugadores no es múltiplo de la cantidad de rondas");
         if (errores.size() > 0)
             throw new ParametrosNoValidosException("Creación de partida", errores);
         this.cantidadRondas = cantidadRondas;
         this.cantidadMaximaJugadores = cantidadMaximaJugadores;
+        this.nombre = nombre;
     }
 
     /**
@@ -87,6 +94,13 @@ public class POJOCreacionPartida {
      */
     public int getCantidadMaximaJugadores() {
         return cantidadMaximaJugadores;
+    }
+
+    /**
+     * @return el nombre de la partida.
+     */
+    public String getNombre() {
+        return nombre;
     }
 
 }

@@ -56,6 +56,9 @@ public class Partida {
     // Jugador que creó la partida.
     private Jugador administrador;
     
+    // El nombre de la partida.
+    private String nombre;
+    
     // Listado de jugadores unidos a la partida. Incluye al |administrador|.
     private List<Jugador> jugadores;
     
@@ -80,11 +83,12 @@ public class Partida {
     /**
      * Crea una partida nueva a partir de un administrador.
      * @param administrador - el jugador que crea la partida.
+     * @param nombre - el nombre de la partida, arbitrario.
      * @param datosPartida - el POJO que viene del cliente con los datos de la partida.
      * @throws NullPointerException si el administrador o los datos de partida son null.
      */
     public Partida(Jugador administrador, POJOCreacionPartida datosPartida) {
-        this(administrador, getLista(administrador), new ArrayList<Jugador>(),
+        this(administrador, datosPartida.getNombre(), getLista(administrador), new ArrayList<Jugador>(),
              datosPartida.getCantidadRondas(), datosPartida.getCantidadMaximaJugadores());
     }
     
@@ -103,7 +107,7 @@ public class Partida {
      * @param partida
      */
     public Partida(Partida partida) {
-        this(partida.administrador, partida.jugadores, partida.espectadores,
+        this(partida.administrador, partida.nombre, partida.jugadores, partida.espectadores,
              partida.rondas.size(), partida.cantidadMaximaJugadores);
     }
     
@@ -115,10 +119,14 @@ public class Partida {
      * @param cantidadRondas
      * @param cantidadMaximaJugadores
      */
-    private Partida(Jugador administrador, List<Jugador> jugadores, List<Jugador> espectadores,
+    private Partida(Jugador administrador, String nombre, List<Jugador> jugadores, List<Jugador> espectadores,
                     int cantidadRondas, int cantidadMaximaJugadores) {
         if (administrador == null)
             throw new NullPointerException();
+        if (nombre == null || nombre.isEmpty())
+            throw new NullPointerException();
+        this.administrador = administrador;
+        this.nombre = nombre;
         id = UUID.randomUUID();
         estado = Estado.EN_ESPERA;
         rondas = new ArrayList<Ronda>();

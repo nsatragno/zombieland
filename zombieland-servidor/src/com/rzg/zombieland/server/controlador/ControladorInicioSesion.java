@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.controlador.Controlador;
+import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
@@ -35,6 +36,7 @@ public class ControladorInicioSesion extends Controlador {
             return gson.toJson(new RespuestaGenerica("No se pudo iniciar sesión. Verifique "
                                                       + "el usuario y contraseña"));
         }
+        Log.info("El jugador " + jugador.getNombre() + " ha iniciado sesión.");
         Sesion sesion = new Sesion(jugador);
         ServicioSesion.getInstancia().addSesion(sesion);
         manejadorSesion.setSesion(sesion);

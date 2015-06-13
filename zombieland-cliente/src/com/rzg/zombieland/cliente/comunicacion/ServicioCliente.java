@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
+import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
@@ -36,8 +37,7 @@ public class ServicioCliente {
     }
     
     /**
-     * Devuelve el hilo de escucha.
-     * @return
+     * @return el hilo de escucha.
      */
     public HiloEscucha getHiloEscucha() {
         return hiloEscucha;
@@ -54,13 +54,25 @@ public class ServicioCliente {
     }
     
     /**
-     * Devuelve la instancia de ServicioCliente cargada última, o null si no se cargó ninguna.
-     * @return
+     * @return la instancia de ServicioCliente cargada última, o null si no se cargó ninguna.
      */
     public static ServicioCliente getInstancia() {
         return instancia;
     }
+    
+    /**
+     * Método de convenienvia para enviar una petición al hilo de escucha que subyace al 
+     * ServicioCliente.
+     * @param peticion
+     * @throws ZombielandException
+     */
+    public static void enviarPeticion(Peticion<?, ?> peticion) throws ZombielandException {
+        getInstancia().getHiloEscucha().enviarPeticion(peticion);
+    }
 
+    /**
+     * Cierra el servicio cliente, limpiando todos los recursos que inicializó.
+     */
     public static void cerrar() {
         instancia.hiloEscucha.cerrar();
         try {

@@ -1,5 +1,7 @@
 package com.rzg.zombieland.server.controlador;
 
+import com.google.gson.Gson;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
@@ -12,6 +14,10 @@ import com.rzg.zombieland.server.sesion.Sesion;
  */
 public abstract class ControladorConSesion extends Controlador {
 
+    /**
+     * El mensaje de error que se envía cuando el usuario no está autenticado.
+     */
+    public static final String MENSAJE_NO_AUTENTICADO = "La acción requiere del inicio de sesión";
     private ManejadorSesion manejadorSesion;
     
     /**
@@ -20,10 +26,16 @@ public abstract class ControladorConSesion extends Controlador {
      * @throws ZombielandException si la sesión es null (es decir, el jugador no ha iniciado 
      *         sesión).
      */
-    public ControladorConSesion(ManejadorSesion manejadorSesion) throws ZombielandException {
-        if (manejadorSesion.getSesion() == null)
-            throw new ZombielandException("La acción requiere del inicio de sesión");
+    public ControladorConSesion(ManejadorSesion manejadorSesion) {
         this.manejadorSesion = manejadorSesion; 
+    }
+    
+    @Override
+    public final String procesar(String linea) {
+        // TODO manejar mejor.
+        if (manejadorSesion.getSesion() == null)
+            return new Gson().toJson(new RespuestaGenerica(MENSAJE_NO_AUTENTICADO));
+        return procesarAutenticado(linea);
     }
     
     /**
@@ -32,4 +44,11 @@ public abstract class ControladorConSesion extends Controlador {
     protected Sesion getSesion() {
         return manejadorSesion.getSesion();
     }
+    
+    /**
+     * Procesa una respuesta una vez que ya sabemos que está autenticado.
+     * @param respuesta
+     * @return la respuesta procesada.
+     */
+    protected abstract String procesarAutenticado(String respuesta);
 }

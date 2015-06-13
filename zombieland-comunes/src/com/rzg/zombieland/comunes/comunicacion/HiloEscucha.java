@@ -36,7 +36,7 @@ public class HiloEscucha extends Thread {
     private ControladorFactory controladorFactory;
     
     // Mapea las peticiones para su respuesta.
-    private Map<UUID, Peticion<?>> mapaPeticiones;
+    private Map<UUID, Peticion<?, ?>> mapaPeticiones;
     
     /**
      * Comienza a escuchar en el socket dado, delegando las peticiones a la fábrica de
@@ -50,7 +50,7 @@ public class HiloEscucha extends Thread {
         Log.debug("Estableciendo nueva conexión con " + socket.getInetAddress());
         this.socket = socket;
         this.controladorFactory = controladorFactory;
-        mapaPeticiones = new HashMap<UUID, Peticion<?>>();
+        mapaPeticiones = new HashMap<UUID, Peticion<?, ?>>();
     }
     
     @Override
@@ -125,6 +125,8 @@ public class HiloEscucha extends Thread {
                         Log.error("Se envió un comando desconocido: " + e.getMessage());
                         e.printStackTrace();
                         out.println(Enviable.LINEA_ERROR);
+                        Log.error("Matando hilo de escucha :(");
+                        cerrar();
                     }
                 }
             }
@@ -147,7 +149,7 @@ public class HiloEscucha extends Thread {
      * @param peticion
      * @throws ZombielandException 
      */
-    public void enviarPeticion(Peticion<?> peticion) throws ZombielandException {
+    public void enviarPeticion(Peticion<?, ?> peticion) throws ZombielandException {
         try {
             // Antes de enviar la petición, la almacenamos en un mapa identificada por un ID
             // generado aleatoriamente para poder identificar su respuesta. Es importante notar que

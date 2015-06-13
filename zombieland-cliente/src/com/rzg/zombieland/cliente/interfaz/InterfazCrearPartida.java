@@ -1,6 +1,7 @@
 package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -9,12 +10,25 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.jdeferred.DoneCallback;
+
+import com.rzg.zombieland.cliente.comunicacion.PeticionCreacionPartida;
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
+
+/**
+ * UI de la creación de partida.
+ */
 public class InterfazCrearPartida extends JPanel
 {
    /**
@@ -24,9 +38,9 @@ public class InterfazCrearPartida extends JPanel
 /**
     * @author Ivan
     */
-	private JTextField textFieldNombrePartida;
-	private JTextField textFieldCantJugadores;
-	private JTextField textFieldCantRondas;
+	private JTextField nombrePartida;
+	private JTextField cantidadJugadores;
+	private JTextField cantidadRondas;
 	/**
 	 * Create the frame.
 	 */
@@ -60,40 +74,40 @@ public class InterfazCrearPartida extends JPanel
 		add(lblNombrePartida);
 				
 				
-		textFieldNombrePartida = new JTextField();
-		textFieldNombrePartida.setForeground(Color.WHITE);
-		textFieldNombrePartida.setBackground(Color.DARK_GRAY);
-		textFieldNombrePartida.setBorder(new LineBorder(new Color(51, 102, 255), 2, true));
-		textFieldNombrePartida.setOpaque(false);
-		textFieldNombrePartida.setBounds(200, 110, 170, 20);
-		add(textFieldNombrePartida);
-		textFieldNombrePartida.setColumns(10);
+		nombrePartida = new JTextField();
+		nombrePartida.setForeground(Color.WHITE);
+		nombrePartida.setBackground(Color.DARK_GRAY);
+		nombrePartida.setBorder(new LineBorder(new Color(51, 102, 255), 2, true));
+		nombrePartida.setOpaque(false);
+		nombrePartida.setBounds(200, 110, 170, 20);
+		add(nombrePartida);
+		nombrePartida.setColumns(10);
 				
-		textFieldCantJugadores = new JTextField();
-		textFieldCantJugadores.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldCantJugadores.setOpaque(false);
-		textFieldCantJugadores.setForeground(Color.WHITE);
-		textFieldCantJugadores.setBackground(Color.DARK_GRAY);
-		textFieldCantJugadores.setBorder(new LineBorder(new Color(51, 102, 255), 2, true));
-		textFieldCantJugadores.setBounds(200, 170, 170, 20);
-		add(textFieldCantJugadores);
-		textFieldCantJugadores.setColumns(10);
+		cantidadJugadores = new JTextField();
+		cantidadJugadores.setHorizontalAlignment(SwingConstants.CENTER);
+		cantidadJugadores.setOpaque(false);
+		cantidadJugadores.setForeground(Color.WHITE);
+		cantidadJugadores.setBackground(Color.DARK_GRAY);
+		cantidadJugadores.setBorder(new LineBorder(new Color(51, 102, 255), 2, true));
+		cantidadJugadores.setBounds(200, 170, 170, 20);
+		add(cantidadJugadores);
+		cantidadJugadores.setColumns(10);
 				
-		textFieldCantRondas = new JTextField();
-		textFieldCantRondas.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldCantRondas.setOpaque(false);
-		textFieldCantRondas.setForeground(Color.WHITE);
-		textFieldCantRondas.setBackground(Color.DARK_GRAY);
-		textFieldCantRondas.setBorder(new LineBorder(new Color(51, 102, 255), 2, true));
-		textFieldCantRondas.setBounds(200, 230, 170, 20);
-		add(textFieldCantRondas);
-		textFieldCantRondas.setColumns(10);
+		cantidadRondas = new JTextField();
+		cantidadRondas.setHorizontalAlignment(SwingConstants.CENTER);
+		cantidadRondas.setOpaque(false);
+		cantidadRondas.setForeground(Color.WHITE);
+		cantidadRondas.setBackground(Color.DARK_GRAY);
+		cantidadRondas.setBorder(new LineBorder(new Color(51, 102, 255), 2, true));
+		cantidadRondas.setBounds(200, 230, 170, 20);
+		add(cantidadRondas);
+		cantidadRondas.setColumns(10);
 				
 		JButton btnAceptarCambios = new JButton("Aceptar");
 		btnAceptarCambios.setBounds(50, 300, 175, 40);
 		btnAceptarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.irA(Main.LOBBY);
+			    crearPartida();
 			}
 		});
 		add(btnAceptarCambios);
@@ -116,5 +130,50 @@ public class InterfazCrearPartida extends JPanel
 		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/zombie-fondo.png"));
 		lblFondo.setBounds(0, 0, 944, 574);
 		add(lblFondo);
+	}
+	
+	/**
+	 * Realiza la petición de creación de partida al servidor.
+	 */
+	public void crearPartida() {
+	    try {
+	        POJOCreacionPartida pojo = 
+	                new POJOCreacionPartida(Integer.parseInt(cantidadRondas.getText()),
+	                                        Integer.parseInt(cantidadJugadores.getText()),
+	                                        nombrePartida.getText());
+	        PeticionCreacionPartida peticion = new PeticionCreacionPartida(pojo);
+	        ServicioCliente.enviarPeticion(peticion);
+	        final Component this_ = this;
+	        peticion.getRespuesta().done(new DoneCallback<RespuestaGenerica>() {
+                
+                @Override
+                public void onDone(RespuestaGenerica respuesta) {
+                    // TODO guardar estado.
+                    if (respuesta.fuePeticionExitosa()) {
+                        Main.irA(Main.LOBBY);
+                        return;
+                    }
+                    JOptionPane.showMessageDialog(this_,
+                            respuesta.getMensajeError(),
+                            "Creación de partida",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            });
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(this,
+	                                      "Los datos no son válidos",
+	                                      "Creación de partida",
+	                                      JOptionPane.WARNING_MESSAGE);
+	    } catch (ParametrosNoValidosException e) {
+	        JOptionPane.showMessageDialog(this,
+                    e.getMensaje(),
+                    "Creación de partida",
+                    JOptionPane.WARNING_MESSAGE);
+        } catch (ZombielandException e) {
+            JOptionPane.showMessageDialog(this,
+                    e.getMessage(),
+                    "Creación de partida",
+                    JOptionPane.ERROR_MESSAGE);
+        }
 	}
 }
