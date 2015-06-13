@@ -1,9 +1,12 @@
 package com.rzg.zombieland.server.juego;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
+import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
+import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
 
 /**
@@ -37,17 +40,10 @@ public class Tablero {
 
 		Coordenada c;
 
-		matriz = new EntidadTablero[casilleros][casilleros]; // Matriz de
-																// entidades
-																// creada //
-																// entidades
-
+		matriz = new EntidadTablero[casilleros][casilleros];
 		// Ponemos al zombi
-		zombi.setPosicion(new Coordenada(casilleros / 2, casilleros / 2)); // Siempre
-																			// arranca
-																			// en
-																			// el
-																			// medio.
+		zombi.setPosicion(new Coordenada(casilleros / 2, casilleros / 2)); 
+		// Siempre arranca en el medio.
 		matriz[casilleros / 2][casilleros / 2] = zombi; // Lo ponemos en la
 														// matriz.
 
@@ -58,20 +54,21 @@ public class Tablero {
 		for (int i = 0; i < Math.pow(casilleros, 2) * 0.3; i++) {
 			resuelto = false;
 			while (!resuelto) {
-				c = new Coordenada(rnd.nextInt() % casilleros, rnd.nextInt()
+				c = new Coordenada(Math.abs(rnd.nextInt()) % casilleros, Math.abs(rnd.nextInt())
 						% casilleros);
 				if (matriz[c.getX()][c.getY()] == null
-					&& matriz[c.getX() + 1][c.getY()] == null
+					/*&& matriz[c.getX() + 1][c.getY()] == null
 					&& matriz[c.getX() - 1][c.getY()] == null
 					&& matriz[c.getX()][c.getY() + 1] == null
 					&& matriz[c.getX()][c.getY() - 1] == null
 					&& matriz[c.getX() + 1][c.getY() - 1] == null
 					&& matriz[c.getX() + 1][c.getY() + 1] == null
 					&& matriz[c.getX() - 1][c.getY() - 1] == null
-					&& matriz[c.getX() - 1][c.getY() + 1] == null) {
+					&& matriz[c.getX() - 1][c.getY() + 1] == null*/) {
 					// Basicamente, inserta un obstaculo si a la redonda no hay nada. 
 					// Esto evita tener obstaculos adyacentes y evita encerrar al zombi.
 					matriz[c.getX()][c.getY()] = new Obstaculo(c);
+					resuelto = true;
 				}
 			}
 		}
@@ -80,7 +77,7 @@ public class Tablero {
 		for (Personaje personaje : personajes) {
 			resuelto = false;
 			while (!resuelto) {
-				c = new Coordenada(rnd.nextInt() % casilleros, rnd.nextInt()
+				c = new Coordenada(Math.abs(rnd.nextInt()) % casilleros, Math.abs(rnd.nextInt())
 						% casilleros);
 				if (matriz[c.getX()][c.getY()] == null) {
 					matriz[c.getX()][c.getY()] = personaje;
@@ -100,8 +97,21 @@ public class Tablero {
 	 */
 	public ProyeccionTablero getProyeccion(Coordenada superiorIzquierda,
 			Coordenada inferiorDerecha) {
-		// TODO implementar.
-		return null;
+		List<POJOEntidad> entidades = new ArrayList<POJOEntidad>();
+		// Recorro mi matriz de entidades en los limites indicados por el metodo.
+		for(int i = superiorIzquierda.getX(); i < inferiorDerecha.getX(); i++) {
+			for(int j = superiorIzquierda.getY(); j < inferiorDerecha.getY(); i++) {
+				if(matriz[i][j] != null) {
+					// Agrego las entidades que encuentre a la lista de la proyeccion
+					entidades.add
+						(new POJOEntidad("Elemento" + i + j,
+										 new Coordenada(i,j),  //Cada entidad ya tiene su posicion
+										 Avatar.HOMBRE)); // Acá iria el avatar correspondiente.
+				}
+			}
+		}
+		// Devuelvo la proyección. Chiche bombón.
+		return new ProyeccionTablero(matriz.length,superiorIzquierda,inferiorDerecha,entidades);
 	}
 
 	/**
@@ -111,8 +121,7 @@ public class Tablero {
 	 * @return la entidad en la coordenada dada, o null si no hay ninguna.
 	 */
 	public EntidadTablero getEntidadEn(Coordenada coordenada) {
-		// TODO implementar.
-		return null;
+		return matriz[coordenada.getX()][coordenada.getY()];
 	}
 
 	/**

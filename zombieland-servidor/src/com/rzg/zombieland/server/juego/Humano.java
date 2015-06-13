@@ -1,5 +1,7 @@
 package com.rzg.zombieland.server.juego;
 
+import com.rzg.zombieland.comunes.misc.Coordenada;
+
 
 /**
  * Cobarde animal que solo sabe correr por su vida.
@@ -10,7 +12,7 @@ public class Humano extends Personaje {
 
     // TODO definir sprite.
     private final String SPRITE = "humano.png";
- 
+    
     @Override
     public String getSprite() {
         return SPRITE;
