@@ -25,7 +25,7 @@ public class ProyeccionTablero extends Enviable {
 	 * @author nicolas
 	 *
 	 */
-	public class POJOEntidad {
+	public static class POJOEntidad {
 		// El nombre de esta entidad. Puede ser, por ejemplo, el nombre del
 		// jugador que controla al
 		// personaje.

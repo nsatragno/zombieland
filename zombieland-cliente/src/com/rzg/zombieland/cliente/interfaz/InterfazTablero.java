@@ -35,7 +35,7 @@ public class InterfazTablero extends JPanel {
 	private static final long serialVersionUID = 1L;
 	// Creo este objeto para poder crear objetos del tipo POJOEntidad
 	// y armar la lista para construir la proyeccion de prueba.
-	private static ProyeccionTablero proyeccion = new ProyeccionTablero();
+	private static ProyeccionTablero proyeccion;
 	@SuppressWarnings("unused")
 	private ProyeccionTablero proyeccionPrueba;
 	
@@ -211,9 +211,9 @@ public class InterfazTablero extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		java.util.List<POJOEntidad> entidades = new ArrayList<POJOEntidad>();
-		entidades.add(proyeccion.new POJOEntidad("Player1", new Coordenada(
+		entidades.add(new POJOEntidad("Player1", new Coordenada(
 				coordenadaX, coordenadaY), Avatar.HOMBRE));
-		entidades.add(proyeccion.new POJOEntidad("Player2",
+		entidades.add(new POJOEntidad("Player2",
 				new Coordenada(7, 6), Avatar.MUJER));
 		Coordenada esquinaSupIzq = new Coordenada(
 				coordenadaX - 2 >= 0 ? coordenadaX - 2 : 0,
