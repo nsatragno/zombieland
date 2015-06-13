@@ -34,52 +34,61 @@ public class InterfazLobby extends JPanel
 		setLayout(null);
 		
 		JLabel lblRecomendacion1 = new JLabel("- El juego comenzar\u00E1 cuando la cantidad de jugadores requerida esten en l\u00EDnea.");
-		lblRecomendacion1.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion1.setBounds(320, 89, 497, 20);
-		lblRecomendacion1.setVerticalAlignment(SwingConstants.TOP);
+		lblRecomendacion1.setForeground(Color.WHITE);
+		lblRecomendacion1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion1.setBounds(320, 114, 497, 30);
 		add(lblRecomendacion1);
 		
 		JLabel lblRecomendacion2 = new JLabel("- El juego consistir\u00E1 de las rondas indicadas por el administrador.");
-		lblRecomendacion2.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion2.setBounds(320, 114, 386, 14);
+		lblRecomendacion2.setForeground(Color.WHITE);
+		lblRecomendacion2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion2.setBounds(320, 139, 386, 30);
 		add(lblRecomendacion2);
 		
 		JLabel lblRecomendacion3 = new JLabel("- El zombi busca humanos, el humano escapa de los zombies.");
-		lblRecomendacion3.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion3.setBounds(320, 139, 389, 14);
+		lblRecomendacion3.setForeground(Color.WHITE);
+		lblRecomendacion3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion3.setBounds(320, 164, 389, 30);
 		add(lblRecomendacion3);
 		
 		JLabel lblRecomendacion4 = new JLabel("- Evita los obst\u00E1culos!");
-		lblRecomendacion4.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion4.setBounds(320, 164, 389, 14);
+		lblRecomendacion4.setForeground(Color.WHITE);
+		lblRecomendacion4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion4.setBounds(320, 189, 389, 30);
 		add(lblRecomendacion4);
 		
 		JLabel lblRecomendacion5 = new JLabel("- Los turnos son de 5 segundos cada uno, as\u00ED que pensa tu movimiento r\u00E1pido!");
-		lblRecomendacion5.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion5.setBounds(320, 189, 466, 14);
+		lblRecomendacion5.setForeground(Color.WHITE);
+		lblRecomendacion5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion5.setBounds(320, 214, 466, 30);
 		add(lblRecomendacion5);
 		
-		JLabel lblRecomendacion6 = new JLabel("- Si un humano es convertido la nueva tarea del jugador va a ser atrapar a los humanos.");
-		lblRecomendacion6.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion6.setBounds(320, 214, 497, 14);
+		JLabel lblRecomendacion6 = new JLabel("- Si un humano es convertido la nueva tarea del jugador ser\u00E1 atrapar a los humanos.");
+		lblRecomendacion6.setForeground(Color.WHITE);
+		lblRecomendacion6.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion6.setBounds(320, 239, 497, 30);
 		add(lblRecomendacion6);
 		
+		JLabel lblRecomendacion9 = new JLabel("- Acordate que tenes la opci\u00F3n de no hacer ning\u00FAn movimiento.");
+		lblRecomendacion9.setForeground(Color.WHITE);
+		lblRecomendacion9.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion9.setBounds(320, 264, 402, 30);
+		add(lblRecomendacion9);
+		
 		JLabel lblRecomendacion7 = new JLabel("- Una ronda termina cuando todos los humanos fueron convertidos a zombies.");
-		lblRecomendacion7.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion7.setBounds(320, 264, 466, 14);
+		lblRecomendacion7.setForeground(Color.WHITE);
+		lblRecomendacion7.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion7.setBounds(320, 289, 466, 30);
 		add(lblRecomendacion7);
 		
 		JLabel lblRecomendacion8 = new JLabel("- El juego termina cuando todas las rondas fueron terminadas.");
-		lblRecomendacion8.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion8.setBounds(320, 289, 415, 14);
+		lblRecomendacion8.setForeground(Color.WHITE);
+		lblRecomendacion8.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblRecomendacion8.setBounds(320, 314, 415, 30);
 		add(lblRecomendacion8);
 		
-		JLabel lblRecomendacion9 = new JLabel("- Acordate que tenes la opci\u00F3n de no hacer ning\u00FAn movimiento.");
-		lblRecomendacion9.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblRecomendacion9.setBounds(320, 239, 402, 14);
-		add(lblRecomendacion9);
-		
 		JLabel lblTitulo = new JLabel("TITULO PARTIDA");
+		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setBounds(10, 11, 595, 67);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		add(lblTitulo);
@@ -161,9 +170,9 @@ public class InterfazLobby extends JPanel
 		label.setBounds(700, 515, 63, 14);
 		add(label);
 		
-		JLabel lblZombie = new JLabel("");
-		lblZombie.setIcon(new ImageIcon("imagenes/zombie2.png"));
-		lblZombie.setBounds(681, 199, 176, 408);
-		add(lblZombie);
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-lobby.png"));
+		lblFondo.setBounds(0, 0, 800, 600);
+		add(lblFondo);
 	}
 }
