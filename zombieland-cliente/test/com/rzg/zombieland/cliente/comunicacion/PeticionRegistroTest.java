@@ -10,7 +10,7 @@ import org.jdeferred.DoneCallback;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaRegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
@@ -24,10 +24,10 @@ public class PeticionRegistroTest extends PeticionTestHarness {
         PeticionRegistro peticion = new PeticionRegistro(registro);
         ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
         final CountDownLatch latch = new CountDownLatch(1);
-        peticion.getRespuesta().then(new DoneCallback<RespuestaRegistro>() {
+        peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
 
 			@Override
-			public void onDone(RespuestaRegistro respuesta) {
+			public void onDone(RespuestaGenerica respuesta) {
 				assertEquals(true, respuesta.fuePeticionExitosa());
 				latch.countDown();
 			}

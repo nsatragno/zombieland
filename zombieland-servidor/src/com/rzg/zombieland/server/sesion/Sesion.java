@@ -2,6 +2,8 @@ package com.rzg.zombieland.server.sesion;
 
 import java.util.UUID;
 
+import com.rzg.zombieland.server.meta.Partida;
+
 /**
  * Rastrea el estado de un jugador: si ha iniciado sesión, en qué partida está jugando y a qué 
  * personaje está controlando.
@@ -14,6 +16,9 @@ public class Sesion {
     
     // El ID único de la sesión.
     private UUID id;
+
+    // La partida a la que está asociada el jugador. Puede ser null.
+    private Partida partida;
     
     /**
      * Construye una sesión a partir del jugador.
@@ -39,5 +44,21 @@ public class Sesion {
      */
     public Jugador getJugador() {
         return jugador;
+    }
+
+
+    /**
+     * @return la partida jugada en esta sesión. 
+     */
+    public Partida getPartida() {
+        return partida;
+    }
+    
+    /**
+     * Establece la partida que el jugador comienza.
+     * @param partida
+     */
+    public void setPartida(Partida partida) {
+        this.partida = partida;
     }
 }

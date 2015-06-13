@@ -4,14 +4,14 @@ import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaLogin;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 
 /**
  * Define una petición del cliente para autenticarse.
  * @author nicolas
  *
  */
-public class PeticionInicioSesion extends Peticion<RespuestaLogin> {
+public class PeticionInicioSesion extends Peticion<RespuestaGenerica> {
     
     // Los datos de inicio de sesión que se envían.
     private POJOInicioSesion pojo;
@@ -35,7 +35,7 @@ public class PeticionInicioSesion extends Peticion<RespuestaLogin> {
     }
 
     @Override
-    protected RespuestaLogin generarRespuesta(String respuesta) {
-        return new Gson().fromJson(respuesta, RespuestaLogin.class);
+    protected RespuestaGenerica generarRespuesta(String respuesta) {
+        return new Gson().fromJson(respuesta, RespuestaGenerica.class);
     }
 }

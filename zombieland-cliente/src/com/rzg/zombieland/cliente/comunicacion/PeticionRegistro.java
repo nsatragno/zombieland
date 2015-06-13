@@ -4,14 +4,14 @@ import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaRegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 
 /**
  * Modela una petición de registro de nuevo jugador.
  * @author nicolas
  *
  */
-public class PeticionRegistro extends Peticion<RespuestaRegistro> {
+public class PeticionRegistro extends Peticion<RespuestaGenerica> {
 
     private POJORegistro registro;
     
@@ -31,9 +31,9 @@ public class PeticionRegistro extends Peticion<RespuestaRegistro> {
     }
 
     @Override
-    protected RespuestaRegistro generarRespuesta(String respuesta) {
+    protected RespuestaGenerica generarRespuesta(String respuesta) {
         Gson gson = new Gson();
-        return gson.fromJson(respuesta, RespuestaRegistro.class);
+        return gson.fromJson(respuesta, RespuestaGenerica.class);
     }
 
 }

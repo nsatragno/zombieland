@@ -19,7 +19,7 @@ import org.jdeferred.DoneCallback;
 import com.rzg.zombieland.cliente.comunicacion.PeticionInicioSesion;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaLogin;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
@@ -130,9 +130,9 @@ public class InterfazInicioSesion extends JPanel {
             PeticionInicioSesion peticion = new PeticionInicioSesion(pojo);
             ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
             final InterfazInicioSesion _this = this;
-            peticion.getRespuesta().done(new DoneCallback<RespuestaLogin>() {
+            peticion.getRespuesta().done(new DoneCallback<RespuestaGenerica>() {
                 @Override
-                public void onDone(RespuestaLogin respuesta) {
+                public void onDone(RespuestaGenerica respuesta) {
                     if (respuesta.fuePeticionExitosa()) {
                         Main.irA(Main.LISTADO_PARTIDAS);
                         return;

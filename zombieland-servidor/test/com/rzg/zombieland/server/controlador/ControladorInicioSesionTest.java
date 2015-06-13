@@ -13,6 +13,7 @@ import com.rzg.zombieland.server.persistencia.HibernateSingleton;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
+import com.rzg.zombieland.server.sesion.ServicioSesion;
 import com.rzg.zombieland.server.sesion.Sesion;
 
 /**
@@ -65,6 +66,7 @@ public class ControladorInicioSesionTest {
     @After
     public void tearDown() {
         HibernateSingleton.cerrarConexion();
+        ServicioSesion.matarInstancia();
     }
     
     /**
@@ -80,6 +82,8 @@ public class ControladorInicioSesionTest {
         Gson gson = new Gson();
         controlador.procesar(gson.toJson(pojo));
         Assert.assertEquals(jugadorValido, manejador.getSesion().getJugador());
+        Assert.assertEquals(manejador.getSesion(),
+                            ServicioSesion.getInstancia().getSesion(jugadorValido));
         Assert.assertNotNull(manejador.getSesion().getId());
     }
     
@@ -96,6 +100,7 @@ public class ControladorInicioSesionTest {
         Gson gson = new Gson();
         controlador.procesar(gson.toJson(pojo));
         Assert.assertNull(manejador.getSesion());
+        Assert.assertNull(ServicioSesion.getInstancia().getSesion(jugadorValido));
     }
 
     /**

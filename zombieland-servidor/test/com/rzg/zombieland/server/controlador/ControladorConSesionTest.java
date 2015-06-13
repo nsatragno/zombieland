@@ -5,9 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
-import com.rzg.zombieland.server.sesion.Sesion;
 
 /**
  * Verifica la funcionalidad del controlador con sesión.
@@ -32,31 +30,14 @@ public class ControladorConSesionTest {
 
     }
     
-    private class ManejadorSesionImpl implements ManejadorSesion {
-
-        private Sesion sesion;
-        
-        @Override
-        public void setSesion(Sesion sesion) {
-            this.sesion = sesion;
-        }
-
-        @Override
-        public Sesion getSesion() {
-            return sesion;
-        }
-        
-    }
-    
     /**
      * Verifica usar el controlador con datos válidos.
      * @throws ZombielandException 
      */
     @Test
     public void testSesionValida() throws ZombielandException {
-        Sesion sesion = new Sesion(new Jugador("a", "b", "b", "d", "e"));
-        ManejadorSesion manejador = new ManejadorSesionImpl();
-        manejador.setSesion(sesion);
+        ManejadorSesionImpl manejador = new ManejadorSesionImpl();
+        manejador.crearSesion();
         ControladorConSesionImpl controlador = new ControladorConSesionImpl(manejador);
         assertEquals(ControladorConSesionImpl.MENSAJE_LINEA_PROCESADA, controlador.procesar("test"));
     }

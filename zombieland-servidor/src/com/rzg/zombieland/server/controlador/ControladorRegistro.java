@@ -2,7 +2,7 @@ package com.rzg.zombieland.server.controlador;
 
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaRegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
@@ -25,9 +25,9 @@ public class ControladorRegistro extends Controlador {
             if (existente != null)
                 throw new ZombielandException("El usuario ya existe");
             dao.guardarObjeto(jugador);
-            return gson.toJson(new RespuestaRegistro());
+            return gson.toJson(new RespuestaGenerica());
         } catch (ZombielandException e) {
-            return gson.toJson(new RespuestaRegistro(e.getMessage()));
+            return gson.toJson(new RespuestaGenerica(e.getMessage()));
         } finally {
             dao.cerrarSesion();
         }

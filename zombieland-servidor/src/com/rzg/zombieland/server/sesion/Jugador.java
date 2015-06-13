@@ -151,6 +151,11 @@ public class Jugador {
                ranking == otro.ranking;
     }
 
+    @Override
+    public int hashCode() {
+        return nombre.hashCode();
+    }
+    
     /**
      * @return el nombre del jugador.
      */

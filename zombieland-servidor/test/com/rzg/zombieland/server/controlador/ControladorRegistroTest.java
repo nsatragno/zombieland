@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaRegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.persistencia.HibernateSingleton;
@@ -63,8 +63,8 @@ public class ControladorRegistroTest {
     public void testRegistroValido() throws ParametrosNoValidosException, ZombielandException {
         POJORegistro registro = new POJORegistro(NOMBRE_JUGADOR_VALIDO, "1234", "test", "test");
         Gson gson = new Gson();
-        RespuestaRegistro respuesta = gson.fromJson(
-                controlador.procesar(gson.toJson(registro)), RespuestaRegistro.class);
+        RespuestaGenerica respuesta = gson.fromJson(
+                controlador.procesar(gson.toJson(registro)), RespuestaGenerica.class);
         Assert.assertTrue(respuesta.fuePeticionExitosa());
         Assert.assertEquals(null, respuesta.getMensajeError());
         assertEquals(new Jugador(registro), dao.getObjeto(NOMBRE_JUGADOR_VALIDO));
@@ -81,8 +81,8 @@ public class ControladorRegistroTest {
     public void testRegistroExistente() throws ParametrosNoValidosException, ZombielandException {
         POJORegistro registro = new POJORegistro(NOMBRE_JUGADOR_EXISTENTE, "1234", "test", "test");
         Gson gson = new Gson();
-        RespuestaRegistro respuesta = gson.fromJson(
-                controlador.procesar(gson.toJson(registro)), RespuestaRegistro.class);
+        RespuestaGenerica respuesta = gson.fromJson(
+                controlador.procesar(gson.toJson(registro)), RespuestaGenerica.class);
         Assert.assertFalse(respuesta.fuePeticionExitosa());
         Assert.assertFalse(respuesta.getMensajeError().isEmpty());
         assertEquals(null, dao.getObjeto(NOMBRE_JUGADOR_VALIDO));

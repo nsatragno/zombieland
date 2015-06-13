@@ -4,11 +4,11 @@ import java.security.InvalidParameterException;
 
 
 /**
- * Representa la respuesta de una petición de inicio de sesión.
+ * Representa una respuesta genérica.
  * @author nicolas
  *
  */
-public class RespuestaLogin {
+public class RespuestaGenerica {
     // Mensaje de error. null si la petición fue exitosa.
     private String mensajeError;
     
@@ -16,7 +16,7 @@ public class RespuestaLogin {
      * Construye una respuesta con error.
      * @param mensajeError 
      */
-    public RespuestaLogin(String mensajeError) {
+    public RespuestaGenerica(String mensajeError) {
         if (mensajeError == null)
             throw new NullPointerException("El mensaje de error no puede ser nulo ni vacío");
         if (mensajeError.isEmpty())
@@ -27,7 +27,7 @@ public class RespuestaLogin {
     /**
      * Construye una respuesta exitosa.
      */
-    public RespuestaLogin() { }
+    public RespuestaGenerica() { }
     
     /**
      * @return true si la petición fue exitosa, false de lo contrario.
