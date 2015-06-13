@@ -1,5 +1,7 @@
 package com.rzg.zombieland.server.juego;
 
+import com.rzg.zombieland.comunes.misc.Coordenada;
+
 /**
  * Entidad inamovible del juego cuyo único propósito es impedir el movimiento.
  * @author nicolas
@@ -8,6 +10,11 @@ package com.rzg.zombieland.server.juego;
 public class Obstaculo extends EntidadTablero {
 
     private final String SPRITE = "obstaculo.jpg";
+    private Coordenada posicion;
+    
+    public Obstaculo(Coordenada posicion) {
+    	this.posicion = posicion;
+    }
     
     @Override
     public String getSprite() {
