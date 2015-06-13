@@ -6,6 +6,10 @@ package com.rzg.zombieland.comunes.misc;
  *
  */
 public interface EscuchaLog {
-	// Notifica de un log nuevo.
+	/**
+	 * Notifica de un log nuevo.
+	 * @param mensaje - el mensaje en sí de log.
+	 * @param nivel - el nivel de log, según constantes en clase Log.
+	 */
 	public void onLog(String mensaje, int nivel);
 }

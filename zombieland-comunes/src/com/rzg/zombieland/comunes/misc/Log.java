@@ -12,14 +12,33 @@ import java.util.List;
 public abstract class Log {
 	private static List<EscuchaLog> escuchadores = new ArrayList<EscuchaLog>();
 	
+	/**
+	 * Muestra todas las entradas del log.
+	 */
 	public static final int DEBUG = 0;
+	
+	/**
+	 * Muestra solo aquellas entradas que pueden aportar información útil a un usuario normal.
+	 */
 	public static final int INFO = 1;
+	
+	/**
+	 * Muestra solo las entradas que detallan errores.
+	 */
 	public static final int ERROR = 2;
 	
+	/**
+	 * Agrega un escuchador al log. El escuchador recibe todas las entradas de log.
+	 * @param escuchador
+	 */
 	public static void agregarEscuchador(EscuchaLog escuchador) {
 		escuchadores.add(escuchador);
 	}
 	
+	/**
+	 * Registra una entrada de log con la mínima prioridad.
+	 * @param mensaje
+	 */
     public static void debug(Object mensaje) {
     	String imprimir = "[DEBUG] " + mensaje;
     	for (EscuchaLog escuchador : escuchadores)
@@ -27,6 +46,10 @@ public abstract class Log {
         System.out.println(imprimir);
     }
     
+    /**
+     * Registra una entrada de log con una prioridad intermedia.
+     * @param mensaje
+     */
     public static void info(Object mensaje) {
     	String imprimir = "[INFO] " + mensaje;
     	for (EscuchaLog escuchador : escuchadores)
@@ -34,6 +57,10 @@ public abstract class Log {
         System.out.println(imprimir);
     }
 
+    /**
+     * Registra una entrada de log con la máxima prioridad.
+     * @param mensaje
+     */
     public static void error(Object mensaje) {
     	String imprimir = "[ERROR] " + mensaje;
     	for (EscuchaLog escuchador : escuchadores)

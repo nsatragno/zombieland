@@ -28,10 +28,9 @@ public class Tablero {
     }
     
     /**
-     * Devuelve la proyección del tablero entre las dos esquinas dadas. 
-     * @param desde
-     * @param hasta
-     * @return
+     * @param superiorIzquierda 
+     * @param inferiorDerecha 
+     * @return la proyección del tablero entre las dos esquinas dadas.
      */
     public ProyeccionTablero getProyeccion(Coordenada superiorIzquierda,
                                            Coordenada inferiorDerecha) {

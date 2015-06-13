@@ -12,8 +12,6 @@ public class ControladorTest extends Controlador {
     
     // La última línea que se procesó.
     private static Set<String> lineasProcesadas = new HashSet<String>();
-    
-    public ControladorTest() { }
 
     @Override
     public String procesar(String linea) {
@@ -22,9 +20,8 @@ public class ControladorTest extends Controlador {
     }
     
     /**
-     * Devuelve true si este controlador ha procesado la línea de envío dada.
      * @param lineaEnvio
-     * @return
+     * @return true si este controlador ha procesado la línea de envío dada.
      */
     public static boolean proceso(String lineaEnvio) {
         return lineasProcesadas.contains(lineaEnvio);
