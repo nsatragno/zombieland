@@ -28,7 +28,7 @@ public class ControladorCrearPartida extends ControladorConSesion {
     public String procesarAutenticado(String linea) {
         Gson gson = new Gson();
         POJOCreacionPartida pojo = gson.fromJson(linea, POJOCreacionPartida.class);
-                Partida partida = new Partida(getSesion().getJugador(), pojo);
+        Partida partida = new Partida(getSesion().getJugador(), pojo);
         getSesion().setPartida(partida);
         Log.debug("El jugador " + getSesion().getJugador().getNombre() + " ha creado una partida.");
         return gson.toJson(new RespuestaGenerica());
