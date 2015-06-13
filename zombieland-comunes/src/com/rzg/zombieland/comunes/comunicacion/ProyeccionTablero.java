@@ -37,12 +37,21 @@ public class ProyeccionTablero extends Enviable {
 		// El avatar de la misma.
 		private Avatar avatar;
 
+		/**
+		 * Crea un POJO de entidad a través de los parámetros básicos.
+		 * @param etiqueta
+		 * @param coordenada
+		 * @param avatar
+		 */
 		public POJOEntidad(String etiqueta, Coordenada coordenada, Avatar avatar) {
 			this.etiqueta = etiqueta;
 			this.coordenada = coordenada;
 			this.avatar = avatar;
 		}
 
+		/**
+		 * @return la coordenada de la entidad.
+		 */
 		public Coordenada getCoordenada() {
 			return coordenada;
 		}
@@ -59,10 +68,6 @@ public class ProyeccionTablero extends Enviable {
 	private List<POJOEntidad> entidades;
 
 	private boolean primeraVez = true;
-
-	public ProyeccionTablero() {
-
-	}
 
 	/**
 	 * @param casilleros
@@ -82,10 +87,22 @@ public class ProyeccionTablero extends Enviable {
 		this.entidades = entidades;
 	}
 
+	/**
+	 * @return las entidades que figuran en la proyección.
+	 */
 	public List<POJOEntidad> getEntidades() {
 		return entidades;
 	}
 
+	/**
+	 * Dibuja una proyección de tablero.
+	 * @param g
+	 * @param img
+	 * @param anchoTablero
+	 * @param margenIzquierdo
+	 * @param margenSuperior
+	 * @param fondo
+	 */
 	public void paint(Graphics g, Image[] img, int anchoTablero,
 			int margenIzquierdo, int margenSuperior, ImageIcon fondo) {
 		int anchoCasillero = anchoTablero / casilleros;
@@ -140,8 +157,11 @@ public class ProyeccionTablero extends Enviable {
 						- esquinaSuperiorIzquierda.getY() * anchoCasillero);
 	}
 
-	// Este método devuelve siempre el ancho necesario del tablero
-	// para que los casilleros entren justo (elimina los excedentes)
+	/**
+	 * @param dimension
+	 * @return el ancho necesario del tablero para que los casilleros entren justo (elimina los 
+	 *         excedentes)
+	 */
 	public int getAnchoEfectivo(int dimension) {
 		return dimension - dimension % casilleros;
 	}

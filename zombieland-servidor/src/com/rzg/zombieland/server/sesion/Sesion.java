@@ -27,6 +27,7 @@ public class Sesion {
     /**
      * Construye una sesión a partir del jugador.
      * @param jugador
+     * @param hilo - el hilo de escucha que atiende esta sesión.
      * @throws NullPointerException si el jugador es nulo.
      */
     public Sesion(Jugador jugador, HiloEscucha hilo) {
