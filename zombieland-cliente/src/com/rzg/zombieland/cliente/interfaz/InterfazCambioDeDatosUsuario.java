@@ -194,13 +194,13 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1
-				.setIcon(new ImageIcon("imagenes/mujer.png"));
+				.setIcon(new ImageIcon("imagenes/Avatares/avatar-mujer.png"));
 		lblNewLabel_1.setBounds(695, 341, 73, 74);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2
-				.setIcon(new ImageIcon("imagenes/poli.png"));
+				.setIcon(new ImageIcon("imagenes/Avatares/avatar-poli.png"));
 		lblNewLabel_2.setBounds(695, 76, 79, 80);
 		contentPane.add(lblNewLabel_2);
 		
@@ -210,7 +210,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		contentPane.add(label_1);
 
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("imagenes/dsn.png"));
+		label.setIcon(new ImageIcon("imagenes/Avatares/avatar-dsn.png"));
 		label.setBounds(695, 194, 73, 94);
 		contentPane.add(label);
 		

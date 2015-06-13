@@ -67,7 +67,7 @@ public class InterfazTablero extends JPanel {
 
 		}
 
-		fondo = new ImageIcon("imagenes/pasto.png");
+		fondo = new ImageIcon("imagenes/Tablero/pasto.png");
 
 		JButton moveUp = new JButton("");
 		moveUp.addActionListener(new ActionListener() {
@@ -79,7 +79,7 @@ public class InterfazTablero extends JPanel {
 			}
 		});
 
-		moveUp.setIcon(new ImageIcon("imagenes/FlechaArriba.png"));
+		moveUp.setIcon(new ImageIcon("imagenes/Tablero/FlechaArriba.png"));
 		moveUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveUp.setBounds(640, 377, 45, 45);
 		add(moveUp);
@@ -111,7 +111,7 @@ public class InterfazTablero extends JPanel {
 		// }
 		// }
 		// });
-		moveLeft.setIcon(new ImageIcon("imagenes/FlechaIzquierda.png"));
+		moveLeft.setIcon(new ImageIcon("imagenes/Tablero/FlechaIzquierda.png"));
 		moveLeft.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveLeft.setBounds(587, 423, 45, 45);
 		add(moveLeft);
@@ -132,7 +132,7 @@ public class InterfazTablero extends JPanel {
 				repaint();
 			}
 		});
-		moveRight.setIcon(new ImageIcon("imagenes/FlechaDerecha.png"));
+		moveRight.setIcon(new ImageIcon("imagenes/Tablero/FlechaDerecha.png"));
 		moveRight.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveRight.setBounds(689, 423, 45, 45);
 		add(moveRight);
@@ -155,7 +155,7 @@ public class InterfazTablero extends JPanel {
 				repaint();
 			}
 		});
-		moveDown.setIcon(new ImageIcon("imagenes/FlechaAbajo.png"));
+		moveDown.setIcon(new ImageIcon("imagenes/Tablero/FlechaAbajo.png"));
 		moveDown.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveDown.setBounds(640, 471, 45, 45);
 		add(moveDown);
@@ -203,7 +203,7 @@ public class InterfazTablero extends JPanel {
 		panelJug.add(table, BorderLayout.CENTER);
 		
 		JLabel labelFondo = new JLabel("");
-		labelFondo.setIcon(new ImageIcon("imagenes/fondo1.png"));
+		labelFondo.setIcon(new ImageIcon("imagenes/Fondo/fondo-tablero.png"));
 		labelFondo.setBounds(0, 0, 800, 600);
 		add(labelFondo);
 	}
