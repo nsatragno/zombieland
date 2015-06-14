@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 
 /**
@@ -26,7 +27,7 @@ public class POJOLobbyTest {
     public void testBasico() throws ParametrosNoValidosException {
         POJOCreacionPartida pojoPartida = 
                 new POJOCreacionPartida(CANTIDAD_RONDAS, CANTIDAD_JUGADORES, NOMBRE);
-        POJOLobby pojo = new POJOLobby(pojoPartida, JUGADOR);
+        POJOPartida pojo = new POJOPartida(pojoPartida, JUGADOR);
         assertEquals(JUGADOR, pojo.getAdministrador());
         assertEquals(CANTIDAD_JUGADORES, pojo.getCantidadMaximaJugadores());
         assertEquals(CANTIDAD_RONDAS, pojo.getCantidadRondas());

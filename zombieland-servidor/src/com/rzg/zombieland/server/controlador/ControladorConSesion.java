@@ -34,10 +34,18 @@ public abstract class ControladorConSesion extends Controlador {
     public final String procesar(String linea) {
         // TODO manejar mejor.
         if (manejadorSesion.getSesion() == null)
-            return new Gson().toJson(new RespuestaGenerica(MENSAJE_NO_AUTENTICADO));
+            return mensajeErrorNoAutenticado();
         return procesarAutenticado(linea);
     }
-    
+
+    /**
+     * @return el mensaje de error para un usuario no autenticado. Aquellos herederos que no usen
+     * respuestas genéricas deberán sobrecargar el método.
+     */
+    protected String mensajeErrorNoAutenticado() {
+        return new Gson().toJson(new RespuestaGenerica(MENSAJE_NO_AUTENTICADO));
+    }
+
     /**
      * @return la sesión del jugador.
      */

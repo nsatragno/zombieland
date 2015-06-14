@@ -3,12 +3,14 @@ package com.rzg.zombieland.comunes.comunicacion.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
+
 /**
  * Representa el estado actual de un lobby: cantidad de jugadores, nombres, etc.
  * @author nicolas
  *
  */
-public class POJOLobby {
+public class POJOPartida {
     
     /**
      * El administrador de la partida.
@@ -39,9 +41,10 @@ public class POJOLobby {
      * @param cantidadRondas 
      * @param cantidadJugadores 
      * @param nombre 
+     * @param estado 
      */
-    public POJOLobby(String administrador, List<String> jugadores, List<String> espectadores,
-                     int cantidadRondas, int cantidadJugadores, String nombre) {
+    public POJOPartida(String administrador, List<String> jugadores, List<String> espectadores,
+                     int cantidadRondas, int cantidadJugadores, String nombre, String estado) {
         this.administrador = administrador;
         this.jugadores = jugadores;
         this.espectadores = espectadores;
@@ -55,7 +58,7 @@ public class POJOLobby {
      * @param pojo
      * @param nombreAdministrador 
      */
-    public POJOLobby(POJOCreacionPartida pojo, String nombreAdministrador) {
+    public POJOPartida(POJOCreacionPartida pojo, String nombreAdministrador) {
         administrador = nombreAdministrador;
         jugadores = new ArrayList<String>();
         espectadores = new ArrayList<String>();
@@ -106,4 +109,29 @@ public class POJOLobby {
     public String getNombre() {
         return nombre;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (!(getClass().isAssignableFrom(obj.getClass())))
+            return false;
+        POJOPartida otro = (POJOPartida)obj;
+        return otro.administrador.equals(administrador) &&
+               otro.cantidadMaximaJugadores == cantidadMaximaJugadores &&
+               otro.cantidadRondas == cantidadRondas &&
+               otro.espectadores.equals(espectadores) &&
+               otro.jugadores.equals(jugadores) &&
+               otro.nombre.equals(nombre);
+    }
+    
+    @Override
+    public String toString() {
+        return "POJOPartida [administrador=" + administrador + ", jugadores=" + jugadores
+                + ", espectadores=" + espectadores + ", cantidadRondas=" + cantidadRondas
+                + ", cantidadMaximaJugadores=" + cantidadMaximaJugadores + ", nombre=" + nombre
+                + "]";
+    }
+
+
 }

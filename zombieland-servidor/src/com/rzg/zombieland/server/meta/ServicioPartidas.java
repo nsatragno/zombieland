@@ -41,4 +41,11 @@ public class ServicioPartidas {
     public List<Partida> getPartidas() {
         return partidas;
     }
+
+    /**
+     * Vuela la instancia para tests.
+     */
+    public static void matarInstancia() {
+        instancia = null;
+    }
 }

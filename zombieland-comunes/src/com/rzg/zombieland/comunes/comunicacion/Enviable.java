@@ -32,6 +32,12 @@ public abstract class Enviable {
      */
     public static final int CREAR_PARTIDA = 0x4;
     
+
+    /**
+     * Obtener el listado de partidas actual.
+     */
+    public static final int LISTADO_PARTIDAS = 0x5;
+    
     /**
      * Indica que ha habido un error en el proceso.
      */

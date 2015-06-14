@@ -2,7 +2,7 @@ package com.rzg.zombieland.cliente.comunicacion;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 
 /**

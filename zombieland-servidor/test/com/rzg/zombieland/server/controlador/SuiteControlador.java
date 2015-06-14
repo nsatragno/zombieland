@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ ControladorRegistroTest.class, ControladorInicioSesionTest.class,
-                ControladorCrearPartidaTest.class, ControladorConSesionTest.class })
+                ControladorCrearPartidaTest.class, ControladorConSesionTest.class, 
+                ControladorListadoPartidasTest.class })
 public class SuiteControlador {
 
 }

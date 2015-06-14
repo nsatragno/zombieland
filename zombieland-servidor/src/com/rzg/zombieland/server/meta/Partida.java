@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
 import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
@@ -125,11 +126,14 @@ public class Partida {
             throw new NullPointerException();
         if (nombre == null || nombre.isEmpty())
             throw new NullPointerException();
+        id = UUID.randomUUID();
         this.administrador = administrador;
         this.nombre = nombre;
-        id = UUID.randomUUID();
+        this.jugadores = jugadores;
+        this.espectadores = espectadores;
+        this.cantidadMaximaJugadores = cantidadMaximaJugadores;
         estado = Estado.EN_ESPERA;
-        rondas = new ArrayList<Ronda>();
+        rondas = new ArrayList<Ronda>(cantidadRondas);
         for (int i = 0; i < cantidadRondas; i++)
             rondas.add(new Ronda());
     }
@@ -147,5 +151,39 @@ public class Partida {
     public ResultadoPartida getResultadoPartida(Jugador jugador) {
         // TODO implementar.
         return null;
+    }
+
+    /**
+     * @return un pojo con los datos de la partida.
+     */
+    public POJOPartida getPOJO() {
+        return new POJOPartida(administrador.getNombre(),
+                               proyectarNombres(jugadores),
+                               proyectarNombres(espectadores), 
+                               rondas.size(), 
+                               cantidadMaximaJugadores, 
+                               nombre,
+                               estado.getDescripcion());
+    }
+    
+    /**
+     * @param jugadores
+     * @return un listado con los nombres de los jugadores.
+     */
+    private List<String> proyectarNombres(List<Jugador> jugadores) {
+        List<String> nombresJugadores = new ArrayList<String>(jugadores.size());
+        for (Jugador jugador : jugadores)
+            nombresJugadores.add(jugador.getNombre());
+        return nombresJugadores;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Partida))
+            return false;
+        Partida otro = (Partida)obj;
+        return otro.id.equals(id);
     }
 }

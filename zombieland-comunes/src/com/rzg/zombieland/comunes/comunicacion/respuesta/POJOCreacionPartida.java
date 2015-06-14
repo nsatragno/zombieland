@@ -1,4 +1,4 @@
-package com.rzg.zombieland.comunes.comunicacion.pojo;
+package com.rzg.zombieland.comunes.comunicacion.respuesta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,12 @@ public class POJOCreacionPartida {
     /**
      * No puede haber, estrictamente, menos rondas que este número.
      */
-    public static final int CANTIDAD_MINIMA_RONDAS = 1;
+    public static final int CANTIDAD_MINIMA_RONDAS = 4;
     
     /**
      * No puede haber, estrictamente, más rondas que este número.
      */
-    public static final int CANTIDAD_MAXIMA_RONDAS = 10;
+    public static final int CANTIDAD_MAXIMA_RONDAS = 20;
     
     /**
      * No puede haber, estrictamente, menos jugadores que este número.
@@ -30,7 +30,7 @@ public class POJOCreacionPartida {
     /**
      * No puede haber, estrictamente, más jugadores que este número.
      */
-    public static final int CANTIDAD_MAXIMA_JUGADORES = 20;
+    public static final int CANTIDAD_MAXIMA_JUGADORES = 10;
     
     // Parámetros de la partida.
     private int cantidadRondas;
@@ -56,19 +56,19 @@ public class POJOCreacionPartida {
             throws ParametrosNoValidosException {
         List<String> errores = new ArrayList<String>();
         if (cantidadRondas < CANTIDAD_MINIMA_RONDAS) {
-            errores.add("La cantidad de rondas es inferior a la mínima "
+            errores.add("La cantidad de rondas, " + cantidadRondas + ", es inferior a la mínima "
                       + "(" + CANTIDAD_MINIMA_RONDAS + ")");
         }
         if (cantidadRondas > CANTIDAD_MAXIMA_RONDAS) {
-            errores.add("La cantidad de rondas es superior a la máxima "
+            errores.add("La cantidad de rondas, " + cantidadRondas + ", es superior a la máxima "
                       + "(" + CANTIDAD_MAXIMA_RONDAS + ")");
         }
         if (cantidadMaximaJugadores < CANTIDAD_MINIMA_JUGADORES) {
-            errores.add("La cantidad de jugadores es inferior a la mínima "
+            errores.add("La cantidad de jugadores, " + cantidadMaximaJugadores + ", es inferior a la mínima "
                       + "(" + CANTIDAD_MINIMA_JUGADORES + ")");
         }
         if (cantidadMaximaJugadores > CANTIDAD_MAXIMA_JUGADORES) {
-            errores.add("La cantidad de jugadores es superior a la máxima "
+            errores.add("La cantidad de jugadores, " + cantidadMaximaJugadores + ", es superior a la máxima "
                       + "(" + CANTIDAD_MAXIMA_JUGADORES + ")");
         }
         if (nombre == null || nombre.isEmpty())

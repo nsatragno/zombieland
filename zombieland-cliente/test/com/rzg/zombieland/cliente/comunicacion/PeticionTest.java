@@ -24,7 +24,8 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  */
 public class PeticionTest extends PeticionTestHarness {
     
-    private final static String MENSAJE_TEST = "Mensaje test! :D";
+    private final static String MENSAJE_TEST = "'Mensaje test! :D'";
+    private final static String RESPUESTA_TEST = "Mensaje test! :D";
     
     private static class ObjetoPeticionTest extends Peticion<String, String> {
         
@@ -35,18 +36,13 @@ public class PeticionTest extends PeticionTestHarness {
             this.mensajeTest = mensajeTest;
         }
         
-        protected String getMensajePeticion() {
+        public String getMensajePeticion() {
             return mensajeTest;
         }
 
         @Override
         protected int getCodigoPeticion() {
             return Enviable.TEST;
-        }
-
-        @Override
-        public String generarRespuesta(String respuesta) {
-            return respuesta;
         }
     }
 
@@ -64,12 +60,12 @@ public class PeticionTest extends PeticionTestHarness {
 
 			@Override
 			public void onDone(String arg0) {
-				assertEquals(MENSAJE_TEST, arg0);
+				assertEquals(RESPUESTA_TEST, arg0);
 				assertTrue(ControladorTest.proceso(MENSAJE_TEST));
 				latch.countDown();
 			}
 		});
-        latch.await(1, TimeUnit.SECONDS);
+        assertTrue(latch.await(1, TimeUnit.SECONDS));
     }
     
     /**

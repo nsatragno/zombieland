@@ -1,6 +1,6 @@
 package com.rzg.zombieland.cliente.meta;
 
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOLobby;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 
 /**
  * Almacena estado que se debe compartir entre pantallas.
@@ -11,7 +11,7 @@ public class Estado {
 
     private static Estado instancia;
     
-    private POJOLobby estadoLobby;
+    private POJOPartida estadoLobby;
     
     private String jugador;
     
@@ -28,7 +28,7 @@ public class Estado {
      * Establece el estado del lobby a partir de su POJO.
      * @param pojo
      */
-    public void setEstadoLobby(POJOLobby pojo) {
+    public void setEstadoLobby(POJOPartida pojo) {
         estadoLobby = pojo;
     }
     
@@ -43,7 +43,7 @@ public class Estado {
     /**
      * @return el estado del lobby.
      */
-    public POJOLobby getEstadoLobby() {
+    public POJOPartida getEstadoLobby() {
         return estadoLobby;
     }
 

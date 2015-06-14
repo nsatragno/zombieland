@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 
 /**

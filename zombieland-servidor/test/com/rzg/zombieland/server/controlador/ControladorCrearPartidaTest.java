@@ -1,10 +1,11 @@
 package com.rzg.zombieland.server.controlador;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.gson.Gson;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.ServicioPartidas;
@@ -16,6 +17,14 @@ import com.rzg.zombieland.server.meta.ServicioPartidas;
  */
 public class ControladorCrearPartidaTest {
 
+    /**
+     * Devuelve al estado inicial al servicio de partidas.
+     */
+    @After
+    public void tearDown() {
+        ServicioPartidas.matarInstancia();
+    }
+    
     /**
      * Test básico de creación de partida.
      * @throws ZombielandException

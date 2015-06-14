@@ -45,7 +45,7 @@ public abstract class Peticion<ClaseEnviable, Respuesta> {
     /**
      * @return el mensaje de una petición.
      */
-    protected String getMensajePeticion() {
+    public String getMensajePeticion() {
         return new Gson().toJson(enviable);
     }
 
@@ -59,7 +59,7 @@ public abstract class Peticion<ClaseEnviable, Respuesta> {
      * @param respuesta
      * @return el resultado de procesar la respuesta.
      */
-    public Respuesta generarRespuesta(String respuesta) {
+    private Respuesta generarRespuesta(String respuesta) {
         return new Gson().fromJson(respuesta, claseRespuesta);
     }
     

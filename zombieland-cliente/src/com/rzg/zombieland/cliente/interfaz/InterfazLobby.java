@@ -21,7 +21,7 @@ import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
 
 import com.rzg.zombieland.cliente.meta.Estado;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOLobby;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 
 /**
  * Interfaz de Lobby.
@@ -46,7 +46,7 @@ public class InterfazLobby extends JPanel
                                                "Estado" };
         private String[] parametros = { "", "", "", "", "" };
 
-        public ModeloParametros(POJOLobby estadoLobby) {
+        public ModeloParametros(POJOPartida estadoLobby) {
             actualizarDatos(estadoLobby);
         }
 
@@ -78,7 +78,7 @@ public class InterfazLobby extends JPanel
          * Actualiza los datos del modelo.
          * @param pojo
          */
-        public void actualizarDatos(POJOLobby pojo) {
+        public void actualizarDatos(POJOPartida pojo) {
             if (pojo == null)
                 return;
             parametros[ADMINISTRADOR] = pojo.getAdministrador();
@@ -257,7 +257,7 @@ public class InterfazLobby extends JPanel
 	/**
 	 * @param datos
 	 */
-	public void actualizarModeloParametros(POJOLobby datos) {
+	public void actualizarModeloParametros(POJOPartida datos) {
 	    modeloTablaParametros.actualizarDatos(datos);
 	    modeloListaJugadores.cambiarDatos(datos.getJugadores());
 	}

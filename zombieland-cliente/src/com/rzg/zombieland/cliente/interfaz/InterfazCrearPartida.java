@@ -22,8 +22,8 @@ import org.jdeferred.DoneCallback;
 import com.rzg.zombieland.cliente.comunicacion.PeticionCreacionPartida;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.meta.Estado;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOLobby;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
@@ -151,8 +151,8 @@ public class InterfazCrearPartida extends JPanel
                 @Override
                 public void onDone(RespuestaGenerica respuesta) {
                     if (respuesta.fuePeticionExitosa()) {
-                        POJOLobby estadoLobby = 
-                                new POJOLobby(pojo, Estado.getInstancia().getNombreJugador());
+                        POJOPartida estadoLobby = 
+                                new POJOPartida(pojo, Estado.getInstancia().getNombreJugador());
                         Estado.getInstancia().setEstadoLobby(estadoLobby);
                         Main.irA(Main.LOBBY);
                         return;
