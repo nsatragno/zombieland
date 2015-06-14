@@ -26,4 +26,7 @@ public class Obstaculo extends EntidadTablero {
         // TODO Auto-generated method stub
     }
 
+    public boolean esPersonaje(){
+    	return false;
+    }
 }

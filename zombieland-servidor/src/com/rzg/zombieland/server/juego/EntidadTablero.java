@@ -32,4 +32,6 @@ public abstract class EntidadTablero {
     protected void setPosicion(Coordenada posicion) {
         this.posicion = posicion;
     }
+
+	public abstract boolean esPersonaje();
 }

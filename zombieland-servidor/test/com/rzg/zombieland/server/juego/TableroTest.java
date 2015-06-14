@@ -19,7 +19,7 @@ public class TableroTest {
 	 * centro de éste.
 	 */
 	@Test
-	public void posicionZombieTest() {
+	public void testPosicionZombie() {
 		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
 		jugadores.add(new Jugador("Humano1"));
 		jugadores.add(new Jugador("Humano2"));
@@ -33,7 +33,7 @@ public class TableroTest {
 	 * Verifica en n iteraciones si el zombi quedó encerrado por obstáculos
 	 * debido a la distribución aleatoria de los mismos.
 	 */
-	public int jugadoresEncerrados() {
+	public boolean jugadoresEncerrados() {
 		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
 		Jugador zombi = new Jugador("Zombi1");
 		Personaje zombie = new Zombie(zombi.getNombre());
@@ -54,18 +54,44 @@ public class TableroTest {
 							posicion.getY())) != null
 					&& tablero.getEntidadEn(new Coordenada(posicion.getX(),
 							posicion.getY() + 1)) != null) {
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	}
 
 	@Test
-	public void jugadoresEncerradosTest() {
-		Assert.assertEquals(0, jugadoresEncerrados());
+	public void testJugadoresEncerrados() {
+		Assert.assertEquals(false, jugadoresEncerrados());
 	}
-	// TODO testear que la cantidad de personajes sea igual a la cantidad de
-	// jugadores.
-	// TODO testear que las coordenadas de los personajes coincidan con la
-	// posicion de la matriz.
+	
+	/**
+	 * Devuelve la cantidad de personajes de un tablero.
+	 * @param t El tablero en cuestión
+	 */
+	public int cantidadPersonajes(Tablero t) {
+		int acum = 0;
+		for(int i = 0; i < 10; i ++)
+			for(int j = 0; j < 10; j ++)
+				if(t.getEntidadEn(new Coordenada(i,j)) != null &&
+						t.getEntidadEn(new Coordenada(i,j)).esPersonaje())
+					acum++;
+		return acum;
+	}
+	
+	/**
+	 * Testea que la cantidad de jugadores del tablero sea la misma que la
+	 * cantidad de jugadores en el juego.
+	 */
+	@Test
+	public void testCantidadDeJugadores() {
+		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
+		jugadores.add(new Jugador("Humano1"));
+		jugadores.add(new Jugador("Humano2"));
+		jugadores.add(new Jugador("Humano3"));
+		Jugador zombi = new Jugador("Zombi1");
+		Personaje zombie = new Zombie(zombi.getNombre());
+		Tablero tablero = new Tablero(10, jugadores, zombie);
+		Assert.assertEquals(4,cantidadPersonajes(tablero));
+	}
 }

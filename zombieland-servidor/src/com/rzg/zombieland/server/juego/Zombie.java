@@ -32,5 +32,8 @@ public class Zombie extends Personaje {
     public String getUsuario(){
     	return usuario;
     }
-
+    
+    public boolean esPersonaje(){
+    	return true;
+    }
 }
