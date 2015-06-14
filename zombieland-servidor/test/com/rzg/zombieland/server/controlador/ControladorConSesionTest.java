@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.comunicacion.controlador.ControladorConSesion;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
 
 /**

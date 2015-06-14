@@ -20,8 +20,8 @@ import javax.swing.border.LineBorder;
 
 import org.jdeferred.DoneCallback;
 
-import com.rzg.zombieland.cliente.comunicacion.PeticionRegistro;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionRegistro;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;

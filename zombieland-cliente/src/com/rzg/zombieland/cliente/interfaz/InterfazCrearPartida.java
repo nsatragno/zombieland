@@ -19,8 +19,8 @@ import javax.swing.border.LineBorder;
 
 import org.jdeferred.DoneCallback;
 
-import com.rzg.zombieland.cliente.comunicacion.PeticionCreacionPartida;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionCreacionPartida;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;

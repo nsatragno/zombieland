@@ -4,6 +4,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionListadoPartidasTest;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionRegistroTest;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionTest;
+
 /**
  * Todos los tests de comunicación.
  * @author nicolas

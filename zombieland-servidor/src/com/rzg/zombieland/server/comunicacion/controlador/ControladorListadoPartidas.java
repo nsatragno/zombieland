@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.controlador;
+package com.rzg.zombieland.server.comunicacion.controlador;
 
 import java.util.ArrayList;
 import java.util.Collection;

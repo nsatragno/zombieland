@@ -23,9 +23,9 @@ import javax.swing.table.AbstractTableModel;
 
 import org.jdeferred.DoneCallback;
 
-import com.rzg.zombieland.cliente.comunicacion.PeticionListadoPartidas;
-import com.rzg.zombieland.cliente.comunicacion.PeticionUnirsePartida;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionListadoPartidas;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionUnirsePartida;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaListadoPartidas;

@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.comunicacion;
+package com.rzg.zombieland.cliente.comunicacion.peticion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.gson.Gson;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionListadoPartidas;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaListadoPartidas;

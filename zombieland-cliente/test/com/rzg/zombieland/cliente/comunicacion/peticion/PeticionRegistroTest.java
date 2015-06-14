@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.comunicacion;
+package com.rzg.zombieland.cliente.comunicacion.peticion;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,6 +10,8 @@ import org.jdeferred.DoneCallback;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionRegistro;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;

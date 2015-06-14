@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.comunicacion;
+package com.rzg.zombieland.cliente.comunicacion.peticion;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;

@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.comunicacion;
+package com.rzg.zombieland.cliente.comunicacion.peticion;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import org.junit.After;
 import org.junit.Before;
 
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.ServicioEscucha;
 import com.rzg.zombieland.server.persistencia.HibernateSingleton;

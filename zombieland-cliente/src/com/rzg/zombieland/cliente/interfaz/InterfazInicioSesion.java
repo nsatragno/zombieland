@@ -16,8 +16,8 @@ import javax.swing.JTextField;
 
 import org.jdeferred.DoneCallback;
 
-import com.rzg.zombieland.cliente.comunicacion.PeticionInicioSesion;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionInicioSesion;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;

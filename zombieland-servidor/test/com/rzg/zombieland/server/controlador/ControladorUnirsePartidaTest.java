@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+import com.rzg.zombieland.server.comunicacion.controlador.ControladorUnirsePartida;
 import com.rzg.zombieland.server.meta.Partida;
 import com.rzg.zombieland.server.meta.ServicioPartidas;
 

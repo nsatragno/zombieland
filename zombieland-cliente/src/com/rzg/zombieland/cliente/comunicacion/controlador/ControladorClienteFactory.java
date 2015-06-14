@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.comunicacion;
+package com.rzg.zombieland.cliente.comunicacion.controlador;
 
 import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.controlador.Controlador.ComandoDesconocidoException;

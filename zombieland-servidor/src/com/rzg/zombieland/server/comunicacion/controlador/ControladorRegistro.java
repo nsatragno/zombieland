@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.controlador;
+package com.rzg.zombieland.server.comunicacion.controlador;
 
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;

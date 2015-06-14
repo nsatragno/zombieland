@@ -1,4 +1,4 @@
-package com.rzg.zombieland.server.controlador;
+package com.rzg.zombieland.server.comunicacion.controlador;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;

@@ -9,7 +9,7 @@ import java.util.List;
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.controlador.ControladorServidorFactory;
+import com.rzg.zombieland.server.comunicacion.controlador.ControladorServidorFactory;
 
 /**
  * Escucha conexiones entrantes y lanza hilos para manejarlas.

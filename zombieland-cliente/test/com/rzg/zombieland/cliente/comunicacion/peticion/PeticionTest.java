@@ -1,4 +1,4 @@
-package com.rzg.zombieland.cliente.comunicacion;
+package com.rzg.zombieland.cliente.comunicacion.peticion;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.jdeferred.DoneCallback;
 import org.junit.Test;
 
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.controlador.ControladorTest;

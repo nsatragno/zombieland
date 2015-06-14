@@ -12,6 +12,7 @@ import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.comunicacion.controlador.ControladorRegistro;
 import com.rzg.zombieland.server.persistencia.HibernateSingleton;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 import com.rzg.zombieland.server.sesion.Jugador;
