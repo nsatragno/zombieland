@@ -2,7 +2,6 @@ package com.rzg.zombieland.cliente.comunicacion;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
@@ -89,8 +88,6 @@ public class PeticionTest extends PeticionTestHarness {
 				}
 			});
         }
-        assertTrue(latch.await(2, TimeUnit.SECONDS));
-        if (latch.getCount() != 0)
-            fail("No retornaron todas las peticiones o tardaron demasiado");
+        assertTrue(latch.await(15, TimeUnit.SECONDS));
     }
 }
