@@ -1,7 +1,9 @@
 package com.rzg.zombieland.server.meta;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Almancena la lista de partidas actual.
@@ -12,10 +14,10 @@ public class ServicioPartidas {
 
     private static ServicioPartidas instancia;
 
-    private List<Partida> partidas;
+    private Map<UUID, Partida> partidas;
     
     private ServicioPartidas() {
-        partidas = new ArrayList<Partida>();
+        partidas = new HashMap<UUID, Partida>();
     }
     
     /**
@@ -32,14 +34,14 @@ public class ServicioPartidas {
      * @param partida
      */
     public void addPartida(Partida partida) {
-        partidas.add(partida);
+        partidas.put(partida.getId(), partida);
     }
 
     /**
      * @return el listado de partidas actual.
      */
-    public List<Partida> getPartidas() {
-        return partidas;
+    public Collection<Partida> getPartidas() {
+        return partidas.values();
     }
 
     /**
@@ -47,5 +49,13 @@ public class ServicioPartidas {
      */
     public static void matarInstancia() {
         instancia = null;
+    }
+
+    /**
+     * @param fromString
+     * @return una partida según su ID.
+     */
+    public Partida getPartida(UUID id) {
+        return partidas.get(id);
     }
 }

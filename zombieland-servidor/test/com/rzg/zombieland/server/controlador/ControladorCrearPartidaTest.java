@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.gson.Gson;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.ServicioPartidas;

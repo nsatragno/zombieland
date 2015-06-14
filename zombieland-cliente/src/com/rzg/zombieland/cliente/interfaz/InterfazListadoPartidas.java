@@ -24,9 +24,12 @@ import javax.swing.table.AbstractTableModel;
 import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.PeticionListadoPartidas;
+import com.rzg.zombieland.cliente.comunicacion.PeticionUnirsePartida;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
-import com.rzg.zombieland.comunes.comunicacion.pojo.RespuestaListadoPartidas;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaListadoPartidas;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
@@ -38,6 +41,7 @@ public class InterfazListadoPartidas extends JPanel {
 
 	private static final long serialVersionUID = -7079211493379843872L;
     private ModeloTabla modeloPartidas;
+    private JTable tablaPartidas;
 	
 	private class ModeloTabla extends AbstractTableModel {
 
@@ -105,6 +109,10 @@ public class InterfazListadoPartidas extends JPanel {
                 throw new ArrayIndexOutOfBoundsException();
             }
         }
+
+        public String getIdPartida(int selectedRow) {
+            return partidas.get(selectedRow).getId();
+        }
 	    
 	}
 
@@ -121,7 +129,7 @@ public class InterfazListadoPartidas extends JPanel {
 		btnUnirse.setBounds(288, 430, 175, 40);
 		btnUnirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.irA(Main.LOBBY);
+			    unirse();
 			}
 		});
 		add(btnUnirse);
@@ -164,7 +172,7 @@ public class InterfazListadoPartidas extends JPanel {
 		scrollPane.setBounds(66, 95, 631, 318);
 		add(scrollPane);
 
-		JTable tablaPartidas = new JTable();
+		tablaPartidas = new JTable();
 		modeloPartidas = new ModeloTabla();
         tablaPartidas.setModel(modeloPartidas);
 		tablaPartidas.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -214,7 +222,41 @@ public class InterfazListadoPartidas extends JPanel {
                                           e.getMessage(), 
                                           "Listado de partidas", 
                                           JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+        }
+    }
+    
+    private void unirse() {
+        int indicePartida = tablaPartidas.getSelectedRow();
+        if (indicePartida == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "No hay ninguna partida seleccionada", 
+                    "Unirse a partida", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        String idPartida = modeloPartidas.getIdPartida(indicePartida);
+        PeticionUnirsePartida peticion = new PeticionUnirsePartida(idPartida);
+        final Component this_ = this;
+        try {
+            ServicioCliente.enviarPeticion(peticion);
+            peticion.getRespuesta().then(new DoneCallback<RespuestaUnirsePartida>() {
+                public void onDone(RespuestaUnirsePartida respuesta) {
+                    if (respuesta.fuePeticionExitosa()) {
+                        Estado.getInstancia().setEstadoLobby(respuesta.getPartida());
+                        Main.irA(Main.LOBBY);
+                    } else {
+                        JOptionPane.showMessageDialog(this_,
+                                                      respuesta.getMensajeError(), 
+                                                      "Unirse a partida", 
+                                                      JOptionPane.WARNING_MESSAGE);
+                    }
+                };
+            });
+        } catch (ZombielandException e) {
+            JOptionPane.showMessageDialog(this,
+                    e.getMessage(), 
+                    "Unirse a partida", 
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -1,11 +1,12 @@
 package com.rzg.zombieland.server.controlador;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
-import com.rzg.zombieland.comunes.comunicacion.pojo.RespuestaListadoPartidas;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaListadoPartidas;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.Partida;
 import com.rzg.zombieland.server.meta.ServicioPartidas;
@@ -29,7 +30,7 @@ public class ControladorListadoPartidas extends ControladorConSesion {
 
     @Override
     public String procesarAutenticado(String linea) {
-        List<Partida> partidas = ServicioPartidas.getInstancia().getPartidas();
+        Collection<Partida> partidas = ServicioPartidas.getInstancia().getPartidas();
         List<POJOPartida> pojos = new ArrayList<POJOPartida>();
         for (Partida partida : partidas)
             pojos.add(partida.getPOJO());

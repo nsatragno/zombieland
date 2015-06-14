@@ -1,8 +1,8 @@
-package com.rzg.zombieland.comunes.comunicacion.pojo;
+package com.rzg.zombieland.comunes.comunicacion.respuesta;
 
 import java.util.List;
 
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 
 /**
  * Engloba el listado de partidas para que parsearlo con JSON no sea doloroso.  

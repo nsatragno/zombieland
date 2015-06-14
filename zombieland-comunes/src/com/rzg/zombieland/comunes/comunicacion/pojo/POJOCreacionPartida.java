@@ -1,4 +1,4 @@
-package com.rzg.zombieland.comunes.comunicacion.respuesta;
+package com.rzg.zombieland.comunes.comunicacion.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,5 +102,4 @@ public class POJOCreacionPartida {
     public String getNombre() {
         return nombre;
     }
-
 }

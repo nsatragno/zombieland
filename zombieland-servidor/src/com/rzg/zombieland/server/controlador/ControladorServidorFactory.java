@@ -41,6 +41,8 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
             return new ControladorCrearPartida(this);
         case Enviable.LISTADO_PARTIDAS:
             return new ControladorListadoPartidas(this);
+        case Enviable.UNIRSE_PARTIDA:
+            return new ControladorUnirsePartida(this);
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

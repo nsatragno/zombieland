@@ -3,14 +3,17 @@ package com.rzg.zombieland.comunes.comunicacion.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
-
 /**
  * Representa el estado actual de un lobby: cantidad de jugadores, nombres, etc.
  * @author nicolas
  *
  */
 public class POJOPartida {
+
+    /**
+     * El ID que identifica unívocamente a la partida.
+     */
+    private String id;
     
     /**
      * El administrador de la partida.
@@ -45,8 +48,10 @@ public class POJOPartida {
      * @param nombre 
      * @param estado 
      */
-    public POJOPartida(String administrador, List<String> jugadores, List<String> espectadores,
-                     int cantidadRondas, int cantidadJugadores, String nombre, String estado) {
+    public POJOPartida(String id, String administrador, List<String> jugadores,
+                       List<String> espectadores, int cantidadRondas, int cantidadJugadores,
+                       String nombre, String estado) {
+        this.id = id;
         this.administrador = administrador;
         this.jugadores = jugadores;
         this.espectadores = espectadores;
@@ -113,6 +118,13 @@ public class POJOPartida {
         return nombre;
     }
     
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null)
@@ -139,6 +151,4 @@ public class POJOPartida {
     public Object getEstado() {
         return estado;
     }
-
-
 }

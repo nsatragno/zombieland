@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOCreacionPartida;
 import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
@@ -157,7 +157,8 @@ public class Partida {
      * @return un pojo con los datos de la partida.
      */
     public POJOPartida getPOJO() {
-        return new POJOPartida(administrador.getNombre(),
+        return new POJOPartida(id.toString(),
+                               administrador.getNombre(),
                                proyectarNombres(jugadores),
                                proyectarNombres(espectadores), 
                                rondas.size(), 
@@ -185,5 +186,28 @@ public class Partida {
             return false;
         Partida otro = (Partida)obj;
         return otro.id.equals(id);
+    }
+
+    /**
+     * @return el ID de la partida.
+     */
+    public UUID getId() {
+        return id;
+    }
+
+    /**
+     * @return el listado de jugadores unidos a la partida.
+     */
+    public List<Jugador> getJugadores() {
+        return jugadores;
+    }
+
+    /**
+     * Agrega un jugador a la partida.
+     * @param jugador
+     */
+    public void addJugador(Jugador jugador) {
+        jugadores.add(jugador);
+        // TODO determinar si ya podemos mandarle púa a la partida.
     }
 }

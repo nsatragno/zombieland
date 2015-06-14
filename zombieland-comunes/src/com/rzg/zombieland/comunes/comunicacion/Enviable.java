@@ -37,10 +37,16 @@ public abstract class Enviable {
      * Obtener el listado de partidas actual.
      */
     public static final int LISTADO_PARTIDAS = 0x5;
+
+    /**
+     * Unirse a una partida ya existente.
+     */
+    public static final int UNIRSE_PARTIDA = 0x6;
     
     /**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
+
     
 }
