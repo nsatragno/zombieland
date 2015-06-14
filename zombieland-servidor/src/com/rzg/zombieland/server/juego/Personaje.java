@@ -36,4 +36,8 @@ public abstract class Personaje extends EntidadTablero {
     public static void mover() {
         // TODO implementar.
     }
+    
+    public Jugador getJugador(){
+    	return jugador;
+    }
 }

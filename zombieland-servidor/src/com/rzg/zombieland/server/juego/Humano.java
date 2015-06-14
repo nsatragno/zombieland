@@ -13,6 +13,15 @@ public class Humano extends Personaje {
     // TODO definir sprite.
     private final String SPRITE = "humano.png";
     
+    // Usuario que identifica al humano. Puede servir más adelante para colocar
+    // el nombre por encima.
+    private String usuario;
+    
+    // Permite construir un humano a través de un Jugador.
+    public Humano(String usuario) {
+    	this.usuario = usuario;
+    }
+    
     @Override
     public String getSprite() {
         return SPRITE;
@@ -21,6 +30,10 @@ public class Humano extends Personaje {
     @Override
     public void colisionar(EntidadTablero entidad) {
         // TODO Auto-generated method stub
+    }
+    
+    public String getUsuario(){
+    	return usuario;
     }
   
 }

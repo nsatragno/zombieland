@@ -10,6 +10,15 @@ public class Zombie extends Personaje {
     // TODO definir sprite.
     private final String SPRITE = "zombie.jpg";
     
+    // Usuario que identifica al zombie. Puede servir más adelante para colocar
+    // el nombre por encima.
+    private String usuario;
+    
+    // Permite construir un zombie a través de un Jugador.
+    public Zombie(String usuario) {
+    	this.usuario = usuario;
+    }
+    
     @Override
     public String getSprite() {
         return SPRITE;
@@ -18,6 +27,10 @@ public class Zombie extends Personaje {
     @Override
     public void colisionar(EntidadTablero entidad) {
         // TODO convertir entidad en zombie.
+    }
+    
+    public String getUsuario(){
+    	return usuario;
     }
 
 }
