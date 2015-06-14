@@ -58,4 +58,29 @@ public class PeticionListadoPartidasTest {
         });
         Assert.assertTrue(latch.await(1, TimeUnit.SECONDS));
     }
+    
+    /**
+     * Prueba que un listado de POJOs vacío parsee correctamente.
+     * @throws ParametrosNoValidosException 
+     * @throws InterruptedException 
+     */
+    @Test
+    public void testObtenerRespuestaPeticionVacia() throws ParametrosNoValidosException, InterruptedException {
+        final CountDownLatch latch = new CountDownLatch(1);
+        PeticionListadoPartidas peticion = new PeticionListadoPartidas();
+        final List<POJOPartida> pojos = new ArrayList<POJOPartida>();
+        RespuestaListadoPartidas respuesta = new RespuestaListadoPartidas(pojos);
+        
+        peticion.procesarRespuesta(new Gson().toJson(respuesta));
+        peticion.getRespuesta().then(new DoneCallback<RespuestaListadoPartidas>() {
+            
+            @Override
+            public void onDone(RespuestaListadoPartidas respuesta) {
+                Assert.assertTrue(respuesta.fuePeticionExitosa());
+                Assert.assertEquals(0, respuesta.getPartidas().size());
+                latch.countDown();
+            }
+        });
+        Assert.assertTrue(latch.await(1, TimeUnit.SECONDS));
+    }
 }

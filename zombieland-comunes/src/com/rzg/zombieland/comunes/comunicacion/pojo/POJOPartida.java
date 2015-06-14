@@ -33,6 +33,8 @@ public class POJOPartida {
     
     private String nombre;
     
+    private String estado;
+    
     /**
      * Construye un POJO de lobby.
      * @param administrador - incluye al administrador.
@@ -51,6 +53,7 @@ public class POJOPartida {
         this.cantidadRondas = cantidadRondas;
         this.cantidadMaximaJugadores = cantidadJugadores;
         this.nombre = nombre;
+        this.estado = estado;
     }
     
     /**
@@ -131,6 +134,10 @@ public class POJOPartida {
                 + ", espectadores=" + espectadores + ", cantidadRondas=" + cantidadRondas
                 + ", cantidadMaximaJugadores=" + cantidadMaximaJugadores + ", nombre=" + nombre
                 + "]";
+    }
+
+    public Object getEstado() {
+        return estado;
     }
 
 
