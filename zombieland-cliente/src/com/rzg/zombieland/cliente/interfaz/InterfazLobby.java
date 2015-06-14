@@ -131,6 +131,7 @@ public class InterfazLobby extends JPanel
 	private static final long serialVersionUID = 6954796419653149772L;
     private ModeloParametros modeloTablaParametros;
     private ModeloLista modeloListaJugadores;
+    private JLabel lblTitulo;
 	/**
 	 * Create the frame.
 	 */
@@ -193,7 +194,7 @@ public class InterfazLobby extends JPanel
 		lblRecomendacion8.setBounds(320, 314, 415, 30);
 		add(lblRecomendacion8);
 		
-		JLabel lblTitulo = new JLabel("TITULO PARTIDA");
+		lblTitulo = new JLabel();
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setBounds(10, 11, 595, 67);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 36));
@@ -260,5 +261,6 @@ public class InterfazLobby extends JPanel
 	public void actualizarModeloParametros(POJOPartida datos) {
 	    modeloTablaParametros.actualizarDatos(datos);
 	    modeloListaJugadores.cambiarDatos(datos.getJugadores());
+	    lblTitulo.setText(datos.getNombre());
 	}
 }
