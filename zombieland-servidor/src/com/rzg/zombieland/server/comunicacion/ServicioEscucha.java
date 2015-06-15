@@ -76,7 +76,7 @@ public class ServicioEscucha extends Thread implements HiloListener {
                     for (HiloEscucha hilo : hilosEscucha) {
                         hilo.cerrar(false);
                         try {
-                            hilo.join();
+                            hilo.join(1000);
                         } catch (InterruptedException e1) {
                             Log.error("No se pudo unir al hilo de escucha hijo:");
                             Log.error(e1.getMessage());
