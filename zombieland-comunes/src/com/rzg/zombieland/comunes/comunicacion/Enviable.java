@@ -44,9 +44,16 @@ public abstract class Enviable {
     public static final int UNIRSE_PARTIDA = 0x6;
     
     /**
+     * Actualización del lobby enviada por el servidor, por ejemplo si se une un jugador nuevo.  
+     */
+    public static final int ACTUALIZACION_LOBBY = 0x7;
+    
+    /**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
+
+    
 
     
 }

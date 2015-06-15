@@ -204,10 +204,53 @@ public class Partida {
 
     /**
      * Agrega un jugador a la partida.
-     * @param jugador
+     * @param jugadorNuevo
      */
-    public void addJugador(Jugador jugador) {
-        jugadores.add(jugador);
+    public void addJugador(Jugador jugadorNuevo) {
+        jugadores.add(jugadorNuevo);
+        for (Jugador jugador : jugadores) {
+            if (jugador == jugadorNuevo)
+                continue;
+            jugador.notificarCambioPartida();
+        }
         // TODO determinar si ya podemos mandarle púa a la partida.
+    }
+
+    /**
+     * @return el administrador de la partida.
+     */
+    public Jugador getAdministrador() {
+        return administrador;
+    }
+
+    /**
+     * @return la cantidad de rondas en la partida.
+     */
+    public int getCantidadRondas() {
+        return rondas.size();
+    }
+    
+    /**
+     * @return la cantidad máxima de jugadores admitida por la partida.
+     */
+    public int getMaximoJugadores() {
+        return cantidadMaximaJugadores;
+    }
+
+    /**
+     * @return el nombre asignado por el jugador de la partida.
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Quita un jugador de la partida.
+     * @param jugadorEliminado
+     */
+    public void removerJugador(Jugador jugadorEliminado) {
+        jugadores.remove(jugadorEliminado);
+        for (Jugador jugador : jugadores)
+            jugador.notificarCambioPartida();
     }
 }

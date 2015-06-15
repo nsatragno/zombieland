@@ -16,13 +16,30 @@ import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
 
 public abstract class AbstractPartidasTest {
-    protected List<POJOPartida> partidasCreadas;
+    protected List<POJOPartida> pojoPartidasCreadas;
+    protected List<Partida> partidasCreadas;
+    
+    private Jugador ultimoAdmin;
+
+    private int ultimaCantidadJugadores;
+
+    private int ultimaCantidadRondas;
+
+    private String ultimoNombre;
+
+    /**
+     * @return the partidasCreadas
+     */
+    public List<POJOPartida> getPartidasCreadas() {
+        return pojoPartidasCreadas;
+    }
 
     /**
      * Constructor por defecto.
      */
     public AbstractPartidasTest() {
-        partidasCreadas = new ArrayList<POJOPartida>();
+        pojoPartidasCreadas = new ArrayList<POJOPartida>();
+        partidasCreadas = new ArrayList<Partida>();
     }
 
     /**
@@ -32,7 +49,7 @@ public abstract class AbstractPartidasTest {
     public void tearDown() {
         ServicioSesion.matarInstancia();
         ServicioPartidas.matarInstancia();
-        partidasCreadas.clear();
+        pojoPartidasCreadas.clear();
     }
     
     /**
@@ -41,21 +58,59 @@ public abstract class AbstractPartidasTest {
      */
     protected void crearPartida() throws ParametrosNoValidosException {
         Random random = new Random();
-        String clave = UUID.randomUUID().toString();
-        Jugador admin = new Jugador(UUID.randomUUID().toString(), 
-                                    clave,
-                                    clave,
-                                    UUID.randomUUID().toString(),
-                                    UUID.randomUUID().toString());
+        ultimoAdmin = crearJugador();
         int cantidadJugadores = random.nextInt(
                 POJOCreacionPartida.CANTIDAD_MAXIMA_JUGADORES - 
                 POJOCreacionPartida.CANTIDAD_MINIMA_JUGADORES) + 
                     POJOCreacionPartida.CANTIDAD_MINIMA_JUGADORES;
-        Partida partida = new Partida(admin,
-                                      new POJOCreacionPartida(cantidadJugadores * 2, 
-                                                              cantidadJugadores, 
-                                                              UUID.randomUUID().toString()));
+        ultimaCantidadRondas = cantidadJugadores * 2;
+        ultimaCantidadJugadores = cantidadJugadores;
+        ultimoNombre = UUID.randomUUID().toString();
+        Partida partida = new Partida(getUltimoAdmin(),
+                                      new POJOCreacionPartida(ultimaCantidadRondas, 
+                                                              ultimaCantidadJugadores, 
+                                                              ultimoNombre));
         ServicioPartidas.getInstancia().addPartida(partida);
-        partidasCreadas.add(partida.getPOJO());
-    }   
+        pojoPartidasCreadas.add(partida.getPOJO());
+        partidasCreadas.add(partida);
+    }
+
+    /**
+     * @return el último admin adjuntado a una partida.
+     */
+    public Jugador getUltimoAdmin() {
+        return ultimoAdmin;
+    }
+    
+    /**
+     * @return the ultimaCantidadJugadores
+     */
+    public int getUltimaCantidadJugadores() {
+        return ultimaCantidadJugadores;
+    }
+
+    /**
+     * @return the ultimaCantidadRondas
+     */
+    public int getUltimaCantidadRondas() {
+        return ultimaCantidadRondas;
+    }
+
+    /**
+     * @return the ultimoNombre
+     */
+    public String getUltimoNombre() {
+        return ultimoNombre;
+    }
+
+    protected Jugador crearJugador() throws ParametrosNoValidosException {
+        String clave = UUID.randomUUID().toString();
+        return new Jugador(UUID.randomUUID().toString(), 
+                clave,
+                clave,
+                UUID.randomUUID().toString(),
+                UUID.randomUUID().toString());
+    }
+
+
 }

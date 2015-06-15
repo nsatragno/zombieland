@@ -10,7 +10,10 @@ import javax.persistence.OneToMany;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.misc.Avatar;
+import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.comunicacion.peticion.PeticionActualizacionLobby;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 
@@ -208,4 +211,17 @@ public class Jugador {
 	public void setClave(String clave) {
 		this.clave = clave;
 	}
+
+	/**
+	 * Notifica al jugador del cambio de partida para que pueda tomar las acciones requeridas.
+	 */
+    public void notificarCambioPartida() {
+        Sesion sesion = ServicioSesion.getInstancia().getSesion(this);
+        try {
+            sesion.enviarPeticion(new PeticionActualizacionLobby(sesion.getPartida().getPOJO()));
+        } catch (ZombielandException e) {
+            Log.error("No se pudo enviar la notificación de cambio de partida al cliente");
+            e.printStackTrace();
+        }
+    }
 }

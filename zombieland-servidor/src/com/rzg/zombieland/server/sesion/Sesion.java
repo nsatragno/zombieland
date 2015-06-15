@@ -2,7 +2,9 @@ package com.rzg.zombieland.server.sesion;
 
 import java.util.UUID;
 
-import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
+import com.rzg.zombieland.comunes.comunicacion.EnviaPeticiones;
+import com.rzg.zombieland.comunes.comunicacion.Peticion;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.Partida;
 
 /**
@@ -21,8 +23,8 @@ public class Sesion {
     // La partida a la que está asociada el jugador. Puede ser null.
     private Partida partida;
     
-    // El hilo que está atendiendo la sesión.
-    private HiloEscucha hilo;
+    // El objeto que envía peticiones al otro lado.
+    private EnviaPeticiones hilo;
     
     /**
      * Construye una sesión a partir del jugador.
@@ -30,11 +32,12 @@ public class Sesion {
      * @param hilo - el hilo de escucha que atiende esta sesión.
      * @throws NullPointerException si el jugador es nulo.
      */
-    public Sesion(Jugador jugador, HiloEscucha hilo) {
+    public Sesion(Jugador jugador, EnviaPeticiones hilo) {
         if (jugador == null)
             throw new NullPointerException("El jugador no puede ser null");
         this.jugador = jugador;
         id = UUID.randomUUID();
+        this.hilo = hilo;
     }
 
     /**
@@ -66,11 +69,12 @@ public class Sesion {
     public void setPartida(Partida partida) {
         this.partida = partida;
     }
-    
+
     /**
-     * @return el hilo de escucha.
+     * Envía una petición al cliente asociado a la sesión.
+     * @throws ZombielandException 
      */
-    public HiloEscucha getHilo() {
-    	return hilo;
+    public void enviarPeticion(Peticion<?, ?> peticion) throws ZombielandException {
+        hilo.enviarPeticion(peticion);
     }
 }

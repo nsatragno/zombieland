@@ -28,7 +28,7 @@ public class ControladorListadoPartidasTest extends AbstractPartidasTest {
      */
     @Test
     public void testSinPartidas() throws ParametrosNoValidosException {
-        assertEquals(0, partidasCreadas.size());
+        assertEquals(0, pojoPartidasCreadas.size());
         assertEquals(0, ServicioPartidas.getInstancia().getPartidas().size());
         
         Gson gson = new Gson();
@@ -55,7 +55,7 @@ public class ControladorListadoPartidasTest extends AbstractPartidasTest {
         ControladorListadoPartidas controlador = new ControladorListadoPartidas(manejador);
         RespuestaListadoPartidas respuesta = gson.fromJson(controlador.procesar(gson.toJson(null)),
                                                            RespuestaListadoPartidas.class);
-        for (POJOPartida partida : partidasCreadas)
+        for (POJOPartida partida : pojoPartidasCreadas)
             assertTrue(respuesta.getPartidas().contains(partida));
         assertTrue(respuesta.fuePeticionExitosa());
     }
@@ -75,7 +75,7 @@ public class ControladorListadoPartidasTest extends AbstractPartidasTest {
         ControladorListadoPartidas controlador = new ControladorListadoPartidas(manejador);
         RespuestaListadoPartidas respuesta = gson.fromJson(controlador.procesar(gson.toJson(null)),
                                                            RespuestaListadoPartidas.class);
-        for (POJOPartida partida : partidasCreadas)
+        for (POJOPartida partida : pojoPartidasCreadas)
             assertTrue(respuesta.getPartidas().contains(partida));
         assertTrue(respuesta.fuePeticionExitosa());
     }
@@ -99,7 +99,7 @@ public class ControladorListadoPartidasTest extends AbstractPartidasTest {
         for (int i = 0; i < CANTIDAD_PARTIDAS; i++)
             crearPartida();
         // Verificamos que realmente se hayan creado tres partidas. Esto es un test... del test.
-        assertEquals(CANTIDAD_PARTIDAS, partidasCreadas.size());
+        assertEquals(CANTIDAD_PARTIDAS, pojoPartidasCreadas.size());
         assertEquals(CANTIDAD_PARTIDAS, ServicioPartidas.getInstancia().getPartidas().size());
     }
 }

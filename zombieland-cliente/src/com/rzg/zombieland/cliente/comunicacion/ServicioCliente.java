@@ -5,6 +5,7 @@ import java.net.Socket;
 
 import com.rzg.zombieland.cliente.comunicacion.controlador.ControladorClienteFactory;
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
+import com.rzg.zombieland.comunes.comunicacion.HiloListener;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
@@ -14,7 +15,7 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  * @author nicolas
  *
  */
-public class ServicioCliente {
+public class ServicioCliente implements HiloListener {
     // El hilo de escucha en sí.
     private HiloEscucha hiloEscucha;
     
@@ -29,7 +30,7 @@ public class ServicioCliente {
      */
     private ServicioCliente(int puerto, String host) throws ZombielandException {
         try {
-            hiloEscucha = new HiloEscucha(new Socket(host, puerto), new ControladorClienteFactory());
+            hiloEscucha = new HiloEscucha(new Socket(host, puerto), new ControladorClienteFactory(), this);
             hiloEscucha.start();
         } catch(IOException e) {
             throw new ZombielandException("No se pudo realizar la conexión con el servidor: " +
@@ -83,5 +84,10 @@ public class ServicioCliente {
             Log.error(e.getLocalizedMessage());
         }
         instancia = null;
+    }
+
+    @Override
+    public void hiloCerrado(HiloEscucha hilo) {
+        Log.error("Se cerró la conexión con el servidor");
     }
 }

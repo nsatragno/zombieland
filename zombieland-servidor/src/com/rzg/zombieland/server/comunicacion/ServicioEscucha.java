@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
+import com.rzg.zombieland.comunes.comunicacion.HiloListener;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.controlador.ControladorServidorFactory;
@@ -17,7 +18,7 @@ import com.rzg.zombieland.server.comunicacion.controlador.ControladorServidorFac
  * @author nicolas
  *
  */
-public class ServicioEscucha extends Thread {
+public class ServicioEscucha extends Thread implements HiloListener {
 	// El puerto por defecto para el constructor sin argumentos.
     private final static int PUERTO_POR_DEFECTO = 2048;
     
@@ -64,7 +65,7 @@ public class ServicioEscucha extends Thread {
     	Log.info("Servidor arrancado");
         while (corriendo) {
             try {
-                HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), new ControladorServidorFactory());
+                HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), new ControladorServidorFactory(), this);
                 hilo.start();
                 hilosEscucha.add(hilo);
             } catch (SocketException e) {
@@ -99,5 +100,17 @@ public class ServicioEscucha extends Thread {
                 serverSocket.close();
             } catch (IOException e) {
             }
+    }
+
+    /**
+     * @return los hilos de escucha.
+     */
+    public List<HiloEscucha> getHilos() {
+        return hilosEscucha;
+    }
+
+    @Override
+    public void hiloCerrado(HiloEscucha hilo) {
+        hilosEscucha.remove(hilo);
     }
 }

@@ -20,6 +20,8 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  */
 public class HiloEscuchaTest {
 
+    private boolean hiloCerrado;
+    
     /**
      * Intenta cerrar un hilo de escucha y verifica que haga el join efectivamente.
      * @throws InterruptedException
@@ -31,7 +33,14 @@ public class HiloEscuchaTest {
     public void testCerrar() throws InterruptedException, UnknownHostException, IOException, ZombielandException {
         ServerSocket serverSocket = new ServerSocket(2048);
         Socket socket = new Socket("localhost", 2048);
-        HiloEscucha escucha = new HiloEscucha(socket, new ControladorTestFactory());
+        hiloCerrado = false;
+        HiloEscucha escucha = new HiloEscucha(socket, new ControladorTestFactory(), new HiloListener() {
+
+            @Override
+            public void hiloCerrado(HiloEscucha hilo) {
+                hiloCerrado = true;
+            }
+        });
         escucha.start();
         assertTrue(escucha.isAlive());
         escucha.cerrar();
@@ -39,5 +48,6 @@ public class HiloEscuchaTest {
         socket.close();
         serverSocket.close();
         assertFalse(escucha.isAlive());
+        assertTrue(hiloCerrado);
     }
 }

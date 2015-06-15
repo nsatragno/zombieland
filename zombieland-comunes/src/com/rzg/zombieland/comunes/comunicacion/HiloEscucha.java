@@ -24,7 +24,7 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  * @author nicolas
  *
  */
-public class HiloEscucha extends Thread {
+public class HiloEscucha extends Thread implements EnviaPeticiones {
 
     // El socket sobre el que se escucha al cliente.
     private Socket socket;
@@ -37,6 +37,9 @@ public class HiloEscucha extends Thread {
     
     // Mapea las peticiones para su respuesta.
     private Map<UUID, Peticion<?, ?>> mapaPeticiones;
+
+    // Objeto al que se le avisa cuando ocurren distintos eventos en el hilo de escucha.
+    private HiloListener listener;
     
     /**
      * Comienza a escuchar en el socket dado, delegando las peticiones a la fábrica de
@@ -44,13 +47,14 @@ public class HiloEscucha extends Thread {
      * @param socket - el socket con el que se escuchará al cliente.
      * @param controladorFactory - fábrica de controladores inyectada.
      */
-    public HiloEscucha(Socket socket, ControladorFactory controladorFactory) {
+    public HiloEscucha(Socket socket, ControladorFactory controladorFactory, HiloListener listener) {
         super("HiloEscucha: " + socket.getInetAddress());
         corriendo = true;
         Log.debug("Estableciendo nueva conexión con " + socket.getInetAddress());
         this.socket = socket;
         this.controladorFactory = controladorFactory;
         mapaPeticiones = new HashMap<UUID, Peticion<?, ?>>();
+        this.listener = listener;
     }
     
     @Override
@@ -72,6 +76,7 @@ public class HiloEscucha extends Thread {
                 // -1 indica que el otro extremo cerró la conexión.
                 if (codigo == -1) {
                     Log.debug("Cerrando hilo escucha: llegó el -1");
+                    cerrar();
                     return;
                 }
                 // Este bloque es sincronizado para que si otro hilo intenta enviar una
@@ -149,6 +154,7 @@ public class HiloEscucha extends Thread {
      * @param peticion
      * @throws ZombielandException 
      */
+    @Override
     public void enviarPeticion(Peticion<?, ?> peticion) throws ZombielandException {
         try {
             // Antes de enviar la petición, la almacenamos en un mapa identificada por un ID
@@ -182,6 +188,14 @@ public class HiloEscucha extends Thread {
             socket.close();
         } catch (IOException e) {
         }
+        if (listener != null)
+            listener.hiloCerrado(this);
     }
 
+    /**
+     * @return la fábrica de controladores.
+     */
+    public ControladorFactory getFactory() {
+        return controladorFactory;
+    }
 }

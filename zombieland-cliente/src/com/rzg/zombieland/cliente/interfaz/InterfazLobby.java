@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +20,7 @@ import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
 
 import com.rzg.zombieland.cliente.meta.Estado;
+import com.rzg.zombieland.cliente.meta.Estado.EscuchadorEstadoLobby;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 
 /**
@@ -28,7 +28,7 @@ import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
  * @author Ivan
  */
 
-public class InterfazLobby extends JPanel
+public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
 {
     private class ModeloParametros extends AbstractTableModel {
 
@@ -244,23 +244,13 @@ public class InterfazLobby extends JPanel
 		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-lobby.png"));
 		lblFondo.setBounds(0, 0, 800, 600);
 		add(lblFondo);
-
-		// Cuando se muestra la pantalla, actualizar los datos que muestra.
-		addComponentListener(new ComponentShownListener() {
-            
-            @Override
-            public void componentShown(ComponentEvent e) {
-                actualizarModeloParametros(Estado.getInstancia().getEstadoLobby());
-            }
-        });
+		Estado.getInstancia().addEscuchador(this);
 	}
 	
-	/**
-	 * @param datos
-	 */
-	public void actualizarModeloParametros(POJOPartida datos) {
-	    modeloTablaParametros.actualizarDatos(datos);
-	    modeloListaJugadores.cambiarDatos(datos.getJugadores());
-	    lblTitulo.setText(datos.getNombre());
-	}
+    @Override
+    public void notificarLobbyActualizado(POJOPartida datos) {
+        modeloTablaParametros.actualizarDatos(datos);
+        modeloListaJugadores.cambiarDatos(datos.getJugadores());
+        lblTitulo.setText(datos.getNombre());
+    }
 }
