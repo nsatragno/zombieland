@@ -67,17 +67,21 @@ public class ServicioEscucha extends Thread implements HiloListener {
             try {
                 HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), new ControladorServidorFactory(), this);
                 hilo.start();
-                hilosEscucha.add(hilo);
+                synchronized (this) {
+                    hilosEscucha.add(hilo);
+                }
             } catch (SocketException e) {
                 // Esperada. La usamos para salir.
-                for (HiloEscucha hilo : hilosEscucha) {
-                    hilo.cerrar();
-                    try {
-                        hilo.join();
-                    } catch (InterruptedException e1) {
-                        Log.error("No se pudo unir al hilo de escucha hijo:");
-                        Log.error(e1.getMessage());
-                        e1.printStackTrace();
+                synchronized (this) {
+                    for (HiloEscucha hilo : hilosEscucha) {
+                        hilo.cerrar();
+                        try {
+                            hilo.join();
+                        } catch (InterruptedException e1) {
+                            Log.error("No se pudo unir al hilo de escucha hijo:");
+                            Log.error(e1.getMessage());
+                            e1.printStackTrace();
+                        }
                     }
                 }
                 return;
@@ -111,6 +115,8 @@ public class ServicioEscucha extends Thread implements HiloListener {
 
     @Override
     public void hiloCerrado(HiloEscucha hilo) {
-        hilosEscucha.remove(hilo);
+        synchronized (this) {
+            hilosEscucha.remove(hilo);
+        }
     }
 }
