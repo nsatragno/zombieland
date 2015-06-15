@@ -2,14 +2,19 @@ package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListModel;
@@ -19,9 +24,15 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
 
+import org.jdeferred.DoneCallback;
+
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionAbandonarPartida;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.meta.Estado.EscuchadorEstadoLobby;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Interfaz de Lobby.
@@ -235,6 +246,16 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
 		listaJugadores.setModel(modeloListaJugadores);
 		add(listaJugadores, BorderLayout.CENTER);
 		
+        JButton botonAbandonar = new JButton();
+        botonAbandonar.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abandonarPartida();
+            }
+        });
+        add(botonAbandonar);
+		
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
 		label.setBounds(700, 515, 63, 14);
@@ -252,5 +273,32 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
         modeloTablaParametros.actualizarDatos(datos);
         modeloListaJugadores.cambiarDatos(datos.getJugadores());
         lblTitulo.setText(datos.getNombre());
+    }
+    
+    private void abandonarPartida() {
+        final Component _this = this;
+        PeticionAbandonarPartida peticion = new PeticionAbandonarPartida();
+        try {
+            ServicioCliente.enviarPeticion(peticion);
+            peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
+                
+                @Override
+                public void onDone(RespuestaGenerica respuesta) {
+                    if (respuesta.fuePeticionExitosa()) {
+                        Main.irA(Main.LISTADO_PARTIDAS);
+                    } else {
+                        JOptionPane.showMessageDialog(_this,
+                                                      respuesta.getMensajeError(),
+                                                      "Lobby", 
+                                                      JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        } catch (ZombielandException e1) {
+            JOptionPane.showMessageDialog(this,
+                                          "No se pudo abandonar la partida",
+                                          "Lobby",
+                                          JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

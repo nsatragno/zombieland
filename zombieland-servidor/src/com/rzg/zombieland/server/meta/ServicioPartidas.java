@@ -10,6 +10,7 @@ import java.util.UUID;
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
+import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.peticion.PeticionListadoPartidas;
 import com.rzg.zombieland.server.interfaz.Principal;
@@ -45,9 +46,8 @@ public class ServicioPartidas {
      */
     public synchronized void addPartida(Partida partida) {
         partidas.put(partida.getId(), partida);
-        if (Principal.getServicioEscucha() != null) {
-            Principal.getServicioEscucha().broadcast(obtenerPeticion());
-        }
+        for (HiloEscucha hilo : Principal.getServicioEscucha().getHilos())
+            enviarPartidas(hilo);
     }
 
     private PeticionListadoPartidas obtenerPeticion() {
@@ -88,6 +88,7 @@ public class ServicioPartidas {
             if (hilo != null)
                 hilo.enviarPeticion(obtenerPeticion());
         } catch (ZombielandException e) {
+            Log.error("No se pudo enviar actualización de partida a un hilo");
         }
     }
 }

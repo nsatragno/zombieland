@@ -122,21 +122,4 @@ public class ServicioEscucha extends Thread implements HiloListener {
             hilosEscucha.remove(hilo);
         }
     }
-
-    /**
-     * Envía una petición a todos los clientes.
-     * @param peticionListadoPartidas
-     * @throws ZombielandException 
-     */
-    public void broadcast(PeticionListadoPartidas peticion) {
-        synchronized (this) {
-            for (HiloEscucha hilo : hilosEscucha)
-                try {
-                    hilo.enviarPeticion(peticion);
-                } catch (ZombielandException e) {
-                    Log.error("No se pudo enviar broadcast a un hilo");
-                    e.printStackTrace();
-                }
-        }
-    }
 }

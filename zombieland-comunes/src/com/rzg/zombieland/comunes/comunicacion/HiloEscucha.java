@@ -59,54 +59,47 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
     
     @Override
     public void run() {
-        // Los dos warnings siguiente NO son de verdad, son un bug de Eclipse:
-        // https://bugs.eclipse.org/bugs/show_bug.cgi?id=371614
-        try (@SuppressWarnings("resource")
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             @SuppressWarnings("resource")
+        try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              // Obtengo un reader de entrada.
              BufferedReader in = new BufferedReader(new InputStreamReader(
                  socket.getInputStream()))) {
             while (corriendo) {
-                // El hilo se detendrá acá hasta que el otro extremo envíe un código de petición. 
+                // El hilo se detendrá acá hasta que el otro extremo envíe un código de petición.
                 int codigo = in.read();
-                Log.debug("Recibiendo datos en HiloEscucha " + this + ". Código: " + codigo);
-                
-                // -1 indica que el otro extremo cerró la conexión.
-                if (codigo == -1) {
-                    Log.debug("Cerrando hilo escucha: llegó el -1");
-                    cerrar(true);
-                    return;
-                }
                 // Este bloque es sincronizado para que si otro hilo intenta enviar una
                 // respuesta sobre esta instancia de escucha mientras nosotros estamos
                 // escribiendo en el socket, los mensajes no se intercalen y rompan el
-                // protocolo.                
+                // protocolo.
+                synchronized (this) {
+                    Log.debug("Recibiendo datos en HiloEscucha " + this + ". Código: " + codigo);
+                    
+                    // -1 indica que el otro extremo cerró la conexión.
+                    if (codigo == -1) {
+                        Log.debug("Cerrando hilo escucha: llegó el -1");
+                        cerrar(true);
+                        return;
+                    }
+                    // Si llegamos acá, la petición no viene de una respuesta. Obtenemos el ID
+                    // generado por el cliente de la petición para que la pueda identificar.
+                    String uuid = in.readLine();
+                    String contenido = in.readLine();
                     // Si el servidor envía una respuesta, resolvemos la petición que teníamos
                     // relacionada. Primero buscamos la buscamos en el mapa de peticiones de
                     // acuerdo al ID que nos envió el otro extremo, luego la quitamos y le enviamos
                     // la respuesta para que la procese.
                     if (codigo == Enviable.RESPUESTA) {
-                        String uuid = in.readLine();
-                        String respuesta = in.readLine();
                         Log.debug("Procesando respuesta:");
-                        Log.debug(respuesta);
-                        synchronized (this) {
-                            mapaPeticiones.remove(UUID.fromString(uuid)).
-                                procesarRespuesta(respuesta);
-                        }
+                        Log.debug(contenido);
+                        mapaPeticiones.remove(UUID.fromString(uuid)).
+                            procesarRespuesta(contenido);
                         continue;
                     }
-                    // Si llegamos acá, la petición no viene de una respuesta. Obtenemos el ID
-                    // generado por el cliente de la petición para que la pueda identificar.
-                    String uuid = in.readLine();
-                    
                     // Obtengo un controlador que es quien tomará las acciones apropiadas para
                     // la petición, como mover a un personaje o registrar un jugador.
                     Log.debug("Contenido:");
                     // La próxima línea es el cuerpo de la petición. Su formato varía de 
                     // acuerdo al tipo de petición y lo sabe manejar el controlador.
-                    String contenido = in.readLine();
+                    
                     Log.debug(contenido);
                     // Obtenemos la respuesta a partir del controlador.
                     String respuesta;
@@ -123,21 +116,19 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
                     }
                     Log.debug("Respuesta:");
                     Log.debug(respuesta);
-                    
-                    synchronized (this) {
-                        // En esta sección se puede ver el protocolo de envío de respuestas.
-                        // Escribimos el código de las respuestas para que el cliente pueda
-                        // identificar el mensaje apropiadamente.
-                        // Escribimos la respuesta en el búfer de salida...
-                        out.write(Enviable.RESPUESTA);
-                        // Escribimos el mismo UUID que nos dio el otro extremo.
-                        out.println(uuid);
-                        out.println(respuesta);
-                        // ...y nos aseguramos de que se limpie de una vez para evitar deadlocks
-                        // en los tests.
-                        out.flush();
-                    }
+                    // En esta sección se puede ver el protocolo de envío de respuestas.
+                    // Escribimos el código de las respuestas para que el cliente pueda
+                    // identificar el mensaje apropiadamente.
+                    // Escribimos la respuesta en el búfer de salida...
+                    out.write(Enviable.RESPUESTA);
+                    // Escribimos el mismo UUID que nos dio el otro extremo.
+                    out.println(uuid);
+                    out.println(respuesta);
+                    // ...y nos aseguramos de que se limpie de una vez para evitar deadlocks
+                    // en los tests.
+                    out.flush();
                 }
+            }
             // Ya no estamos más corriendo. Cerramos el socket y nos vamos a dormir.
             socket.close();
         } catch (SocketException e) {
@@ -164,11 +155,12 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
             // generado aleatoriamente para poder identificar su respuesta. Es importante notar que
             // la vuelta de la petición desde el otro extremo se maneja en otro hilo, por lo que la
             // respuesta debe resolverse asíncronamete mediante una promesa.
-            mapaPeticiones.put(peticion.getID(), peticion);
-            PrintWriter salida = new PrintWriter(socket.getOutputStream());
-            Log.debug("Enviando petición " + peticion.getCodigoPeticion());
-            // Ver comentarios en run() sobre el synchronized. 
+            // Ver comentarios en run() sobre el synchronized.
             synchronized (this) {
+                mapaPeticiones.put(peticion.getID(), peticion);
+                PrintWriter salida = new PrintWriter(socket.getOutputStream());
+                Log.debug("Enviando petición " + peticion.getCodigoPeticion());
+                 
                 // El protocolo de envío de peticiones es sencillo: código, ID, contenido.
                 salida.write(peticion.getCodigoPeticion());
                 salida.println(peticion.getID().toString());

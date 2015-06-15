@@ -48,9 +48,16 @@ public abstract class Enviable {
     public static final int ACTUALIZACION_LOBBY = 0x7;
     
     /**
+     * Solicitud de abandono de partida enviada por el cliente.
+     */
+    public static final int ABANDONAR_PARTIDA = 0x8;
+    
+    /**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
+
+    
 
     
 
