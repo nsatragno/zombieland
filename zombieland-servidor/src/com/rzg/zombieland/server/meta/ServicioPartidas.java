@@ -85,7 +85,8 @@ public class ServicioPartidas {
      */
     public void enviarPartidas(HiloEscucha hilo) {
         try {
-            hilo.enviarPeticion(obtenerPeticion());
+            if (hilo != null)
+                hilo.enviarPeticion(obtenerPeticion());
         } catch (ZombielandException e) {
         }
     }
