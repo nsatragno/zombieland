@@ -76,7 +76,7 @@ public class ServicioCliente implements HiloListener {
      * Cierra el servicio cliente, limpiando todos los recursos que inicializó.
      */
     public static void cerrar() {
-        instancia.hiloEscucha.cerrar();
+        instancia.hiloEscucha.cerrar(true);
         try {
             instancia.hiloEscucha.join();
         } catch (InterruptedException e) {

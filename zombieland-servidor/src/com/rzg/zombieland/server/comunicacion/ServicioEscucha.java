@@ -74,7 +74,7 @@ public class ServicioEscucha extends Thread implements HiloListener {
                 // Esperada. La usamos para salir.
                 synchronized (this) {
                     for (HiloEscucha hilo : hilosEscucha) {
-                        hilo.cerrar();
+                        hilo.cerrar(false);
                         try {
                             hilo.join();
                         } catch (InterruptedException e1) {

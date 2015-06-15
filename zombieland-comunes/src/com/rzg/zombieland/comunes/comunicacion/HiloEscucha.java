@@ -76,7 +76,7 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
                 // -1 indica que el otro extremo cerró la conexión.
                 if (codigo == -1) {
                     Log.debug("Cerrando hilo escucha: llegó el -1");
-                    cerrar();
+                    cerrar(true);
                     return;
                 }
                 // Este bloque es sincronizado para que si otro hilo intenta enviar una
@@ -131,7 +131,7 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
                         e.printStackTrace();
                         out.println(Enviable.LINEA_ERROR);
                         Log.error("Matando hilo de escucha :(");
-                        cerrar();
+                        cerrar(true);
                     }
                 }
             }
@@ -181,14 +181,15 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
     }
     /**
      * Cierra el hilo de escucha.
+     * @param notificar - true si debe notificar a los escuchadores, false de lo contrario.
      */
-    public void cerrar() {
+    public void cerrar(boolean notificar) {
         corriendo = false;
         try {
             socket.close();
         } catch (IOException e) {
         }
-        if (listener != null)
+        if (notificar && listener != null)
             listener.hiloCerrado(this);
     }
 

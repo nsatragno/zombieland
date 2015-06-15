@@ -43,7 +43,7 @@ public class HiloEscuchaTest {
         });
         escucha.start();
         assertTrue(escucha.isAlive());
-        escucha.cerrar();
+        escucha.cerrar(true);
         escucha.join();
         socket.close();
         serverSocket.close();
