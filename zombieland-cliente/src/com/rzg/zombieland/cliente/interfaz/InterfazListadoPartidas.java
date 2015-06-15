@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -24,11 +23,11 @@ import javax.swing.table.AbstractTableModel;
 import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
-import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionListadoPartidas;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionUnirsePartida;
 import com.rzg.zombieland.cliente.meta.Estado;
+import com.rzg.zombieland.cliente.meta.Estado.EscuchadorPartidas;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaListadoPartidas;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
@@ -37,7 +36,7 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  * 
  * @author Ivan
  */
-public class InterfazListadoPartidas extends JPanel {
+public class InterfazListadoPartidas extends JPanel implements EscuchadorPartidas {
 
 	private static final long serialVersionUID = -7079211493379843872L;
     private ModeloTabla modeloPartidas;
@@ -190,41 +189,9 @@ public class InterfazListadoPartidas extends JPanel {
 		lblFondo.setBounds(0, 0, 800, 600);
 		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-lista-partidas.png"));
 		add(lblFondo);
-		addComponentListener(new ComponentShownListener() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                actualizarModeloPartidas();
-            }
-        });
-		
+		Estado.getInstancia().addEscuchadorPartidas(this);
 	}
 
-    private void actualizarModeloPartidas() {
-        PeticionListadoPartidas peticion = new PeticionListadoPartidas();
-        final Component this_ = this;
-        try {
-            ServicioCliente.enviarPeticion(peticion);
-            peticion.getRespuesta().then(new DoneCallback<RespuestaListadoPartidas>() {
-                
-                @Override
-                public void onDone(RespuestaListadoPartidas respuesta) {
-                    if (respuesta.fuePeticionExitosa())
-                        modeloPartidas.actualizar(respuesta.getPartidas());
-                    else
-                        JOptionPane.showMessageDialog(this_,
-                                                      respuesta.getMensajeError(), 
-                                                      "Listado de partidas", 
-                                                      JOptionPane.WARNING_MESSAGE);
-                }
-            });
-        } catch (ZombielandException e) {
-            JOptionPane.showMessageDialog(this,
-                                          e.getMessage(), 
-                                          "Listado de partidas", 
-                                          JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
     private void unirse() {
         int indicePartida = tablaPartidas.getSelectedRow();
         if (indicePartida == -1) {
@@ -258,5 +225,10 @@ public class InterfazListadoPartidas extends JPanel {
                     "Unirse a partida", 
                     JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    @Override
+    public void notificarPartidasActualizadas(POJOListadoPartidas listado) {
+        modeloPartidas.actualizar(listado.getPartidas());
     }
 }

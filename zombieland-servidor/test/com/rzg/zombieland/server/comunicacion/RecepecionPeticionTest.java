@@ -140,7 +140,7 @@ public class RecepecionPeticionTest extends AbstractPartidasTest {
         int codigoRespuesta = entrada.read();
         String uuidRecibido = entrada.readLine();
         String lineaEntrada = entrada.readLine();
-        assertEquals(codigoRespuesta, Enviable.RESPUESTA);
+        assertEquals(Enviable.RESPUESTA, codigoRespuesta);
         assertEquals(lineaEntrada, Enviable.LINEA_ERROR);
         assertEquals(uuid.toString(), uuidRecibido);
         assertFalse(ControladorTest.proceso(LINEA_ENVIO));

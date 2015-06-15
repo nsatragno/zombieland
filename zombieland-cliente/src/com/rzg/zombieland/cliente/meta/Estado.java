@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
 
 /**
  * Almacena estado que se debe compartir entre pantallas.
@@ -25,16 +26,33 @@ public class Estado {
         public void notificarLobbyActualizado(POJOPartida pojo);
     }
     
+    /**
+     * Interfaz para escuchar cambios de estado de listado de partidas.
+     * @author nicolas
+     *
+     */
+    public interface EscuchadorPartidas {
+        /**
+         * Se dispara cuando se cambie el estado del lobby.
+         * @param pojo
+         */
+        public void notificarPartidasActualizadas(POJOListadoPartidas respuesta);
+    }
+    
+    
     private static Estado instancia;
     
     private POJOPartida estadoLobby;
     
     private String jugador;
     
-    private List<EscuchadorEstadoLobby> escuchadores;
+    private List<EscuchadorEstadoLobby> escuchadoresLobby;
+
+    private List<EscuchadorPartidas> escuchadoresPartidas;
     
     public Estado() {
-        escuchadores = new ArrayList<EscuchadorEstadoLobby>();
+        escuchadoresLobby = new ArrayList<EscuchadorEstadoLobby>();
+        escuchadoresPartidas = new ArrayList<EscuchadorPartidas>();
     }
     
     /**
@@ -51,7 +69,7 @@ public class Estado {
      * @param escuchador
      */
     public void addEscuchador(EscuchadorEstadoLobby escuchador) {
-        this.escuchadores.add(escuchador);
+        this.escuchadoresLobby.add(escuchador);
     }
     
     /**
@@ -59,8 +77,7 @@ public class Estado {
      * @param pojo
      */
     public void setEstadoLobby(POJOPartida pojo) {
-        estadoLobby = pojo;
-        for (EscuchadorEstadoLobby escuchador : escuchadores)
+        for (EscuchadorEstadoLobby escuchador : escuchadoresLobby)
             escuchador.notificarLobbyActualizado(pojo);
     }
     
@@ -84,5 +101,14 @@ public class Estado {
      */
     public String getNombreJugador() {
         return jugador;
+    }
+
+    public void addEscuchadorPartidas(EscuchadorPartidas escuchador) {
+        this.escuchadoresPartidas.add(escuchador);
+    }
+
+    public void setListadoPartidas(POJOListadoPartidas listado) {
+        for (EscuchadorPartidas escuchador : escuchadoresPartidas)
+            escuchador.notificarPartidasActualizadas(listado);
     }
 }

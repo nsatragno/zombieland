@@ -31,10 +31,9 @@ public abstract class Enviable {
      * Crear una nueva partida que administra el jugador.
      */
     public static final int CREAR_PARTIDA = 0x4;
-    
 
     /**
-     * Obtener el listado de partidas actual.
+     * Notifica el listado de partidas actual.
      */
     public static final int LISTADO_PARTIDAS = 0x5;
 

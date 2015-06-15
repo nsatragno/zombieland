@@ -39,7 +39,7 @@ public class Principal implements EscuchaLog {
 	private JFrame frame;
 	
 	// Servicio de escucha. Es null mientras no haya arrancado.
-	private ServicioEscucha servicio;
+	private static ServicioEscucha servicio;
 	
 	// El nivel de log para mostrar en la interfaz.
 	private int nivelLog = Log.DEBUG;
@@ -199,4 +199,11 @@ public class Principal implements EscuchaLog {
 			log.append(mensaje + "\n");
 		}
 	}
+
+	/**
+	 * @return el servicio de escucha.
+	 */
+    public static ServicioEscucha getServicioEscucha() {
+        return servicio;
+    }
 }

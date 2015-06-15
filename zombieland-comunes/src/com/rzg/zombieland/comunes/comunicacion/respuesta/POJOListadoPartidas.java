@@ -9,7 +9,7 @@ import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
  * @author nicolas
  *
  */
-public class RespuestaListadoPartidas extends RespuestaGenerica {
+public class POJOListadoPartidas {
     // El listado de partidas.
     private List<POJOPartida> partidas;
 
@@ -17,19 +17,10 @@ public class RespuestaListadoPartidas extends RespuestaGenerica {
      * Constructor por listado.
      * @param partidas
      */
-    public RespuestaListadoPartidas(List<POJOPartida> partidas) {
-        super();
+    public POJOListadoPartidas(List<POJOPartida> partidas) {
         this.partidas = partidas;
     }
     
-    /**
-     * Constructor con error :(
-     * @param mensajeError 
-     */
-    public RespuestaListadoPartidas(String mensajeError) {
-        super(mensajeError);
-    }
-
     /**
      * @return las partidas.
      */

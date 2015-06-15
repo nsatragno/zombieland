@@ -11,6 +11,7 @@ import com.rzg.zombieland.comunes.comunicacion.HiloListener;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.controlador.ControladorServidorFactory;
+import com.rzg.zombieland.server.comunicacion.peticion.PeticionListadoPartidas;
 
 /**
  * Escucha conexiones entrantes y lanza hilos para manejarlas.
@@ -119,6 +120,23 @@ public class ServicioEscucha extends Thread implements HiloListener {
     public void hiloCerrado(HiloEscucha hilo) {
         synchronized (this) {
             hilosEscucha.remove(hilo);
+        }
+    }
+
+    /**
+     * Envía una petición a todos los clientes.
+     * @param peticionListadoPartidas
+     * @throws ZombielandException 
+     */
+    public void broadcast(PeticionListadoPartidas peticion) {
+        synchronized (this) {
+            for (HiloEscucha hilo : hilosEscucha)
+                try {
+                    hilo.enviarPeticion(peticion);
+                } catch (ZombielandException e) {
+                    Log.error("No se pudo enviar broadcast a un hilo");
+                    e.printStackTrace();
+                }
         }
     }
 }

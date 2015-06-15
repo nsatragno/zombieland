@@ -15,6 +15,8 @@ public class ControladorClienteFactory implements ControladorFactory {
     @Override
     public Controlador crear(int codigo) throws ComandoDesconocidoException {
         switch (codigo) {
+        case Enviable.LISTADO_PARTIDAS:
+            return new ControladorListadoPartidas();
         case Enviable.ACTUALIZACION_LOBBY:
             return new ControladorActualizacionLobby();
         default:

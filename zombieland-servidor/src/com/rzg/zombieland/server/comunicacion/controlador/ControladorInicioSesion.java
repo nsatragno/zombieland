@@ -6,6 +6,7 @@ import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.misc.Log;
+import com.rzg.zombieland.server.meta.ServicioPartidas;
 import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
@@ -45,7 +46,7 @@ public class ControladorInicioSesion extends Controlador {
         Sesion sesion = new Sesion(jugador, hilo);
         ServicioSesion.getInstancia().addSesion(sesion);
         manejadorSesion.setSesion(sesion);
-        
+        ServicioPartidas.getInstancia().enviarPartidas(hilo);
         return gson.toJson(new RespuestaGenerica());
     }
 
