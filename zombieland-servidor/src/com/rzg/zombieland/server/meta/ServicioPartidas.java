@@ -46,8 +46,10 @@ public class ServicioPartidas {
      */
     public synchronized void addPartida(Partida partida) {
         partidas.put(partida.getId(), partida);
-        for (HiloEscucha hilo : Principal.getServicioEscucha().getHilos())
-            enviarPartidas(hilo);
+        if (Principal.getServicioEscucha() != null) {
+            for (HiloEscucha hilo : Principal.getServicioEscucha().getHilos())
+                enviarPartidas(hilo);
+        }
     }
 
     private PeticionListadoPartidas obtenerPeticion() {
