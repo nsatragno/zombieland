@@ -65,7 +65,9 @@ public class ServicioEscucha extends Thread implements HiloListener {
     	Log.info("Servidor arrancado");
         while (corriendo) {
             try {
-                HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), new ControladorServidorFactory(), this);
+                ControladorServidorFactory factory = new ControladorServidorFactory();
+                HiloEscucha hilo = new HiloEscucha(serverSocket.accept(), factory, this);
+                factory.setHiloEscucha(hilo);
                 hilo.start();
                 synchronized (this) {
                     hilosEscucha.add(hilo);
