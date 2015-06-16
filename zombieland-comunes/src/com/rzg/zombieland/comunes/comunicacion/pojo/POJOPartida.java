@@ -11,6 +11,23 @@ import java.util.List;
 public class POJOPartida {
 
     /**
+     * Una partida vacía.
+     */
+    public static final POJOPartida PARTIDA_VACIA; 
+    
+    static {
+        PARTIDA_VACIA = 
+                new POJOPartida(null,
+                                null, 
+                                new ArrayList<String>(), 
+                                new ArrayList<String>(), 
+                                0, 
+                                0, 
+                                "", 
+                                "");
+    }
+
+    /**
      * El ID que identifica unívocamente a la partida.
      */
     private String id;

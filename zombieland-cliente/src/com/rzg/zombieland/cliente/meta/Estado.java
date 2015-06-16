@@ -53,6 +53,7 @@ public class Estado {
     public Estado() {
         escuchadoresLobby = new ArrayList<EscuchadorEstadoLobby>();
         escuchadoresPartidas = new ArrayList<EscuchadorPartidas>();
+        estadoLobby = POJOPartida.PARTIDA_VACIA;
     }
     
     /**

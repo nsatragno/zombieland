@@ -286,6 +286,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
                 @Override
                 public void onDone(RespuestaGenerica respuesta) {
                     if (respuesta.fuePeticionExitosa()) {
+                        Estado.getInstancia().setEstadoLobby(POJOPartida.PARTIDA_VACIA);
                         Main.irA(Main.LISTADO_PARTIDAS);
                     } else {
                         JOptionPane.showMessageDialog(_this,
