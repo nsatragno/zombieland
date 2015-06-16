@@ -25,7 +25,7 @@ public class ControladorAbandonarPartida extends ControladorConSesion {
     @Override
     public String procesarAutenticado(String linea) {
         Gson gson = new Gson();
-        getSesion().getPartida().removerJugador(getSesion().getJugador());
+        getSesion().setPartida(null);
         Log.debug("El jugador " + getSesion().getJugador().getNombre() + " ha abandonado una partida.");
         return gson.toJson(new RespuestaGenerica());
     }

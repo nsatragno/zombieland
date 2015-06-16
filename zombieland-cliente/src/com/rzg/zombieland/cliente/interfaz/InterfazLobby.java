@@ -246,7 +246,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
 		listaJugadores.setModel(modeloListaJugadores);
 		add(listaJugadores, BorderLayout.CENTER);
 		
-        JButton botonAbandonar = new JButton();
+        JButton botonAbandonar = new JButton("Abandonar");
         botonAbandonar.addActionListener(new ActionListener() {
             
             @Override
@@ -254,6 +254,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
                 abandonarPartida();
             }
         });
+        botonAbandonar.setBounds(400, 490, 150, 40);
         add(botonAbandonar);
 		
 		JLabel label = new JLabel("RZG - 2015");

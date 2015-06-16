@@ -67,6 +67,7 @@ public class Sesion {
      * @param partida
      */
     public void setPartida(Partida partida) {
+        abandonarPartida();
         this.partida = partida;
     }
 
@@ -76,5 +77,15 @@ public class Sesion {
      */
     public void enviarPeticion(Peticion<?, ?> peticion) throws ZombielandException {
         hilo.enviarPeticion(peticion);
+    }
+
+    /**
+     * Hace que el jugador abandone la partida.
+     */
+    private void abandonarPartida() {
+        if (partida == null)
+            return;
+        partida.removerJugador(jugador);
+        partida = null;
     }
 }

@@ -51,6 +51,19 @@ public class Partida {
         }
     }
     
+    /**
+     * Interfaz para escuchar cambios en la vida de la partida.
+     * @author nicolas
+     *
+     */
+    public interface PartidaListener {
+        /**
+         * Notifica que la partida ha quedado vacía.
+         * @param partida - la partida que se ha quedado vacía.
+         */
+        void notificarPartidaVacia(Partida partida);
+    }
+    
     // ID único que identifica la partida.
     private UUID id;
     
@@ -81,6 +94,9 @@ public class Partida {
     // Indica el momento en el que se inició la partida, expresados como tiempo UNIX.
     private long tiempoArranque;
     
+    // El objeto que escucha los cambios en la vida de la partida.
+    private PartidaListener listener;
+    
     /**
      * Crea una partida nueva a partir de un administrador.
      * @param administrador - el jugador que crea la partida.
@@ -105,6 +121,7 @@ public class Partida {
 
     /**
      * Crea una partida nueva a partir de la partida anterior.
+     * TODO determinar si lo vamos a usar, o vamos a reutilizar la misma partida.
      * @param partida
      */
     public Partida(Partida partida) {
@@ -137,11 +154,6 @@ public class Partida {
         for (int i = 0; i < cantidadRondas; i++)
             rondas.add(new Ronda());
     }
-    
-    /**
-     * Constructor sin parámetros para Hibernate.
-     */
-    public Partida() { }
     
     /**
      * Devuelve el resultado de una partida para un jugador.
@@ -243,6 +255,14 @@ public class Partida {
     public String getNombre() {
         return nombre;
     }
+    
+    /**
+     * Establece el objeto que recibirá notificaciones sobre la partida.
+     * @param listener
+     */
+    public void setListener(PartidaListener listener) {
+        this.listener = listener;
+    }
 
     /**
      * Quita un jugador de la partida.
@@ -250,6 +270,11 @@ public class Partida {
      */
     public void removerJugador(Jugador jugadorEliminado) {
         jugadores.remove(jugadorEliminado);
+        if (jugadores.isEmpty()) {
+            if (listener != null)
+                listener.notificarPartidaVacia(this);
+            return;
+        }
         for (Jugador jugador : jugadores)
             jugador.notificarCambioPartida();
     }
