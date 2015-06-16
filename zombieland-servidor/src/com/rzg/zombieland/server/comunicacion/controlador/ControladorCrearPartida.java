@@ -31,7 +31,11 @@ public class ControladorCrearPartida extends ControladorConSesion {
         POJOCreacionPartida pojo = gson.fromJson(linea, POJOCreacionPartida.class);
         Partida partida = new Partida(getSesion().getJugador(), pojo);
         ServicioPartidas.getInstancia().addPartida(partida);
-        getSesion().setPartida(partida);
+        try {
+            getSesion().setPartida(partida);
+        } catch (ZombielandException e) {
+            return gson.toJson(new RespuestaGenerica(e.getMessage()));
+        }
         Log.debug("El jugador " + getSesion().getJugador().getNombre() + " ha creado una partida.");
         return gson.toJson(new RespuestaGenerica());
     }

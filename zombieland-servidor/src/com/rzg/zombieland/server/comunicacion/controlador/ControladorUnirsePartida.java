@@ -36,8 +36,12 @@ public class ControladorUnirsePartida extends ControladorConSesion {
         Partida partida = ServicioPartidas.getInstancia().getPartida(UUID.fromString(idPartida));
         if (partida == null)
             return gson.toJson(new RespuestaGenerica(MENSAJE_PARTIDA_NO_EXISTENTE));
-        getSesion().setPartida(partida);
-        partida.addJugador(getSesion().getJugador());
+        try {
+            partida.addJugador(getSesion().getJugador());
+            getSesion().setPartida(partida);
+        } catch (ZombielandException e) {
+            return gson.toJson(new RespuestaGenerica(e.getMessage()));
+        }
         Log.debug("El jugador " + getSesion().getJugador().getNombre() + " se ha unido a una partida.");
         return gson.toJson(new RespuestaUnirsePartida(partida.getPOJO()));
     }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.rzg.zombieland.comunes.comunicacion.EnviaPeticiones;
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
@@ -83,7 +84,7 @@ public class ServicioPartidas implements PartidaListener {
      * Envía el listado de partidas a través del hilo dado.
      * @param hilo
      */
-    public void enviarPartidas(HiloEscucha hilo) {
+    public void enviarPartidas(EnviaPeticiones hilo) {
         try {
             if (hilo != null) {
                 List<POJOPartida> listado = new ArrayList<POJOPartida>();

@@ -10,6 +10,7 @@ import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.controlador.ControladorInicioSesion;
+import com.rzg.zombieland.server.meta.EnviaPeticionesImpl;
 import com.rzg.zombieland.server.persistencia.HibernateSingleton;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 import com.rzg.zombieland.server.sesion.Jugador;
@@ -78,7 +79,7 @@ public class ControladorInicioSesionTest {
     @Test
     public void testInicioValido() throws ZombielandException, ParametrosNoValidosException {
         Manejador manejador = new Manejador();
-        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, null);
+        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, new EnviaPeticionesImpl());
         POJOInicioSesion pojo = new POJOInicioSesion(jugadorValido.getNombre(), jugadorValido.getClave());
         Gson gson = new Gson();
         controlador.procesar(gson.toJson(pojo));
@@ -96,7 +97,7 @@ public class ControladorInicioSesionTest {
     @Test
     public void testInicioNombreNoValido() throws ZombielandException, ParametrosNoValidosException {
         Manejador manejador = new Manejador();
-        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, null);
+        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, new EnviaPeticionesImpl());
         POJOInicioSesion pojo = new POJOInicioSesion("asd", jugadorValido.getClave());
         Gson gson = new Gson();
         controlador.procesar(gson.toJson(pojo));
@@ -112,7 +113,7 @@ public class ControladorInicioSesionTest {
     @Test
     public void testInicioClaveNoValida() throws ZombielandException, ParametrosNoValidosException {
         Manejador manejador = new Manejador();
-        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, null);
+        ControladorInicioSesion controlador = new ControladorInicioSesion(manejador, new EnviaPeticionesImpl());
         POJOInicioSesion pojo = new POJOInicioSesion(jugadorValido.getNombre(), "claveNoValida");
         Gson gson = new Gson();
         controlador.procesar(gson.toJson(pojo));

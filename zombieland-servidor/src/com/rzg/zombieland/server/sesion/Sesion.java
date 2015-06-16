@@ -35,6 +35,8 @@ public class Sesion {
     public Sesion(Jugador jugador, EnviaPeticiones hilo) {
         if (jugador == null)
             throw new NullPointerException("El jugador no puede ser null");
+        if (hilo == null)
+            throw new NullPointerException("El hilo no puede ser null");
         this.jugador = jugador;
         id = UUID.randomUUID();
         this.hilo = hilo;
@@ -65,9 +67,10 @@ public class Sesion {
     /**
      * Establece la partida que el jugador comienza.
      * @param partida
+     * @throws ZombielandException 
      */
-    public void setPartida(Partida partida) {
-        abandonarPartida();
+    public void setPartida(Partida partida) throws ZombielandException {
+        abandonarPartidaActual();
         this.partida = partida;
     }
 
@@ -81,8 +84,9 @@ public class Sesion {
 
     /**
      * Hace que el jugador abandone la partida.
+     * @throws ZombielandException 
      */
-    private void abandonarPartida() {
+    private void abandonarPartidaActual() throws ZombielandException {
         if (partida == null)
             return;
         partida.removerJugador(jugador);

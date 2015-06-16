@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
@@ -217,15 +218,19 @@ public class Partida {
     /**
      * Agrega un jugador a la partida.
      * @param jugadorNuevo
+     * @throws ZombielandException 
      */
-    public void addJugador(Jugador jugadorNuevo) {
+    public void addJugador(Jugador jugadorNuevo) throws ZombielandException {
+        if (estado == Estado.ACTIVA)
+            throw new ZombielandException("No se puede unir a una partida en progreso");
         jugadores.add(jugadorNuevo);
+        if (jugadores.size() == cantidadMaximaJugadores)
+            estado = Estado.ACTIVA;
         for (Jugador jugador : jugadores) {
             if (jugador == jugadorNuevo)
                 continue;
             jugador.notificarCambioPartida();
         }
-        // TODO determinar si ya podemos mandarle púa a la partida.
     }
 
     /**
@@ -268,8 +273,9 @@ public class Partida {
      * Quita un jugador de la partida.
      * @param jugadorEliminado
      */
-    public void removerJugador(Jugador jugadorEliminado) {
-        jugadores.remove(jugadorEliminado);
+    public void removerJugador(Jugador jugadorEliminado) throws ZombielandException {
+        if (!jugadores.remove(jugadorEliminado))
+            throw new ZombielandException("El jugador no estaba unido a la partida");
         if (jugadores.isEmpty()) {
             if (listener != null)
                 listener.notificarPartidaVacia(this);

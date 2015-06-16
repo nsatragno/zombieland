@@ -5,13 +5,13 @@ import java.net.ServerSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.comunicacion.HiloListener;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.controlador.ControladorServidorFactory;
-import com.rzg.zombieland.server.comunicacion.peticion.PeticionListadoPartidas;
 
 /**
  * Escucha conexiones entrantes y lanza hilos para manejarlas.
@@ -32,6 +32,12 @@ public class ServicioEscucha extends Thread implements HiloListener {
     // Mantiene una referencia a los hilos que creó para cerrarlos. 
     private List<HiloEscucha> hilosEscucha;
     
+    // Bloquea la eliminación de hilos. 
+    private Semaphore semaforo;
+    
+    // Indica si actualmente se están eliminado los hilos.
+    private boolean matandoHilos;
+    
     /**
      * Crea un servicio de escucha para un puerto determinado.
      * @param puerto
@@ -51,6 +57,8 @@ public class ServicioEscucha extends Thread implements HiloListener {
             throw new ZombielandException("No se pudo iniciar el servidor: "
                     + e.getLocalizedMessage());
         }
+        semaforo = new Semaphore(1);
+        matandoHilos = false;
     }
     
     /**
@@ -75,17 +83,27 @@ public class ServicioEscucha extends Thread implements HiloListener {
                 }
             } catch (SocketException e) {
                 // Esperada. La usamos para salir.
-                synchronized (this) {
+                try {
+                    // Voy a arrancar a matar a los hilos, bloqueo las actualizaciones del listado.
+                    semaforo.acquire();
+                    matandoHilos = true;
                     for (HiloEscucha hilo : hilosEscucha) {
                         hilo.cerrar(false);
                         try {
+                            // Permito que el hilo se cierre.
+                            semaforo.release();
                             hilo.join(1000);
+                            // Y lo vuelvo a bloquear.
+                            semaforo.acquire();
                         } catch (InterruptedException e1) {
                             Log.error("No se pudo unir al hilo de escucha hijo:");
                             Log.error(e1.getMessage());
                             e1.printStackTrace();
                         }
                     }
+                    semaforo.release();
+                } catch (InterruptedException e1) {
+                    Log.error("Interrumpido al intentar cerrar: " + e1.getMessage());
                 }
                 return;
             } catch (IOException e) {
@@ -117,9 +135,17 @@ public class ServicioEscucha extends Thread implements HiloListener {
     }
 
     @Override
-    public void hiloCerrado(HiloEscucha hilo) {
-        synchronized (this) {
-            hilosEscucha.remove(hilo);
+    public synchronized void hiloCerrado(HiloEscucha hilo) {
+        try {
+            // Bloqueo si se está operando sobre el listado de hilos. 
+            semaforo.acquire();
+        } catch (InterruptedException e) {
+            Log.error("Interrumpido al adquirir el semáforo para hiloCerrado: " + e.getMessage());
+            return;
         }
+        // Me aseguro que no se estén matando hilos para removerme del listado.
+        if (!matandoHilos)
+            hilosEscucha.remove(hilo);
+        semaforo.release();
     }
 }

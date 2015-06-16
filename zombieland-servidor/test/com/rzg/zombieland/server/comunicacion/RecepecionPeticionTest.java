@@ -160,11 +160,11 @@ public class RecepecionPeticionTest extends AbstractPartidasTest {
         for (int i = 0; i < CANTIDAD_INTENTOS; i++) {
             Gson gson = new Gson();
             // Creo una partida y obtengo los datos del jugador que crea la partida.
-            crearPartida();
+            Partida partida = crearPartida();
             Jugador primerJugador = getUltimoAdmin();
             Sesion sesionPrimerJugador = new Sesion(primerJugador, servicioEscucha.getHilos().get(0));
+            sesionPrimerJugador.setPartida(partida);
             ServicioSesion.getInstancia().addSesion(sesionPrimerJugador);
-            sesionPrimerJugador.setPartida(partidasCreadas.get(0));
             
             // Otro jugador se conecta.
             try (Socket socketOtroJugador = new Socket(host, puerto);
@@ -190,7 +190,6 @@ public class RecepecionPeticionTest extends AbstractPartidasTest {
                 factory.setSesion(sesionOtroJugador);
         
                 // El segundo jugador pide unirse a la partida.
-                Partida partida = partidasCreadas.get(0);
                 salidaOtroJugador.write(Enviable.UNIRSE_PARTIDA);
                 UUID uuid = UUID.randomUUID();
                 salidaOtroJugador.println(uuid);

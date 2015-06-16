@@ -56,7 +56,7 @@ public abstract class AbstractPartidasTest {
      * Crea una partida con datos aleatorios.
      * @throws ParametrosNoValidosException 
      */
-    protected void crearPartida() throws ParametrosNoValidosException {
+    protected Partida crearPartida() throws ParametrosNoValidosException {
         Random random = new Random();
         ultimoAdmin = crearJugador();
         int cantidadJugadores = random.nextInt(
@@ -73,6 +73,7 @@ public abstract class AbstractPartidasTest {
         ServicioPartidas.getInstancia().addPartida(partida);
         pojoPartidasCreadas.add(partida.getPOJO());
         partidasCreadas.add(partida);
+        return partida;
     }
 
     /**

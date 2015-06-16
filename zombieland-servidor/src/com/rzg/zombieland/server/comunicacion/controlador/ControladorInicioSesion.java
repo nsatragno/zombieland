@@ -1,6 +1,7 @@
 package com.rzg.zombieland.server.comunicacion.controlador;
 
 import com.google.gson.Gson;
+import com.rzg.zombieland.comunes.comunicacion.EnviaPeticiones;
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
@@ -22,13 +23,17 @@ public class ControladorInicioSesion extends Controlador {
     private ManejadorSesion manejadorSesion;
     
     // El hilo que crea a este controlador.
-	private HiloEscucha hilo;
+	private EnviaPeticiones hilo;
 
     /**
      * Construye el controlador de inicio de sesión a partir del manejador.
      * @param manejadorSesion el manejador al que se le registrará el jugador.
      */
-    public ControladorInicioSesion(ManejadorSesion manejadorSesion, HiloEscucha hilo) {
+    public ControladorInicioSesion(ManejadorSesion manejadorSesion, EnviaPeticiones hilo) {
+        if (manejadorSesion == null)
+            throw new NullPointerException("El manejador de sesión no puede ser null");
+        if (hilo == null)
+            throw new NullPointerException("El hilo no puede ser null");
         this.manejadorSesion = manejadorSesion;
         this.hilo = hilo;
     }
