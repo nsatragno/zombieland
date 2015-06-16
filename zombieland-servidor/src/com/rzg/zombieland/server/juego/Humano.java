@@ -1,8 +1,5 @@
 package com.rzg.zombieland.server.juego;
 
-import com.rzg.zombieland.comunes.misc.Coordenada;
-
-
 /**
  * Cobarde animal que solo sabe correr por su vida.
  * @author nicolas
@@ -27,10 +24,15 @@ public class Humano extends Personaje {
         return SPRITE;
     }
 
-    @Override
-    public void colisionar(EntidadTablero entidad) {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void colisionar(EntidadTablero entidad) {
+		// Si hay una colision llamada por un humano que recibió por parámetro un
+		// zombie, hay cosas que hacer.
+		if (entidad.getClass() == Zombie.class) {
+			// Cambio al humano por un nuevo zombie.
+			entidad = new Zombie(usuario);
+		}
+	}
     
     public String getUsuario(){
     	return usuario;

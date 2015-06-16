@@ -29,4 +29,5 @@ public class Obstaculo extends EntidadTablero {
     public boolean esPersonaje(){
     	return false;
     }
+
 }

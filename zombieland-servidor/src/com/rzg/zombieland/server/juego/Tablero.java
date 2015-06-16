@@ -146,7 +146,18 @@ public class Tablero {
 	 * @param hasta
 	 *            - coordenada de destino. Debe estar vacía.
 	 */
+	
+	// Se supone que estos datos los validamos antes de mandarselos al tablero.
+	// De no ser así, avisen que tengo que validar todo para no irme del mismo.
 	public void moverEntidad(Coordenada desde, Coordenada hasta) {
-		// TODO implementar.
+		// Primero pregunto si a la posición a la cual quiere desplazarse no hay nada
+		if(matriz[hasta.getX()][hasta.getY()] == null){
+			matriz[hasta.getX()][hasta.getY()] = matriz[desde.getX()][desde.getY()];
+			matriz[desde.getX()][desde.getY()] = null;
+		} // Cambio los valores de la matriz.
+		  // Si no es null, hay una colisión.
+		else{
+			getEntidadEn(desde).colisionar(getEntidadEn(hasta));
+		}
 	}
 }
