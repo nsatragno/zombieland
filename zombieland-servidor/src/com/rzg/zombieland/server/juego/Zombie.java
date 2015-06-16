@@ -1,5 +1,7 @@
 package com.rzg.zombieland.server.juego;
 
+import com.rzg.zombieland.comunes.misc.Coordenada;
+
 /**
  * Personaje cuyo único deseo en el mundo es comer cerebros. RAWR!
  * 
@@ -26,16 +28,19 @@ public class Zombie extends Personaje {
 	}
 
 	@Override
-	public void colisionar(EntidadTablero entidad) {
+	public void colisionar(EntidadTablero entidad, EntidadTablero[][] matriz) {
 		// Si hay una colision llamada por un zombi que recibió por parámetro un
 		// humano
 		// Hay cosas que hacer.
 		if (entidad.esPersonaje()) {
 			if (entidad.getClass() == Humano.class) {
 				// Cambio al humano por un nuevo zombie.
+				Coordenada posicion = entidad.getPosicion();
 				entidad = new Zombie(((Humano) entidad).getUsuario());
+				matriz[posicion.getX()][posicion.getY()] = entidad;
 			}
 		}
+		// Si no pasó nada devuelvo la misma entidad.
 	}
 
 	public String getUsuario() {

@@ -1,5 +1,7 @@
 package com.rzg.zombieland.server.juego;
 
+import com.rzg.zombieland.comunes.misc.Coordenada;
+
 /**
  * Cobarde animal que solo sabe correr por su vida.
  * 
@@ -26,15 +28,17 @@ public class Humano extends Personaje {
 	}
 
 	@Override
-	public void colisionar(EntidadTablero entidad) {
+	public void colisionar(EntidadTablero e, EntidadTablero[][] matriz) {
 		// Si hay una colision llamada por un humano que recibió por parámetro
 		// un
 		// zombie, hay cosas que hacer.
 		// El primer if filtra a los obstáculos.
-		if (entidad.esPersonaje()) {
-			if (entidad.getClass() == Zombie.class) {
+		if (e.esPersonaje()) {
+			if (e.getClass() == Zombie.class) {
 				// Cambio al humano por un nuevo zombie.
-				entidad = new Zombie(usuario);
+				Coordenada posicion = this.getPosicion();
+				EntidadTablero entidad = new Zombie(usuario);
+				matriz[posicion.getX()][posicion.getY()] = entidad;
 			}
 		}
 	}

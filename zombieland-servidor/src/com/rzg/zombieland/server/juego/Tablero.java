@@ -157,7 +157,7 @@ public class Tablero {
 		} // Cambio los valores de la matriz.
 		  // Si no es null, hay una colisión.
 		else{
-			getEntidadEn(desde).colisionar(getEntidadEn(hasta));
+			getEntidadEn(desde).colisionar(getEntidadEn(hasta),matriz);
 		}
 	}
 }
