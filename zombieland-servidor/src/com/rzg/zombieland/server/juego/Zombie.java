@@ -30,9 +30,11 @@ public class Zombie extends Personaje {
 		// Si hay una colision llamada por un zombi que recibió por parámetro un
 		// humano
 		// Hay cosas que hacer.
-		if (entidad.getClass() == Humano.class) {
-			// Cambio al humano por un nuevo zombie.
-			entidad = new Zombie(((Humano) entidad).getUsuario());
+		if (entidad.esPersonaje()) {
+			if (entidad.getClass() == Humano.class) {
+				// Cambio al humano por un nuevo zombie.
+				entidad = new Zombie(((Humano) entidad).getUsuario());
+			}
 		}
 	}
 
