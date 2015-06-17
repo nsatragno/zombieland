@@ -1,5 +1,7 @@
 package com.rzg.zombieland.server.sesion;
 
+import com.rzg.zombieland.server.sesion.Sesion.SesionListener;
+
 
 /**
  * Define el comportamiento de una clase que maneja la sesión de un jugador para un hilo de escucha
@@ -7,7 +9,7 @@ package com.rzg.zombieland.server.sesion;
  * @author nicolas
  *
  */
-public interface ManejadorSesion {
+public interface ManejadorSesion extends SesionListener {
     /**
      * Establece la sesión que el manejador administra.
      * @param sesion

@@ -219,7 +219,7 @@ public class RecepecionPeticionTest extends AbstractPartidasTest {
                 salida.flush();
                 
                 // El segundo jugador se desconecta.
-                partida.removerJugador(otroJugador);
+                socketOtroJugador.close();
                 
                 // El primer jugador recibe la nueva actualización de lobby.
                 codigoRespuesta = entrada.read();

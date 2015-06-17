@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -38,8 +40,8 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
     // Mapea las peticiones para su respuesta.
     private Map<UUID, Peticion<?, ?>> mapaPeticiones;
 
-    // Objeto al que se le avisa cuando ocurren distintos eventos en el hilo de escucha.
-    private HiloListener listener;
+    // Lista a la que se le avisa cuando ocurren distintos eventos en el hilo de escucha.
+    private List<HiloListener> listeners;
     
     /**
      * Comienza a escuchar en el socket dado, delegando las peticiones a la fábrica de
@@ -47,14 +49,14 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
      * @param socket - el socket con el que se escuchará al cliente.
      * @param controladorFactory - fábrica de controladores inyectada.
      */
-    public HiloEscucha(Socket socket, ControladorFactory controladorFactory, HiloListener listener) {
+    public HiloEscucha(Socket socket, ControladorFactory controladorFactory) {
         super("HiloEscucha: " + socket.getInetAddress());
         corriendo = true;
         Log.debug("Estableciendo nueva conexión con " + socket.getInetAddress());
         this.socket = socket;
         this.controladorFactory = controladorFactory;
         mapaPeticiones = new HashMap<UUID, Peticion<?, ?>>();
-        this.listener = listener;
+        this.listeners = new ArrayList<HiloListener>();
     }
     
     @Override
@@ -184,8 +186,14 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
             socket.close();
         } catch (IOException e) {
         }
-        if (notificar && listener != null)
-            listener.hiloCerrado(this);
+        if (notificar) {
+            for (HiloListener listener : listeners)
+                listener.hiloCerrado(this);
+        }
+    }
+    
+    public void addListener(HiloListener listener) {
+        this.listeners.add(listener);
     }
 
     /**

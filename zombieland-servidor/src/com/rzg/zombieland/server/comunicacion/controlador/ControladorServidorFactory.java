@@ -2,6 +2,7 @@ package com.rzg.zombieland.server.comunicacion.controlador;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
+import com.rzg.zombieland.comunes.comunicacion.HiloListener;
 import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.controlador.Controlador.ComandoDesconocidoException;
 import com.rzg.zombieland.comunes.controlador.ControladorFactory;
@@ -14,7 +15,7 @@ import com.rzg.zombieland.server.sesion.Sesion;
  * @author nicolas
  *
  */
-public class ControladorServidorFactory implements ControladorFactory, ManejadorSesion {
+public class ControladorServidorFactory implements ControladorFactory, ManejadorSesion, HiloListener {
     
     // La sesión del jugador.
     private Sesion sesion;
@@ -52,6 +53,7 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
     
     public void setHiloEscucha(HiloEscucha hilo) {
     	this.hilo = hilo;
+    	hilo.addListener(this);
     }
 
     @Override
@@ -62,5 +64,16 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
     @Override
     public Sesion getSesion() {
         return sesion;
+    }
+
+    @Override
+    public void notificarSesionCerrada(Sesion sesion) {
+        this.sesion = null;
+    }
+
+    @Override
+    public void hiloCerrado(HiloEscucha hilo) {
+        if (sesion != null)
+            sesion.cerrar();
     }
 }

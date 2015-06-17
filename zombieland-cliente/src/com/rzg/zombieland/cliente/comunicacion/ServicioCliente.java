@@ -30,7 +30,7 @@ public class ServicioCliente implements HiloListener {
      */
     private ServicioCliente(int puerto, String host) throws ZombielandException {
         try {
-            hiloEscucha = new HiloEscucha(new Socket(host, puerto), new ControladorClienteFactory(), this);
+            hiloEscucha = new HiloEscucha(new Socket(host, puerto), new ControladorClienteFactory());
             hiloEscucha.start();
         } catch(IOException e) {
             throw new ZombielandException("No se pudo realizar la conexión con el servidor: " +

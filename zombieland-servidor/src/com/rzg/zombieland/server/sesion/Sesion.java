@@ -1,9 +1,12 @@
 package com.rzg.zombieland.server.sesion;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.rzg.zombieland.comunes.comunicacion.EnviaPeticiones;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
+import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.Partida;
 
@@ -26,6 +29,22 @@ public class Sesion {
     // El objeto que envía peticiones al otro lado.
     private EnviaPeticiones hilo;
     
+    // El listado de listener de sesión.
+    private List<SesionListener> listeners;
+    
+    /**
+     * Interfaz de escuchador de sesión.
+     * @author nicolas
+     *
+     */
+    public interface SesionListener {
+        /**
+         * Indica que la sesión se cerró.
+         * @param sesion
+         */
+        public void notificarSesionCerrada(Sesion sesion);
+    }
+    
     /**
      * Construye una sesión a partir del jugador.
      * @param jugador
@@ -40,6 +59,7 @@ public class Sesion {
         this.jugador = jugador;
         id = UUID.randomUUID();
         this.hilo = hilo;
+        listeners = new ArrayList<SesionListener>();
     }
 
     /**
@@ -55,7 +75,6 @@ public class Sesion {
     public Jugador getJugador() {
         return jugador;
     }
-
 
     /**
      * @return la partida jugada en esta sesión. 
@@ -80,6 +99,23 @@ public class Sesion {
      */
     public void enviarPeticion(Peticion<?, ?> peticion) throws ZombielandException {
         hilo.enviarPeticion(peticion);
+    }
+    
+    public void addListener(SesionListener listener) {
+        listeners.add(listener);
+    }
+    
+    /**
+     * Cierra la sesión del jugador.
+     */
+    public void cerrar() {
+        try {
+            abandonarPartidaActual();
+            for (SesionListener listener : listeners)
+                listener.notificarSesionCerrada(this);
+        } catch (ZombielandException e) {
+            Log.error("Error al intentar cerrar sesión: " + e.getMessage());
+        }
     }
 
     /**

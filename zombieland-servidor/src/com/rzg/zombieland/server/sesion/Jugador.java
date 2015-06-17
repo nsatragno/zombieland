@@ -14,7 +14,6 @@ import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.peticion.PeticionActualizacionLobby;
-import com.rzg.zombieland.server.meta.Partida;
 import com.rzg.zombieland.server.meta.ResultadoPartida;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 

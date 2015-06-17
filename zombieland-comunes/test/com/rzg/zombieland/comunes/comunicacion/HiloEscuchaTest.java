@@ -34,8 +34,9 @@ public class HiloEscuchaTest {
         ServerSocket serverSocket = new ServerSocket(2048);
         Socket socket = new Socket("localhost", 2048);
         hiloCerrado = false;
-        HiloEscucha escucha = new HiloEscucha(socket, new ControladorTestFactory(), new HiloListener() {
-
+        HiloEscucha escucha = new HiloEscucha(socket, new ControladorTestFactory());
+        escucha.addListener(new HiloListener() {
+            
             @Override
             public void hiloCerrado(HiloEscucha hilo) {
                 hiloCerrado = true;

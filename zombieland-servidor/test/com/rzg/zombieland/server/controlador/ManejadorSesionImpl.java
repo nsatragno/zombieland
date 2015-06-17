@@ -11,10 +11,19 @@ import com.rzg.zombieland.server.sesion.Sesion;
 class ManejadorSesionImpl implements ManejadorSesion {
 
     private Sesion sesion;
+    private boolean sesionCerrada = false;
+    
+    /**
+     * @return true si la sesión fue cerrada, false de lo contrario.
+     */
+    public boolean getSesionCerrada() {
+        return sesionCerrada;
+    }
     
     @Override
     public void setSesion(Sesion sesion) {
         this.sesion = sesion;
+        sesion.addListener(this);
     }
 
     @Override
@@ -31,6 +40,12 @@ class ManejadorSesionImpl implements ManejadorSesion {
         } catch (ParametrosNoValidosException e) {
             Assert.fail(e.getMensaje());
         }
+    }
+
+    @Override
+    public void notificarSesionCerrada(Sesion sesion) {
+        sesionCerrada = true;
+        this.sesion = null;
     }
     
 }
