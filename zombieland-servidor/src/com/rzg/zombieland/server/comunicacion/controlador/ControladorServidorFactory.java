@@ -44,6 +44,8 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
             return new ControladorUnirsePartida(this);
         case Enviable.ABANDONAR_PARTIDA:
             return new ControladorAbandonarPartida(this);
+        case Enviable.UNIRSE_RAPIDO:
+            return new ControladorUnirseRapido(this);
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

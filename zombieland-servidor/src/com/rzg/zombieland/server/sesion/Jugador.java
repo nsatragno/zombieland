@@ -169,7 +169,7 @@ public class Jugador {
 				&& respuestaSecreta.equals(otro.respuestaSecreta)
 				&& ranking == otro.ranking;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return nombre.hashCode();

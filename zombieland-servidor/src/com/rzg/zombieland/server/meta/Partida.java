@@ -231,6 +231,7 @@ public class Partida {
                 continue;
             jugador.notificarCambioPartida();
         }
+        ServicioPartidas.getInstancia().notificarClientes();
     }
 
     /**
@@ -283,5 +284,12 @@ public class Partida {
         }
         for (Jugador jugador : jugadores)
             jugador.notificarCambioPartida();
+    }
+
+    /**
+     * @return true si se pueden unir jugadores a esta partida, false de lo contrario.
+     */
+    public boolean puedenUnirseJugadores() {
+        return jugadores.size() < cantidadMaximaJugadores && estado == Estado.EN_ESPERA;
     }
 }

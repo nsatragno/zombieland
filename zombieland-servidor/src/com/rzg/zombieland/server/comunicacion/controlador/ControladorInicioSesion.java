@@ -2,7 +2,6 @@ package com.rzg.zombieland.server.comunicacion.controlador;
 
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.EnviaPeticiones;
-import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.controlador.Controlador;

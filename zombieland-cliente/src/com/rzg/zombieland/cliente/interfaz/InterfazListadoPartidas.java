@@ -24,8 +24,10 @@ import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionUnirsePartida;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionUnirseRapido;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.meta.Estado.EscuchadorPartidas;
+import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
@@ -148,7 +150,7 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
 		btnJugar.setBounds(77, 430, 175, 40);
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.irA(Main.TABLERO);
+				unirseRapido();
 			}
 		});
 		add(btnJugar);
@@ -203,6 +205,18 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
         }
         String idPartida = modeloPartidas.getIdPartida(indicePartida);
         PeticionUnirsePartida peticion = new PeticionUnirsePartida(idPartida);
+        unirse(peticion);
+    }
+
+    /**
+     * Se una rápidamente a una partida.
+     */
+    private void unirseRapido() {
+        PeticionUnirseRapido peticion = new PeticionUnirseRapido();
+        unirse(peticion);
+    }
+
+    private void unirse(Peticion<?, RespuestaUnirsePartida> peticion) {
         final Component this_ = this;
         try {
             ServicioCliente.enviarPeticion(peticion);

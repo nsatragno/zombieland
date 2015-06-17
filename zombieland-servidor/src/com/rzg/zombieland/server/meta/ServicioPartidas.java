@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import com.rzg.zombieland.comunes.comunicacion.EnviaPeticiones;
@@ -87,25 +88,36 @@ public class ServicioPartidas implements PartidaListener {
     public void enviarPartidas(EnviaPeticiones hilo) {
         try {
             if (hilo != null) {
-                List<POJOPartida> listado = new ArrayList<POJOPartida>();
-                synchronized (partidas) {
-                    for (Partida partidaExistente : partidas.values())
-                        listado.add(partidaExistente.getPOJO());    
-                }
+                List<POJOPartida> listado = proyectarPartidas();
                 hilo.enviarPeticion(new PeticionListadoPartidas(new POJOListadoPartidas(listado)));
             }
         } catch (ZombielandException e) {
             Log.error("No se pudo enviar actualización de partida a un hilo");
         }
     }
+
+    private List<POJOPartida> proyectarPartidas() {
+        List<POJOPartida> listado = new ArrayList<POJOPartida>();
+        synchronized (partidas) {
+            for (Partida partidaExistente : partidas.values())
+                listado.add(partidaExistente.getPOJO());    
+        }
+        return listado;
+    }
     
     /**
      * Le envía las partidas a todos los clientes.
      */
-    private void notificarClientes() {
+    public void notificarClientes() {
         if (Principal.getServicioEscucha() != null) {
+            List<POJOPartida> partidas = proyectarPartidas();
             for (HiloEscucha hilo : Principal.getServicioEscucha().getHilos())
-                enviarPartidas(hilo);
+                try {
+                    hilo.enviarPeticion(
+                            new PeticionListadoPartidas(new POJOListadoPartidas(partidas)));
+                } catch (ZombielandException e) {
+                    Log.error("No se pudo enviar actualización de partida a un hilo");
+                }
         }
     }
 
@@ -115,5 +127,24 @@ public class ServicioPartidas implements PartidaListener {
             partidas.remove(partida.getId());
         }
         notificarClientes();
+    }
+
+    /**
+     * @return una partida aleatoria a la que el jugador se puede unir.
+     */
+    public Partida getPartidaAleatoria() {
+        synchronized (partidas) {
+            List<Partida> partidasValidas = new ArrayList<Partida>();
+            for (Partida partida : partidas.values()) {
+                if (partida.puedenUnirseJugadores())
+                    partidasValidas.add(partida);
+            }
+            if (partidasValidas.size() == 0)
+                return null;
+            if (partidasValidas.size() == 1)
+                return partidasValidas.get(0);
+            int i = (new Random()).nextInt(partidasValidas.size() - 1);
+            return partidasValidas.get(i);
+        }
     }
 }
