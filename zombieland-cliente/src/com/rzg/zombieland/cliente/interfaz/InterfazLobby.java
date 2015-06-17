@@ -97,7 +97,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
             parametros[CANTIDAD_REQUERIDA] = Integer.toString(pojo.getCantidadMaximaJugadores());
             parametros[CANTIDAD_RONDAS] = Integer.toString(pojo.getCantidadRondas());
             // TODO ver si es posible tener otro estado en este punto.
-            parametros[ESTADO] = "En espera";
+            parametros[ESTADO] = pojo.getEstado();
             fireTableDataChanged();
         }
     }

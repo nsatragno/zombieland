@@ -165,7 +165,7 @@ public class POJOPartida {
                 + "]";
     }
 
-    public Object getEstado() {
+    public String getEstado() {
         return estado;
     }
 }
