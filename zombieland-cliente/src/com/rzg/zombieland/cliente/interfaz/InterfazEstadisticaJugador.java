@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.misc.Log;
 
 /**
@@ -108,7 +109,7 @@ public class InterfazEstadisticaJugador extends JFrame
 		contentPane.add(lblJugadosJugador);
 		
 		JLabel lblFondo = new JLabel("");
-		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/zombie-est-jug.png"));
+		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/zombie-est-jug.png")));
 		lblFondo.setBounds(0, 0, 500, 475);
 		contentPane.add(lblFondo);
 	}

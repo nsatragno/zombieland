@@ -15,6 +15,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.rzg.zombieland.cliente.misc.RutaImagen;
+
 public class InterfazRankingPartida {
 
 	private JFrame frmRanking;
@@ -62,7 +64,7 @@ public class InterfazRankingPartida {
 		frmRanking.getContentPane().add(lblPartida);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("imagenes/fondoRankPartida.png"));
+		label.setIcon(new ImageIcon(RutaImagen.get("imagenes/fondoRankPartida.png")));
 		label.setBounds(10, 335, 800, 255);
 		frmRanking.getContentPane().add(label);
 		

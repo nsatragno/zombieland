@@ -22,6 +22,7 @@ import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionRegistro;
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
@@ -82,7 +83,7 @@ public class InterfazRegistro extends JPanel {
         lblNombreDeUsuario.setBounds(10, 40, 160, 30);
         add(lblNombreDeUsuario);
         
-        ImageIcon icon = new ImageIcon("imagenes/loading.gif");
+        ImageIcon icon = new ImageIcon(RutaImagen.get("imagenes/loading.gif"));
         imagenCargando = new JLabel(icon);
         imagenCargando.setText("Cargando...");
         imagenCargando.setBounds(100, 387, 400, 40);
@@ -161,7 +162,7 @@ public class InterfazRegistro extends JPanel {
         add(lblRzg);
         
         JLabel lblFondo = new JLabel("");
-        lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-reg-usuario.png"));
+        lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-reg-usuario.png")));
         lblFondo.setBounds(0, 0, 800, 600);
         add(lblFondo);
     }

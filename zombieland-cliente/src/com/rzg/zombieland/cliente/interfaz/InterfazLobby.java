@@ -30,6 +30,7 @@ import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionAbandonarPartida;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.meta.Estado.EscuchadorEstadoLobby;
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
@@ -263,7 +264,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
 		add(label);
 		
 		JLabel lblFondo = new JLabel("");
-		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-lobby.png"));
+		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-lobby.png")));
 		lblFondo.setBounds(0, 0, 800, 600);
 		add(lblFondo);
 		Estado.getInstancia().addEscuchador(this);

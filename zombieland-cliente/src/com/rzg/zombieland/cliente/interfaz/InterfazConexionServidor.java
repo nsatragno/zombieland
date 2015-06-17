@@ -3,6 +3,7 @@ package com.rzg.zombieland.cliente.interfaz;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,8 +17,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import java.awt.SystemColor;
 
 /**
  * Interfaz que lanza un HiloEscucha según parámetros de usuario.
@@ -125,7 +126,7 @@ public class InterfazConexionServidor extends JPanel {
 	
 	@Override
 	public void paint (Graphics g){
-		ImageIcon imagenFondo = new ImageIcon("imagenes/Fondos/fondoServidor.png");
+		ImageIcon imagenFondo = new ImageIcon(RutaImagen.get("imagenes/Fondos/fondoServidor.png"));
 		g.drawImage(imagenFondo.getImage(), 0, -35, 800, 600, null);
 		setOpaque(false);
 		super.paint(g);

@@ -22,6 +22,7 @@ import org.jdeferred.DoneCallback;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionCreacionPartida;
 import com.rzg.zombieland.cliente.meta.Estado;
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
@@ -129,7 +130,7 @@ public class InterfazCrearPartida extends JPanel
 		add(label);
 		
 		JLabel lblFondo = new JLabel("");
-		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/zombie-fondo.png"));
+		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/zombie-fondo.png")));
 		lblFondo.setBounds(0, 0, 944, 574);
 		add(lblFondo);
 	}

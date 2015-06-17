@@ -19,7 +19,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Dimension;
+
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 
 /**
  * 
@@ -194,13 +195,13 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1
-				.setIcon(new ImageIcon("imagenes/Avatares/avatar-mujer.png"));
+				.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-mujer.png")));
 		lblNewLabel_1.setBounds(695, 341, 73, 74);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2
-				.setIcon(new ImageIcon("imagenes/Avatares/avatar-poli.png"));
+				.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-poli.png")));
 		lblNewLabel_2.setBounds(695, 76, 79, 80);
 		contentPane.add(lblNewLabel_2);
 		
@@ -210,13 +211,13 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		contentPane.add(label_1);
 
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("imagenes/Avatares/avatar-dsn.png"));
+		label.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-dsn.png")));
 		label.setBounds(695, 194, 73, 94);
 		contentPane.add(label);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(-500, 0, 1300, 600);
-		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-cambio-datos.png"));
+		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-cambio-datos.png")));
 		getContentPane().add(lblFondo);
 
 	}

@@ -13,6 +13,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.rzg.zombieland.cliente.misc.RutaImagen;
+
 /**
  * 
  * @author Nicolas L
@@ -64,7 +66,7 @@ public class InterfazRankingGeneral extends JPanel {
 		add(label);
 
 		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setIcon(new ImageIcon("imagenes/Fondos/zombieBanner.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/zombieBanner.png")));
 		lblNewLabel_2.setBounds(0, 304, 797, 247);
 		add(lblNewLabel_2);
 	}

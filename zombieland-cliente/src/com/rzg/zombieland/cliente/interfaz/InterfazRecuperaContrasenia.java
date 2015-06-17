@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import com.rzg.zombieland.cliente.misc.RutaImagen;
+
 /**
  * Interfaz de recuperar contraseña.
  * 
@@ -107,12 +109,12 @@ public class InterfazRecuperaContrasenia extends JFrame
         contentPane.add(lblTitulo);
         
         JLabel lblImagen = new JLabel("");
-        lblImagen.setIcon(new ImageIcon("imagenes/zombie-silueta.png"));
+        lblImagen.setIcon(new ImageIcon(RutaImagen.get("imagenes/zombie-silueta.png")));
         lblImagen.setBounds(-5, -30, 100, 386);
         contentPane.add(lblImagen);
         
         JLabel lblFondo = new JLabel("");
-        lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-contraseña.png"));
+        lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-contraseña.png")));
         lblFondo.setBounds(-400, 0, 925, 386);
         contentPane.add(lblFondo);
 	}

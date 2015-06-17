@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
 import com.rzg.zombieland.comunes.misc.Avatar;
@@ -63,11 +64,11 @@ public class InterfazTablero extends JPanel {
 
 		img = new Image[4];
 		for (int i = 0; i < 4; i++) {
-			img[i] = new ImageIcon("imagenes/avatar" + (i + 1) + ".png").getImage();
+			img[i] = new ImageIcon(RutaImagen.get("imagenes/avatar" + (i + 1) + ".png")).getImage();
 
 		}
 
-		fondo = new ImageIcon("imagenes/Tablero/pasto.png");
+		fondo = new ImageIcon(RutaImagen.get("imagenes/Tablero/pasto.png"));
 
 		JButton moveUp = new JButton("");
 		moveUp.addActionListener(new ActionListener() {
@@ -79,7 +80,7 @@ public class InterfazTablero extends JPanel {
 			}
 		});
 
-		moveUp.setIcon(new ImageIcon("imagenes/Tablero/FlechaArriba.png"));
+		moveUp.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaArriba.png")));
 		moveUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveUp.setBounds(640, 377, 45, 45);
 		add(moveUp);
@@ -111,7 +112,7 @@ public class InterfazTablero extends JPanel {
 		// }
 		// }
 		// });
-		moveLeft.setIcon(new ImageIcon("imagenes/Tablero/FlechaIzquierda.png"));
+		moveLeft.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaIzquierda.png")));
 		moveLeft.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveLeft.setBounds(587, 423, 45, 45);
 		add(moveLeft);
@@ -132,7 +133,7 @@ public class InterfazTablero extends JPanel {
 				repaint();
 			}
 		});
-		moveRight.setIcon(new ImageIcon("imagenes/Tablero/FlechaDerecha.png"));
+		moveRight.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaDerecha.png")));
 		moveRight.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveRight.setBounds(689, 423, 45, 45);
 		add(moveRight);
@@ -155,7 +156,7 @@ public class InterfazTablero extends JPanel {
 				repaint();
 			}
 		});
-		moveDown.setIcon(new ImageIcon("imagenes/Tablero/FlechaAbajo.png"));
+		moveDown.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaAbajo.png")));
 		moveDown.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveDown.setBounds(640, 471, 45, 45);
 		add(moveDown);
@@ -203,7 +204,7 @@ public class InterfazTablero extends JPanel {
 		panelJug.add(table, BorderLayout.CENTER);
 		
 		JLabel labelFondo = new JLabel("");
-		labelFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-tablero.png"));
+		labelFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-tablero.png")));
 		labelFondo.setBounds(0, 0, 800, 600);
 		add(labelFondo);
 	}

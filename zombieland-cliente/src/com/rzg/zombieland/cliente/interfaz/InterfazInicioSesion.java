@@ -19,6 +19,7 @@ import org.jdeferred.DoneCallback;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionInicioSesion;
 import com.rzg.zombieland.cliente.meta.Estado;
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
@@ -80,7 +81,7 @@ public class InterfazInicioSesion extends JPanel {
 		add(fieldPassword);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("imagenes/zombieland.png"));
+		lblNewLabel.setIcon(new ImageIcon(RutaImagen.get("imagenes/zombieland.png")));
 		lblNewLabel.setBounds(325, 11, 159, 179);
 		add(lblNewLabel);
 		
@@ -161,7 +162,7 @@ public class InterfazInicioSesion extends JPanel {
 	
 	@Override
 	public void paint (Graphics g){
-		ImageIcon imagenFondo = new ImageIcon("imagenes/Fondos/fondo-inicio-sesion.png");
+		ImageIcon imagenFondo = new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-inicio-sesion.png"));
 		g.drawImage(imagenFondo.getImage(), 0, -50, 800, 600, null);
 		setOpaque(false);
 		super.paint(g);

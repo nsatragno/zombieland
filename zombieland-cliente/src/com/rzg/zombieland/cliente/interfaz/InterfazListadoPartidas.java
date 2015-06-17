@@ -27,6 +27,7 @@ import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionUnirsePartida;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionUnirseRapido;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.meta.Estado.EscuchadorPartidas;
+import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
@@ -189,7 +190,7 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
 
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 800, 600);
-		lblFondo.setIcon(new ImageIcon("imagenes/Fondos/fondo-lista-partidas.png"));
+		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-lista-partidas.png")));
 		add(lblFondo);
 		Estado.getInstancia().addEscuchadorPartidas(this);
 	}
