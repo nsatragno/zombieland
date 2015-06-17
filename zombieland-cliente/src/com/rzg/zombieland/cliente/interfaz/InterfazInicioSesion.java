@@ -27,6 +27,7 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Interfaz completa de inicio de sesión.
+ * 
  * @author Manuel
  */
 
@@ -53,43 +54,44 @@ public class InterfazInicioSesion extends JPanel {
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblUsuario.setBounds(251, 192, 92, 42);
 		add(lblUsuario);
-		
+
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblPassword.setBounds(251, 246, 110, 17);
 		add(lblPassword);
-		
+
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        login();
-		    }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				login();
+			}
 		});
 		btnIngresar.setBounds(184, 292, 175, 40);
 		add(btnIngresar);
-		
+
 		fieldUsuario = new JTextField();
 		fieldUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		fieldUsuario.setBounds(389, 203, 139, 20);
 		add(fieldUsuario);
 		fieldUsuario.setColumns(10);
-		
+
 		fieldPassword = new JPasswordField();
 		fieldPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		fieldPassword.setBounds(389, 244, 139, 20);
 		add(fieldPassword);
-		
+
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(RutaImagen.get("imagenes/zombieland.png")));
+		lblNewLabel.setIcon(new ImageIcon(RutaImagen
+				.get("imagenes/zombieland.png")));
 		lblNewLabel.setBounds(325, 11, 159, 179);
 		add(lblNewLabel);
-		
+
 		JLabel lblMsg = new JLabel("No tenes un usuario?");
 		lblMsg.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblMsg.setBounds(251, 379, 200, 37);
 		add(lblMsg);
-		
+
 		JButton btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -98,21 +100,21 @@ public class InterfazInicioSesion extends JPanel {
 		});
 		btnRegistrarse.setBounds(445, 398, 175, 40);
 		add(btnRegistrarse);
-		
+
 		JLabel lblRzg = new JLabel("RZG - 2015");
 		lblRzg.setForeground(SystemColor.controlShadow);
 		lblRzg.setBounds(700, 515, 110, 14);
 		add(lblRzg);
-		
+
 		JLabel lblUniteAZombieland = new JLabel("Unite a Zombieland!");
 		lblUniteAZombieland.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblUniteAZombieland.setBounds(251, 416, 219, 37);
 		add(lblUniteAZombieland);
-		
+
 		JButton btnO = new JButton("Olvid\u00F3 su clave?");
 		btnO.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(recupera == null)
+				if (recupera == null)
 					recupera = new InterfazRecuperaContrasenia();
 				recupera.setVisible(true);
 			}
@@ -120,49 +122,48 @@ public class InterfazInicioSesion extends JPanel {
 		btnO.setBounds(445, 292, 175, 40);
 		add(btnO);
 	}
-	
+
 	/**
 	 * Realiza el inicio de sesión y muestra los carteles apropiados.
 	 */
 	public void login() {
-        try {
-            final POJOInicioSesion pojo = 
-                    new POJOInicioSesion(fieldUsuario.getText(),
-                                         new String(fieldPassword.getPassword()));
-            PeticionInicioSesion peticion = new PeticionInicioSesion(pojo);
-            ServicioCliente.enviarPeticion(peticion);
-            final InterfazInicioSesion _this = this;
-            peticion.getRespuesta().done(new DoneCallback<RespuestaGenerica>() {
-                @Override
-                public void onDone(RespuestaGenerica respuesta) {
-                    if (respuesta.fuePeticionExitosa()) {
-                        Estado.getInstancia().setNombreJugador(pojo.getNombre());
-                        Main.irA(Main.LISTADO_PARTIDAS);
-                        return;
-                    }
-                    JOptionPane.showMessageDialog(_this,
-                            respuesta.getMensajeError(),
-                            "Inicio sesión Zombieland",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            });
-            
-        } catch (ParametrosNoValidosException e) {
-            JOptionPane.showMessageDialog(this,
-                                          e.getMensaje(),
-                                          "Inicio sesión Zombieland",
-                                          JOptionPane.WARNING_MESSAGE);
-        } catch (ZombielandException e) {
-            JOptionPane.showMessageDialog(this,
-                                          e.getMessage(),
-                                          "Inicio sesión Zombieland",
-                                          JOptionPane.ERROR_MESSAGE);   
-        }
-    }
-	
+		try {
+			final POJOInicioSesion pojo = new POJOInicioSesion(
+					fieldUsuario.getText(), new String(
+							fieldPassword.getPassword()));
+			PeticionInicioSesion peticion = new PeticionInicioSesion(pojo);
+			ServicioCliente.enviarPeticion(peticion);
+			final InterfazInicioSesion _this = this;
+			peticion.getRespuesta().done(new DoneCallback<RespuestaGenerica>() {
+				@Override
+				public void onDone(RespuestaGenerica respuesta) {
+					if (respuesta.fuePeticionExitosa()) {
+						Estado.getInstancia()
+								.setNombreJugador(pojo.getNombre());
+						MenuZombieland.setInicioSesion(true);
+						Main.irA(Main.LISTADO_PARTIDAS);
+						return;
+					}
+					JOptionPane.showMessageDialog(_this,
+							respuesta.getMensajeError(),
+							"Inicio sesión Zombieland",
+							JOptionPane.WARNING_MESSAGE);
+				}
+			});
+
+		} catch (ParametrosNoValidosException e) {
+			JOptionPane.showMessageDialog(this, e.getMensaje(),
+					"Inicio sesión Zombieland", JOptionPane.WARNING_MESSAGE);
+		} catch (ZombielandException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(),
+					"Inicio sesión Zombieland", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 	@Override
-	public void paint (Graphics g){
-		ImageIcon imagenFondo = new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-inicio-sesion.png"));
+	public void paint(Graphics g) {
+		ImageIcon imagenFondo = new ImageIcon(
+				RutaImagen.get("imagenes/Fondos/fondo-inicio-sesion.png"));
 		g.drawImage(imagenFondo.getImage(), 0, -50, 800, 600, null);
 		setOpaque(false);
 		super.paint(g);
