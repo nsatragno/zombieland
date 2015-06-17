@@ -20,13 +20,15 @@ public class TableroTest {
 	 */
 	@Test
 	public void testPosicionZombie() {
-		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-		jugadores.add(new Jugador("Humano1"));
-		jugadores.add(new Jugador("Humano2"));
-		Jugador zombi = new Jugador("Zombi1");
-		Personaje zombie = new Zombie(zombi.getNombre());
-		Tablero tablero = new Tablero(10, jugadores, zombie);
-		Assert.assertEquals(tablero.getEntidadEn(new Coordenada(5, 5)), zombie);
+	    for (int k = 0; k < 1000; k++) {
+    		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
+    		jugadores.add(new Jugador("Humano1"));
+    		jugadores.add(new Jugador("Humano2"));
+    		Jugador zombi = new Jugador("Zombi1");
+    		Personaje zombie = new Zombie(zombi.getNombre());
+    		Tablero tablero = new Tablero(10, jugadores, zombie);
+    		Assert.assertEquals(tablero.getEntidadEn(new Coordenada(5, 5)), zombie);
+    	}
 	}
 
 	/**
@@ -103,25 +105,27 @@ public class TableroTest {
 	 */
 	@Test
 	public void testMovimiento() {
-		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-		Jugador zombi = new Jugador("Zombi1");
-		Personaje zombie = new Zombie(zombi.getNombre());
-		// Generamos el tablero de prueba para mover al zombie en él
-		// Sabemos que el zombie arranca en la posición (5,5)
-		Tablero tablero = new Tablero(10, jugadores, zombie);
-		Coordenada desde = new Coordenada(5, 5);
-		Coordenada hasta;
-		// Elijo una de las posiciones de los costados. Si una de ellas está
-		// ocupada
-		// uso la que está en su diagonal, que debido al algoritmo de colocación
-		// de obstáculos debe estar vacía
-		if (tablero.getEntidadEn(new Coordenada(5, 6)) == null)
-			hasta = new Coordenada(5, 6);
-		else
-			hasta = new Coordenada(6, 5);
-		tablero.moverEntidad(desde, hasta);
-		// Verificamos que en la posición 'hasta' esté el zombie en cuestión.
-		Assert.assertEquals(zombie, tablero.getEntidadEn(hasta));
+	    for (int k = 0; k < 1000; k++) {
+    		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
+    		Jugador zombi = new Jugador("Zombi1");
+    		Personaje zombie = new Zombie(zombi.getNombre());
+    		// Generamos el tablero de prueba para mover al zombie en él
+    		// Sabemos que el zombie arranca en la posición (5,5)
+    		Tablero tablero = new Tablero(10, jugadores, zombie);
+    		Coordenada desde = new Coordenada(5, 5);
+    		Coordenada hasta;
+    		// Elijo una de las posiciones de los costados. Si una de ellas está
+    		// ocupada
+    		// uso la que está en su diagonal, que debido al algoritmo de colocación
+    		// de obstáculos debe estar vacía
+    		if (tablero.getEntidadEn(new Coordenada(5, 6)) == null)
+    			hasta = new Coordenada(5, 6);
+    		else
+    			hasta = new Coordenada(6, 5);
+    		tablero.moverEntidad(desde, hasta);
+    		// Verificamos que en la posición 'hasta' esté el zombie en cuestión.
+    		Assert.assertEquals(zombie, tablero.getEntidadEn(hasta));
+	    }
 	}
 
 	/**
@@ -130,33 +134,35 @@ public class TableroTest {
 	 */
 	@Test
 	public void testColision() {
-		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-		Jugador zombi = new Jugador("Zombi1");
-		Personaje zombie = new Zombie(zombi.getNombre());
-		// Generamos el tablero de prueba para mover al zombie en él
-		// Sabemos que el zombie arranca en la posición (5,5)
-		Tablero tablero = new Tablero(10, jugadores, zombie);
-		Coordenada desde = new Coordenada(5, 5);
-		Coordenada hasta = new Coordenada(0, 0);
-		// Voy a recorrer el tablero
-		// hasta encontrar un obstáculo.
-		int i = 0;
-		int j = 0;
-		while (tablero.getEntidadEn(hasta) == null) {
-			j++;
-			if (j == 10) {
-				j = 0;
-				i++;
-			}
-			hasta = new Coordenada(i, j);
-		}
-		// Salgo del while con una coordenada de un obstaculo.
-		// Ahora intento moverme ahí.
-		tablero.moverEntidad(desde, hasta);
-		// Comparo al personaje con la entidad que hay en la posición donde
-		// debería
-		// estar, que es la misma de antes ya que no debió moverse.
-		Assert.assertEquals(zombie, tablero.getEntidadEn(desde));
+	    for (int k = 0; k < 1000; k++) {
+    		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
+    		Jugador zombi = new Jugador("Zombi1");
+    		Personaje zombie = new Zombie(zombi.getNombre());
+    		// Generamos el tablero de prueba para mover al zombie en él
+    		// Sabemos que el zombie arranca en la posición (5,5)
+    		Tablero tablero = new Tablero(10, jugadores, zombie);
+    		Coordenada desde = new Coordenada(5, 5);
+    		Coordenada hasta = new Coordenada(0, 0);
+    		// Voy a recorrer el tablero
+    		// hasta encontrar un obstáculo.
+    		int i = 0;
+    		int j = 0;
+    		while (tablero.getEntidadEn(hasta) == null) {
+    			j++;
+    			if (j == 10) {
+    				j = 0;
+    				i++;
+    			}
+    			hasta = new Coordenada(i, j);
+    		}
+    		// Salgo del while con una coordenada de un obstaculo.
+    		// Ahora intento moverme ahí.
+    		tablero.moverEntidad(desde, hasta);
+    		// Comparo al personaje con la entidad que hay en la posición donde
+    		// debería
+    		// estar, que es la misma de antes ya que no debió moverse.
+    		Assert.assertEquals(zombie, tablero.getEntidadEn(desde));
+	    }
 	}
 
 	/**
@@ -165,32 +171,26 @@ public class TableroTest {
 	 */
 	@Test
 	public void testColisionZombieHumano() {
-		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-		Jugador humano = new Jugador("Humano1");
-		jugadores.add(humano);
-		Jugador zombi = new Jugador("Zombi1");
-		Personaje zombie = new Zombie(zombi.getNombre());
-		Tablero tablero = new Tablero(10, jugadores, zombie);
-		// Voy a intentar mover al zombi desde su posición a la posición del
-		// humano
-		// Como el tablero se genera al azar, necesito encontrar al humano
-		// primero.
-		Coordenada desde = new Coordenada(5, 5); // Posicion del zombie.
-		// Va a recorrer toda la matriz, cuando encuentre un personaje cuya
-		// posición
-		// No sea el 5,5, va a encontrar al humano.
-		Coordenada hasta = null;
-		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++)
-				if ((i != 5 && j != 5)
-						&& tablero.getEntidadEn(new Coordenada(i, j)) != null) {
-					if (tablero.getEntidadEn(new Coordenada(i, j))
-							.esPersonaje())
-						hasta = new Coordenada(i, j);
-				}
-		tablero.moverEntidad(desde, hasta);
-		Assert.assertEquals(Zombie.class, tablero.getEntidadEn(hasta)
-				.getClass());
+	    for (int k = 0; k < 1000; k++) {
+    		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
+    		Jugador humano = new Jugador("Humano1");
+    		jugadores.add(humano);
+    		Jugador zombi = new Jugador("Zombi1");
+    		Personaje zombie = new Zombie(zombi.getNombre());
+    		Tablero tablero = new Tablero(10, jugadores, zombie);
+    		// Voy a intentar mover al zombi desde su posición a la posición del
+    		// humano
+    		// Como el tablero se genera al azar, necesito encontrar al humano
+    		// primero.
+    		Coordenada desde = new Coordenada(5, 5); // Posicion del zombie.
+    		// Va a recorrer toda la matriz, cuando encuentre un personaje cuya
+    		// posición
+    		// No sea el 5,5, va a encontrar al humano.
+    		Coordenada hasta = getCoordenadaHumano(tablero);
+    		tablero.moverEntidad(desde, hasta);
+    		Assert.assertEquals(Zombie.class, tablero.getEntidadEn(hasta)
+    				.getClass());
+	    }
 	}
 
 	/**
@@ -199,29 +199,36 @@ public class TableroTest {
 	 */
 	@Test
 	public void testColisionHumanoZombie() {
-		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-		Jugador humano = new Jugador("Humano1");
-		jugadores.add(humano);
-		Jugador zombi = new Jugador("Zombi1");
-		Personaje zombie = new Zombie(zombi.getNombre());
-		Tablero tablero = new Tablero(10, jugadores, zombie);
-		// Voy a intentar mover al humano a donde está el zombie.
-		// Como el tablero se genera al azar, necesito encontrar al humano
-		// primero.
-		Coordenada hasta = new Coordenada(5, 5); // Posicion del zombie.
-		// Va a recorrer toda la matriz, cuando encuentre un personaje cuya
-		// posición
-		// No sea el 5,5, va a encontrar al humano.
-		Coordenada desde = null;
-		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++)
-				if ((i != 5 && j != 5)
-						&& tablero.getEntidadEn(new Coordenada(i, j)) != null)
-					if (tablero.getEntidadEn(new Coordenada(i, j))
-							.esPersonaje())
-						desde = new Coordenada(i, j);
-		tablero.moverEntidad(desde, hasta);
-		Assert.assertEquals(Zombie.class, tablero.getEntidadEn(desde)
-				.getClass());
+	    for (int k = 0; k < 1000; k++) {
+    		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
+    		Jugador humano = new Jugador("Humano1");
+    		jugadores.add(humano);
+    		Jugador zombi = new Jugador("Zombi1");
+    		Personaje zombie = new Zombie(zombi.getNombre());
+            Tablero tablero = new Tablero(10, jugadores, zombie);
+            // Voy a intentar mover al humano a donde está el zombie.
+            // Como el tablero se genera al azar, necesito encontrar al humano
+            // primero.
+            Coordenada hasta = new Coordenada(5, 5); // Posicion del zombie.
+            // Va a recorrer toda la matriz, cuando encuentre un personaje cuya
+            // posición
+            // No sea el 5,5, va a encontrar al humano.
+            Coordenada desde = getCoordenadaHumano(tablero);
+            tablero.moverEntidad(desde, hasta);
+            Assert.assertEquals(Zombie.class, tablero.getEntidadEn(desde).getClass());
+	    }
 	}
+
+    private Coordenada getCoordenadaHumano(Tablero tablero) {
+        Coordenada desde = null;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                EntidadTablero entidad = tablero.getEntidadEn(new Coordenada(i, j));
+                if (!(i == 5 && j == 5) & entidad != null && entidad.esPersonaje()) {
+                    desde = new Coordenada(i, j);
+                }
+            }
+        }
+        return desde;
+    }
 }
