@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ SesionTest.class })
+@SuiteClasses({ SesionTest.class, ServicioSesionTest.class })
 public class SuiteSesion {
 
 }

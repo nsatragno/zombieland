@@ -10,6 +10,7 @@ import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.controlador.AbstractPartidasTest;
+import com.rzg.zombieland.server.meta.Partida.Estado;
 import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
 import com.rzg.zombieland.server.sesion.Sesion;
@@ -73,6 +74,7 @@ public class PartidaTest extends AbstractPartidasTest {
         ServicioSesion.getInstancia().addSesion(sesion);
         
         for (int i = 1; i < getUltimaCantidadJugadores(); i++) {
+            assertTrue(partida.puedenUnirseJugadores());
             Jugador jugador = crearJugador();
             sesion = new Sesion(jugador, new EnviaPeticionesImpl());
             sesion.setPartida(partida);
@@ -80,6 +82,7 @@ public class PartidaTest extends AbstractPartidasTest {
             partida.addJugador(jugador);
         }
         try {
+            assertFalse(partida.puedenUnirseJugadores());
             partida.addJugador(crearJugador());
             fail("Debería haber lanzado una excepción");
         } catch (ZombielandException e) {
@@ -102,5 +105,24 @@ public class PartidaTest extends AbstractPartidasTest {
         } catch (ZombielandException e) {
             // Esperada.
         }
+    }
+    
+    @Test
+    public void testArrancar() throws ZombielandException {
+        Partida partida = crearPartida();
+        
+        Sesion sesion = new Sesion(getUltimoAdmin(), new EnviaPeticionesImpl());
+        sesion.setPartida(partida);
+        ServicioSesion.getInstancia().addSesion(sesion);
+        
+        for (int i = 1; i < getUltimaCantidadJugadores(); i++) {
+            assertEquals(Estado.EN_ESPERA, partida.getEstado());
+            Jugador jugador = crearJugador();
+            sesion = new Sesion(jugador, new EnviaPeticionesImpl());
+            sesion.setPartida(partida);
+            ServicioSesion.getInstancia().addSesion(sesion);
+            partida.addJugador(jugador);
+        }
+        assertEquals(Estado.ACTIVA, partida.getEstado());
     }
 }

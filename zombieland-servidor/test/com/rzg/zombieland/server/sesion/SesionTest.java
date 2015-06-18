@@ -1,10 +1,16 @@
 package com.rzg.zombieland.server.sesion;
 
+import static org.junit.Assert.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.meta.EnviaPeticionesImpl;
+import com.rzg.zombieland.server.meta.Partida;
+import com.rzg.zombieland.server.sesion.Sesion.SesionListener;
 
 /**
  * Verifica el correcto funcionamiento de la sesión.
@@ -14,6 +20,20 @@ import com.rzg.zombieland.server.meta.EnviaPeticionesImpl;
 public class SesionTest {
 
     private final Jugador jugadorValido;
+    
+    private class SesionListenerImpl implements SesionListener {
+     
+        private boolean sesionCerrada = false;
+        
+        @Override
+        public void notificarSesionCerrada(Sesion sesion) {
+            sesionCerrada = true;
+        }
+        
+        public boolean getSesionCerrada() {
+            return sesionCerrada;
+        }
+    }
     
     /**
      * Inicializa al jugador válido.
@@ -48,4 +68,35 @@ public class SesionTest {
         new Sesion(jugadorValido, null);
     }
 
+    /**
+     * Prueba crear y cerrar una sesión.
+     */
+    @Test
+    public void testCerrar() {
+        Sesion sesion = new Sesion(jugadorValido, new EnviaPeticionesImpl());
+        SesionListenerImpl listener = new SesionListenerImpl();
+        sesion.addListener(listener);
+        assertFalse(listener.getSesionCerrada());
+        sesion.cerrar();
+        assertTrue(listener.getSesionCerrada());
+    }
+    
+
+    /**
+     * Prueba crear y cerrar una sesión que tenía una partida.
+     * @throws ZombielandException 
+     * @throws ParametrosNoValidosException 
+     */
+    @Test
+    public void testAbandonarPartida() throws ParametrosNoValidosException, ZombielandException {
+        Sesion sesion = new Sesion(jugadorValido, new EnviaPeticionesImpl());
+        Partida partida = new Partida(jugadorValido, new POJOCreacionPartida(5, 5, "test"));
+        assertEquals(1, partida.getJugadores().size());
+        assertNull(sesion.getPartida());
+        sesion.setPartida(partida);
+        assertEquals(partida, sesion.getPartida());
+        sesion.cerrar();
+        assertEquals(0, partida.getJugadores().size());
+        assertNull(sesion.getPartida());
+    }
 }

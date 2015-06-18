@@ -292,4 +292,11 @@ public class Partida {
     public boolean puedenUnirseJugadores() {
         return jugadores.size() < cantidadMaximaJugadores && estado == Estado.EN_ESPERA;
     }
+
+    /**
+     * @return el estado actual de la partida.
+     */
+    public Estado getEstado() {
+        return estado;
+    }
 }
