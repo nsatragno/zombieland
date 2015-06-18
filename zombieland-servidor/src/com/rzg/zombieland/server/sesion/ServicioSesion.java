@@ -60,6 +60,6 @@ public class ServicioSesion implements SesionListener {
 
     @Override
     public synchronized void notificarSesionCerrada(Sesion sesion) {
-        sesiones.remove(sesion.getId());
+        sesiones.remove(sesion.getJugador());
     }
 }

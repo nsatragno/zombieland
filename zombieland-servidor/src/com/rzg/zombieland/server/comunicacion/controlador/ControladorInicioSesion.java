@@ -47,6 +47,12 @@ public class ControladorInicioSesion extends Controlador {
                                                       + "el usuario y contraseña"));
         }
         Log.info("El jugador " + jugador.getNombre() + " ha iniciado sesión.");
+        
+        if (ServicioSesion.getInstancia().getSesion(jugador) != null) {
+            return gson.toJson(new RespuestaGenerica("Su sesión ya está iniciada. "
+                                                   + "Intente cerrarla antes de continuar"));
+        }
+        
         Sesion sesion = new Sesion(jugador, hilo);
         ServicioSesion.getInstancia().addSesion(sesion);
         manejadorSesion.setSesion(sesion);
