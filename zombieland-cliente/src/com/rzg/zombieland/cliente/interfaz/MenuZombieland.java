@@ -3,14 +3,17 @@ package com.rzg.zombieland.cliente.interfaz;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.net.URI;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionCierreSesion;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Menu Completo.
@@ -28,7 +31,7 @@ public class MenuZombieland extends JMenuBar {
 	 * Atributos necesarios para poder modificar el bloqueo de los botones.
 	 */
 	public static boolean inicio = false;
-	private static JMenuItem mntmIniciarSesion;
+	private static JMenuItem iniciarSesion;
 	private static JMenuItem mntmRegistrarse;
 	private static JMenuItem mntmDatos;
 	private static JMenuItem mntmEstadsticas;
@@ -40,13 +43,13 @@ public class MenuZombieland extends JMenuBar {
 		JMenu mnArchivo = new JMenu("Archivo");
 		add(mnArchivo);
 
-		mntmIniciarSesion = new JMenuItem("Iniciar Sesion");
-		mntmIniciarSesion.addActionListener(new ActionListener() {
+		iniciarSesion = new JMenuItem("Iniciar Sesion");
+		iniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Main.irA(Main.INICIO_SESION);
+			    cerrarSesion();
 			}
 		});
-		mnArchivo.add(mntmIniciarSesion);
+		mnArchivo.add(iniciarSesion);
 
 		mntmRegistrarse = new JMenuItem("Registrarse");
 		mntmRegistrarse.addActionListener(new ActionListener() {
@@ -163,7 +166,7 @@ public class MenuZombieland extends JMenuBar {
 		});
 		mnAyuda.add(mntmGoogleame);
 
-		mntmIniciarSesion.setEnabled(!inicio);
+		iniciarSesion.setEnabled(!inicio);
 		mntmRegistrarse.setEnabled(!inicio);
 		mntmDatos.setEnabled(inicio);
 		mntmEstadsticas.setEnabled(inicio);
@@ -173,12 +176,27 @@ public class MenuZombieland extends JMenuBar {
 
 	public static void setInicioSesion(boolean estado) {
 		inicio = estado;
-		mntmIniciarSesion.setEnabled(!inicio);
+	    iniciarSesion.setText(estado ? "Cerrar sesión" : "Iniciar sesión");
 		mntmRegistrarse.setEnabled(!inicio);
 		mntmDatos.setEnabled(inicio);
 		mntmEstadsticas.setEnabled(inicio);
 		mntmJugar.setEnabled(inicio);
 		mntmVerPartidas.setEnabled(inicio);
 
+	}
+	
+	/**
+	 * Envía a la pantalla de inicio de sesión y cierra la existente si estaba abierta.
+	 */
+	public void cerrarSesion() {
+	    if (inicio) {
+            try {
+                ServicioCliente.enviarPeticion(new PeticionCierreSesion());
+            } catch (ZombielandException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+            setInicioSesion(false);
+        }
+        Main.irA(Main.INICIO_SESION);
 	}
 }

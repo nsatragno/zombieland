@@ -46,6 +46,8 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
             return new ControladorAbandonarPartida(this);
         case Enviable.UNIRSE_RAPIDO:
             return new ControladorUnirseRapido(this);
+        case Enviable.CERRAR_SESION:
+            return new ControladorCerrarSesion(this);
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "
@@ -60,6 +62,7 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
 
     @Override
     public void setSesion(Sesion sesion) {
+        sesion.addListener(this);
         this.sesion = sesion;
     }
 

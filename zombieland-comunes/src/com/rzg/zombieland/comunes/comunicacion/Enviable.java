@@ -56,6 +56,11 @@ public abstract class Enviable {
      * Solicitud para unirse a una partida aleatoria.
      */
     public static final int UNIRSE_RAPIDO = 0x9;
+
+    /**
+     * Solicitud para cerrar la sesión.
+     */
+    public static final int CERRAR_SESION = 0xA;
     
     /**
      * Indica que ha habido un error en el proceso.
