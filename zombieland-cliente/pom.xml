@@ -11,6 +11,12 @@
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>test</testSourceDirectory>
+		<resources>
+			<resource>
+			    <targetPath>imagenes</targetPath>
+				<directory>src/imagenes</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -24,18 +30,18 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.5.5</version>
 				<configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.rzg.zombieland.cliente.interfaz.Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.rzg.zombieland.cliente.interfaz.Main</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
 				<executions>
 					<execution>
-					    <id>make-assembly</id>
+						<id>make-assembly</id>
 						<phase>package</phase>
 						<goals>
 							<goal>single</goal>
