@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>zombieland-cliente</groupId>
 	<artifactId>zombieland-cliente</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-ALPHA</version>
 	<name>Cliente Zombieland</name>
 	<properties>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
@@ -22,8 +22,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -56,12 +56,12 @@
 		<dependency>
 			<groupId>zombieland-comunes</groupId>
 			<artifactId>zombieland-comunes</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-ALPHA</version>
 		</dependency>
 		<dependency>
 			<groupId>zombieland-servidor</groupId>
 			<artifactId>zombieland-servidor</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-ALPHA</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

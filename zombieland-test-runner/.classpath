@@ -5,5 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/zombieland-cliente"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/zombieland-comunes"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/zombieland-servidor"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
