@@ -9,7 +9,6 @@ import java.util.Random;
 
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
-import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
 import com.rzg.zombieland.server.meta.ResultadoRonda;
 import com.rzg.zombieland.server.sesion.Jugador;
@@ -86,8 +85,9 @@ public class Tablero {
         }
 
         // Ponemos a los humanos
-        // Los humanos se crean a partir de los nombres de los jugadores.
         for (Jugador jugador : jugadores) {
+            if (jugador == zombi)
+                continue;
             resuelto = false;
             while (!resuelto) {
                 Coordenada c = new Coordenada(Math.abs(rnd.nextInt()) % casilleros, Math.abs(rnd.nextInt())
@@ -121,14 +121,8 @@ public class Tablero {
                 if (matriz[i][j] != null) {
                     // Agrego las entidades que encuentre a la lista de la
                     // proyeccion
-                    entidades.add(new POJOEntidad("Elemento" + i + j, new Coordenada(i, j), // Cada
-                                                                                            // entidad
-                                                                                            // ya
-                                                                                            // tiene
-                                                                                            // su
-                                                                                            // posicion
-                            Avatar.HOMBRE)); // Acá iria el avatar
-                                             // correspondiente.
+                    entidades.add(new POJOEntidad("Elemento" + i + j, new Coordenada(i, j),
+                                  matriz[i][j].getAvatar()));
                 }
             }
         }

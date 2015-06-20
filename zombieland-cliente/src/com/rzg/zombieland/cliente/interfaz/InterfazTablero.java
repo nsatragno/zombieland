@@ -8,7 +8,8 @@ import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,11 +20,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
-import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
 import com.rzg.zombieland.comunes.misc.Avatar;
-import com.rzg.zombieland.comunes.misc.Coordenada;
 
 /**
  * Interfaz de tablero.
@@ -34,9 +34,7 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
 public class InterfazTablero extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	// Creo este objeto para poder crear objetos del tipo POJOEntidad
-	// y armar la lista para construir la proyeccion de prueba.
-	private static ProyeccionTablero proyeccion;
+	
 	@SuppressWarnings("unused")
 	private ProyeccionTablero proyeccionPrueba;
 	
@@ -54,7 +52,7 @@ public class InterfazTablero extends JPanel {
 	private int coordenadaX;
 	private int coordenadaY;
 
-	private Image[] img; // Avatares
+	private Map<Avatar, Image> img; // Avatares
 	private ImageIcon fondo;
 
 	public InterfazTablero() {
@@ -62,10 +60,10 @@ public class InterfazTablero extends JPanel {
 		setLayout(null);
 		setBounds(100, 100, 800, 600);
 
-		img = new Image[4];
-		for (int i = 0; i < 4; i++) {
-			img[i] = new ImageIcon(RutaImagen.get("imagenes/avatar" + (i + 1) + ".png")).getImage();
-
+		img = new HashMap<Avatar, Image>();
+		for (Avatar avatar : Avatar.values()) {
+			img.put(avatar, new ImageIcon(
+			        RutaImagen.get("imagenes/Avatares/" + avatar.getSprite())).getImage());
 		}
 
 		fondo = new ImageIcon(RutaImagen.get("imagenes/Tablero/pasto.png"));
@@ -211,20 +209,7 @@ public class InterfazTablero extends JPanel {
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		java.util.List<POJOEntidad> entidades = new ArrayList<POJOEntidad>();
-		entidades.add(new POJOEntidad("Player1", new Coordenada(
-				coordenadaX, coordenadaY), Avatar.HOMBRE));
-		entidades.add(new POJOEntidad("Player2",
-				new Coordenada(7, 6), Avatar.MUJER));
-		Coordenada esquinaSupIzq = new Coordenada(
-				coordenadaX - 2 >= 0 ? coordenadaX - 2 : 0,
-				coordenadaY - 2 >= 0 ? coordenadaY - 2 : 0);
-		Coordenada esquinaInfDer = new Coordenada(
-				coordenadaX + 3 <= CASILLEROS ? coordenadaX + 3 : CASILLEROS,
-				coordenadaY + 3 <= CASILLEROS ? coordenadaY + 3 : CASILLEROS);
-		ProyeccionTablero proyeccionPrueba = new ProyeccionTablero(CASILLEROS,
-				esquinaSupIzq, esquinaInfDer, entidades);
-		proyeccionPrueba.paint(g, img, DIMENSION, MARGEN_IZQUIERDO,
-				MARGEN_SUPERIOR, fondo);
+		ProyeccionTablero proyeccion =  Estado.getInstancia().getEstadoLobby().getProyeccion();
+		proyeccion.paint(g, img, DIMENSION, MARGEN_IZQUIERDO, MARGEN_SUPERIOR, fondo);
 	}
 }

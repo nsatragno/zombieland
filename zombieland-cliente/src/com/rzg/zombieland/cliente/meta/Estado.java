@@ -78,6 +78,7 @@ public class Estado {
      * @param pojo
      */
     public void setEstadoLobby(POJOPartida pojo) {
+        estadoLobby = pojo;
         for (EscuchadorEstadoLobby escuchador : escuchadoresLobby)
             escuchador.notificarLobbyActualizado(pojo);
     }

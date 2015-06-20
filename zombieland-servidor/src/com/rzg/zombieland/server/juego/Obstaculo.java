@@ -1,5 +1,6 @@
 package com.rzg.zombieland.server.juego;
 
+import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
 
 /**
@@ -9,22 +10,20 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  */
 public class Obstaculo extends EntidadTablero {
 
-    private final String SPRITE = "obstaculo.jpg";
-    
     public Obstaculo(Coordenada posicion) {
     	super(posicion);
     }
     
     @Override
-    public String getSprite() {
-        return SPRITE;
-    }
-
-    @Override
     public void colisionar(EntidadTablero entidad) { }
 
     public boolean esPersonaje(){
     	return false;
+    }
+
+    @Override
+    public Avatar getAvatar() {
+        return Avatar.OBSTACULO;
     }
 
 }

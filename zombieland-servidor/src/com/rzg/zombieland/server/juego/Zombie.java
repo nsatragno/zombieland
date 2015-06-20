@@ -1,5 +1,6 @@
 package com.rzg.zombieland.server.juego;
 
+import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
 import com.rzg.zombieland.server.sesion.Jugador;
 
@@ -14,11 +15,6 @@ public class Zombie extends Personaje {
 	// TODO definir sprite.
 	private final String SPRITE = "zombie.jpg";
 
-	@Override
-	public String getSprite() {
-		return SPRITE;
-	}
-	
 	public Zombie(Jugador jugador, Coordenada posicion, Tablero tablero) {
 	    super(jugador, posicion, tablero);
     }
@@ -59,5 +55,10 @@ public class Zombie extends Personaje {
         int result = 1;
         result = prime * result + ((SPRITE == null) ? 0 : SPRITE.hashCode());
         return result;
+    }
+
+    @Override
+    public Avatar getAvatar() {
+        return Avatar.ZOMBIE;
     }
 }

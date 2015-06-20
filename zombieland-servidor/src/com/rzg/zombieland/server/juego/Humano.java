@@ -1,5 +1,6 @@
 package com.rzg.zombieland.server.juego;
 
+import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
 import com.rzg.zombieland.server.sesion.Jugador;
 
@@ -11,9 +12,6 @@ import com.rzg.zombieland.server.sesion.Jugador;
  */
 public class Humano extends Personaje {
 
-	// TODO definir sprite.
-	private final String SPRITE = "humano.png";
-	
 	// El largo de un lado del cuadrado de visión del humano.
 	private final static int TAMAÑO_VISION = 5;
 
@@ -23,8 +21,8 @@ public class Humano extends Personaje {
 	}
 
 	@Override
-	public String getSprite() {
-		return SPRITE;
+	public Avatar getAvatar() {
+		return getJugador().getAvatar();
 	}
 
 	@Override

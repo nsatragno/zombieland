@@ -1,5 +1,6 @@
 package com.rzg.zombieland.server.juego;
 
+import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
 
 /**
@@ -27,9 +28,9 @@ public abstract class EntidadTablero {
     }
     
     /**
-     * @return el nombre de la imagen con la que esta entidad se representa.
+     * @return el avatar para dibujar la entidad en el tablero.
      */
-    public abstract String getSprite();
+    public abstract Avatar getAvatar();
     
     /**
      * Hace colisionar esta entidad con otra, posiblemente afectándolas.

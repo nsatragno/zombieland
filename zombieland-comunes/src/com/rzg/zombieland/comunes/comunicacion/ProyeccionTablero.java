@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 
@@ -95,6 +96,10 @@ public class ProyeccionTablero extends Enviable {
                 return false;
             return true;
         }
+
+        public Avatar getAvatar() {
+            return avatar;
+        }
 	}
 
 	// Tamaño total del tablero - Ancho/largo de la matriz en casilleros
@@ -143,7 +148,7 @@ public class ProyeccionTablero extends Enviable {
 	 * @param margenSuperior
 	 * @param fondo
 	 */
-	public void paint(Graphics g, Image[] img, int anchoTablero,
+	public void paint(Graphics g, Map<Avatar, Image> img, int anchoTablero,
 			int margenIzquierdo, int margenSuperior, ImageIcon fondo) {
 		int anchoCasillero = anchoTablero / casilleros;
 		int anchoReal = getAnchoEfectivo(anchoTablero);
@@ -164,13 +169,11 @@ public class ProyeccionTablero extends Enviable {
 			}
 			primeraVez = false;
 		}
-		int j = 0;
 		for (POJOEntidad entidad : entidades) {
-			g.drawImage(img[j], entidad.getCoordenada().getX() * anchoCasillero
+			g.drawImage(img.get(entidad.getAvatar()), entidad.getCoordenada().getX() * anchoCasillero
 					+ margenIzquierdo, entidad.getCoordenada().getY()
 					* anchoCasillero + margenSuperior, anchoCasillero,
 					anchoCasillero, null);
-			j++;
 		}
 
 		// La famosa 'Proyeccion'
@@ -181,20 +184,20 @@ public class ProyeccionTablero extends Enviable {
 		// Son 4 rectangulos. Uno arriba, uno abajo y 2 a cada lado.
 		g2D.fillRect(margenIzquierdo, margenSuperior, anchoReal,
 				esquinaSuperiorIzquierda.getY() * anchoCasillero);
-		g2D.fillRect(margenIzquierdo, esquinaInferiorDerecha.getY()
+		g2D.fillRect(margenIzquierdo, (esquinaInferiorDerecha.getY() + 1)
 				* anchoCasillero + margenSuperior, anchoReal, anchoReal
-				- esquinaInferiorDerecha.getY() * anchoCasillero);
+				- (esquinaInferiorDerecha.getY() + 1) * anchoCasillero);
 		g2D.fillRect(margenIzquierdo, esquinaSuperiorIzquierda.getY()
 				* anchoCasillero + margenSuperior,
 				esquinaSuperiorIzquierda.getX() * anchoCasillero,
 				esquinaInferiorDerecha.getY() * anchoCasillero
-						- esquinaSuperiorIzquierda.getY() * anchoCasillero);
-		g2D.fillRect(esquinaInferiorDerecha.getX() * anchoCasillero
+						- (esquinaSuperiorIzquierda.getY() - 1) * anchoCasillero);
+		g2D.fillRect((esquinaInferiorDerecha.getX() + 1) * anchoCasillero
 				+ margenIzquierdo, esquinaSuperiorIzquierda.getY()
 				* anchoCasillero + margenSuperior, anchoReal
-				- esquinaInferiorDerecha.getX() * anchoCasillero,
+				- (esquinaInferiorDerecha.getX() + 1) * anchoCasillero,
 				esquinaInferiorDerecha.getY() * anchoCasillero
-						- esquinaSuperiorIzquierda.getY() * anchoCasillero);
+						- (esquinaSuperiorIzquierda.getY() - 1) * anchoCasillero);
 	}
 
 	/**

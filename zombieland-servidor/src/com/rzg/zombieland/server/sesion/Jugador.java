@@ -2,6 +2,7 @@ package com.rzg.zombieland.server.sesion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -115,6 +116,13 @@ public class Jugador {
 			errores.add("La pregunta secreta no puede estar vacía");
 		this.respuestaSecreta = respuestaSecreta;
 
+		List<Avatar> avatares = new ArrayList<>();
+		for (Avatar avatar : Avatar.values()) {
+		    if (avatar.esPersonaje())
+		        avatares.add(avatar);
+		}
+		this.avatar = avatares.get(new Random().nextInt(avatares.size()));
+		
 		if (errores.size() > 0)
 			throw new ParametrosNoValidosException("Jugador", errores);
 	}
@@ -214,5 +222,12 @@ public class Jugador {
             Log.error("No se pudo enviar la notificación de cambio de partida al cliente");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @return el avatar del jugador.
+     */
+    public Avatar getAvatar() {
+        return avatar;
     }
 }
