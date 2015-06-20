@@ -14,16 +14,24 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.jdeferred.DoneCallback;
+
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionMovimiento;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.Avatar;
+import com.rzg.zombieland.comunes.misc.Movimiento.Direccion;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Interfaz de tablero.
@@ -71,10 +79,7 @@ public class InterfazTablero extends JPanel {
 		JButton moveUp = new JButton("");
 		moveUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// Movimiento hacia arriba.
-				if (coordenadaY - 1 >= 0)
-					coordenadaY--;
-				repaint();
+			    mover(Direccion.NORTE);
 			}
 		});
 
@@ -95,10 +100,7 @@ public class InterfazTablero extends JPanel {
 		JButton moveLeft = new JButton("");
 		moveLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Movimiento hacia la izquierda
-				if (coordenadaX - 1 >= 0)
-					coordenadaX--;
-				repaint();
+			    mover(Direccion.OESTE);
 			}
 		});
 		// button_1.addKeyListener(new KeyAdapter() {
@@ -125,10 +127,7 @@ public class InterfazTablero extends JPanel {
 		// });
 		moveRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Movimiento hacia la derecha
-				if (coordenadaX + 1 <= CASILLEROS - 1)
-					coordenadaX++;
-				repaint();
+			    mover(Direccion.ESTE);
 			}
 		});
 		moveRight.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaDerecha.png")));
@@ -148,10 +147,7 @@ public class InterfazTablero extends JPanel {
 		// });
 		moveDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Movimiento hacia abajo
-				if (coordenadaY + 1 <= CASILLEROS - 1)
-					coordenadaY++;
-				repaint();
+			    mover(Direccion.SUR);
 			}
 		});
 		moveDown.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaAbajo.png")));
@@ -212,4 +208,32 @@ public class InterfazTablero extends JPanel {
 		ProyeccionTablero proyeccion =  Estado.getInstancia().getEstadoLobby().getProyeccion();
 		proyeccion.paint(g, img, DIMENSION, MARGEN_IZQUIERDO, MARGEN_SUPERIOR, fondo);
 	}
+	
+
+	/**
+	 * Envía una petición de movimiento.
+	 * @param este
+	 */
+    private void mover(Direccion direccion) {
+        PeticionMovimiento peticion = new PeticionMovimiento(direccion);
+        final InterfazTablero this_ = this;
+        try {
+            ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
+            peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
+                @Override
+                public void onDone(RespuestaGenerica respuesta) {
+                    if (!respuesta.fuePeticionExitosa()) {
+                        JOptionPane.showMessageDialog(
+                                this_,
+                                respuesta.getMensajeError(),
+                                "Zombieland tablero",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        } catch (ZombielandException e) {
+            JOptionPane.showMessageDialog(
+                    this, e.getMessage(), "Zombieland tablero", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

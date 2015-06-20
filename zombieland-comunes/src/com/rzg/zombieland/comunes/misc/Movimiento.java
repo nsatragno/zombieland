@@ -11,7 +11,7 @@ public class Movimiento implements Comparable<Movimiento> {
      * @author nicolas
      *
      */
-	public enum Tipo {
+	public enum Direccion {
 		/**
 		 * Movimiento hacia «arriba». 
 		 */
@@ -37,7 +37,7 @@ public class Movimiento implements Comparable<Movimiento> {
 		
         private int dY;
 
-        private Tipo(int dX, int dY) {
+        private Direccion(int dX, int dY) {
 		    this.dX = dX;
 		    this.dY = dY;
 		}
@@ -51,19 +51,19 @@ public class Movimiento implements Comparable<Movimiento> {
         }
 	}
 
-    public static final Movimiento NINGUNO = new Movimiento(0, Tipo.NINGUNO);
+    public static final Movimiento NINGUNO = new Movimiento(0, Direccion.NINGUNO);
 
 	// Tiempo en el que se recibe la orden de movimiento, para poder determinar el orden de estos.
 	private long tiempoDeMovimientoMillis;
 	
 	// El tipo de movimiento.
-	private Tipo tipo;
+	private Direccion tipo;
 	
-	public Movimiento(Tipo tipo) {
+	public Movimiento(Direccion tipo) {
 	    this(System.currentTimeMillis(), tipo);
 	}
 	
-	private Movimiento(long tiempo, Tipo tipo) {
+	private Movimiento(long tiempo, Direccion tipo) {
 	    if (tipo == null)
 	        throw new NullPointerException("El tipo de movimiento no puede ser null");
 	    this.tiempoDeMovimientoMillis = tiempo;
