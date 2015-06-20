@@ -40,6 +40,8 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
             return new ControladorInicioSesion(this, hilo);
         case Enviable.CREAR_PARTIDA:
             return new ControladorCrearPartida(this);
+        case Enviable.MOVER_PERSONAJE:
+            return new ControladorMovimiento(this);
         case Enviable.UNIRSE_PARTIDA:
             return new ControladorUnirsePartida(this);
         case Enviable.ABANDONAR_PARTIDA:

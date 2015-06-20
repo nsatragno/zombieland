@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.rzg.zombieland.comunes.misc.Movimiento.Tipo;
+import com.rzg.zombieland.comunes.misc.Movimiento.Direccion;
 
 public class MovimientoTest {
 
@@ -17,9 +17,9 @@ public class MovimientoTest {
 
     @Test
     public void testOrdenamiento() {
-        Movimiento m1 = new Movimiento(Tipo.ESTE);
-        Movimiento m2 = new Movimiento(Tipo.ESTE);
-        Movimiento m3 = new Movimiento(Tipo.ESTE);
+        Movimiento m1 = new Movimiento(Direccion.ESTE);
+        Movimiento m2 = new Movimiento(Direccion.ESTE);
+        Movimiento m3 = new Movimiento(Direccion.ESTE);
         
         Movimiento [] listado = { m3, m2, m1 };
         Movimiento [] listadoOrdenado = { m1, m2, m3 };

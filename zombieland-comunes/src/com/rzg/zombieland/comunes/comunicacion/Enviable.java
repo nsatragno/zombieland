@@ -66,4 +66,6 @@ public abstract class Enviable {
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
+
+    public static final int MOVER_PERSONAJE = 0x10;
 }
