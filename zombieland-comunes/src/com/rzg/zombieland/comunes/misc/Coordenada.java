@@ -8,8 +8,8 @@ package com.rzg.zombieland.comunes.misc;
  */
 public class Coordenada {
     // Pares de coordenadas.
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
    
     /**
      * Construye el par de coordenadas.
@@ -29,26 +29,9 @@ public class Coordenada {
     }
     
     /**
-     * Establece la posición X.
-     * @param x
-     */
-    public void setX(int x) {
-        this.x = x;
-    }
-    
-    
-    /**
      * @return la posición Y.
      */
     public int getY() {
         return y;
-    }
-    
-    /**
-     * Establece la posición Y.
-     * @param y
-     */
-    public void setY(int y) {
-        this.y = y;
     }
 }

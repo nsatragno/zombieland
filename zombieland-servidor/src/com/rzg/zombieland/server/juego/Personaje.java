@@ -2,6 +2,7 @@ package com.rzg.zombieland.server.juego;
 
 import java.util.UUID;
 
+import com.rzg.zombieland.comunes.misc.Coordenada;
 import com.rzg.zombieland.comunes.misc.Movimiento;
 import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
@@ -46,7 +47,7 @@ public abstract class Personaje extends EntidadTablero implements Comparable<Per
      * Realiza el siguiente movimiento.
      */
     public void mover() {
-        // TODO implementar.
+        setPosicion(tablero.moverEntidad(getPosicion(), siguienteMovimiento.mover(getPosicion())));
     }
     
     public Jugador getJugador(){

@@ -15,23 +15,40 @@ public class Movimiento implements Comparable<Movimiento> {
 		/**
 		 * Movimiento hacia «arriba». 
 		 */
-		NORTE,
+		NORTE(0, 1),
 		/**
 		 * Movimiento hacia la derecha.
 		 */
-		ESTE,
+		ESTE(1, 0),
 		/**
 		 * Movimiento hacia «abajo».
 		 */
-		SUR,
+		SUR(0, -1),
 		/**
 		 * Movimiento hacia la izquierda.
 		 */
-		OESTE,
+		OESTE(-1, 0),
         /**
          * No se mueve.
          */
-		NINGUNO;
+		NINGUNO(0, 0);
+		
+		private int dX;
+		
+        private int dY;
+
+        private Tipo(int dX, int dY) {
+		    this.dX = dX;
+		    this.dY = dY;
+		}
+        
+        public int getDX() {
+            return dX;
+        }
+        
+        public int getDY() {
+            return dY;
+        }
 	}
 
     public static final Movimiento NINGUNO = new Movimiento(0, Tipo.NINGUNO);
@@ -89,5 +106,12 @@ public class Movimiento implements Comparable<Movimiento> {
             return false;
         return true;
     }
-	
+
+    /**
+     * @param coordenada - la coordenada que se va a mover.
+     * @return una nueva coordenada, desplazada según el movimiento.
+     */
+    public Coordenada mover(Coordenada coordenada) {
+        return new Coordenada(coordenada.getX() + tipo.getDX(), coordenada.getY() + tipo.getDY());
+    }
 }
