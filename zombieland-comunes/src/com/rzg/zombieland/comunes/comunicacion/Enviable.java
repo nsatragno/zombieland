@@ -74,9 +74,12 @@ public abstract class Enviable {
     public static final int DEVOLVER_DATOS = 0xC;
     
     /**
+     * Solicitud para establecer el siguiente movimiento del personaje.
+     */
+    public static final int MOVER_PERSONAJE = 0xD;
+    
+    /**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
-
-    public static final int MOVER_PERSONAJE = 0x10;
 }
