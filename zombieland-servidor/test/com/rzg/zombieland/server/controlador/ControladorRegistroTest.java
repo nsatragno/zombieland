@@ -62,7 +62,7 @@ public class ControladorRegistroTest {
      */
     @Test
     public void testRegistroValido() throws ParametrosNoValidosException, ZombielandException {
-        POJORegistro registro = new POJORegistro(NOMBRE_JUGADOR_VALIDO, "1234", "test", "test");
+        POJORegistro registro = new POJORegistro(NOMBRE_JUGADOR_VALIDO, "1234", "test", "test", null);
         Gson gson = new Gson();
         RespuestaGenerica respuesta = gson.fromJson(
                 controlador.procesar(gson.toJson(registro)), RespuestaGenerica.class);
@@ -80,7 +80,7 @@ public class ControladorRegistroTest {
      */
     @Test
     public void testRegistroExistente() throws ParametrosNoValidosException, ZombielandException {
-        POJORegistro registro = new POJORegistro(NOMBRE_JUGADOR_EXISTENTE, "1234", "test", "test");
+        POJORegistro registro = new POJORegistro(NOMBRE_JUGADOR_EXISTENTE, "1234", "test", "test", null);
         Gson gson = new Gson();
         RespuestaGenerica respuesta = gson.fromJson(
                 controlador.procesar(gson.toJson(registro)), RespuestaGenerica.class);

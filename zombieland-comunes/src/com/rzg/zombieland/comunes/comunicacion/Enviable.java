@@ -63,6 +63,12 @@ public abstract class Enviable {
     public static final int CERRAR_SESION = 0xA;
     
     /**
+     * Solicitud para cambiar los datos del jugador
+     */
+    
+    public static final int CAMBIO_DATOS = 0xB;
+    
+    /**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";

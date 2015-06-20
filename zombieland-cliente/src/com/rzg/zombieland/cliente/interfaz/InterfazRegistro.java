@@ -180,7 +180,7 @@ public class InterfazRegistro extends JPanel {
             POJORegistro pojoRegistro;
             pojoRegistro = new POJORegistro(nombreDeUsuario.getText(), new String(
                     password.getPassword()), (String) preguntaSeguridad.getSelectedItem(),
-                    respuestaSeguridad.getText());
+                    respuestaSeguridad.getText(), null);
             PeticionRegistro peticion = new PeticionRegistro(pojoRegistro);
             ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
             imagenCargando.setVisible(true);

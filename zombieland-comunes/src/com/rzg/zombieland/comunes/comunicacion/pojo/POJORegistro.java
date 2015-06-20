@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
+import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 
 
@@ -24,6 +25,9 @@ public class POJORegistro extends Enviable {
     private String preguntaSecreta;
     private String respuestaSecreta;
     
+    // Avatar del jugador
+    private Avatar avatarJugador;
+    
     /**
      * Constructor por atributos.
      * @param nombre - el nombre del jugador que se registra.
@@ -35,24 +39,29 @@ public class POJORegistro extends Enviable {
     public POJORegistro(String nombre,
                        String clave,
                        String preguntaSecreta,
-                       String respuestaSecreta) throws ParametrosNoValidosException {
+                       String respuestaSecreta,
+                       Avatar avatarJugador) throws ParametrosNoValidosException {
         List<String> errores = new ArrayList<String>();
         
-        if (nombre.isEmpty())
+        if (nombre == null || nombre.isEmpty())
             errores.add("El nombre no puede ser vacío");
         this.nombre = nombre;
         
-        if (clave.isEmpty())
+        if (clave == null || clave.isEmpty())
             errores.add("La clave no puede ser vacía");
         this.clave = clave;
         
-        if (preguntaSecreta.isEmpty())
+        if (preguntaSecreta == null || preguntaSecreta.isEmpty())
             errores.add("La pregunta secreta no puede ser vacía");
         this.preguntaSecreta = preguntaSecreta;
         
-        if (respuestaSecreta.isEmpty())
+        if (respuestaSecreta == null || respuestaSecreta.isEmpty())
             errores.add("La respuesta secreta no puede ser vacía");
         this.respuestaSecreta = respuestaSecreta;
+
+        if(avatarJugador != null && !avatarJugador.esPersonaje())
+        	errores.add("El avatar del jugador no es un personaje");
+        this.avatarJugador = avatarJugador;
         
         if (errores.size() != 0)
             throw new ParametrosNoValidosException("registro de jugador", errores);
@@ -84,6 +93,14 @@ public class POJORegistro extends Enviable {
      */
     public String getRespuestaSecreta() {
         return respuestaSecreta;
+    }
+    
+    /**
+     * 
+     * @return el avatar del jugador.
+     */
+    public Avatar getAvatarJugador(){
+    	return avatarJugador;
     }
     
     @Override
