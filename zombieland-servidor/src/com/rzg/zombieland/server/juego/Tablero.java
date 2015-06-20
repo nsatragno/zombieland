@@ -2,6 +2,7 @@ package com.rzg.zombieland.server.juego;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -213,7 +214,7 @@ public class Tablero {
         synchronized (personajes) {
             // Ordenamos los personajes de acuerdo al orden en el que realizaron los
             // movimientos.
-            personajes.sort(new Comparator<Personaje>() {
+            Collections.sort(personajes, new Comparator<Personaje>() {
     
                 @Override
                 public int compare(Personaje p1, Personaje p2) {
