@@ -1,6 +1,7 @@
 package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +22,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.jdeferred.DoneCallback;
+
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionObtenerDatosJugador;
+import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * 
@@ -37,6 +46,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 	private ButtonGroup Avatar = new ButtonGroup();
 	private JPasswordField pass;
 	private JPasswordField passVerificacion;
+	private JComboBox <String> preguntaSeguridad;
 
 	/**
 	 * Create the frame.
@@ -86,34 +96,17 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		textUsuario.setBorder(new LineBorder(Color.BLACK));
 		textUsuario.setForeground(Color.WHITE);
 		textUsuario.setOpaque(false);
-		// Cuando clickeo el campo se borra lo que esta escrito.
-
-		textUsuario.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				textUsuario.setText(" ");
-			}
-		});
-
 		textUsuario.setBounds(312, 65, 160, 20);
 		contentPane.add(textUsuario);
 		textUsuario.setColumns(10);
-
-		textPreg = new JTextField("ACT");
-		textPreg.setBorder(new LineBorder(Color.BLACK));
-		textPreg.setForeground(Color.WHITE);
-		textPreg.setOpaque(false);
-		textPreg.setBounds(312, 275, 160, 20);
-		contentPane.add(textPreg);
-		textPreg.setColumns(10);
-		// Cuando clickeo el campo se borra lo que esta escrito.
-
-		textPreg.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				textPreg.setText(" ");
-			}
-		});
+		
+		preguntaSeguridad = new JComboBox<String>();
+        preguntaSeguridad.setBorder(new LineBorder(new Color(51, 153, 51)));
+        preguntaSeguridad.setForeground(Color.WHITE);
+        preguntaSeguridad.setBackground(Color.BLACK);
+        preguntaSeguridad.setModel(Estado.preguntas);
+        preguntaSeguridad.setBounds(312, 275, 160, 20);
+        add(preguntaSeguridad);
 
 		textRta = new JTextField("RTA");
 		textRta.setBorder(new LineBorder(Color.BLACK));
@@ -122,13 +115,6 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		textRta.setBounds(312, 306, 160, 20);
 		contentPane.add(textRta);
 		textRta.setColumns(10);
-		// Cuando clickeo el campo se borra lo que esta escrito.
-		textRta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				textRta.setText(" ");
-			}
-		});
 
 		JButton btnModificar = new JButton("Modificar Datos");
 		btnModificar.addActionListener(new ActionListener() {
@@ -192,6 +178,22 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		passVerificacion.setOpaque(false);
 		passVerificacion.setBounds(313, 186, 159, 20);
 		contentPane.add(passVerificacion);
+		
+		try {
+			PeticionObtenerDatosJugador peticion = new PeticionObtenerDatosJugador();
+			ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
+			peticion.getRespuesta().then(new DoneCallback<POJORegistro> () {
+				@Override
+				public void onDone(POJORegistro datos){
+					textUsuario.setText(datos.getNombre());
+					//TODO Ivan ver esto y avatar
+					textPreg.setText(datos.getPreguntaSecreta());
+					textRta.setText(datos.getRespuestaSecreta());
+				}
+			});
+		} catch (ZombielandException e1) {
+			
+		}
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1
@@ -220,5 +222,9 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-cambio-datos.png")));
 		getContentPane().add(lblFondo);
 
+	}
+	
+	private void cambiarDatos(){
+		
 	}
 }

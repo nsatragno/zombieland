@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +21,7 @@ import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionRegistro;
+import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
@@ -58,6 +58,7 @@ public class InterfazRegistro extends JPanel {
      * Initialize the contents of the frame.
      */
     private void initialize() {
+    	   	
         setLayout(null);
         JButton btnRegistrar = new JButton("Registrar!");
         btnRegistrar.addActionListener(new ActionListener() {
@@ -141,9 +142,7 @@ public class InterfazRegistro extends JPanel {
         preguntaSeguridad.setBorder(new LineBorder(new Color(51, 153, 51)));
         preguntaSeguridad.setForeground(Color.WHITE);
         preguntaSeguridad.setBackground(Color.BLACK);
-        preguntaSeguridad.setModel(new DefaultComboBoxModel<String>(new String[] { "",
-                "Cual es su color favorito?", "Mejor amigo de la infancia?",
-                "A que escuela primaria fue?", "Nombre de su primer mascota?" }));
+        preguntaSeguridad.setModel(Estado.preguntas);
         preguntaSeguridad.setBounds(225, 160, 200, 30);
         add(preguntaSeguridad);
 

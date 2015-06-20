@@ -3,6 +3,8 @@ package com.rzg.zombieland.cliente.meta;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
+
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
 
@@ -12,6 +14,10 @@ import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
  *
  */
 public class Estado {
+	
+	public static final DefaultComboBoxModel<String> preguntas = new DefaultComboBoxModel<String>(new String[] { "",
+            "Cual es su color favorito?", "Mejor amigo de la infancia?",
+            "A que escuela primaria fue?", "Nombre de su primer mascota?" });
 
     /**
      * Interfaz para escuchar cambios de estado del lobby.

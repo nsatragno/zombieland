@@ -1,5 +1,6 @@
 package com.rzg.zombieland.server.sesion;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -230,4 +231,16 @@ public class Jugador {
     public Avatar getAvatar() {
         return avatar;
     }
+
+	public POJORegistro getPOJO() {
+		POJORegistro registro;
+		try {
+			registro = new POJORegistro(this.nombre, this.clave, this.preguntaSecreta,
+										this.respuestaSecreta, this.avatar);
+			return registro;
+		} catch (ParametrosNoValidosException e) {
+			Log.error("El POJO devolvio una excepcion" + e.getMensaje());
+			throw new InvalidParameterException();
+		}
+	}
 }

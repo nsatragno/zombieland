@@ -69,6 +69,11 @@ public abstract class Enviable {
     public static final int CAMBIO_DATOS = 0xB;
     
     /**
+     * Solicitud para devolver los datos del jugador
+     */
+    public static final int DEVOLVER_DATOS = 0xC;
+    
+    /**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
