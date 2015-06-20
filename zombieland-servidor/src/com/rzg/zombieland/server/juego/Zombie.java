@@ -1,6 +1,7 @@
 package com.rzg.zombieland.server.juego;
 
 import com.rzg.zombieland.comunes.misc.Coordenada;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Personaje cuyo único deseo en el mundo es comer cerebros. RAWR!
@@ -13,19 +14,14 @@ public class Zombie extends Personaje {
 	// TODO definir sprite.
 	private final String SPRITE = "zombie.jpg";
 
-	// Usuario que identifica al zombie. Puede servir más adelante para colocar
-	// el nombre por encima.
-	private String usuario;
-
-	// Permite construir un zombie a través de un Jugador.
-	public Zombie(String usuario) {
-		this.usuario = usuario;
-	}
-
 	@Override
 	public String getSprite() {
 		return SPRITE;
 	}
+	
+	public Zombie(Jugador jugador) {
+	    super(jugador);
+    }
 
 	@Override
 	public void colisionar(EntidadTablero entidad, EntidadTablero[][] matriz) {
@@ -36,19 +32,14 @@ public class Zombie extends Personaje {
 			if (entidad.getClass() == Humano.class) {
 				// Cambio al humano por un nuevo zombie.
 				Coordenada posicion = entidad.getPosicion();
-				entidad = new Zombie(((Humano) entidad).getUsuario());
+				entidad = new Zombie(((Humano) entidad).getJugador());
 				matriz[posicion.getX()][posicion.getY()] = entidad;
 			}
 		}
 		// Si no pasó nada devuelvo la misma entidad.
 	}
 
-	public String getUsuario() {
-		return usuario;
-	}
-
 	public boolean esPersonaje() {
 		return true;
 	}
-
 }

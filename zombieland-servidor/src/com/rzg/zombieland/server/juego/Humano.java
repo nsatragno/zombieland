@@ -1,6 +1,7 @@
 package com.rzg.zombieland.server.juego;
 
 import com.rzg.zombieland.comunes.misc.Coordenada;
+import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
  * Cobarde animal que solo sabe correr por su vida.
@@ -13,13 +14,9 @@ public class Humano extends Personaje {
 	// TODO definir sprite.
 	private final String SPRITE = "humano.png";
 
-	// Usuario que identifica al humano. Puede servir más adelante para colocar
-	// el nombre por encima.
-	private String usuario;
-
 	// Permite construir un humano a través de un Jugador.
-	public Humano(String usuario) {
-		this.usuario = usuario;
+	public Humano(Jugador jugador) {
+	    super(jugador);
 	}
 
 	@Override
@@ -37,16 +34,13 @@ public class Humano extends Personaje {
 			if (e.getClass() == Zombie.class) {
 				// Cambio al humano por un nuevo zombie.
 				Coordenada posicion = this.getPosicion();
-				EntidadTablero entidad = new Zombie(usuario);
+				EntidadTablero entidad = new Zombie(getJugador());
 				matriz[posicion.getX()][posicion.getY()] = entidad;
 			}
 		}
 	}
 
-	public String getUsuario() {
-		return usuario;
-	}
-
+	@Override
 	public boolean esPersonaje() {
 		return true;
 	}

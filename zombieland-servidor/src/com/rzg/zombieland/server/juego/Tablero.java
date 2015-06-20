@@ -1,6 +1,7 @@
 package com.rzg.zombieland.server.juego;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -8,6 +9,7 @@ import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Coordenada;
+import com.rzg.zombieland.server.meta.ResultadoRonda;
 import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
@@ -21,19 +23,20 @@ public class Tablero {
 	private EntidadTablero[][] matriz;
 
 	// Jugadores que participan - Humanos solamente.
-	private List<Jugador> jugadores;
+	private List<Personaje> personajes;
 
 	// Posición en el listado de personajes del que se moverá primero.
 	private int primerPersonaje;
 
 	// Personaje de la ronda que arranca como zombi.
 	private Personaje zombi;
-
+	
 	/**
 	 * Constructor por defecto. Aquí se generarán los obstáculos en forma
 	 * 'aleatoria'
 	 */
-	public Tablero(int casilleros, List<Jugador> jugadores, Personaje zombi) {
+	public Tablero(int casilleros, List<Jugador> jugadores, Jugador zombi) {
+	    personajes = new ArrayList<Personaje>();
 		Random rnd = new Random(); // Que quede claro que va a ser una cuestión
 									// de suerte
 		boolean resuelto = false; // Flag que me indica si ya posicione o no a
@@ -41,12 +44,15 @@ public class Tablero {
 
 		Coordenada c;
 
+		Zombie personajeZombie = new Zombie(zombi);
+		personajes.add(personajeZombie);
+		
 		matriz = new EntidadTablero[casilleros][casilleros];
 		// Ponemos al zombi - primero le asignamos el nombre.
-		zombi.setPosicion(new Coordenada(casilleros / 2, casilleros / 2));
+		personajeZombie.setPosicion(new Coordenada(casilleros / 2, casilleros / 2));
 		// Siempre arranca en el medio.
-		matriz[casilleros / 2][casilleros / 2] = zombi; // Lo ponemos en la
-														// matriz.
+		matriz[casilleros / 2][casilleros / 2] = personajeZombie; // Lo ponemos en la
+		                                                          // matriz.
 
 		// Ponemos los obstaculos. Si la matriz es de 10x10, son 100 casilleros.
 		// Con 25 obstáculos estariamos bien -- Sería el 25%
@@ -89,10 +95,11 @@ public class Tablero {
 				c = new Coordenada(Math.abs(rnd.nextInt()) % casilleros,
 						Math.abs(rnd.nextInt()) % casilleros);
 				if (matriz[c.getX()][c.getY()] == null) {
-					Humano h = new Humano(jugador.getNombre());
+					Humano h = new Humano(jugador);
 					h.setPosicion(c);
 					matriz[c.getX()][c.getY()] = h;
 					resuelto = true;
+					personajes.add(h);
 				}
 			}
 
@@ -160,4 +167,28 @@ public class Tablero {
 			getEntidadEn(desde).colisionar(getEntidadEn(hasta),matriz);
 		}
 	}
+
+	/**
+	 * @return el resultado de la partida.
+	 */
+    public ResultadoRonda getResultado() {
+        // TODO implementar.
+        return null;
+    }
+
+    /**
+     * Mueve a todos los personajes.
+     */
+    public void moverTodos() {
+        // Ordenamos los personajes de acuerdo al orden en el que realizaron los movimientos.
+        personajes.sort(new Comparator<Personaje>() {
+
+            @Override
+            public int compare(Personaje p1, Personaje p2) {
+                return p1.compareTo(p2);
+            }
+        });
+        for (Personaje personaje : personajes)
+            personaje.mover();
+    }
 }

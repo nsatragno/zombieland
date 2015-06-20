@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.rzg.zombieland.server.meta.ResultadoPartida;
+import com.rzg.zombieland.server.meta.ResultadoJugador;
 import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
@@ -33,7 +33,7 @@ public class HibernateSingleton {
         .setProperty("current_session_context_class", "thread")
         .setProperty("show_sql", "false")
         .setProperty("cache.provider_class", "org.hibernate.cache.NoCacheProvider")
-        .addAnnotatedClass(ResultadoPartida.class)
+        .addAnnotatedClass(ResultadoJugador.class)
         .addAnnotatedClass(Jugador.class)
         .buildSessionFactory();
     }

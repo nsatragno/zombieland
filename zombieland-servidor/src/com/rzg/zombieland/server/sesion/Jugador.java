@@ -14,7 +14,7 @@ import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.peticion.PeticionActualizacionLobby;
-import com.rzg.zombieland.server.meta.ResultadoPartida;
+import com.rzg.zombieland.server.meta.ResultadoJugador;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 
 /**
@@ -72,23 +72,13 @@ public class Jugador {
 
 	// Resultados de partidas históricos.
 	@OneToMany
-	private List<ResultadoPartida> historicoPartidas;
+	private List<ResultadoJugador> historicoPartidas;
 
 	/**
 	 * Constructor vacío para Hibernate.
 	 */
 	public Jugador() {
 
-	}
-
-	/**
-	 * Constructor para tests.
-	 * 
-	 * @param nombre
-	 */
-
-	public Jugador(String nombre) {
-		this.nombre = nombre;
 	}
 
 	/**

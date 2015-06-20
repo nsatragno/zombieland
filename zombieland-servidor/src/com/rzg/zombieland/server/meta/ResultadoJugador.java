@@ -16,7 +16,7 @@ import com.rzg.zombieland.server.sesion.Jugador;
  *
  */
 @Entity
-public class ResultadoPartida {
+public class ResultadoJugador {
     // Identificación del resultado.
     @Id
     private UUID id;
@@ -36,7 +36,7 @@ public class ResultadoPartida {
     /**
      * Constructor vacío para Hibernate.
      */
-    public ResultadoPartida() {
+    public ResultadoJugador() {
         
     }
     
@@ -46,7 +46,7 @@ public class ResultadoPartida {
      * @param ranking
      * @param jugador 
      */
-    public ResultadoPartida(int puntos, int ranking, Jugador jugador) {
+    public ResultadoJugador(int puntos, int ranking, Jugador jugador) {
         if (puntos < 0)
             throw new InvalidParameterException("El puntaje no puede ser menor a cero");
         this.puntos = puntos;
@@ -100,8 +100,8 @@ public class ResultadoPartida {
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
-        if (!(obj instanceof ResultadoPartida)) return false;
-        ResultadoPartida otro = (ResultadoPartida)obj;
+        if (!(obj instanceof ResultadoJugador)) return false;
+        ResultadoJugador otro = (ResultadoJugador)obj;
         return id.equals(otro.id) &&
                puntos == otro.puntos &&
                ranking == otro.ranking &&

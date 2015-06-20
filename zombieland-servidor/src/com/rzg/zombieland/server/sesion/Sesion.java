@@ -8,6 +8,7 @@ import com.rzg.zombieland.comunes.comunicacion.EnviaPeticiones;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.juego.Personaje;
 import com.rzg.zombieland.server.meta.Partida;
 
 /**
@@ -31,6 +32,9 @@ public class Sesion {
     
     // El listado de listener de sesión.
     private List<SesionListener> listeners;
+    
+    // El personaje que el jugador maneja.
+    private Personaje personaje;
     
     /**
      * Interfaz de escuchador de sesión.
@@ -127,5 +131,20 @@ public class Sesion {
             return;
         partida.removerJugador(jugador);
         partida = null;
+    }
+
+    /**
+     * Establece el personaje que el jugador moverá.
+     * @param personaje
+     */
+    public void setPersonaje(Personaje personaje) {
+        this.personaje = personaje;
+    }
+
+    /**
+     * @return el personaje que el jugador moverá.
+     */
+    public Personaje getPersonaje() {
+        return personaje;
     }
 }

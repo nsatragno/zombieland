@@ -2,11 +2,14 @@ package com.rzg.zombieland.server.meta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.server.juego.Personaje;
+import com.rzg.zombieland.server.juego.Tablero;
 import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
@@ -83,20 +86,26 @@ public class Partida {
     // Indica el estado actual de la partida.
     private Estado estado;
     
-    // Rondas de la partida, editables hasta que arranca. 
-    private List<Ronda> rondas;
+    // Resultados de las partidas. 
+    private List<ResultadoRonda> resultados;
     
     // La cantidad máxima de jugadores permitida. La partida arrancará cuando se alcance.
     private int cantidadMaximaJugadores;
     
+    // La cantidad de rondas.
+    private int cantidadRondas;
+    
     // El número de ronda actual. Empieza por cero.
-    private int numeroRondaActual;
+    private int rondaActual;
     
     // Indica el momento en el que se inició la partida, expresados como tiempo UNIX.
     private long tiempoArranque;
     
     // El objeto que escucha los cambios en la vida de la partida.
     private PartidaListener listener;
+    
+    // El tablero de partida.
+    private Tablero tablero;
     
     /**
      * Crea una partida nueva a partir de un administrador.
@@ -127,7 +136,7 @@ public class Partida {
      */
     public Partida(Partida partida) {
         this(partida.administrador, partida.nombre, partida.jugadores, partida.espectadores,
-             partida.rondas.size(), partida.cantidadMaximaJugadores);
+             partida.cantidadRondas, partida.cantidadMaximaJugadores);
     }
     
     /**
@@ -144,16 +153,15 @@ public class Partida {
             throw new NullPointerException();
         if (nombre == null || nombre.isEmpty())
             throw new NullPointerException();
-        id = UUID.randomUUID();
+        this.id = UUID.randomUUID();
         this.administrador = administrador;
         this.nombre = nombre;
         this.jugadores = jugadores;
         this.espectadores = espectadores;
         this.cantidadMaximaJugadores = cantidadMaximaJugadores;
-        estado = Estado.EN_ESPERA;
-        rondas = new ArrayList<Ronda>(cantidadRondas);
-        for (int i = 0; i < cantidadRondas; i++)
-            rondas.add(new Ronda());
+        this.cantidadRondas = cantidadRondas;
+        this.estado = Estado.EN_ESPERA;
+        resultados = new ArrayList<ResultadoRonda>(cantidadRondas);
     }
     
     /**
@@ -161,7 +169,7 @@ public class Partida {
      * @param jugador - el jugador para el que se quieren obtener los resultados.
      * @return el resultado de la partida.
      */
-    public ResultadoPartida getResultadoPartida(Jugador jugador) {
+    public ResultadoJugador getResultadoPartida(Jugador jugador) {
         // TODO implementar.
         return null;
     }
@@ -174,7 +182,7 @@ public class Partida {
                                administrador.getNombre(),
                                proyectarNombres(jugadores),
                                proyectarNombres(espectadores), 
-                               rondas.size(), 
+                               cantidadRondas, 
                                cantidadMaximaJugadores, 
                                nombre,
                                estado.getDescripcion());
@@ -225,13 +233,35 @@ public class Partida {
             throw new ZombielandException("No se puede unir a una partida en progreso");
         jugadores.add(jugadorNuevo);
         if (jugadores.size() == cantidadMaximaJugadores)
-            estado = Estado.ACTIVA;
+            setEstado(Estado.ACTIVA);
         for (Jugador jugador : jugadores) {
             if (jugador == jugadorNuevo)
                 continue;
             jugador.notificarCambioPartida();
         }
         ServicioPartidas.getInstancia().notificarClientes();
+    }
+
+    /**
+     * Establece el estado de la partida.
+     * @param activa
+     */
+    private void setEstado(Estado estado) {
+        this.estado = estado;
+        switch (estado) {
+        case ACTIVA:
+            // TODO ver si le permitimos cambiar la cantida de casilleros al admin.
+            int cantidadCasilleros = new Random().nextInt(10) + 10;
+            int jugadorZombie = rondaActual % jugadores.size();
+            tablero = new Tablero(cantidadCasilleros, jugadores, jugadores.get(jugadorZombie));
+            break;
+        case EN_ESPERA:
+            resultados.add(tablero.getResultado());
+            tablero = null;
+            break;
+        default:
+            break;
+        }
     }
 
     /**
@@ -245,7 +275,7 @@ public class Partida {
      * @return la cantidad de rondas en la partida.
      */
     public int getCantidadRondas() {
-        return rondas.size();
+        return cantidadRondas;
     }
     
     /**
@@ -284,6 +314,16 @@ public class Partida {
         }
         for (Jugador jugador : jugadores)
             jugador.notificarCambioPartida();
+    }
+    
+    /**
+     * Mueve todos los jugadores.
+     */
+    public void moverTodos() throws ZombielandException {
+        if (estado != Estado.ACTIVA)
+            throw new ZombielandException("La partida debe estar activa para mover a todos");
+        tablero.moverTodos();
+        // TODO verificar si la partida terminó.
     }
 
     /**

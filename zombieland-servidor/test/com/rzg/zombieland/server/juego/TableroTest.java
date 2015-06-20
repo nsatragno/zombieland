@@ -6,49 +6,64 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.rzg.zombieland.comunes.misc.Coordenada;
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+import com.rzg.zombieland.server.controlador.AbstractPartidasTest;
+import com.rzg.zombieland.server.meta.EnviaPeticionesImpl;
 import com.rzg.zombieland.server.sesion.Jugador;
+import com.rzg.zombieland.server.sesion.ServicioSesion;
+import com.rzg.zombieland.server.sesion.Sesion;
 
 /**
  * @author Manuel
  */
 
-public class TableroTest {
+public class TableroTest extends AbstractPartidasTest {
 
+    @Override
+    protected Jugador crearJugador() throws ParametrosNoValidosException {
+        Jugador jugador = super.crearJugador();
+        Sesion sesion = new Sesion(jugador, new EnviaPeticionesImpl());
+        ServicioSesion.getInstancia().addSesion(sesion);
+        return jugador;
+    }
+    
 	/**
 	 * Verifica que al crearse el tablero la posición inicial del zombi sea el
 	 * centro de éste.
+	 * @throws ParametrosNoValidosException 
 	 */
 	@Test
-	public void testPosicionZombie() {
-	    for (int k = 0; k < 1000; k++) {
-    		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-    		jugadores.add(new Jugador("Humano1"));
-    		jugadores.add(new Jugador("Humano2"));
-    		Jugador zombi = new Jugador("Zombi1");
-    		Personaje zombie = new Zombie(zombi.getNombre());
-    		Tablero tablero = new Tablero(10, jugadores, zombie);
-    		Assert.assertEquals(tablero.getEntidadEn(new Coordenada(5, 5)), zombie);
-    	}
-	}
+    public void testPosicionZombie() throws ParametrosNoValidosException {
+        for (int k = 0; k < 1000; k++) {
+            java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
+            jugadores.add(crearJugador());
+            jugadores.add(crearJugador());
+            Jugador zombi = crearJugador();
+            Tablero tablero = new Tablero(10, jugadores, zombi);
+            Assert.assertEquals(((Zombie) tablero.getEntidadEn(new Coordenada(5, 5))).getJugador(),
+                                zombi);
+        }
+    }
 
 	/**
 	 * Verifica en n iteraciones si el zombi quedó encerrado por obstáculos
 	 * debido a la distribución aleatoria de los mismos. NOTA: Sólo testea que
 	 * no pueda moverse hacia ningun lado desde su posición.
+	 * @throws ParametrosNoValidosException 
 	 */
-	public boolean jugadoresEncerrados() {
+	public boolean jugadoresEncerrados() throws ParametrosNoValidosException {
 		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-		Jugador zombi = new Jugador("Zombi1");
-		Personaje zombie = new Zombie(zombi.getNombre());
+		Jugador zombi = crearJugador();
 		for (int i = 0; i < 100000; i++) {
-			Tablero tablero = new Tablero(10, jugadores, zombie);
+			Tablero tablero = new Tablero(10, jugadores, zombi);
 			// El truco está en verificar las cuatro puntas, ya que los
 			// movimientos
 			// no pueden ser diagonales. Pruebo con el zombi porque está en el
 			// medio
 			// y la probabilidad es la misma. Si pasa este test, asumo que pasan
 			// todos.
-			Coordenada posicion = zombie.getPosicion();
+			Personaje personaje = ServicioSesion.getInstancia().getSesion(zombi).getPersonaje();
+			Coordenada posicion = personaje.getPosicion();
 			if (tablero.getEntidadEn(new Coordenada(posicion.getX() + 1,
 					posicion.getY())) != null
 					&& tablero.getEntidadEn(new Coordenada(posicion.getX(),
@@ -64,7 +79,7 @@ public class TableroTest {
 	}
 
 	@Test
-	public void testJugadoresEncerrados() {
+	public void testJugadoresEncerrados() throws ParametrosNoValidosException {
 		Assert.assertEquals(false, jugadoresEncerrados());
 	}
 
@@ -87,31 +102,31 @@ public class TableroTest {
 	/**
 	 * Testea que la cantidad de jugadores del tablero sea la misma que la
 	 * cantidad de jugadores en el juego.
+	 * @throws ParametrosNoValidosException 
 	 */
 	@Test
-	public void testCantidadDeJugadores() {
+	public void testCantidadDeJugadores() throws ParametrosNoValidosException {
 		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-		jugadores.add(new Jugador("Humano1"));
-		jugadores.add(new Jugador("Humano2"));
-		jugadores.add(new Jugador("Humano3"));
-		Jugador zombi = new Jugador("Zombi1");
-		Personaje zombie = new Zombie(zombi.getNombre());
-		Tablero tablero = new Tablero(10, jugadores, zombie);
+		jugadores.add(crearJugador());
+		jugadores.add(crearJugador());
+		jugadores.add(crearJugador());
+		Jugador zombi = crearJugador();
+		Tablero tablero = new Tablero(10, jugadores, zombi);
 		Assert.assertEquals(4, cantidadPersonajes(tablero));
 	}
 
 	/**
 	 * Testea que los movimientos se realicen de forma correcta.
+	 * @throws ParametrosNoValidosException 
 	 */
 	@Test
-	public void testMovimiento() {
+	public void testMovimiento() throws ParametrosNoValidosException {
 	    for (int k = 0; k < 1000; k++) {
     		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-    		Jugador zombi = new Jugador("Zombi1");
-    		Personaje zombie = new Zombie(zombi.getNombre());
+    		Jugador zombi = crearJugador();
     		// Generamos el tablero de prueba para mover al zombie en él
     		// Sabemos que el zombie arranca en la posición (5,5)
-    		Tablero tablero = new Tablero(10, jugadores, zombie);
+    		Tablero tablero = new Tablero(10, jugadores, zombi);
     		Coordenada desde = new Coordenada(5, 5);
     		Coordenada hasta;
     		// Elijo una de las posiciones de los costados. Si una de ellas está
@@ -124,23 +139,24 @@ public class TableroTest {
     			hasta = new Coordenada(6, 5);
     		tablero.moverEntidad(desde, hasta);
     		// Verificamos que en la posición 'hasta' esté el zombie en cuestión.
-    		Assert.assertEquals(zombie, tablero.getEntidadEn(hasta));
+    		Personaje personaje = ServicioSesion.getInstancia().getSesion(zombi).getPersonaje();
+    		Assert.assertEquals(personaje, tablero.getEntidadEn(hasta));
 	    }
 	}
 
 	/**
 	 * Testea que no se produzcan movimientos que generen una superposición de
 	 * elementos Si hay un obstáculo, que no se pueda mover ahí.
+	 * @throws ParametrosNoValidosException 
 	 */
 	@Test
-	public void testColision() {
+	public void testColision() throws ParametrosNoValidosException {
 	    for (int k = 0; k < 1000; k++) {
     		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-    		Jugador zombi = new Jugador("Zombi1");
-    		Personaje zombie = new Zombie(zombi.getNombre());
+    		Jugador zombi = crearJugador();
     		// Generamos el tablero de prueba para mover al zombie en él
     		// Sabemos que el zombie arranca en la posición (5,5)
-    		Tablero tablero = new Tablero(10, jugadores, zombie);
+    		Tablero tablero = new Tablero(10, jugadores, zombi);
     		Coordenada desde = new Coordenada(5, 5);
     		Coordenada hasta = new Coordenada(0, 0);
     		// Voy a recorrer el tablero
@@ -161,23 +177,24 @@ public class TableroTest {
     		// Comparo al personaje con la entidad que hay en la posición donde
     		// debería
     		// estar, que es la misma de antes ya que no debió moverse.
-    		Assert.assertEquals(zombie, tablero.getEntidadEn(desde));
+    		Personaje personaje = ServicioSesion.getInstancia().getSesion(zombi).getPersonaje();
+    		Assert.assertEquals(personaje, tablero.getEntidadEn(desde));
 	    }
 	}
 
 	/**
 	 * Verifica si al chocar un humano con un zombi, el humano se transforma y
 	 * ambos quedan en la misma posición.
+	 * @throws ParametrosNoValidosException 
 	 */
 	@Test
-	public void testColisionZombieHumano() {
+	public void testColisionZombieHumano() throws ParametrosNoValidosException {
 	    for (int k = 0; k < 1000; k++) {
     		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-    		Jugador humano = new Jugador("Humano1");
+    		Jugador humano = crearJugador();
     		jugadores.add(humano);
-    		Jugador zombi = new Jugador("Zombi1");
-    		Personaje zombie = new Zombie(zombi.getNombre());
-    		Tablero tablero = new Tablero(10, jugadores, zombie);
+    		Jugador zombi = crearJugador();
+    		Tablero tablero = new Tablero(10, jugadores, zombi);
     		// Voy a intentar mover al zombi desde su posición a la posición del
     		// humano
     		// Como el tablero se genera al azar, necesito encontrar al humano
@@ -196,16 +213,16 @@ public class TableroTest {
 	/**
 	 * Ahora testea que un humano se lleve puesto un zombie, que el humano se
 	 * transforme y ambos mantengan la posición.
+	 * @throws ParametrosNoValidosException 
 	 */
 	@Test
-	public void testColisionHumanoZombie() {
+	public void testColisionHumanoZombie() throws ParametrosNoValidosException {
 	    for (int k = 0; k < 1000; k++) {
     		java.util.List<Jugador> jugadores = new ArrayList<Jugador>();
-    		Jugador humano = new Jugador("Humano1");
+    		Jugador humano = crearJugador();
     		jugadores.add(humano);
-    		Jugador zombi = new Jugador("Zombi1");
-    		Personaje zombie = new Zombie(zombi.getNombre());
-            Tablero tablero = new Tablero(10, jugadores, zombie);
+    		Jugador zombi = crearJugador();
+            Tablero tablero = new Tablero(10, jugadores, zombi);
             // Voy a intentar mover al humano a donde está el zombie.
             // Como el tablero se genera al azar, necesito encontrar al humano
             // primero.

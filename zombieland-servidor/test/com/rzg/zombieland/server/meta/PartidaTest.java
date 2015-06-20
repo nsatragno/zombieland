@@ -117,6 +117,15 @@ public class PartidaTest extends AbstractPartidasTest {
         
         for (int i = 1; i < getUltimaCantidadJugadores(); i++) {
             assertEquals(Estado.EN_ESPERA, partida.getEstado());
+            
+            // Hasta que no arranca, no se pueden mover.
+            try {
+                partida.moverTodos();
+                fail("Debería haber lanzado una excepción");
+            } catch (ZombielandException e) {
+                // Esperada.
+            }
+            
             Jugador jugador = crearJugador();
             sesion = new Sesion(jugador, new EnviaPeticionesImpl());
             sesion.setPartida(partida);
@@ -124,5 +133,6 @@ public class PartidaTest extends AbstractPartidasTest {
             partida.addJugador(jugador);
         }
         assertEquals(Estado.ACTIVA, partida.getEstado());
+        partida.moverTodos();  // No lanza excepción.
     }
 }
