@@ -208,7 +208,8 @@ public class Jugador {
     public void notificarCambioPartida() {
         Sesion sesion = ServicioSesion.getInstancia().getSesion(this);
         try {
-            sesion.enviarPeticion(new PeticionActualizacionLobby(sesion.getPartida().getPOJO()));
+            sesion.enviarPeticion(
+                    new PeticionActualizacionLobby(sesion.getPartida().getPOJO(this)));
         } catch (ZombielandException e) {
             Log.error("No se pudo enviar la notificación de cambio de partida al cliente");
             e.printStackTrace();

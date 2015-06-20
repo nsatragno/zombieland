@@ -100,7 +100,7 @@ public class ServicioPartidas implements PartidaListener {
         List<POJOPartida> listado = new ArrayList<POJOPartida>();
         synchronized (partidas) {
             for (Partida partidaExistente : partidas.values())
-                listado.add(partidaExistente.getPOJO());    
+                listado.add(partidaExistente.getPOJO(null));    
         }
         return listado;
     }

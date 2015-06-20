@@ -71,7 +71,7 @@ public abstract class AbstractPartidasTest {
                                                               ultimaCantidadJugadores, 
                                                               ultimoNombre));
         ServicioPartidas.getInstancia().addPartida(partida);
-        pojoPartidasCreadas.add(partida.getPOJO());
+        pojoPartidasCreadas.add(partida.getPOJO(null));
         partidasCreadas.add(partida);
         return partida;
     }

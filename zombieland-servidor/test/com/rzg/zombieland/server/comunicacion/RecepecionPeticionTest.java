@@ -203,7 +203,7 @@ public class RecepecionPeticionTest extends AbstractPartidasTest {
                 assertEquals(Enviable.RESPUESTA, codigoRespuesta);
                 RespuestaUnirsePartida respuesta = gson.fromJson(lineaEntrada, RespuestaUnirsePartida.class);
                 assertTrue(respuesta.fuePeticionExitosa());
-                assertEquals(partida.getPOJO(), respuesta.getPartida());
+                assertEquals(partida.getPOJO(otroJugador), respuesta.getPartida());
                 
                 // El primer jugador recibe la actualización de lobby.
                 codigoRespuesta = entrada.read();
@@ -211,7 +211,7 @@ public class RecepecionPeticionTest extends AbstractPartidasTest {
                 lineaEntrada = entrada.readLine();
                 assertEquals(Enviable.ACTUALIZACION_LOBBY, codigoRespuesta);
                 POJOPartida pojoRecibido = gson.fromJson(lineaEntrada, POJOPartida.class);
-                assertEquals(partida.getPOJO(), pojoRecibido);
+                assertEquals(partida.getPOJO(primerJugador), pojoRecibido);
                 
                 salida.write(Enviable.RESPUESTA);
                 salida.println(id);
@@ -227,7 +227,7 @@ public class RecepecionPeticionTest extends AbstractPartidasTest {
                 lineaEntrada = entrada.readLine();
                 assertEquals(Enviable.ACTUALIZACION_LOBBY, codigoRespuesta);
                 pojoRecibido = gson.fromJson(lineaEntrada, POJOPartida.class);
-                assertEquals(partida.getPOJO(), pojoRecibido);
+                assertEquals(partida.getPOJO(primerJugador), pojoRecibido);
             }
             // Esperamos a que desconecte el primer jugador.
             int vueltas = 0;

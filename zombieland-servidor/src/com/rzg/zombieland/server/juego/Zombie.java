@@ -44,4 +44,20 @@ public class Zombie extends Personaje {
 	public boolean esZombie() {
 	    return true;
 	}
+
+    @Override
+    public Coordenada[] getRectanguloVision() {
+        return new Coordenada[] { new Coordenada(0, 0), getTablero().getEsquinaInferiorDerecha() };
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((SPRITE == null) ? 0 : SPRITE.hashCode());
+        return result;
+    }
 }

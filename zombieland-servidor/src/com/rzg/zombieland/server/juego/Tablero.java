@@ -109,12 +109,15 @@ public class Tablero {
      * @param inferiorDerecha
      * @return la proyección del tablero entre las dos esquinas dadas.
      */
-    public ProyeccionTablero getProyeccion(Coordenada superiorIzquierda, Coordenada inferiorDerecha) {
+    private ProyeccionTablero getProyeccion(Coordenada superiorIzquierda, Coordenada inferiorDerecha) {
+        superiorIzquierda =  normalizar(superiorIzquierda);
+        inferiorDerecha = normalizar(inferiorDerecha);
         List<POJOEntidad> entidades = new ArrayList<POJOEntidad>();
+        
         // Recorro mi matriz de entidades en los limites indicados por el
         // metodo.
-        for (int i = superiorIzquierda.getX(); i < inferiorDerecha.getX(); i++) {
-            for (int j = superiorIzquierda.getY(); j < inferiorDerecha.getY(); i++) {
+        for (int i = superiorIzquierda.getX(); i <= inferiorDerecha.getX(); i++) {
+            for (int j = superiorIzquierda.getY(); j <= inferiorDerecha.getY(); j++) {
                 if (matriz[i][j] != null) {
                     // Agrego las entidades que encuentre a la lista de la
                     // proyeccion
@@ -131,6 +134,25 @@ public class Tablero {
         }
         // Devuelvo la proyección. Chiche bombón.
         return new ProyeccionTablero(matriz.length, superiorIzquierda, inferiorDerecha, entidades);
+    }
+
+    /**
+     * @param coordenada
+     * @return una coordenada que se ajusta a los límites del tablero de acuerdo a la coordanada 
+     *         dada.
+     */
+    private Coordenada normalizar(Coordenada coordenada) {
+        if (coordenada.getX() >= matriz.length)
+            coordenada = new Coordenada(matriz.length - 1, coordenada.getY());
+        else if (coordenada.getX() < 0)
+            coordenada = new Coordenada(0, coordenada.getY());
+        
+        if (coordenada.getY() >= matriz.length)
+            coordenada = new Coordenada(coordenada.getX(), matriz.length - 1);
+        else if (coordenada.getY() < 0)
+            coordenada = new Coordenada(coordenada.getX(), 0);
+        
+        return coordenada;
     }
 
     /**
@@ -265,5 +287,28 @@ public class Tablero {
             }
         }
         matriz[posicion.getX()][posicion.getY()] = zombie;
+    }
+
+    public ProyeccionTablero getProyeccionJugador(Jugador jugador) {
+        Personaje personajeJugador = null;
+        synchronized (personajes) {
+            for (Personaje personaje : personajes) {
+                if (personaje.getJugador().getNombre().equals(jugador.getNombre())) {
+                    personajeJugador = personaje;
+                    break;
+                }
+            }
+        }
+        if (personajeJugador == null)
+            throw new InvalidParameterException("El jugador no tiene ningún personaje");
+        Coordenada[] rectanguloVision = personajeJugador.getRectanguloVision();
+        return getProyeccion(rectanguloVision[0], rectanguloVision[1]);
+    }
+
+    /**
+     * @return la esquina inferior derecha del tablero.
+     */
+    public Coordenada getEsquinaInferiorDerecha() {
+        return new Coordenada(matriz.length - 1, matriz.length - 1);
     }
 }

@@ -3,6 +3,8 @@ package com.rzg.zombieland.comunes.comunicacion.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
+
 /**
  * Representa el estado actual de un lobby: cantidad de jugadores, nombres, etc.
  * @author nicolas
@@ -24,7 +26,8 @@ public class POJOPartida {
                                 0, 
                                 0, 
                                 "", 
-                                "");
+                                "",
+                                null);
     }
 
     /**
@@ -55,8 +58,11 @@ public class POJOPartida {
     
     private String estado;
     
+    // La proyección del tablero asociada a la partida, si existe.
+    private ProyeccionTablero proyeccion;
+    
     /**
-     * Construye un POJO de lobby.
+     * Construye un POJO de partida.
      * @param administrador - incluye al administrador.
      * @param jugadores
      * @param espectadores
@@ -67,7 +73,7 @@ public class POJOPartida {
      */
     public POJOPartida(String id, String administrador, List<String> jugadores,
                        List<String> espectadores, int cantidadRondas, int cantidadJugadores,
-                       String nombre, String estado) {
+                       String nombre, String estado, ProyeccionTablero proyeccion) {
         this.id = id;
         this.administrador = administrador;
         this.jugadores = jugadores;
@@ -76,21 +82,28 @@ public class POJOPartida {
         this.cantidadMaximaJugadores = cantidadJugadores;
         this.nombre = nombre;
         this.estado = estado;
+        this.proyeccion = proyeccion;
     }
     
     /**
-     * Construye un pojo de lobby a partir del pojo de creación de partida.
+     * Construye un pojo de partida a partir del pojo de creación de partida.
      * @param pojo
-     * @param nombreAdministrador 
+     * @param nombreAdmin 
      */
-    public POJOPartida(POJOCreacionPartida pojo, String nombreAdministrador) {
-        administrador = nombreAdministrador;
-        jugadores = new ArrayList<String>();
-        espectadores = new ArrayList<String>();
-        cantidadRondas = pojo.getCantidadRondas();
-        cantidadMaximaJugadores = pojo.getCantidadMaximaJugadores();
-        nombre = pojo.getNombre();
-        jugadores.add(nombreAdministrador);
+    public POJOPartida(POJOCreacionPartida pojo, String nombreAdmin) {
+        this(null, nombreAdmin, crearListadoJugadores(nombreAdmin), new ArrayList<String>(), 
+             pojo.getCantidadRondas(), pojo.getCantidadMaximaJugadores(), pojo.getNombre(), 
+             "En espera", null);
+    }
+
+    /**
+     * @param nombreAdmin
+     * @return un listado de jugadores que solo contiene el nombre dado.
+     */
+    private static List<String> crearListadoJugadores(String nombre) {
+        List<String> listado = new ArrayList<String>();
+        listado.add(nombre);
+        return listado;
     }
 
     /**
@@ -154,7 +167,8 @@ public class POJOPartida {
                otro.cantidadRondas == cantidadRondas &&
                otro.espectadores.equals(espectadores) &&
                otro.jugadores.equals(jugadores) &&
-               otro.nombre.equals(nombre);
+               otro.nombre.equals(nombre) &&
+               proyeccion == null ? otro.proyeccion == null : proyeccion.equals(otro.proyeccion);
     }
     
     @Override
@@ -167,5 +181,9 @@ public class POJOPartida {
 
     public String getEstado() {
         return estado;
+    }
+    
+    public ProyeccionTablero getProyeccion() {
+        return proyeccion;
     }
 }

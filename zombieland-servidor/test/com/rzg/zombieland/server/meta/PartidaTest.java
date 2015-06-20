@@ -39,7 +39,7 @@ public class PartidaTest extends AbstractPartidasTest {
                                         getUltimaCantidadJugadores(), 
                                         getUltimoNombre());
         POJOPartida pojo = new POJOPartida(pojoCreacion, getUltimoAdmin().getNombre());
-        assertEquals(pojo, partida.getPOJO());
+        assertEquals(pojo, partida.getPOJO(getUltimoAdmin()));
     }
     
     @Test
@@ -56,12 +56,40 @@ public class PartidaTest extends AbstractPartidasTest {
         POJOPartida pojo = 
                 new Gson().fromJson(enviaPeticiones.getUltimaPeticion().getMensajePeticion(), 
                                     POJOPartida.class);
-        assertEquals(pojo, partida.getPOJO());
+        assertEquals(pojo, partida.getPOJO(getUltimoAdmin()));
         
         partida.removerJugador(otroJugador);
         pojo = new Gson().fromJson(enviaPeticiones.getUltimaPeticion().getMensajePeticion(), 
                                    POJOPartida.class);
-        assertEquals(pojo, partida.getPOJO());
+        assertEquals(pojo, partida.getPOJO(getUltimoAdmin()));
+    }
+    
+    /**
+     * Prueba que notificar del arranque envíe la proyección con el POJO.
+     * @throws ZombielandException
+     */
+    @Test
+    public void testNotificarArrancar() throws ZombielandException {
+        Partida partida = crearPartida();
+        EnviaPeticionesImpl enviaPeticiones = new EnviaPeticionesImpl();
+        Sesion sesion = new Sesion(getUltimoAdmin(), enviaPeticiones);
+        sesion.setPartida(partida);
+        ServicioSesion.getInstancia().addSesion(sesion);
+        
+        
+        for (int i = 1; i < getUltimaCantidadJugadores(); i++) {
+            Jugador jugador = crearJugador();
+            sesion = new Sesion(jugador, new EnviaPeticionesImpl());
+            sesion.setPartida(partida);
+            ServicioSesion.getInstancia().addSesion(sesion);
+            partida.addJugador(jugador);
+        }
+        
+        POJOPartida pojo = 
+                new Gson().fromJson(enviaPeticiones.getUltimaPeticion().getMensajePeticion(), 
+                                    POJOPartida.class);
+        assertEquals(pojo, partida.getPOJO(getUltimoAdmin()));
+        assertNotNull(pojo.getProyeccion());
     }
     
     @Test

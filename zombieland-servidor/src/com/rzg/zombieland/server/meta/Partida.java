@@ -175,9 +175,11 @@ public class Partida {
     }
 
     /**
+     * @param jugador - el jugador que solicita el POJO. Puede ser null, en cuyo caso no se
+     *                  enviará la proyección del tablero.
      * @return un pojo con los datos de la partida.
      */
-    public POJOPartida getPOJO() {
+    public POJOPartida getPOJO(Jugador jugador) {
         return new POJOPartida(id.toString(),
                                administrador.getNombre(),
                                proyectarNombres(jugadores),
@@ -185,7 +187,10 @@ public class Partida {
                                cantidadRondas, 
                                cantidadMaximaJugadores, 
                                nombre,
-                               estado.getDescripcion());
+                               estado.getDescripcion(),
+                               tablero == null || jugador == null ? 
+                                   null 
+                                 : tablero.getProyeccionJugador(jugador));
     }
     
     /**

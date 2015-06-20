@@ -19,7 +19,7 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  *
  */
 public class ProyeccionTablero extends Enviable {
-	/**
+    /**
 	 * Identifica una entidad de la proyección.
 	 * 
 	 * @author nicolas
@@ -55,6 +55,46 @@ public class ProyeccionTablero extends Enviable {
 		public Coordenada getCoordenada() {
 			return coordenada;
 		}
+
+        /* (non-Javadoc)
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((avatar == null) ? 0 : avatar.hashCode());
+            result = prime * result + ((coordenada == null) ? 0 : coordenada.hashCode());
+            result = prime * result + ((etiqueta == null) ? 0 : etiqueta.hashCode());
+            return result;
+        }
+
+        /* (non-Javadoc)
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            POJOEntidad other = (POJOEntidad) obj;
+            if (avatar != other.avatar)
+                return false;
+            if (coordenada == null) {
+                if (other.coordenada != null)
+                    return false;
+            } else if (!coordenada.equals(other.coordenada))
+                return false;
+            if (etiqueta == null) {
+                if (other.etiqueta != null)
+                    return false;
+            } else if (!etiqueta.equals(other.etiqueta))
+                return false;
+            return true;
+        }
 	}
 
 	// Tamaño total del tablero - Ancho/largo de la matriz en casilleros
@@ -165,4 +205,53 @@ public class ProyeccionTablero extends Enviable {
 	public int getAnchoEfectivo(int dimension) {
 		return dimension - dimension % casilleros;
 	}
+	
+	/* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + casilleros;
+        result = prime * result + ((entidades == null) ? 0 : entidades.hashCode());
+        result = prime * result
+                + ((esquinaInferiorDerecha == null) ? 0 : esquinaInferiorDerecha.hashCode());
+        result = prime * result
+                + ((esquinaSuperiorIzquierda == null) ? 0 : esquinaSuperiorIzquierda.hashCode());
+        result = prime * result + (primeraVez ? 1231 : 1237);
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ProyeccionTablero other = (ProyeccionTablero) obj;
+        if (casilleros != other.casilleros)
+            return false;
+        if (entidades == null) {
+            if (other.entidades != null)
+                return false;
+        } else if (!entidades.equals(other.entidades))
+            return false;
+        if (esquinaInferiorDerecha == null) {
+            if (other.esquinaInferiorDerecha != null)
+                return false;
+        } else if (!esquinaInferiorDerecha.equals(other.esquinaInferiorDerecha))
+            return false;
+        if (esquinaSuperiorIzquierda == null) {
+            if (other.esquinaSuperiorIzquierda != null)
+                return false;
+        } else if (!esquinaSuperiorIzquierda.equals(other.esquinaSuperiorIzquierda))
+            return false;
+        return true;
+    }
 }

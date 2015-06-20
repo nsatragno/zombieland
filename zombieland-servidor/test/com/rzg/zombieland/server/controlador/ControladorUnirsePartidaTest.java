@@ -38,7 +38,8 @@ public class ControladorUnirsePartidaTest extends AbstractPartidasTest {
         RespuestaUnirsePartida respuesta = gson.fromJson(sRespuesta, RespuestaUnirsePartida.class);
         assertTrue("La respuesta no fue exitosa: " + respuesta.getMensajeError(),
                    respuesta.fuePeticionExitosa());
-        assertEquals(manejador.getSesion().getPartida().getPOJO(), respuesta.getPartida());
+        assertEquals(manejador.getSesion().getPartida().getPOJO(getUltimoAdmin()),
+                                                                respuesta.getPartida());
         assertEquals(2, manejador.getSesion().getPartida().getJugadores().size());
     }
 

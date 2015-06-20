@@ -43,7 +43,7 @@ public class ControladorUnirsePartida extends ControladorConSesion {
             return gson.toJson(new RespuestaGenerica(e.getMessage()));
         }
         Log.debug("El jugador " + getSesion().getJugador().getNombre() + " se ha unido a una partida.");
-        return gson.toJson(new RespuestaUnirsePartida(partida.getPOJO()));
+        return gson.toJson(new RespuestaUnirsePartida(partida.getPOJO(getSesion().getJugador())));
     }
 
 }

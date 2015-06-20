@@ -65,5 +65,14 @@ public abstract class Personaje extends EntidadTablero implements Comparable<Per
         return tablero;
     }
 
+    /**
+     * @return true si el personaje es un zombie, false de lo contrario.
+     */
     public abstract boolean esZombie();
+
+    /**
+     * @return un array cuyo primer elemento es la coordenada superior izquierda límite que el
+     * personaje puede ver, y el segundo elemento la coordenada inferior derecha.
+     */
+    public abstract Coordenada[] getRectanguloVision();
 }

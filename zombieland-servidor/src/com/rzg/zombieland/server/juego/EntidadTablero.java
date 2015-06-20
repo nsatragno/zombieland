@@ -8,6 +8,17 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  *
  */
 public abstract class EntidadTablero {
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((posicion == null) ? 0 : posicion.hashCode());
+        return result;
+    }
+
     // Posición que esta entidad ocupa en el tablero.
     private Coordenada posicion;
     
@@ -37,5 +48,25 @@ public abstract class EntidadTablero {
         this.posicion = posicion;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        EntidadTablero other = (EntidadTablero) obj;
+        if (posicion == null) {
+            if (other.posicion != null)
+                return false;
+        } else if (!posicion.equals(other.posicion))
+            return false;
+        return true;
+    }
+    
 	public abstract boolean esPersonaje();
 }
