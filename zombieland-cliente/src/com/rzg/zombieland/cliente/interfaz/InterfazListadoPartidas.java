@@ -225,7 +225,10 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
                 public void onDone(RespuestaUnirsePartida respuesta) {
                     if (respuesta.fuePeticionExitosa()) {
                         Estado.getInstancia().setEstadoLobby(respuesta.getPartida());
-                        Main.irA(Main.LOBBY);
+                        if (respuesta.getPartida().getProyeccion() == null)
+                            Main.irA(Main.LOBBY);
+                        else
+                            Main.irA(Main.TABLERO);
                     } else {
                         JOptionPane.showMessageDialog(this_,
                                                       respuesta.getMensajeError(), 

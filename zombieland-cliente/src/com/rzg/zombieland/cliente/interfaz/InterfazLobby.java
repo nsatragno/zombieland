@@ -275,6 +275,8 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
         modeloTablaParametros.actualizarDatos(datos);
         modeloListaJugadores.cambiarDatos(datos.getJugadores());
         lblTitulo.setText(datos.getNombre());
+        if (datos.getProyeccion() != null)
+            Main.irA(Main.TABLERO);
     }
     
     private void abandonarPartida() {
