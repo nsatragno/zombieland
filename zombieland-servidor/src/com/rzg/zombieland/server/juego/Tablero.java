@@ -3,6 +3,7 @@ package com.rzg.zombieland.server.juego;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -150,10 +151,7 @@ public class Tablero {
      * @param hasta
      *            - coordenada de destino. Debe estar vacía.
      */
-
-    // Se supone que estos datos los validamos antes de mandarselos al tablero.
-    // De no ser así, avisen que tengo que validar todo para no irme del mismo.
-    public Coordenada moverEntidad(Coordenada desde, Coordenada hasta) {
+    public synchronized Coordenada moverEntidad(Coordenada desde, Coordenada hasta) {
         // Primero pregunto si a la posición a la cual quiere desplazarse no hay
         // nada
         if (fueraDeLaMatriz(desde)) {
@@ -164,14 +162,13 @@ public class Tablero {
             // No se mueva nada.
             return desde;
         }
-                if (matriz[hasta.getX()][hasta.getY()] == null) {
+        if (matriz[hasta.getX()][hasta.getY()] == null) {
             matriz[hasta.getX()][hasta.getY()] = matriz[desde.getX()][desde.getY()];
             matriz[desde.getX()][desde.getY()] = null;
             return hasta;
-        } // Cambio los valores de la matriz.
-          // Si no es null, hay una colisión.
-        else {
-            getEntidadEn(desde).colisionar(getEntidadEn(hasta), matriz);
+        } else {
+            getEntidadEn(desde).colisionar(getEntidadEn(hasta));
+            getEntidadEn(hasta).colisionar(getEntidadEn(desde));
             return desde;
         }
     }
@@ -197,16 +194,76 @@ public class Tablero {
      * Mueve a todos los personajes.
      */
     public void moverTodos() {
-        // Ordenamos los personajes de acuerdo al orden en el que realizaron los
-        // movimientos.
-        personajes.sort(new Comparator<Personaje>() {
+        synchronized (personajes) {
+            // Ordenamos los personajes de acuerdo al orden en el que realizaron los
+            // movimientos.
+            personajes.sort(new Comparator<Personaje>() {
+    
+                @Override
+                public int compare(Personaje p1, Personaje p2) {
+                    return p1.compareTo(p2);
+                }
+            });
+            for (Personaje personaje : personajes)
+                personaje.mover();
+        }
+    }
 
-            @Override
-            public int compare(Personaje p1, Personaje p2) {
-                return p1.compareTo(p2);
+    /**
+     * Quita a un jugador del tablero.
+     * @param jugadorEliminado
+     */
+    public void removerJugador(Jugador jugadorEliminado) {
+        synchronized (personajes) {
+            boolean quedanZombies = false;
+            Iterator<Personaje> iterator = personajes.iterator();
+            while (iterator.hasNext()) {
+                Personaje personaje = iterator.next();
+                if (personaje.getJugador().getNombre().equals(jugadorEliminado.getNombre())) {
+                    iterator.remove();
+                    matriz[personaje.getPosicion().getX()][personaje.getPosicion().getY()] = null;
+                } else if (personaje.esZombie()) {
+                    quedanZombies = true;
+                }
             }
-        });
-        for (Personaje personaje : personajes)
-            personaje.mover();
+            if (!quedanZombies) {
+                int index = new Random().nextInt(personajes.size());
+                Personaje personaje = personajes.get(index);
+                Coordenada posicion = personaje.getPosicion();
+                
+                Zombie zombie = new Zombie(personaje.getJugador(), posicion, this);
+                personajes.set(index, zombie);
+                matriz[posicion.getX()][posicion.getY()] = zombie;
+            }
+        }
+    }
+    
+    /**
+     * @return true si la partida finalizó, false de lo contrario.
+     */
+    public boolean partidaFinalizada() {
+        synchronized (personajes) {
+            for (Personaje personaje : personajes) {
+                if (!personaje.esZombie())
+                    return false; 
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Remplaza la entidad en el tablero con la dada.
+     * @param posicion
+     * @param zombie
+     */
+    public void remplazarEntidadEn(Coordenada posicion, Zombie zombie) {
+        synchronized (personajes) {
+            for (int i = 0; i < personajes.size(); i++) {
+            Personaje personaje = personajes.get(i);
+            if (personaje.getJugador().getNombre().equals(zombie.getJugador().getNombre()))
+                personajes.set(i, zombie);
+            }
+        }
+        matriz[posicion.getX()][posicion.getY()] = zombie;
     }
 }

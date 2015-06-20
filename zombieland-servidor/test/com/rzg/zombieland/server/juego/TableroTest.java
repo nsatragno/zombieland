@@ -1,6 +1,11 @@
 package com.rzg.zombieland.server.juego;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -11,6 +16,7 @@ import org.junit.Test;
 
 import com.rzg.zombieland.comunes.misc.Coordenada;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.controlador.AbstractPartidasTest;
 import com.rzg.zombieland.server.meta.EnviaPeticionesImpl;
 import com.rzg.zombieland.server.sesion.Jugador;
@@ -294,7 +300,63 @@ public class TableroTest extends AbstractPartidasTest {
             Assert.assertEquals(Zombie.class, tablero.getEntidadEn(desde).getClass());
 	    }
 	}
+	
+	/**
+	 * Verifica que remover un jugador quite su personaje.
+	 * @throws ZombielandException
+	 */
+	@Test
+	public void testRemoverHumano() throws ZombielandException {
+	    List<Jugador> jugadores = new ArrayList<Jugador>();
+        Jugador humano = crearJugador();
+        jugadores.add(humano);
+        Jugador zombi = crearJugador();
+        Tablero tablero = new Tablero(10, jugadores, zombi);
+        
+        Coordenada coordenada = getCoordenadaHumano(tablero);
+        assertNotNull(tablero.getEntidadEn(coordenada));
+        assertFalse(tablero.partidaFinalizada());
+        
+        tablero.removerJugador(humano);
+        assertNull(tablero.getEntidadEn(coordenada));
+        assertTrue(tablero.partidaFinalizada());
+	}
+	
+    /**
+     * Verifica que remover un jugador quite su personaje.
+     * @throws ZombielandException
+     */
+    @Test
+    public void testRemoverZombie() throws ZombielandException {
+        List<Jugador> jugadores = new ArrayList<Jugador>();
+        Jugador humano = crearJugador();
+        jugadores.add(humano);
+        Jugador zombi = crearJugador();
+        Tablero tablero = new Tablero(10, jugadores, zombi);
+        
+        Coordenada coordenadaJugador = getCoordenadaHumano(tablero);
+        Coordenada coordenadaZombie = new Coordenada(5, 5);
+        
+        
+        assertNotNull(tablero.getEntidadEn(coordenadaJugador));
+        assertNotNull(tablero.getEntidadEn(coordenadaZombie));
+        assertFalse(tablero.partidaFinalizada());
+        
+        tablero.removerJugador(zombi);
+        assertNull(tablero.getEntidadEn(coordenadaZombie));
+        assertNotNull(tablero.getEntidadEn(coordenadaJugador));
+        assertEquals(Zombie.class, tablero.getEntidadEn(coordenadaJugador).getClass());
+        assertTrue(tablero.partidaFinalizada());
+    }
 
+	/**
+	 * TODO arreglar este método:
+	 *     1) Asume que el zombie siempre está en el medio. Si eso cambia, todos los tests se 
+	 *        rompen.
+	 *     2) Asume que el tablero mide siempre 10 x 10. 
+	 * @param tablero
+	 * @return la coordenada donde está el humano.
+	 */
     private Coordenada getCoordenadaHumano(Tablero tablero) {
         Coordenada desde = null;
         for (int i = 0; i < 10; i++) {

@@ -24,22 +24,24 @@ public class Zombie extends Personaje {
     }
 
 	@Override
-	public void colisionar(EntidadTablero entidad, EntidadTablero[][] matriz) {
-		// Si hay una colision llamada por un zombi que recibió por parámetro un
-		// humano
-		// Hay cosas que hacer.
+	public void colisionar(EntidadTablero entidad) {
 		if (entidad.esPersonaje()) {
-			if (entidad.getClass() == Humano.class) {
+		    Personaje personaje = (Personaje)entidad;
+		    if (!personaje.esZombie()) {
 				// Cambio al humano por un nuevo zombie.
-				Coordenada posicion = entidad.getPosicion();
-				entidad = new Zombie(((Humano) entidad).getJugador(), entidad.getPosicion(), getTablero());
-				matriz[posicion.getX()][posicion.getY()] = entidad;
+		        Coordenada posicion = entidad.getPosicion();
+		        Zombie zombie = new Zombie(personaje.getJugador(), posicion, getTablero()); 
+		        getTablero().remplazarEntidadEn(posicion, zombie);
 			}
 		}
-		// Si no pasó nada devuelvo la misma entidad.
 	}
 
 	public boolean esPersonaje() {
 		return true;
+	}
+	
+	@Override
+	public boolean esZombie() {
+	    return true;
 	}
 }

@@ -25,23 +25,15 @@ public class Humano extends Personaje {
 	}
 
 	@Override
-	public void colisionar(EntidadTablero e, EntidadTablero[][] matriz) {
-		// Si hay una colision llamada por un humano que recibió por parámetro
-		// un
-		// zombie, hay cosas que hacer.
-		// El primer if filtra a los obstáculos.
-		if (e.esPersonaje()) {
-			if (e.getClass() == Zombie.class) {
-				// Cambio al humano por un nuevo zombie.
-				Coordenada posicion = this.getPosicion();
-				EntidadTablero entidad = new Zombie(getJugador(), posicion, getTablero());
-				matriz[posicion.getX()][posicion.getY()] = entidad;
-			}
-		}
-	}
+	public void colisionar(EntidadTablero e) { }
 
 	@Override
 	public boolean esPersonaje() {
 		return true;
 	}
+
+    @Override
+    public boolean esZombie() {
+        return false;
+    }
 }

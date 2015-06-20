@@ -21,9 +21,7 @@ public class Obstaculo extends EntidadTablero {
     }
 
     @Override
-    public void colisionar(EntidadTablero entidad, EntidadTablero[][] matriz) {
-        // TODO Auto-generated method stub
-    }
+    public void colisionar(EntidadTablero entidad) { }
 
     public boolean esPersonaje(){
     	return false;

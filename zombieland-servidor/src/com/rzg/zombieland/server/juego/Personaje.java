@@ -64,4 +64,6 @@ public abstract class Personaje extends EntidadTablero implements Comparable<Per
     protected Tablero getTablero() {
         return tablero;
     }
+
+    public abstract boolean esZombie();
 }

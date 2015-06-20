@@ -312,6 +312,8 @@ public class Partida {
                 listener.notificarPartidaVacia(this);
             return;
         }
+        if (estado == Estado.ACTIVA)
+            tablero.removerJugador(jugadorEliminado);
         for (Jugador jugador : jugadores)
             jugador.notificarCambioPartida();
     }
