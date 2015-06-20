@@ -10,10 +10,9 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
 public class Obstaculo extends EntidadTablero {
 
     private final String SPRITE = "obstaculo.jpg";
-    private Coordenada posicion;
     
     public Obstaculo(Coordenada posicion) {
-    	this.posicion = posicion;
+    	super(posicion);
     }
     
     @Override

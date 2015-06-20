@@ -15,8 +15,8 @@ public class Humano extends Personaje {
 	private final String SPRITE = "humano.png";
 
 	// Permite construir un humano a través de un Jugador.
-	public Humano(Jugador jugador) {
-	    super(jugador);
+	public Humano(Jugador jugador, Coordenada posicion, Tablero tablero) {
+	    super(jugador, posicion, tablero);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Humano extends Personaje {
 			if (e.getClass() == Zombie.class) {
 				// Cambio al humano por un nuevo zombie.
 				Coordenada posicion = this.getPosicion();
-				EntidadTablero entidad = new Zombie(getJugador());
+				EntidadTablero entidad = new Zombie(getJugador(), posicion, getTablero());
 				matriz[posicion.getX()][posicion.getY()] = entidad;
 			}
 		}

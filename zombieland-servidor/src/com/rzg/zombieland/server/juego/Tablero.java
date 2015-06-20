@@ -43,14 +43,12 @@ public class Tablero {
         boolean resuelto = false; // Flag que me indica si ya posicione o no a
                                   // la entidad.
 
-        Coordenada c;
-
-        Zombie personajeZombie = new Zombie(zombi);
-        personajes.add(personajeZombie);
-
+        
+        
         matriz = new EntidadTablero[casilleros][casilleros];
         // Ponemos al zombi - primero le asignamos el nombre.
-        personajeZombie.setPosicion(new Coordenada(casilleros / 2, casilleros / 2));
+        Zombie personajeZombie = new Zombie(zombi, new Coordenada(casilleros / 2, casilleros / 2), this);
+        personajes.add(personajeZombie);
         // Siempre arranca en el medio.
         matriz[casilleros / 2][casilleros / 2] = personajeZombie; // Lo ponemos
                                                                   // en la
@@ -69,7 +67,7 @@ public class Tablero {
         for (int i = 0; i < Math.pow(casilleros, 2) * 0.25; i++) {
             resuelto = false;
             while (!resuelto) {
-                c = new Coordenada(Math.abs(rnd.nextInt()) % casilleros, Math.abs(rnd.nextInt())
+                Coordenada c = new Coordenada(Math.abs(rnd.nextInt()) % casilleros, Math.abs(rnd.nextInt())
                         % casilleros);
                 if (matriz[c.getX()][c.getY()] == null
                         && matriz[c.getX() + 1 >= casilleros ? c.getX() : c.getX() + 1][c.getY() + 1 >= casilleros ? c
@@ -91,11 +89,10 @@ public class Tablero {
         for (Jugador jugador : jugadores) {
             resuelto = false;
             while (!resuelto) {
-                c = new Coordenada(Math.abs(rnd.nextInt()) % casilleros, Math.abs(rnd.nextInt())
+                Coordenada c = new Coordenada(Math.abs(rnd.nextInt()) % casilleros, Math.abs(rnd.nextInt())
                         % casilleros);
                 if (matriz[c.getX()][c.getY()] == null) {
-                    Humano h = new Humano(jugador);
-                    h.setPosicion(c);
+                    Humano h = new Humano(jugador, c, this);
                     matriz[c.getX()][c.getY()] = h;
                     resuelto = true;
                     personajes.add(h);

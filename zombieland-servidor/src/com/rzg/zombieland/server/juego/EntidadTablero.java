@@ -11,6 +11,10 @@ public abstract class EntidadTablero {
     // Posición que esta entidad ocupa en el tablero.
     private Coordenada posicion;
     
+    public EntidadTablero(Coordenada posicion) {
+        this.posicion = posicion;
+    }
+    
     /**
      * @return el nombre de la imagen con la que esta entidad se representa.
      */

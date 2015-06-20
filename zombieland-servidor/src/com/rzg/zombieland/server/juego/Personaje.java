@@ -26,11 +26,13 @@ public abstract class Personaje extends EntidadTablero implements Comparable<Per
     // Tablero en el que el personaje está inscrito.
     private Tablero tablero;
     
-    public Personaje(Jugador jugador) {
+    public Personaje(Jugador jugador, Coordenada posicion, Tablero tablero) {
+        super(posicion);
         this.jugador = jugador;
         Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
         sesion.setPersonaje(this);
         siguienteMovimiento = Movimiento.NINGUNO;
+        this.tablero = tablero;
     }
     
     /**
@@ -57,5 +59,9 @@ public abstract class Personaje extends EntidadTablero implements Comparable<Per
     @Override
     public final int compareTo(Personaje p2) {
         return siguienteMovimiento.compareTo(p2.siguienteMovimiento);
+    }
+    
+    protected Tablero getTablero() {
+        return tablero;
     }
 }

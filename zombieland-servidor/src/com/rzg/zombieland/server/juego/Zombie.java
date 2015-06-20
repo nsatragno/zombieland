@@ -19,8 +19,8 @@ public class Zombie extends Personaje {
 		return SPRITE;
 	}
 	
-	public Zombie(Jugador jugador) {
-	    super(jugador);
+	public Zombie(Jugador jugador, Coordenada posicion, Tablero tablero) {
+	    super(jugador, posicion, tablero);
     }
 
 	@Override
@@ -32,7 +32,7 @@ public class Zombie extends Personaje {
 			if (entidad.getClass() == Humano.class) {
 				// Cambio al humano por un nuevo zombie.
 				Coordenada posicion = entidad.getPosicion();
-				entidad = new Zombie(((Humano) entidad).getJugador());
+				entidad = new Zombie(((Humano) entidad).getJugador(), entidad.getPosicion(), getTablero());
 				matriz[posicion.getX()][posicion.getY()] = entidad;
 			}
 		}
