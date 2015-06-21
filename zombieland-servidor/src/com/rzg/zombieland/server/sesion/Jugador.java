@@ -175,7 +175,7 @@ public class Jugador {
 		return nombre.equals(otro.nombre) && clave.equals(otro.clave)
 				&& preguntaSecreta.equals(otro.preguntaSecreta)
 				&& respuestaSecreta.equals(otro.respuestaSecreta)
-				&& ranking == otro.ranking;
+				&& ranking == otro.ranking && id == otro.id;
 	}
 	
 	@Override
