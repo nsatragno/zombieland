@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -16,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -27,10 +29,12 @@ import javax.swing.border.LineBorder;
 import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionCambioDatosJugador;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionObtenerDatosJugador;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
@@ -170,6 +174,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 		contentPane.add(lblSeleccionAvatar);
 		
 		spriteAvatares = new ArrayList<String>();
+		botonesPantalla = new ArrayList<JRadioButton>();
 		
 		for(Avatar avatar : Avatar.values()) {
 			if(avatar.esPersonaje())
@@ -177,11 +182,10 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 		}
 		
 		JLabel lblAvatar1 = new JLabel("");
-		colocarAvatar(lblAvatar1, spriteAvatares, avataresColocados);
+		colocarAvatar(lblAvatar1);
 		lblAvatar1.setBounds(695, 76, 79, 80);
 		contentPane.add(lblAvatar1);
 
-		botonesPantalla = new ArrayList<JRadioButton>();
 		rdbtnPJ1 = new JRadioButton("");
 		rdbtnPJ1.setOpaque(false);
 		rdbtnPJ1.setBounds(630, 97, 67, 54);
@@ -189,7 +193,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 		botonesPantalla.add(rdbtnPJ1);
 		
 		JLabel lblAvatar2 = new JLabel("");
-		colocarAvatar(lblAvatar2, spriteAvatares, avataresColocados);
+		colocarAvatar(lblAvatar2);
 		lblAvatar2.setBounds(695, 194, 73, 94);
 		contentPane.add(lblAvatar2);
 
@@ -200,7 +204,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 		botonesPantalla.add(rdbtnPJ2);
 		
 		JLabel lblAvatar3 = new JLabel("");
-		colocarAvatar(lblAvatar3, spriteAvatares, avataresColocados);
+		colocarAvatar(lblAvatar3);
 		lblAvatar3.setBounds(695, 341, 73, 74);
 		contentPane.add(lblAvatar3);
 
@@ -233,12 +237,11 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 	 * @param spriteAvatares
 	 * @param indice
 	 */
-	private void colocarAvatar(JLabel lblAvatar,
-			List<String> spriteAvatares, int indice)
+	private void colocarAvatar(JLabel lblAvatar)
 	{
-		if(indice < spriteAvatares.size()) {
+		if(avataresColocados < spriteAvatares.size()) {
 			lblAvatar.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/"
-					+ spriteAvatares.get(indice))));
+					+ spriteAvatares.get(avataresColocados))));
 			this.avataresColocados++;
 		}
 	}
@@ -316,5 +319,43 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 	public void windowOpened(WindowEvent e)
 	{
 		
+	}
+	
+	private void modificarDatos() {
+		if(!Arrays.equals(pass.getPassword(), passVerificacion.getPassword())) {
+			JOptionPane.showMessageDialog(getParent(), "Las claves no son iguales");
+            return;
+		}
+		
+		try {
+			int indice = 0;
+			for(JRadioButton boton : botonesPantalla) {
+				if(boton.isSelected())
+					break;
+				else
+					indice++;
+			}
+			
+			Avatar avatar;
+			for(Avatar av : Avatar.values()) {
+				if(av.getSprite().equals(spriteAvatares.get(indice))) {
+					avatar = av;
+					break;
+				}
+			}
+			
+			POJORegistro pojoRegistro;
+			pojoRegistro = new POJORegistro (textUsuario.getText(), new String(pass.getPassword()),
+									(String) preguntaSeguridad.getSelectedItem(), textRta.getText(),
+									avatar);
+			PeticionCambioDatosJugador peticion = new PeticionCambioDatosJugador(pojoRegistro);
+			ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
+			peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
+				@Override
+				public void onDone(RespuestaGenerica respuesta) {
+					manejarRespuestaGenerica(respuesta);
+				}
+			});
+		}
 	}
 }
