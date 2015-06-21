@@ -165,4 +165,11 @@ public class Estado {
         for (EscuchadorProyeccion escuchador : escuchadoresProyeccion)
             escuchador.notificarProyeccionActualizada(proyeccion);
     }
+
+    /**
+     * @return true si se está observando una partida, false de lo contrario.
+     */
+    public boolean isEspectador() {
+        return espectador;
+    }
 }
