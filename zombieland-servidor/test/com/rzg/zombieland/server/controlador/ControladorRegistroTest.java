@@ -68,7 +68,7 @@ public class ControladorRegistroTest {
                 controlador.procesar(gson.toJson(registro)), RespuestaGenerica.class);
         Assert.assertTrue(respuesta.fuePeticionExitosa());
         Assert.assertEquals(null, respuesta.getMensajeError());
-        assertEquals(new Jugador(registro), dao.getObjeto(NOMBRE_JUGADOR_VALIDO));
+        assertEquals(new Jugador(registro), dao.getJugadorPorNombre(NOMBRE_JUGADOR_VALIDO));
         dao.cerrarSesion();
     }
     
@@ -86,7 +86,7 @@ public class ControladorRegistroTest {
                 controlador.procesar(gson.toJson(registro)), RespuestaGenerica.class);
         Assert.assertFalse(respuesta.fuePeticionExitosa());
         Assert.assertFalse(respuesta.getMensajeError().isEmpty());
-        assertEquals(null, dao.getObjeto(NOMBRE_JUGADOR_VALIDO));
+        assertEquals(null, dao.getJugadorPorNombre(NOMBRE_JUGADOR_VALIDO));
         dao.cerrarSesion();
     }
 

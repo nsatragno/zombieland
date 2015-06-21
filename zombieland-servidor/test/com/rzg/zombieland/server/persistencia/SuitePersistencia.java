@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ JugadorTest.class, ResultadoPartidaTest.class })
+@SuiteClasses({ JugadorTest.class, ResultadoJugadorTest.class })
 public class SuitePersistencia {
 
 }

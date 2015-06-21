@@ -9,7 +9,7 @@ import com.rzg.zombieland.server.sesion.Jugador;
  * @author nicolas
  *
  */
-public class JugadorTest extends PersistenciaTest<Jugador, String> {
+public class JugadorTest extends PersistenciaTest<Jugador, Integer> {
 
     @Override
     protected Jugador generarObjeto() throws ParametrosNoValidosException {
@@ -22,12 +22,12 @@ public class JugadorTest extends PersistenciaTest<Jugador, String> {
     }
 
     @Override
-    protected String getIdObjeto(Jugador objeto) {
-        return objeto.getNombre();
+    protected Integer getIdObjeto(Jugador objeto) {
+        return objeto.getId();
     }
 
     @Override
-    protected Dao<Jugador, String> getDao() {
+    protected Dao<Jugador, Integer> getDao() {
         return new JugadorDao();
     }
 }

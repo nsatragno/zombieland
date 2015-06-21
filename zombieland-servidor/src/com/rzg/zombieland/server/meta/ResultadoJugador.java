@@ -1,10 +1,11 @@
 package com.rzg.zombieland.server.meta;
 
 import java.security.InvalidParameterException;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -19,7 +20,8 @@ import com.rzg.zombieland.server.sesion.Jugador;
 public class ResultadoJugador {
     // Identificación del resultado.
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     
     // Puntos totales ganados en la partida.
     @Column
@@ -58,8 +60,6 @@ public class ResultadoJugador {
         if (jugador == null)
             throw new NullPointerException("El jugador no puede ser null");
         this.jugador = jugador;
-        
-        id = UUID.randomUUID();
     }
     
     /**
@@ -93,7 +93,7 @@ public class ResultadoJugador {
     /**
      * @return el ID único de resultado de partida.
      */
-    public UUID getId() {
+    public int getId() {
         return id;
     }
     
@@ -102,7 +102,7 @@ public class ResultadoJugador {
         if (obj == null) return false;
         if (!(obj instanceof ResultadoJugador)) return false;
         ResultadoJugador otro = (ResultadoJugador)obj;
-        return id.equals(otro.id) &&
+        return id == otro.id &&
                puntos == otro.puntos &&
                ranking == otro.ranking &&
                jugador.equals(otro.jugador);

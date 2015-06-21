@@ -46,7 +46,8 @@ public class InterfazRecuperaContrasenia extends JFrame
 	private JTextField textFieldUsuario;
 	private JLabel preguntaSeguridad;
 	private JTextField textFieldResp;
-
+	private String respuestaReal;
+	private JLabel labelContrasenia;
 	/**
 	 * Create the frame.
 	 */
@@ -76,8 +77,8 @@ public class InterfazRecuperaContrasenia extends JFrame
 		lblRespuesta.setBounds(90, 155, 110, 14);
 		contentPane.add(lblRespuesta);
 		
-		JLabel labelContrasenia = new JLabel("");
-		labelContrasenia.setForeground(Color.RED);
+		labelContrasenia = new JLabel("Buscando Usuario...");
+		labelContrasenia.setVisible(false);
 		labelContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
 		labelContrasenia.setBorder(new LineBorder(Color.GRAY));
 		labelContrasenia.setBounds(120, 266, 270, 20);
@@ -110,16 +111,26 @@ public class InterfazRecuperaContrasenia extends JFrame
         lblRzg.setForeground(SystemColor.controlShadow);
         lblRzg.setBounds(421, 293, 63, 14);
         getContentPane().add(lblRzg);
-        
-        JButton btnRecuperar = new JButton("Recuperar");
+
+        JButton btnRecuperar = new JButton("Obtener Pregunta Seguridad");
     	btnRecuperar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				RecuperarPreguntaSeguridad();
 			}
 		});
-        btnRecuperar.setBounds(195, 205, 135, 30);
+        btnRecuperar.setBounds(10, 205, 200, 30);
         contentPane.add(btnRecuperar);
+        
+        JButton btnVerificarRespuesta = new JButton("Verificar Respuesta seguridad");
+    	btnVerificarRespuesta.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				verificarRespuesta();
+			}
+		});
+        btnVerificarRespuesta.setBounds(250, 205, 220, 30);
+        contentPane.add(btnVerificarRespuesta);
         
         JLabel lblTitulo = new JLabel("Recupera tu contrase\u00F1a");
         lblTitulo.setForeground(Color.LIGHT_GRAY);
@@ -138,11 +149,30 @@ public class InterfazRecuperaContrasenia extends JFrame
         contentPane.add(lblFondo);
 	}
 	/**
+	 * Se verifica que la respuesta de seguridad ingresada sea la correcta,
+	 * y se abre una ventana para que realice el cambio de contraseña
+	 */
+	public void verificarRespuesta() {
+		if (textFieldResp.getText().equals(respuestaReal)){
+			new InterfazCambioContrasenia(textFieldUsuario.getText()).setVisible(true);
+	        textFieldResp.setText("");
+			textFieldUsuario.setText("");
+			preguntaSeguridad.setText("");
+		}
+		else
+			JOptionPane.showMessageDialog(this,
+					"Respuesta incorrecta",
+					"Recuperar Contraseña Fallo",
+					JOptionPane.WARNING_MESSAGE);
+		
+	}
+	/**
 	 * Ingresa el nombre de usuario y debe encontrar la pregunta de seguridad
 	 * correspondiente y su respuesta.
 	 */
 	public void RecuperarPreguntaSeguridad() {
 		preguntaSeguridad.setText(" ");
+		labelContrasenia.setVisible(true);
 		try {
 			final POJONombreUsuario pojo = new POJONombreUsuario(
 					textFieldUsuario.getText());
@@ -156,12 +186,15 @@ public class InterfazRecuperaContrasenia extends JFrame
 					if (respuesta.fuePeticionExitosa()) {
 						preguntaSeguridad.setText(
 								respuesta.getPreguntaSeguridad().getPreguntaSeguridad());
+						respuestaReal = respuesta.getPreguntaSeguridad().getRespuestaSeguridad();
+						labelContrasenia.setVisible(false);
 						return;
 					}
 					JOptionPane.showMessageDialog(_this,
 							respuesta.getMensajeError(),
 							"Recuperar Contraseña Fallo",
 							JOptionPane.WARNING_MESSAGE);
+					labelContrasenia.setVisible(false);
 				}
 			});	
 			

@@ -1,41 +1,38 @@
 package com.rzg.zombieland.server.comunicacion.controlador;
 
 import com.google.gson.Gson;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCambioPass;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJONombreUsuario;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPreguntaSeguridad;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaPreguntaSeg;
 import com.rzg.zombieland.comunes.controlador.Controlador;
+import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 import com.rzg.zombieland.server.sesion.Jugador;
- /**
-  * Gestiona una peticion de recuperar contraseña, debe encontrar el usuario
-  * y devolver la pregunta de seguridad.
-  * @author Nicolas L
-  *
-  */
-public class ControladorObtenerPreguntaSeguridad extends Controlador{
-	
+
+public class ControladorCambioPass extends Controlador {
+
 	@Override
 	public String procesar(String linea) {
 		Gson gson = new Gson();
-		POJONombreUsuario nombre = gson.fromJson(linea, POJONombreUsuario.class);
-		String nombreUsuario = nombre.getNombre();  
+		POJOCambioPass cambiopass = gson.fromJson(linea, POJOCambioPass.class);
+		String nombreUsuario = cambiopass.getNombre();
+		String pass = cambiopass.getPass();
 		JugadorDao dao = new JugadorDao();
 		Jugador jugador = dao.getJugadorPorNombre(nombreUsuario);
-		dao.cerrarSesion();
+		
 		if (jugador == null) {
 	            return gson.toJson(new RespuestaGenerica("El usuario no existe"));
 	        }
-		try {
-			RespuestaPreguntaSeg rta = new RespuestaPreguntaSeg(
-												new POJOPreguntaSeguridad(jugador.getPreguntaSecreta(),
-																	jugador.getRespuestaSecreta()));
-			return gson.toJson(rta);
-		} catch (ParametrosNoValidosException e) {
-			return gson.toJson(new RespuestaGenerica("No se encontraron datos."));
-		}
+		
+			jugador.setClave(pass);
+			dao.actualizarObjeto(jugador);
+			dao.cerrarSesion();
+			 Log.info("El jugador " + jugador.getNombre() + " ha modificado su contraseña.");
+			return gson.toJson(new RespuestaGenerica());
+	
 	}
 
 }

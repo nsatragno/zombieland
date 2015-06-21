@@ -3,6 +3,7 @@ package com.rzg.zombieland.cliente.interfaz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.SystemColor;
@@ -10,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,6 +36,7 @@ import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Movimiento.Direccion;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import javax.swing.SwingConstants;
 
 /**
  * Interfaz de tablero.
@@ -43,9 +47,10 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
 public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 	private static final long serialVersionUID = 1L;
-	
-	private JTable table;
 
+	private JTable table;
+	
+	private final Timer timer = new Timer();
 	// Constantes
 	private static final int DIMENSION = 500; // Dimension en pixeles del
 												// tablero
@@ -62,8 +67,9 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 		img = new HashMap<Avatar, Image>();
 		for (Avatar avatar : Avatar.values()) {
-			img.put(avatar, new ImageIcon(
-			        RutaImagen.get("imagenes/Avatares/" + avatar.getSprite())).getImage());
+			img.put(avatar,
+					new ImageIcon(RutaImagen.get("imagenes/Avatares/"
+							+ avatar.getSprite())).getImage());
 		}
 
 		fondo = new ImageIcon(RutaImagen.get("imagenes/Tablero/pasto.png"));
@@ -71,11 +77,12 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		JButton moveUp = new JButton("");
 		moveUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			    mover(Direccion.NORTE);
+				mover(Direccion.NORTE);
 			}
 		});
 
-		moveUp.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaArriba.png")));
+		moveUp.setIcon(new ImageIcon(RutaImagen
+				.get("imagenes/Tablero/FlechaArriba.png")));
 		moveUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveUp.setBounds(640, 377, 45, 45);
 		add(moveUp);
@@ -92,7 +99,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		JButton moveLeft = new JButton("");
 		moveLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    mover(Direccion.OESTE);
+				mover(Direccion.OESTE);
 			}
 		});
 		// button_1.addKeyListener(new KeyAdapter() {
@@ -104,7 +111,8 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		// }
 		// }
 		// });
-		moveLeft.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaIzquierda.png")));
+		moveLeft.setIcon(new ImageIcon(RutaImagen
+				.get("imagenes/Tablero/FlechaIzquierda.png")));
 		moveLeft.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveLeft.setBounds(587, 423, 45, 45);
 		add(moveLeft);
@@ -119,10 +127,11 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		// });
 		moveRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    mover(Direccion.ESTE);
+				mover(Direccion.ESTE);
 			}
 		});
-		moveRight.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaDerecha.png")));
+		moveRight.setIcon(new ImageIcon(RutaImagen
+				.get("imagenes/Tablero/FlechaDerecha.png")));
 		moveRight.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveRight.setBounds(689, 423, 45, 45);
 		add(moveRight);
@@ -139,18 +148,27 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		// });
 		moveDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    mover(Direccion.SUR);
+				mover(Direccion.SUR);
 			}
 		});
-		moveDown.setIcon(new ImageIcon(RutaImagen.get("imagenes/Tablero/FlechaAbajo.png")));
+		moveDown.setIcon(new ImageIcon(RutaImagen
+				.get("imagenes/Tablero/FlechaAbajo.png")));
 		moveDown.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moveDown.setBounds(640, 471, 45, 45);
 		add(moveDown);
-		
+
 		JLabel label = new JLabel("RZG - 2015");
 		label.setForeground(SystemColor.textInactiveText);
 		label.setBounds(700, 515, 63, 14);
 		add(label);
+		
+		final JLabel labelTemporizador = new JLabel("LALALA");
+		labelTemporizador.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTemporizador.setBackground(Color.RED);
+		labelTemporizador.setFont(new Font("Tahoma", Font.BOLD, 18));
+		labelTemporizador.setForeground(Color.RED);
+		labelTemporizador.setBounds(641, 220, 159, 45);
+		add(labelTemporizador);
 
 		JPanel panelJug = new JPanel();
 		panelJug.setBounds(561, 34, 193, 175);
@@ -188,51 +206,72 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		table.setBounds(0, 0, 193, 304);
 		panelJug.add(table.getTableHeader(), BorderLayout.NORTH);
 		panelJug.add(table, BorderLayout.CENTER);
-		
+
 		JLabel labelFondo = new JLabel("");
-		labelFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-tablero.png")));
+		labelFondo.setIcon(new ImageIcon(RutaImagen
+				.get("imagenes/Fondos/fondo-tablero.png")));
 		labelFondo.setBounds(0, 0, 800, 600);
 		add(labelFondo);
 		
+
+		TimerTask task = new TimerTask() {
+			int tic = 0;
+		// Acá va la lógica del temporizador. Ajustar el tiempo del tic al tiempo del juego.
+			@Override
+			public void run() {
+				if (tic == 500) {
+					labelTemporizador.setText("0");
+					tic = 0;
+				} else {
+					labelTemporizador.setText("" + tic);
+					tic++;
+				}
+			}
+		};
+		// Programo el timer para que actúe cada 1ms.
+		timer.schedule(task, 0, 1);
+
 		Estado.getInstancia().addEscuchador(this);
 	}
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		ProyeccionTablero proyeccion =  Estado.getInstancia().getEstadoLobby().getProyeccion();
-		proyeccion.paint(g, img, DIMENSION, MARGEN_IZQUIERDO, MARGEN_SUPERIOR, fondo);
+		
+		ProyeccionTablero proyeccion = Estado.getInstancia().getEstadoLobby()
+				.getProyeccion();
+		proyeccion.paint(g, img, DIMENSION, MARGEN_IZQUIERDO, MARGEN_SUPERIOR,
+				fondo);
 	}
-	
 
 	/**
 	 * Envía una petición de movimiento.
+	 * 
 	 * @param este
 	 */
-    private void mover(Direccion direccion) {
-        PeticionMovimiento peticion = new PeticionMovimiento(direccion);
-        final InterfazTablero this_ = this;
-        try {
-            ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
-            peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
-                @Override
-                public void onDone(RespuestaGenerica respuesta) {
-                    if (!respuesta.fuePeticionExitosa()) {
-                        JOptionPane.showMessageDialog(
-                                this_,
-                                respuesta.getMensajeError(),
-                                "Zombieland tablero",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            });
-        } catch (ZombielandException e) {
-            JOptionPane.showMessageDialog(
-                    this, e.getMessage(), "Zombieland tablero", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+	private void mover(Direccion direccion) {
+		PeticionMovimiento peticion = new PeticionMovimiento(direccion);
+		final InterfazTablero this_ = this;
+		try {
+			ServicioCliente.getInstancia().getHiloEscucha()
+					.enviarPeticion(peticion);
+			peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
+				@Override
+				public void onDone(RespuestaGenerica respuesta) {
+					if (!respuesta.fuePeticionExitosa()) {
+						JOptionPane.showMessageDialog(this_,
+								respuesta.getMensajeError(),
+								"Zombieland tablero", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
+		} catch (ZombielandException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(),
+					"Zombieland tablero", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
-    @Override
-    public void notificarProyeccionActualizada(ProyeccionTablero proyeccion) {
-        repaint();
-    }
+	@Override
+	public void notificarProyeccionActualizada(ProyeccionTablero proyeccion) {
+		repaint();
+	}
 }
