@@ -44,9 +44,6 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 	private static final long serialVersionUID = 1L;
 	
-	@SuppressWarnings("unused")
-	private ProyeccionTablero proyeccionPrueba;
-	
 	private JTable table;
 
 	// Constantes
@@ -54,12 +51,6 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 												// tablero
 	private static final int MARGEN_IZQUIERDO = 10;
 	private static final int MARGEN_SUPERIOR = 30;
-	private static int CASILLEROS = 10; // Casilleros del tablero a lo alto y a
-										// lo ancho.
-
-	// variables de prueba para el movimiento.
-	private int coordenadaX;
-	private int coordenadaY;
 
 	private Map<Avatar, Image> img; // Avatares
 	private ImageIcon fondo;

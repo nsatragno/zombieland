@@ -1,13 +1,10 @@
 package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -39,7 +36,8 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  */
 public class InterfazCambioDeDatosUsuario extends JFrame {
 
-	private JPanel contentPane;
+    private static final long serialVersionUID = 7837393531603880737L;
+    private JPanel contentPane;
 	private JTextField textUsuario;
 	private JTextField textPreg;
 	private JTextField textRta;
@@ -222,9 +220,5 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-cambio-datos.png")));
 		getContentPane().add(lblFondo);
 
-	}
-	
-	private void cambiarDatos(){
-		
 	}
 }

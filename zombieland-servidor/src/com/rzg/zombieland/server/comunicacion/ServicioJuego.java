@@ -16,7 +16,7 @@ public class ServicioJuego {
 	
 	public ServicioJuego(){
 		listaBucles = new ArrayList<BucleJuego>();
-		Semaphore semaforo = new Semaphore(1);
+		semaforo = new Semaphore(1);
 		matandoHilos = false;
 	}
 	

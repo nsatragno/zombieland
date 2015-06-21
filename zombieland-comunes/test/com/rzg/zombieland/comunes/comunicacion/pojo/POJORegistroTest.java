@@ -1,12 +1,12 @@
 package com.rzg.zombieland.comunes.comunicacion.pojo;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.gson.Gson;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 
@@ -62,7 +62,7 @@ public class POJORegistroTest {
     @Test
     public void testDatosNoValidos() {
     	try {
-			POJORegistro pojo = new POJORegistro(null, null, null, null, Avatar.OBSTACULO);
+			new POJORegistro(null, null, null, null, Avatar.OBSTACULO);
 			fail();
 		} catch (ParametrosNoValidosException e) {
 			assertEquals(5, e.getCantidadParametros());

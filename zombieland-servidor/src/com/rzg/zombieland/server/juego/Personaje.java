@@ -1,7 +1,5 @@
 package com.rzg.zombieland.server.juego;
 
-import java.util.UUID;
-
 import com.rzg.zombieland.comunes.misc.Coordenada;
 import com.rzg.zombieland.comunes.misc.Movimiento;
 import com.rzg.zombieland.server.sesion.Jugador;
@@ -14,9 +12,6 @@ import com.rzg.zombieland.server.sesion.Sesion;
  *
  */
 public abstract class Personaje extends EntidadTablero implements Comparable<Personaje> {
-    // ID único que la identifica.
-    private UUID id;
-
     // Jugador que controla este personaje.
     private Jugador jugador;
     
@@ -50,6 +45,7 @@ public abstract class Personaje extends EntidadTablero implements Comparable<Per
      */
     public void mover() {
         setPosicion(tablero.moverEntidad(getPosicion(), siguienteMovimiento.mover(getPosicion())));
+        siguienteMovimiento = Movimiento.NINGUNO;
     }
     
     public Jugador getJugador(){

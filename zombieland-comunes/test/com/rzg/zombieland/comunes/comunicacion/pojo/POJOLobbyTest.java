@@ -1,6 +1,6 @@
 package com.rzg.zombieland.comunes.comunicacion.pojo;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 

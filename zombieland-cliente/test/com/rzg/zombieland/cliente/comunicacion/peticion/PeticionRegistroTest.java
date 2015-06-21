@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
-import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionRegistro;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;

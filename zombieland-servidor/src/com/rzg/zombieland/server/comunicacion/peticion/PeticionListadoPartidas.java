@@ -2,8 +2,8 @@ package com.rzg.zombieland.server.comunicacion.peticion;
 
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 
 /**
  * Modela una petición de listado de partidas. 
