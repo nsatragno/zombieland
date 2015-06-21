@@ -57,6 +57,12 @@ public class Estado {
          * @param proyeccion
          */
         public void notificarProyeccionActualizada(ProyeccionTablero proyeccion);
+        
+        /**
+         * Se dispara cuando se arranca una nueva partida.
+         * @param espectador
+         */
+        public void notificarCambioEstadoEspectador(boolean espectador);
     }
     
     
@@ -71,6 +77,9 @@ public class Estado {
     private List<EscuchadorPartidas> escuchadoresPartidas;
 
     private List<EscuchadorProyeccion> escuchadoresProyeccion;
+    
+    // True si se está observando una partida, false de lo contrario.
+    private boolean espectador;
     
     public Estado() {
         escuchadoresLobby = new ArrayList<EscuchadorEstadoLobby>();
@@ -145,6 +154,12 @@ public class Estado {
             escuchador.notificarPartidasActualizadas(listado);
     }
 
+    public void setEspectador(boolean espectador) {
+        this.espectador = espectador;
+        for (EscuchadorProyeccion escuchador : escuchadoresProyeccion)
+            escuchador.notificarCambioEstadoEspectador(espectador);
+    }
+    
     public void setProyeccion(ProyeccionTablero proyeccion) {
         estadoLobby.setProyeccion(proyeccion);
         for (EscuchadorProyeccion escuchador : escuchadoresProyeccion)

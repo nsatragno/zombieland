@@ -341,6 +341,12 @@ public class Partida implements SesionListener {
      * @throws ZombielandException si el jugador no estaba unido a la partida.
      */
     public void removerJugador(Jugador jugadorEliminado) throws ZombielandException {
+        synchronized (espectadores) {
+            if (espectadores.contains(jugadorEliminado)) {
+                espectadores.remove(jugadorEliminado);
+                return;
+            }
+        }
         synchronized (jugadores) {
             if (!jugadores.remove(jugadorEliminado))
                 throw new ZombielandException("El jugador no estaba unido a la partida");
@@ -437,13 +443,6 @@ public class Partida implements SesionListener {
 
     @Override
     public void notificarSesionCerrada(Sesion sesion) {
-        Jugador jugador = sesion.getJugador();
-        synchronized (espectadores) {
-            if (espectadores.contains(jugador)) {
-                espectadores.remove(jugador);
-                return;
-            }
-        }
         try {
             removerJugador(sesion.getJugador());
         } catch (ZombielandException e) {

@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -36,7 +37,6 @@ import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Movimiento.Direccion;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import javax.swing.SwingConstants;
 
 /**
  * Interfaz de tablero.
@@ -60,6 +60,14 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 	private Map<Avatar, Image> img; // Avatares
 	private ImageIcon fondo;
 
+    private JButton moveDown;
+
+    private JButton moveRight;
+
+    private JButton moveLeft;
+
+    private JButton moveUp;
+
 	public InterfazTablero() {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
@@ -74,7 +82,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 		fondo = new ImageIcon(RutaImagen.get("imagenes/Tablero/pasto.png"));
 
-		JButton moveUp = new JButton("");
+		moveUp = new JButton("");
 		moveUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mover(Direccion.NORTE);
@@ -96,7 +104,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		// }
 		// });
 
-		JButton moveLeft = new JButton("");
+		moveLeft = new JButton("");
 		moveLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mover(Direccion.OESTE);
@@ -117,7 +125,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		moveLeft.setBounds(587, 423, 45, 45);
 		add(moveLeft);
 
-		JButton moveRight = new JButton("");
+		moveRight = new JButton("");
 		// button_2.addKeyListener(new KeyAdapter() {
 		// @Override
 		// public void keyPressed(KeyEvent e) {
@@ -136,7 +144,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		moveRight.setBounds(689, 423, 45, 45);
 		add(moveRight);
 
-		JButton moveDown = new JButton("");
+		moveDown = new JButton("");
 		// button_3.addKeyListener(new KeyAdapter() {
 		// @Override
 		// public void keyPressed(KeyEvent e) {
@@ -270,6 +278,14 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		}
 	}
 
+	@Override
+	public void notificarCambioEstadoEspectador(boolean espectador) {
+	    moveDown.setVisible(!espectador);
+	    moveUp.setVisible(!espectador);
+	    moveRight.setVisible(!espectador);
+	    moveLeft.setVisible(!espectador);
+	}
+	
 	@Override
 	public void notificarProyeccionActualizada(ProyeccionTablero proyeccion) {
 		repaint();
