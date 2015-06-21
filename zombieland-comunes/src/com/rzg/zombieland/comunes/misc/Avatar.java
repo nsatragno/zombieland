@@ -1,8 +1,9 @@
 package com.rzg.zombieland.comunes.misc;
 
 public enum Avatar {
-	MUJER("avatar-mujer.png", true),
+	POLICIA("avatar-poli.png", true),
 	HOMBRE("avatar-dsn.png", true),
+	MUJER("avatar-mujer.png", true),
 	OBSTACULO("avatar4.png", false),
 	ZOMBIE("zombie.png", false);
 

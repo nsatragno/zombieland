@@ -147,6 +147,7 @@ public class Principal implements EscuchaLog {
 		puerto.setColumns(10);
 		
 		frame = new JFrame();
+		frame.setTitle("Servidor ZombieLand");
 		frame.setBounds(100, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setJMenuBar(menuBar);

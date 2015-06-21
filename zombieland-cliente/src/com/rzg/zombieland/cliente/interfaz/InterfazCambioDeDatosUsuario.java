@@ -1,13 +1,13 @@
 package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.HashMap;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -30,6 +30,9 @@ import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
+import com.rzg.zombieland.comunes.misc.Avatar;
+
+import javax.swing.SwingConstants;
 
 /**
  * 
@@ -37,16 +40,22 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  * @author Nicolas L
  *
  */
-public class InterfazCambioDeDatosUsuario extends JFrame {
+public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4342197949176383612L;
 	private JPanel contentPane;
 	private JTextField textUsuario;
-	private JTextField textPreg;
 	private JTextField textRta;
 	private ButtonGroup Avatar = new ButtonGroup();
 	private JPasswordField pass;
 	private JPasswordField passVerificacion;
 	private JComboBox <String> preguntaSeguridad;
+	private JRadioButton rdbtnPJ1;
+	private JRadioButton rdbtnPJ2;
+	private JRadioButton rdbtnPJ3;
 
 	/**
 	 * Create the frame.
@@ -60,6 +69,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		addWindowListener(this);
 
 		JLabel lblNombreDeUsuario = new JLabel("Nombre de Usuario:");
 		lblNombreDeUsuario.setForeground(Color.WHITE);
@@ -92,7 +102,8 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		lblRespuestaDeSeguridad.setBounds(27, 305, 220, 22);
 		contentPane.add(lblRespuestaDeSeguridad);
 
-		textUsuario = new JTextField("nombreAct");
+		textUsuario = new JTextField("");
+		textUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		textUsuario.setBorder(new LineBorder(Color.BLACK));
 		textUsuario.setForeground(Color.WHITE);
 		textUsuario.setOpaque(false);
@@ -100,15 +111,33 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		contentPane.add(textUsuario);
 		textUsuario.setColumns(10);
 		
+		pass = new JPasswordField();
+		pass.setBorder(new LineBorder(Color.BLACK));
+		pass.setForeground(Color.WHITE);
+		pass.setOpaque(false);
+		pass.setToolTipText("");
+		pass.setBounds(312, 153, 160, 20);
+		contentPane.add(pass);
+
+		// pass.setToolTipText("Mas de 4 digitos.");
+
+		passVerificacion = new JPasswordField("");
+		passVerificacion.setBorder(new LineBorder(Color.BLACK));
+		passVerificacion.setForeground(Color.WHITE);
+		passVerificacion.setOpaque(false);
+		passVerificacion.setBounds(313, 186, 159, 20);
+		contentPane.add(passVerificacion);
+		
 		preguntaSeguridad = new JComboBox<String>();
         preguntaSeguridad.setBorder(new LineBorder(new Color(51, 153, 51)));
         preguntaSeguridad.setForeground(Color.WHITE);
         preguntaSeguridad.setBackground(Color.BLACK);
         preguntaSeguridad.setModel(Estado.preguntas);
-        preguntaSeguridad.setBounds(312, 275, 160, 20);
-        add(preguntaSeguridad);
+        preguntaSeguridad.setBounds(312, 275, 225, 20);
+        getContentPane().add(preguntaSeguridad);
 
-		textRta = new JTextField("RTA");
+		textRta = new JTextField("");
+		textRta.setHorizontalAlignment(SwingConstants.CENTER);
 		textRta.setBorder(new LineBorder(Color.BLACK));
 		textRta.setForeground(Color.WHITE);
 		textRta.setOpaque(false);
@@ -140,18 +169,35 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setBounds(554, 22, 220, 22);
 		contentPane.add(lblNewLabel);
+		
+		JLabel lblAvatarPoli = new JLabel("");
+		lblAvatarPoli
+				.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-poli.png")));
+		lblAvatarPoli.setBounds(695, 76, 79, 80);
+		contentPane.add(lblAvatarPoli);
 
-		JRadioButton rdbtnPJ1 = new JRadioButton("");
+		rdbtnPJ1 = new JRadioButton("");
 		rdbtnPJ1.setOpaque(false);
 		rdbtnPJ1.setBounds(630, 97, 67, 54);
 		contentPane.add(rdbtnPJ1);
+		
+		JLabel lblAvatarDsn = new JLabel("");
+		lblAvatarDsn.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-dsn.png")));
+		lblAvatarDsn.setBounds(695, 194, 73, 94);
+		contentPane.add(lblAvatarDsn);
 
-		JRadioButton rdbtnPJ2 = new JRadioButton("");
+		rdbtnPJ2 = new JRadioButton("");
 		rdbtnPJ2.setOpaque(false);
 		rdbtnPJ2.setBounds(630, 220, 67, 54);
 		contentPane.add(rdbtnPJ2);
+		
+		JLabel lblAvatarMujer = new JLabel("");
+		lblAvatarMujer
+				.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-mujer.png")));
+		lblAvatarMujer.setBounds(695, 341, 73, 74);
+		contentPane.add(lblAvatarMujer);
 
-		JRadioButton rdbtnPJ3 = new JRadioButton("");
+		rdbtnPJ3 = new JRadioButton("");
 		rdbtnPJ3.setOpaque(false);
 		rdbtnPJ3.setBounds(630, 357, 67, 54);
 		contentPane.add(rdbtnPJ3);
@@ -161,61 +207,11 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 		Avatar.add(rdbtnPJ1);
 		Avatar.add(rdbtnPJ2);
 		Avatar.add(rdbtnPJ3);
-
-		pass = new JPasswordField();
-		pass.setBorder(new LineBorder(Color.BLACK));
-		pass.setForeground(Color.WHITE);
-		pass.setOpaque(false);
-		pass.setToolTipText("");
-		pass.setBounds(312, 153, 160, 20);
-		contentPane.add(pass);
-
-		// pass.setToolTipText("Mas de 4 digitos.");
-
-		passVerificacion = new JPasswordField("");
-		passVerificacion.setBorder(new LineBorder(Color.BLACK));
-		passVerificacion.setForeground(Color.WHITE);
-		passVerificacion.setOpaque(false);
-		passVerificacion.setBounds(313, 186, 159, 20);
-		contentPane.add(passVerificacion);
-		
-		try {
-			PeticionObtenerDatosJugador peticion = new PeticionObtenerDatosJugador();
-			ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
-			peticion.getRespuesta().then(new DoneCallback<POJORegistro> () {
-				@Override
-				public void onDone(POJORegistro datos){
-					textUsuario.setText(datos.getNombre());
-					//TODO Ivan ver esto y avatar
-					textPreg.setText(datos.getPreguntaSecreta());
-					textRta.setText(datos.getRespuestaSecreta());
-				}
-			});
-		} catch (ZombielandException e1) {
-			
-		}
-
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1
-				.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-mujer.png")));
-		lblNewLabel_1.setBounds(695, 341, 73, 74);
-		contentPane.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2
-				.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-poli.png")));
-		lblNewLabel_2.setBounds(695, 76, 79, 80);
-		contentPane.add(lblNewLabel_2);
 		
 		JLabel label_1 = new JLabel("RZG - 2015");
 		label_1.setForeground(SystemColor.textInactiveText);
 		label_1.setBounds(700, 515, 63, 14);
 		contentPane.add(label_1);
-
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-dsn.png")));
-		label.setBounds(695, 194, 73, 94);
-		contentPane.add(label);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(-500, 0, 1300, 600);
@@ -225,6 +221,82 @@ public class InterfazCambioDeDatosUsuario extends JFrame {
 	}
 	
 	private void cambiarDatos(){
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0)
+	{
+		try {
+			PeticionObtenerDatosJugador peticion = new PeticionObtenerDatosJugador();
+			ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
+			peticion.getRespuesta().then(new DoneCallback<POJORegistro> () {
+				@Override
+				public void onDone(POJORegistro datos){
+					textUsuario.setText(datos.getNombre());
+					pass.setText(datos.getClave());
+					passVerificacion.setText(datos.getClave());
+					//TODO avatar
+					int indice = 0;
+					boolean encontro = false;
+					while(!encontro &&  indice < preguntaSeguridad.getItemCount()) {
+						if(datos.getPreguntaSecreta().
+								equals(preguntaSeguridad.getItemAt(indice)))
+							encontro = true;
+						else indice++;
+					}
+					preguntaSeguridad.setSelectedIndex(indice);
+					textRta.setText(datos.getRespuestaSecreta());
+					HashMap<Avatar, JRadioButton> mapa = new HashMap<Avatar, JRadioButton>();
+					mapa.put(Avatar.POLICIA, rdbtnPJ1);
+					mapa.put(Avatar.HOMBRE, rdbtnPJ2);
+					mapa.put(Avatar.MUJER, rdbtnPJ3);
+				}
+			});
+		} catch (ZombielandException e1) {
+			
+		}
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e)
+	{
+		textUsuario.setText("");
+		pass.setText("");
+		passVerificacion.setText("");
+		preguntaSeguridad.setSelectedIndex(-1);
+		textRta.setText("");
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e)
+	{
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e)
+	{
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e)
+	{
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e)
+	{
 		
 	}
 }

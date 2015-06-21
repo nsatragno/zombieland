@@ -15,8 +15,8 @@ import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
  */
 public class Estado {
 	
-	public static final DefaultComboBoxModel<String> preguntas = new DefaultComboBoxModel<String>(new String[] { "",
-            "Cual es su color favorito?", "Mejor amigo de la infancia?",
+	public static final DefaultComboBoxModel<String> preguntas = new DefaultComboBoxModel<String>
+	(new String[] { "", "Cual es su color favorito?", "Mejor amigo de la infancia?",
             "A que escuela primaria fue?", "Nombre de su primer mascota?" });
 
     /**
