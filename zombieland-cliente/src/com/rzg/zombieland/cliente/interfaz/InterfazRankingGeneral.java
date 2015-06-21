@@ -3,6 +3,8 @@ package com.rzg.zombieland.cliente.interfaz;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,6 +59,11 @@ public class InterfazRankingGeneral extends JPanel {
 		add(lblNewLabel_1);
 
 		JButton btnVolver = new JButton("Volver al Lobby");
+		btnVolver.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                Main.irA(Main.INICIO_SESION);
+            }
+        });
 		btnVolver.setBounds(40, 325, 121, 35);
 		add(btnVolver);
 		
