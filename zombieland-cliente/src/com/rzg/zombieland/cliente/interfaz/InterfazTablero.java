@@ -26,6 +26,7 @@ import org.jdeferred.DoneCallback;
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionMovimiento;
 import com.rzg.zombieland.cliente.meta.Estado;
+import com.rzg.zombieland.cliente.meta.Estado.EscuchadorProyeccion;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
@@ -39,7 +40,7 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  * @author Manuel
  */
 
-public class InterfazTablero extends JPanel {
+public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -201,6 +202,8 @@ public class InterfazTablero extends JPanel {
 		labelFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-tablero.png")));
 		labelFondo.setBounds(0, 0, 800, 600);
 		add(labelFondo);
+		
+		Estado.getInstancia().addEscuchador(this);
 	}
 
 	public void paint(Graphics g) {
@@ -235,5 +238,10 @@ public class InterfazTablero extends JPanel {
             JOptionPane.showMessageDialog(
                     this, e.getMessage(), "Zombieland tablero", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    @Override
+    public void notificarProyeccionActualizada(ProyeccionTablero proyeccion) {
+        repaint();
     }
 }

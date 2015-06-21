@@ -355,16 +355,24 @@ public class Partida {
         return estado;
     }
 
-	public void enviarProyeccion() {
-		
-		for(Jugador jugador : jugadores){
-			Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
-			try {
-				sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
-			} catch (ZombielandException e) {
-				Log.error("No llegó la proyección del tablero.");
-			}
-		}
-		
-	}
+    public void enviarProyeccion() {
+        for (Jugador jugador : jugadores) {
+            Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
+            if (sesion == null)
+                continue;
+            try {
+                sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
+            } catch (ZombielandException e) {
+                Log.error("No llegó la proyección del tablero.");
+            }
+        }
+
+    }
+
+    /**
+     * @return true si la partida está siendo jugada, false de lo contrario.
+     */
+    public boolean activa() {
+        return estado == Estado.ACTIVA; 
+    }
 }

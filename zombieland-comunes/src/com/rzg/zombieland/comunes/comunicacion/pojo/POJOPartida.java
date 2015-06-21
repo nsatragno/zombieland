@@ -186,4 +186,12 @@ public class POJOPartida {
     public ProyeccionTablero getProyeccion() {
         return proyeccion;
     }
+
+    /**
+     * Establece la proyección de la partida.
+     * @param proyeccion2
+     */
+    public void setProyeccion(ProyeccionTablero proyeccion) {
+        this.proyeccion = proyeccion;
+    }
 }

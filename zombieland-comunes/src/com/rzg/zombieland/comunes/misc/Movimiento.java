@@ -15,7 +15,7 @@ public class Movimiento implements Comparable<Movimiento> {
 		/**
 		 * Movimiento hacia «arriba». 
 		 */
-		NORTE(0, 1),
+		NORTE(0, -1),
 		/**
 		 * Movimiento hacia la derecha.
 		 */
@@ -23,7 +23,7 @@ public class Movimiento implements Comparable<Movimiento> {
 		/**
 		 * Movimiento hacia «abajo».
 		 */
-		SUR(0, -1),
+		SUR(0, 1),
 		/**
 		 * Movimiento hacia la izquierda.
 		 */

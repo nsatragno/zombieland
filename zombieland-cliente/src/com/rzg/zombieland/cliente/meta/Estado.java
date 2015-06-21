@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 
+import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
 
@@ -40,9 +41,22 @@ public class Estado {
     public interface EscuchadorPartidas {
         /**
          * Se dispara cuando se cambie el estado del lobby.
-         * @param pojo
+         * @param respuesta
          */
         public void notificarPartidasActualizadas(POJOListadoPartidas respuesta);
+    }
+    
+    /**
+     * Interfaz para escuchar cambios de estado de tablero.
+     * @author nicolas
+     *
+     */
+    public interface EscuchadorProyeccion {
+        /**
+         * Se dispara cuando se cambie el estado del tablero.
+         * @param proyeccion
+         */
+        public void notificarProyeccionActualizada(ProyeccionTablero proyeccion);
     }
     
     
@@ -55,10 +69,13 @@ public class Estado {
     private List<EscuchadorEstadoLobby> escuchadoresLobby;
 
     private List<EscuchadorPartidas> escuchadoresPartidas;
+
+    private List<EscuchadorProyeccion> escuchadoresProyeccion;
     
     public Estado() {
         escuchadoresLobby = new ArrayList<EscuchadorEstadoLobby>();
         escuchadoresPartidas = new ArrayList<EscuchadorPartidas>();
+        escuchadoresProyeccion = new ArrayList<EscuchadorProyeccion>();
         estadoLobby = POJOPartida.PARTIDA_VACIA;
     }
     
@@ -77,6 +94,14 @@ public class Estado {
      */
     public void addEscuchador(EscuchadorEstadoLobby escuchador) {
         this.escuchadoresLobby.add(escuchador);
+    }
+    
+    /**
+     * Agrega un escuchador de estado de partida.
+     * @param escuchador
+     */
+    public void addEscuchador(EscuchadorProyeccion escuchador) {
+        this.escuchadoresProyeccion.add(escuchador);
     }
     
     /**
@@ -118,5 +143,11 @@ public class Estado {
     public void setListadoPartidas(POJOListadoPartidas listado) {
         for (EscuchadorPartidas escuchador : escuchadoresPartidas)
             escuchador.notificarPartidasActualizadas(listado);
+    }
+
+    public void setProyeccion(ProyeccionTablero proyeccion) {
+        estadoLobby.setProyeccion(proyeccion);
+        for (EscuchadorProyeccion escuchador : escuchadoresProyeccion)
+            escuchador.notificarProyeccionActualizada(proyeccion);
     }
 }
