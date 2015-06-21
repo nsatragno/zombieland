@@ -208,6 +208,7 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
         String idPartida = modeloPartidas.getIdPartida(indicePartida);
         PeticionUnirsePartida peticion = 
                 new PeticionUnirsePartida(new POJOUnirsePartida(idPartida, espectador));
+        Estado.getInstancia().setEspectador(espectador);
         unirse(peticion);
     }
 

@@ -22,6 +22,9 @@ public class ServicioCliente implements HiloListener {
     // Esta clase es un singleton.
     private static ServicioCliente instancia;
     
+    // Escuchador del hilo.
+    private static HiloListener listenerHilo;
+    
     /**
      * Constructor privado para uso de crearInstancia.
      * @param puerto
@@ -31,6 +34,7 @@ public class ServicioCliente implements HiloListener {
     private ServicioCliente(int puerto, String host) throws ZombielandException {
         try {
             hiloEscucha = new HiloEscucha(new Socket(host, puerto), new ControladorClienteFactory());
+            hiloEscucha.addListener(this);
             hiloEscucha.start();
         } catch(IOException e) {
             throw new ZombielandException("No se pudo realizar la conexión con el servidor: " +
@@ -85,9 +89,19 @@ public class ServicioCliente implements HiloListener {
         }
         instancia = null;
     }
+    
+    /**
+     * Establece el escuchador de eventos de conexión.
+     * @param listener
+     */
+    public static void setListener(HiloListener listener) {
+        listenerHilo = listener;
+    }
 
     @Override
     public void hiloCerrado(HiloEscucha hilo) {
-        Log.error("Se cerró la conexión con el servidor");
+        Log.info("Se cerró la conexión con el servidor");
+        if (listenerHilo != null)
+            listenerHilo.hiloCerrado(hilo);
     }
 }

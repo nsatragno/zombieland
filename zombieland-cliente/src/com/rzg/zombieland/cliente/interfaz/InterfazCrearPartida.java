@@ -155,6 +155,7 @@ public class InterfazCrearPartida extends JPanel
                         POJOPartida estadoLobby = 
                                 new POJOPartida(pojo, Estado.getInstancia().getNombreJugador());
                         Estado.getInstancia().setEstadoLobby(estadoLobby);
+                        Estado.getInstancia().setEspectador(false);
                         Main.irA(Main.LOBBY);
                         return;
                     }

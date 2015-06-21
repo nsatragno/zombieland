@@ -4,12 +4,17 @@ import java.awt.CardLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
+import com.rzg.zombieland.comunes.comunicacion.HiloListener;
 
 /**
  * 
  */
-public class Main extends JFrame {
+public class Main extends JFrame implements HiloListener {
 
     /**
      * Pantalla en la que se establece la conexión con el servidor.
@@ -105,5 +110,15 @@ public class Main extends JFrame {
 		contentPane.add(new InterfazRankingGeneral(), RANKING_GENERAL);
 		setJMenuBar(new MenuZombieland());
 		setContentPane(contentPane);
+		ServicioCliente.setListener(this);
 	}
+
+    @Override
+    public void hiloCerrado(HiloEscucha hilo) {
+        JOptionPane.showMessageDialog(this,
+                                      "Se perdió la conexión con el servidor", 
+                                      "Zombieland",
+                                      JOptionPane.ERROR_MESSAGE);
+        irA(CONEXION);
+    }
 }
