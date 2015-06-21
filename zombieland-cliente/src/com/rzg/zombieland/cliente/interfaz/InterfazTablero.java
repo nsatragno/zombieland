@@ -49,7 +49,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 	private static final long serialVersionUID = 1L;
 
 	private JTable table;
-	
+
 	private final Timer timer = new Timer();
 	// Constantes
 	private static final int DIMENSION = 500; // Dimension en pixeles del
@@ -60,20 +60,15 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 	private Map<Avatar, Image> img; // Avatares
 	private ImageIcon fondo;
 
-    private JButton moveDown;
+	private JButton moveDown;
 
-    private JButton moveRight;
+	private JButton moveRight;
 
-    private JButton moveLeft;
+	private JButton moveLeft;
 
-    private JButton moveUp;
-    
-    // True si es la primera vez que se va a pintar el tablero para una partida, false de lo 
-    // contrario.
-    private boolean primeraVez;
+	private JButton moveUp;
 
 	public InterfazTablero() {
-	    primeraVez = true;
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		setBounds(100, 100, 800, 600);
@@ -174,7 +169,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		label.setForeground(SystemColor.textInactiveText);
 		label.setBounds(700, 515, 63, 14);
 		add(label);
-		
+
 		final JLabel labelTemporizador = new JLabel("LALALA");
 		labelTemporizador.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTemporizador.setBackground(Color.RED);
@@ -225,11 +220,12 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 				.get("imagenes/Fondos/fondo-tablero.png")));
 		labelFondo.setBounds(0, 0, 800, 600);
 		add(labelFondo);
-		
 
 		TimerTask task = new TimerTask() {
 			int tic = 0;
-		// Acá va la lógica del temporizador. Ajustar el tiempo del tic al tiempo del juego.
+
+			// Acá va la lógica del temporizador. Ajustar el tiempo del tic al
+			// tiempo del juego.
 			@Override
 			public void run() {
 				if (tic == 500) {
@@ -249,13 +245,15 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		
+		update(g);
+	}
+	public void update (Graphics g) {
 		ProyeccionTablero proyeccion = Estado.getInstancia().getEstadoLobby()
 				.getProyeccion();
-		proyeccion.paint(g, img, DIMENSION, MARGEN_IZQUIERDO, MARGEN_SUPERIOR, fondo, primeraVez);
-		primeraVez = false;
+		proyeccion.paint(g, img, DIMENSION, MARGEN_IZQUIERDO,
+				MARGEN_SUPERIOR, fondo);
 	}
-
+	
 	/**
 	 * Envía una petición de movimiento.
 	 * 
@@ -285,13 +283,12 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 	@Override
 	public void notificarCambioEstadoEspectador(boolean espectador) {
-	    primeraVez = true;
-	    moveDown.setVisible(!espectador);
-	    moveUp.setVisible(!espectador);
-	    moveRight.setVisible(!espectador);
-	    moveLeft.setVisible(!espectador);
+		moveDown.setVisible(!espectador);
+		moveUp.setVisible(!espectador);
+		moveRight.setVisible(!espectador);
+		moveLeft.setVisible(!espectador);
 	}
-	
+
 	@Override
 	public void notificarProyeccionActualizada(ProyeccionTablero proyeccion) {
 		repaint();
