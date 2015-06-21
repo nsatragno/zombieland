@@ -20,7 +20,7 @@ import com.rzg.zombieland.comunes.misc.Coordenada;
  *
  */
 public class ProyeccionTablero extends Enviable {
-    /**
+	/**
 	 * Identifica una entidad de la proyección.
 	 * 
 	 * @author nicolas
@@ -40,6 +40,7 @@ public class ProyeccionTablero extends Enviable {
 
 		/**
 		 * Crea un POJO de entidad a través de los parámetros básicos.
+		 * 
 		 * @param etiqueta
 		 * @param coordenada
 		 * @param avatar
@@ -57,49 +58,56 @@ public class ProyeccionTablero extends Enviable {
 			return coordenada;
 		}
 
-        /* (non-Javadoc)
-         * @see java.lang.Object#hashCode()
-         */
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + ((avatar == null) ? 0 : avatar.hashCode());
-            result = prime * result + ((coordenada == null) ? 0 : coordenada.hashCode());
-            result = prime * result + ((etiqueta == null) ? 0 : etiqueta.hashCode());
-            return result;
-        }
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result
+					+ ((avatar == null) ? 0 : avatar.hashCode());
+			result = prime * result
+					+ ((coordenada == null) ? 0 : coordenada.hashCode());
+			result = prime * result
+					+ ((etiqueta == null) ? 0 : etiqueta.hashCode());
+			return result;
+		}
 
-        /* (non-Javadoc)
-         * @see java.lang.Object#equals(java.lang.Object)
-         */
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            POJOEntidad other = (POJOEntidad) obj;
-            if (avatar != other.avatar)
-                return false;
-            if (coordenada == null) {
-                if (other.coordenada != null)
-                    return false;
-            } else if (!coordenada.equals(other.coordenada))
-                return false;
-            if (etiqueta == null) {
-                if (other.etiqueta != null)
-                    return false;
-            } else if (!etiqueta.equals(other.etiqueta))
-                return false;
-            return true;
-        }
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			POJOEntidad other = (POJOEntidad) obj;
+			if (avatar != other.avatar)
+				return false;
+			if (coordenada == null) {
+				if (other.coordenada != null)
+					return false;
+			} else if (!coordenada.equals(other.coordenada))
+				return false;
+			if (etiqueta == null) {
+				if (other.etiqueta != null)
+					return false;
+			} else if (!etiqueta.equals(other.etiqueta))
+				return false;
+			return true;
+		}
 
-        public Avatar getAvatar() {
-            return avatar;
-        }
+		public Avatar getAvatar() {
+			return avatar;
+		}
 	}
 
 	// Tamaño total del tablero - Ancho/largo de la matriz en casilleros
@@ -137,8 +145,13 @@ public class ProyeccionTablero extends Enviable {
 		return entidades;
 	}
 
+	public int getCasilleros() {
+		return casilleros;
+	}
+
 	/**
 	 * Dibuja una proyección de tablero.
+	 * 
 	 * @param g
 	 * @param img
 	 * @param anchoTablero
@@ -147,31 +160,28 @@ public class ProyeccionTablero extends Enviable {
 	 * @param fondo
 	 */
 	public void paint(Graphics g, Map<Avatar, Image> img, int anchoTablero,
-			int margenIzquierdo, int margenSuperior, ImageIcon fondo, boolean primeraVez) {
+			int margenIzquierdo, int margenSuperior, ImageIcon fondo) {
 		int anchoCasillero = anchoTablero / casilleros;
 		int anchoReal = getAnchoEfectivo(anchoTablero);
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setColor(Color.BLACK);
 		// La cuadrícula y el fondo -- ESTA ES LA SOLUCION --
-		if (primeraVez) {
-			g.drawImage(fondo.getImage(), margenIzquierdo, margenSuperior,
-					getAnchoEfectivo(anchoTablero),
-					getAnchoEfectivo(anchoTablero), null);
-			for (int i = 0; i <= casilleros; i++) {
-				g2D.drawLine(margenIzquierdo + anchoCasillero * i,
-						margenSuperior, margenIzquierdo + anchoCasillero * i,
-						margenSuperior + anchoReal);
-				g2D.drawLine(margenIzquierdo, margenSuperior + anchoCasillero
-						* i, margenIzquierdo + anchoReal, margenSuperior
-						+ anchoCasillero * i);
-			}
-			primeraVez = false;
+		g.drawImage(fondo.getImage(), margenIzquierdo, margenSuperior,
+				getAnchoEfectivo(anchoTablero), getAnchoEfectivo(anchoTablero),
+				null);
+		for (int i = 0; i <= casilleros; i++) {
+			g2D.drawLine(margenIzquierdo + anchoCasillero * i, margenSuperior,
+					margenIzquierdo + anchoCasillero * i, margenSuperior
+							+ anchoReal);
+			g2D.drawLine(margenIzquierdo, margenSuperior + anchoCasillero * i,
+					margenIzquierdo + anchoReal, margenSuperior
+							+ anchoCasillero * i);
 		}
 		for (POJOEntidad entidad : entidades) {
-			g.drawImage(img.get(entidad.getAvatar()), entidad.getCoordenada().getX() * anchoCasillero
-					+ margenIzquierdo, entidad.getCoordenada().getY()
-					* anchoCasillero + margenSuperior, anchoCasillero,
-					anchoCasillero, null);
+			g.drawImage(img.get(entidad.getAvatar()), entidad.getCoordenada()
+					.getX() * anchoCasillero + margenIzquierdo, entidad
+					.getCoordenada().getY() * anchoCasillero + margenSuperior,
+					anchoCasillero, anchoCasillero, null);
 		}
 
 		// La famosa 'Proyeccion'
@@ -189,69 +199,81 @@ public class ProyeccionTablero extends Enviable {
 				* anchoCasillero + margenSuperior,
 				esquinaSuperiorIzquierda.getX() * anchoCasillero,
 				esquinaInferiorDerecha.getY() * anchoCasillero
-						- (esquinaSuperiorIzquierda.getY() - 1) * anchoCasillero);
+						- (esquinaSuperiorIzquierda.getY() - 1)
+						* anchoCasillero);
 		g2D.fillRect((esquinaInferiorDerecha.getX() + 1) * anchoCasillero
 				+ margenIzquierdo, esquinaSuperiorIzquierda.getY()
 				* anchoCasillero + margenSuperior, anchoReal
 				- (esquinaInferiorDerecha.getX() + 1) * anchoCasillero,
 				esquinaInferiorDerecha.getY() * anchoCasillero
-						- (esquinaSuperiorIzquierda.getY() - 1) * anchoCasillero);
+						- (esquinaSuperiorIzquierda.getY() - 1)
+						* anchoCasillero);
 	}
 
 	/**
 	 * @param dimension
-	 * @return el ancho necesario del tablero para que los casilleros entren justo (elimina los 
-	 *         excedentes)
+	 * @return el ancho necesario del tablero para que los casilleros entren
+	 *         justo (elimina los excedentes)
 	 */
 	public int getAnchoEfectivo(int dimension) {
 		return dimension - dimension % casilleros;
 	}
-	
-	/* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + casilleros;
-        result = prime * result + ((entidades == null) ? 0 : entidades.hashCode());
-        result = prime * result
-                + ((esquinaInferiorDerecha == null) ? 0 : esquinaInferiorDerecha.hashCode());
-        result = prime * result
-                + ((esquinaSuperiorIzquierda == null) ? 0 : esquinaSuperiorIzquierda.hashCode());
-        return result;
-    }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ProyeccionTablero other = (ProyeccionTablero) obj;
-        if (casilleros != other.casilleros)
-            return false;
-        if (entidades == null) {
-            if (other.entidades != null)
-                return false;
-        } else if (!entidades.equals(other.entidades))
-            return false;
-        if (esquinaInferiorDerecha == null) {
-            if (other.esquinaInferiorDerecha != null)
-                return false;
-        } else if (!esquinaInferiorDerecha.equals(other.esquinaInferiorDerecha))
-            return false;
-        if (esquinaSuperiorIzquierda == null) {
-            if (other.esquinaSuperiorIzquierda != null)
-                return false;
-        } else if (!esquinaSuperiorIzquierda.equals(other.esquinaSuperiorIzquierda))
-            return false;
-        return true;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + casilleros;
+		result = prime * result
+				+ ((entidades == null) ? 0 : entidades.hashCode());
+		result = prime
+				* result
+				+ ((esquinaInferiorDerecha == null) ? 0
+						: esquinaInferiorDerecha.hashCode());
+		result = prime
+				* result
+				+ ((esquinaSuperiorIzquierda == null) ? 0
+						: esquinaSuperiorIzquierda.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProyeccionTablero other = (ProyeccionTablero) obj;
+		if (casilleros != other.casilleros)
+			return false;
+		if (entidades == null) {
+			if (other.entidades != null)
+				return false;
+		} else if (!entidades.equals(other.entidades))
+			return false;
+		if (esquinaInferiorDerecha == null) {
+			if (other.esquinaInferiorDerecha != null)
+				return false;
+		} else if (!esquinaInferiorDerecha.equals(other.esquinaInferiorDerecha))
+			return false;
+		if (esquinaSuperiorIzquierda == null) {
+			if (other.esquinaSuperiorIzquierda != null)
+				return false;
+		} else if (!esquinaSuperiorIzquierda
+				.equals(other.esquinaSuperiorIzquierda))
+			return false;
+		return true;
+	}
 }
