@@ -114,21 +114,6 @@ public class Principal implements EscuchaLog {
 			}
 		});
 		
-		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu("Servidor");
-		JMenuItem menuSalir = new JMenuItem("Salir");
-		menuSalir.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (servicio != null) 
-					toggleServidor();
-				frame.dispose();
-			}
-		});
-		menu.add(menuSalir);
-		menuBar.add(menu);
-		
 		log = new JTextArea();
 		log.setEditable(false);
 		log.setRows(40);
@@ -151,7 +136,6 @@ public class Principal implements EscuchaLog {
 		frame.setTitle("Servidor ZombieLand");
 		frame.setBounds(100, 100, 900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setJMenuBar(menuBar);
 		
 		frame.getContentPane().setLayout(new MigLayout());
 		frame.getContentPane().add(titulo, "span 2, wrap, growx");
@@ -161,6 +145,22 @@ public class Principal implements EscuchaLog {
 		frame.getContentPane().add(puerto, "wrap");
 		frame.getContentPane().add(scroll, "wrap, span 4");
 		frame.getContentPane().add(botonIniciar, "align center, span 4");
+		
+		JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Servidor");
+        JMenuItem menuSalir = new JMenuItem("Salir");
+        menuSalir.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (servicio != null) 
+                    toggleServidor();
+                frame.dispose();
+            }
+        });
+        menu.add(menuSalir);
+        menuBar.add(menu);
+        frame.setJMenuBar(menuBar);
 	}
 	
 	/**

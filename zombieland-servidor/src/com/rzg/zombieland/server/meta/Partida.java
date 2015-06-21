@@ -16,6 +16,7 @@ import com.rzg.zombieland.server.juego.Tablero;
 import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
 import com.rzg.zombieland.server.sesion.Sesion;
+import com.rzg.zombieland.server.sesion.Sesion.SesionListener;
 
 /**
  * Define una partida. La partida empieza cuando es creada por un jugador y termina cuando el
@@ -23,7 +24,7 @@ import com.rzg.zombieland.server.sesion.Sesion;
  * @author nicolas
  *
  */
-public class Partida {
+public class Partida implements SesionListener {
     /**
      * Estado de la partida actual.
      * @author nicolas
@@ -242,6 +243,9 @@ public class Partida {
         if (estado == Estado.ACTIVA)
             throw new ZombielandException("No se puede unir a una partida en progreso");
         jugadores.add(jugadorNuevo);
+        Sesion sesion = ServicioSesion.getInstancia().getSesion(jugadorNuevo);
+        if (sesion != null)
+            sesion.addListener(this);
         if (jugadores.size() == cantidadMaximaJugadores)
             setEstado(Estado.ACTIVA);
         for (Jugador jugador : jugadores) {
@@ -261,12 +265,7 @@ public class Partida {
         switch (estado) {
         case ACTIVA:
             // TODO ver si le permitimos cambiar la cantida de casilleros al admin.
-            int cantidadCasilleros = new Random().nextInt(10) + 10;
-            int jugadorZombie = rondaActual % jugadores.size();
-            tablero = new Tablero(cantidadCasilleros, jugadores, jugadores.get(jugadorZombie));
-            BucleJuego bucle = new BucleJuego(this);
-            bucle.start();
-            ServicioJuego.getInstancia().agregarBucle(bucle);
+            siguiente();
             break;
         case EN_ESPERA:
             resultados.add(tablero.getResultado());
@@ -316,19 +315,22 @@ public class Partida {
     /**
      * Quita un jugador de la partida.
      * @param jugadorEliminado
+     * @throws ZombielandException si el jugador no estaba unido a la partida.
      */
     public void removerJugador(Jugador jugadorEliminado) throws ZombielandException {
-        if (!jugadores.remove(jugadorEliminado))
-            throw new ZombielandException("El jugador no estaba unido a la partida");
-        if (jugadores.isEmpty()) {
-            if (listener != null)
-                listener.notificarPartidaVacia(this);
-            return;
+        synchronized (jugadores) {
+            if (!jugadores.remove(jugadorEliminado))
+                throw new ZombielandException("El jugador no estaba unido a la partida");
+            if (jugadores.isEmpty()) {
+                if (listener != null)
+                    listener.notificarPartidaVacia(this);
+                return;
+            }
+            if (tablero != null)
+                tablero.removerJugador(jugadorEliminado);
+            for (Jugador jugador : jugadores)
+                jugador.notificarCambioPartida();
         }
-        if (estado == Estado.ACTIVA)
-            tablero.removerJugador(jugadorEliminado);
-        for (Jugador jugador : jugadores)
-            jugador.notificarCambioPartida();
     }
     
     /**
@@ -338,7 +340,9 @@ public class Partida {
         if (estado != Estado.ACTIVA)
             throw new ZombielandException("La partida debe estar activa para mover a todos");
         tablero.moverTodos();
-        // TODO verificar si la partida terminó.
+        if (tablero.partidaFinalizada())
+            estado = Estado.EN_ESPERA;
+        // TODO agregar un estado nuevo.
     }
 
     /**
@@ -356,17 +360,18 @@ public class Partida {
     }
 
     public void enviarProyeccion() {
-        for (Jugador jugador : jugadores) {
-            Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
-            if (sesion == null)
-                continue;
-            try {
-                sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
-            } catch (ZombielandException e) {
-                Log.error("No llegó la proyección del tablero.");
+        synchronized (jugadores) {
+            for (Jugador jugador : jugadores) {
+                Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
+                if (sesion == null)
+                    continue;
+                try {
+                    sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
+                } catch (ZombielandException e) {
+                    Log.error("No llegó la proyección del tablero.");
+                }
             }
         }
-
     }
 
     /**
@@ -374,5 +379,30 @@ public class Partida {
      */
     public boolean activa() {
         return estado == Estado.ACTIVA; 
+    }
+
+    /**
+     * Arranca la siguiente ronda.
+     */
+    public void siguiente() {
+        estado = Estado.ACTIVA;
+        int cantidadCasilleros = new Random().nextInt(10) + 10;
+        int jugadorZombie = rondaActual % jugadores.size();
+        tablero = new Tablero(cantidadCasilleros, jugadores, jugadores.get(jugadorZombie));
+        BucleJuego bucle = new BucleJuego(this);
+        bucle.start();
+        ServicioJuego.getInstancia().agregarBucle(bucle);
+        rondaActual++;
+        
+    }
+
+    @Override
+    public void notificarSesionCerrada(Sesion sesion) {
+        try {
+            removerJugador(sesion.getJugador());
+        } catch (ZombielandException e) {
+            Log.error("El jugador no pudo quitarse de la lista al desconectarse:");
+            Log.error(e.getMessage());
+        }
     }
 }

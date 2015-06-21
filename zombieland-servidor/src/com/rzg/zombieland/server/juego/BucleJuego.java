@@ -7,7 +7,7 @@ import com.rzg.zombieland.server.meta.Partida;
 public class BucleJuego extends Thread implements Runnable {
 
     private Partida partida;
-    private final long TIEMPO_TURNO = 5000;
+    private final long TIEMPO_TURNO = 100;
 
     public BucleJuego(Partida partida) {
         this.partida = partida;
@@ -23,6 +23,7 @@ public class BucleJuego extends Thread implements Runnable {
                     partida.moverTodos();
                     partida.enviarProyeccion();
                     if (!partida.activa()) {
+                        partida.siguiente();
                         Log.info("La partida terminó, terminando bucle de juego.");
                         return;
                     }
