@@ -7,7 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -29,14 +31,10 @@ import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionObtenerDatosJuga
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
-import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.comunes.misc.Avatar;
-
-import javax.swing.SwingConstants;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
- * 
- * 
  * @author Nicolas L
  *
  */
@@ -46,18 +44,22 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
     private JPanel contentPane;
 	private JTextField textUsuario;
 	private JTextField textRta;
-	private ButtonGroup Avatar = new ButtonGroup();
+	private ButtonGroup grupoBotones = new ButtonGroup();
 	private JPasswordField pass;
 	private JPasswordField passVerificacion;
 	private JComboBox <String> preguntaSeguridad;
 	private JRadioButton rdbtnPJ1;
 	private JRadioButton rdbtnPJ2;
 	private JRadioButton rdbtnPJ3;
+	private int avataresColocados;
+	private List<String> spriteAvatares;
+	private List<JRadioButton> botonesPantalla;
 
 	/**
 	 * Create the frame.
 	 */
 	public InterfazCambioDeDatosUsuario() {
+		avataresColocados = 0;
 		setResizable(false);
 		setTitle("Cambiar Datos De Usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -161,49 +163,58 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 		btnCancelar.setBounds(548, 456, 175, 40);
 		contentPane.add(btnCancelar);
 
-		JLabel lblNewLabel = new JLabel("Seleccione Avatar:");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel.setBounds(554, 22, 220, 22);
-		contentPane.add(lblNewLabel);
+		JLabel lblSeleccionAvatar = new JLabel("Seleccione Avatar:");
+		lblSeleccionAvatar.setForeground(Color.WHITE);
+		lblSeleccionAvatar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSeleccionAvatar.setBounds(554, 22, 220, 22);
+		contentPane.add(lblSeleccionAvatar);
 		
-		JLabel lblAvatarPoli = new JLabel("");
-		lblAvatarPoli
-				.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-poli.png")));
-		lblAvatarPoli.setBounds(695, 76, 79, 80);
-		contentPane.add(lblAvatarPoli);
+		spriteAvatares = new ArrayList<String>();
+		
+		for(Avatar avatar : Avatar.values()) {
+			if(avatar.esPersonaje())
+				spriteAvatares.add(avatar.getSprite());
+		}
+		
+		JLabel lblAvatar1 = new JLabel("");
+		colocarAvatar(lblAvatar1, spriteAvatares, avataresColocados);
+		lblAvatar1.setBounds(695, 76, 79, 80);
+		contentPane.add(lblAvatar1);
 
+		botonesPantalla = new ArrayList<JRadioButton>();
 		rdbtnPJ1 = new JRadioButton("");
 		rdbtnPJ1.setOpaque(false);
 		rdbtnPJ1.setBounds(630, 97, 67, 54);
 		contentPane.add(rdbtnPJ1);
+		botonesPantalla.add(rdbtnPJ1);
 		
-		JLabel lblAvatarDsn = new JLabel("");
-		lblAvatarDsn.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-dsn.png")));
-		lblAvatarDsn.setBounds(695, 194, 73, 94);
-		contentPane.add(lblAvatarDsn);
+		JLabel lblAvatar2 = new JLabel("");
+		colocarAvatar(lblAvatar2, spriteAvatares, avataresColocados);
+		lblAvatar2.setBounds(695, 194, 73, 94);
+		contentPane.add(lblAvatar2);
 
 		rdbtnPJ2 = new JRadioButton("");
 		rdbtnPJ2.setOpaque(false);
 		rdbtnPJ2.setBounds(630, 220, 67, 54);
 		contentPane.add(rdbtnPJ2);
+		botonesPantalla.add(rdbtnPJ2);
 		
-		JLabel lblAvatarMujer = new JLabel("");
-		lblAvatarMujer
-				.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/avatar-mujer.png")));
-		lblAvatarMujer.setBounds(695, 341, 73, 74);
-		contentPane.add(lblAvatarMujer);
+		JLabel lblAvatar3 = new JLabel("");
+		colocarAvatar(lblAvatar3, spriteAvatares, avataresColocados);
+		lblAvatar3.setBounds(695, 341, 73, 74);
+		contentPane.add(lblAvatar3);
 
 		rdbtnPJ3 = new JRadioButton("");
 		rdbtnPJ3.setOpaque(false);
 		rdbtnPJ3.setBounds(630, 357, 67, 54);
 		contentPane.add(rdbtnPJ3);
+		botonesPantalla.add(rdbtnPJ3);
 
 		// Agrego los rdbtn al grupo de botones, para que solo se pueda
 		// seleccionar uno.
-		Avatar.add(rdbtnPJ1);
-		Avatar.add(rdbtnPJ2);
-		Avatar.add(rdbtnPJ3);
+		grupoBotones.add(rdbtnPJ1);
+		grupoBotones.add(rdbtnPJ2);
+		grupoBotones.add(rdbtnPJ3);
 		
 		JLabel label_1 = new JLabel("RZG - 2015");
 		label_1.setForeground(SystemColor.textInactiveText);
@@ -214,9 +225,24 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 		lblFondo.setBounds(-500, 0, 1300, 600);
 		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-cambio-datos.png")));
 		getContentPane().add(lblFondo);
-
 	}
 	
+	/**
+	 * El metodo va a colocar en el label la imagen del avatar que corresponda.
+	 * @param lblAvatar
+	 * @param spriteAvatares
+	 * @param indice
+	 */
+	private void colocarAvatar(JLabel lblAvatar,
+			List<String> spriteAvatares, int indice)
+	{
+		if(indice < spriteAvatares.size()) {
+			lblAvatar.setIcon(new ImageIcon(RutaImagen.get("imagenes/Avatares/"
+					+ spriteAvatares.get(indice))));
+			this.avataresColocados++;
+		}
+	}
+
 
 	@Override
 	public void windowActivated(WindowEvent arg0)
@@ -230,7 +256,6 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 					textUsuario.setText(datos.getNombre());
 					pass.setText(datos.getClave());
 					passVerificacion.setText(datos.getClave());
-					//TODO avatar
 					int indice = 0;
 					boolean encontro = false;
 					while(!encontro &&  indice < preguntaSeguridad.getItemCount()) {
@@ -241,6 +266,10 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 					}
 					preguntaSeguridad.setSelectedIndex(indice);
 					textRta.setText(datos.getRespuestaSecreta());
+					
+					int indiceBoton = spriteAvatares.indexOf(datos.getSpriteAvatarJugador());
+					botonesPantalla.get(indiceBoton).setSelected(true);
+
 				}
 			});
 		} catch (ZombielandException e1) {
@@ -257,7 +286,6 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 		passVerificacion.setText("");
 		preguntaSeguridad.setSelectedIndex(-1);
 		textRta.setText("");
-		
 	}
 
 	@Override

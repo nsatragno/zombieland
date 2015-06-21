@@ -34,6 +34,7 @@ public class POJORegistro extends Enviable {
      * @param clave - la clave del jugador que se registra.
      * @param preguntaSecreta - pregunta de seguridad.
      * @param respuestaSecreta - respuesta de seguridad
+     * @param avatar - el avatar del jugador
      * @throws ParametrosNoValidosException si alguno de los datos falta.
      */
     public POJORegistro(String nombre,
@@ -97,10 +98,10 @@ public class POJORegistro extends Enviable {
     
     /**
      * 
-     * @return el avatar del jugador.
+     * @return el sprite del avatar del jugador.
      */
-    public Avatar getAvatarJugador(){
-    	return avatarJugador;
+    public String getSpriteAvatarJugador(){
+    	return avatarJugador.getSprite();
     }
     
     @Override
