@@ -6,9 +6,14 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -71,8 +76,42 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
     // True si es la primera vez que se va a pintar el tablero para una partida, false de lo 
     // contrario.
     private boolean primeraVez;
+    
+    // Tenemos una referencia al dispatcher de flechas para activarlo solamente cuando se muestra
+    // la pantalla.
+    private DispatcherFlechas dispatcher;
 
+    private class DispatcherFlechas implements KeyEventDispatcher {
+
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() != KeyEvent.KEY_RELEASED)
+                return false;
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_LEFT:
+                    e.consume();
+                    mover(Direccion.OESTE);
+                    return true;
+                case KeyEvent.VK_RIGHT:
+                    e.consume();
+                    mover(Direccion.ESTE);
+                    return true;
+                case KeyEvent.VK_UP:
+                    e.consume();
+                    mover(Direccion.NORTE);
+                    return true;
+                case KeyEvent.VK_DOWN:
+                    e.consume();
+                    mover(Direccion.SUR);
+                    return true;
+            }
+            return false;
+        }
+        
+    }
+    
 	public InterfazTablero() {
+	    dispatcher = new DispatcherFlechas();
 	    primeraVez = true;
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
@@ -100,30 +139,13 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		moveUp.setBounds(640, 377, 45, 45);
 		add(moveUp);
 
-		// addKeyListener(new KeyAdapter() {
-		// @Override
-		// public void keyPressed(KeyEvent e) {
-		// if (e.getKeyCode() == KeyEvent.VK_0) {
-		// button.doClick();
-		// }
-		// }
-		// });
-
 		moveLeft = new JButton("");
 		moveLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mover(Direccion.OESTE);
 			}
 		});
-		// button_1.addKeyListener(new KeyAdapter() {
-		// @Override
-		// public void keyPressed(KeyEvent e) {
-		// if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-		// x -= tamañoCasilleros;
-		// repaint();
-		// }
-		// }
-		// });
+		
 		moveLeft.setIcon(new ImageIcon(RutaImagen
 				.get("imagenes/Tablero/FlechaIzquierda.png")));
 		moveLeft.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -131,13 +153,6 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		add(moveLeft);
 
 		moveRight = new JButton("");
-		// button_2.addKeyListener(new KeyAdapter() {
-		// @Override
-		// public void keyPressed(KeyEvent e) {
-		// x += tamañoCasilleros;
-		// repaint();
-		// }
-		// });
 		moveRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mover(Direccion.ESTE);
@@ -150,15 +165,6 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		add(moveRight);
 
 		moveDown = new JButton("");
-		// button_3.addKeyListener(new KeyAdapter() {
-		// @Override
-		// public void keyPressed(KeyEvent e) {
-		// if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-		// y += tamañoCasilleros;
-		// repaint();
-		// }
-		// }
-		// });
 		moveDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mover(Direccion.SUR);
@@ -216,6 +222,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		table.getColumnModel().getColumn(0).setPreferredWidth(120);
 		table.getColumnModel().getColumn(0).setMinWidth(50);
 		table.getColumnModel().getColumn(1).setResizable(false);
+		table.setFocusable(false);
 		table.setBounds(0, 0, 193, 304);
 		panelJug.add(table.getTableHeader(), BorderLayout.NORTH);
 		panelJug.add(table, BorderLayout.CENTER);
@@ -244,6 +251,29 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		// Programo el timer para que actúe cada 1ms.
 		timer.schedule(task, 0, 1);
 
+		addComponentListener(new ComponentListener() {
+            
+		    final KeyboardFocusManager manager = 
+		            KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		    
+		    @Override
+            public void componentShown(ComponentEvent e) {
+                if (Estado.getInstancia().isEspectador())
+                    return;
+                manager.addKeyEventDispatcher(dispatcher);
+            }
+            
+            @Override
+            public void componentResized(ComponentEvent e) { }
+            
+            @Override
+            public void componentMoved(ComponentEvent e) { }
+            
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                manager.removeKeyEventDispatcher(dispatcher);
+            }
+        });
 		Estado.getInstancia().addEscuchador(this);
 	}
 
