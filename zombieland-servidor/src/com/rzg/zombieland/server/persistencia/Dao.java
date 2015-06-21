@@ -34,7 +34,7 @@ public abstract class Dao<T, T_ID extends Serializable> {
      * Devuelve una sesión de Hibernate, abriéndola si es necesario.
      * @return la sesión de hibernate.
      */
-    private Session getSession() {
+    protected Session getSession() {
         if (session == null) {
             session = HibernateSingleton.getInstancia().openSession();
             session.beginTransaction();

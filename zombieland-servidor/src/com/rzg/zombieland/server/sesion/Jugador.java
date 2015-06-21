@@ -7,6 +7,8 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -38,7 +40,7 @@ public class Jugador {
 	 */
 	public static Jugador iniciarSesion(String nombre, String clave) {
 		JugadorDao dao = new JugadorDao();
-		Jugador jugador = dao.getObjeto(nombre);
+		Jugador jugador = dao.getJugadorPorNombre(nombre);
 		dao.cerrarSesion();
 		if (jugador == null)
 			return null;
@@ -46,9 +48,14 @@ public class Jugador {
 			return jugador;
 		return null;
 	}
+	
+	// ID único de jugador.
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
 	// Nombre de usuario.
-	@Id
+	@Column(unique = true)
 	private String nombre;
 
 	// Clave de acceso al sistema.
@@ -243,4 +250,8 @@ public class Jugador {
 			throw new InvalidParameterException();
 		}
 	}
+
+    public Integer getId() {
+        return id;
+    }
 }

@@ -21,7 +21,7 @@ public class ControladorCambioPass extends Controlador {
 		String nombreUsuario = cambiopass.getNombre();
 		String pass = cambiopass.getPass();
 		JugadorDao dao = new JugadorDao();
-		Jugador jugador = dao.getObjeto(nombreUsuario);
+		Jugador jugador = dao.getJugadorPorNombre(nombreUsuario);
 		
 		if (jugador == null) {
 	            return gson.toJson(new RespuestaGenerica("El usuario no existe"));

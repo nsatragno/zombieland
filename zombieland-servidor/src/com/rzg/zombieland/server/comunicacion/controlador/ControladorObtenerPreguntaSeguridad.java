@@ -23,7 +23,7 @@ public class ControladorObtenerPreguntaSeguridad extends Controlador{
 		POJONombreUsuario nombre = gson.fromJson(linea, POJONombreUsuario.class);
 		String nombreUsuario = nombre.getNombre();  
 		JugadorDao dao = new JugadorDao();
-		Jugador jugador = dao.getObjeto(nombreUsuario);
+		Jugador jugador = dao.getJugadorPorNombre(nombreUsuario);
 		dao.cerrarSesion();
 		if (jugador == null) {
 	            return gson.toJson(new RespuestaGenerica("El usuario no existe"));

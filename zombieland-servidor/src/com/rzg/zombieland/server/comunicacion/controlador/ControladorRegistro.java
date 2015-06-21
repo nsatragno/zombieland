@@ -21,7 +21,7 @@ public class ControladorRegistro extends Controlador {
         JugadorDao dao = new JugadorDao();
         try {
             Jugador jugador = new Jugador(registro);
-            Jugador existente = dao.getObjeto(jugador.getNombre());
+            Jugador existente = dao.getJugadorPorNombre(jugador.getNombre());
             if (existente != null)
                 throw new ZombielandException("El usuario ya existe");
             dao.guardarObjeto(jugador);
