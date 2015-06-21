@@ -88,6 +88,12 @@ public abstract class Enviable {
      */
 	
 	public static final int PREGUNTA_SEGURIDAD = 0xF;
+	
+	 /**
+     * Solicitud para realizar un cambio de contraseña de un usuario que no la recuerda.
+     */
+	
+	public static final int Cambio_Pass = 0x10;
 	/**
      * Indica que ha habido un error en el proceso.
      */
