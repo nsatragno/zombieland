@@ -46,7 +46,7 @@ public class PeticionRegistroTest extends PeticionTestHarness {
 				latch.countDown();
 			}
 		});
-        Assert.assertTrue(latch.await(5, TimeUnit.SECONDS));
+        Assert.assertTrue(latch.await(15, TimeUnit.SECONDS));
         JugadorDao dao = new JugadorDao();
         Jugador jugador = dao.getListado().get(0);
         assertEquals(jugador.getNombre(), registro.getNombre());

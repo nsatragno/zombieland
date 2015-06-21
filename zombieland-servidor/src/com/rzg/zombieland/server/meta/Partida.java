@@ -7,10 +7,15 @@ import java.util.UUID;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-import com.rzg.zombieland.server.juego.Personaje;
+import com.rzg.zombieland.server.comunicacion.ServicioJuego;
+import com.rzg.zombieland.server.comunicacion.peticion.PeticionProyeccion;
+import com.rzg.zombieland.server.juego.BucleJuego;
 import com.rzg.zombieland.server.juego.Tablero;
 import com.rzg.zombieland.server.sesion.Jugador;
+import com.rzg.zombieland.server.sesion.ServicioSesion;
+import com.rzg.zombieland.server.sesion.Sesion;
 
 /**
  * Define una partida. La partida empieza cuando es creada por un jugador y termina cuando el
@@ -259,6 +264,9 @@ public class Partida {
             int cantidadCasilleros = new Random().nextInt(10) + 10;
             int jugadorZombie = rondaActual % jugadores.size();
             tablero = new Tablero(cantidadCasilleros, jugadores, jugadores.get(jugadorZombie));
+            BucleJuego bucle = new BucleJuego(this);
+            bucle.start();
+            ServicioJuego.getInstancia().agregarBucle(bucle);
             break;
         case EN_ESPERA:
             resultados.add(tablero.getResultado());
@@ -346,4 +354,17 @@ public class Partida {
     public Estado getEstado() {
         return estado;
     }
+
+	public void enviarProyeccion() {
+		
+		for(Jugador jugador : jugadores){
+			Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
+			try {
+				sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
+			} catch (ZombielandException e) {
+				Log.error("No llegó la proyección del tablero.");
+			}
+		}
+		
+	}
 }

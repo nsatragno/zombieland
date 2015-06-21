@@ -79,7 +79,14 @@ public abstract class Enviable {
     public static final int MOVER_PERSONAJE = 0xD;
     
     /**
+     * Solicitud para actualizar la proyección enviada por el servidor.
+     */
+	public static final int ACTUALIZACION_PROYECCION = 0xE;
+    
+	/**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
+
+
 }
