@@ -294,9 +294,16 @@ public class Tablero {
                 }
             }
         }
-        if (personajeJugador == null)
-            throw new InvalidParameterException("El jugador no tiene ningún personaje");
-        Coordenada[] rectanguloVision = personajeJugador.getRectanguloVision();
+        Coordenada[] rectanguloVision;
+        if (personajeJugador == null) {
+            // Es la proyección para un espectador.
+            rectanguloVision = new Coordenada[] { 
+                new Coordenada(0, 0), 
+                new Coordenada(matriz.length - 1, matriz.length - 1)
+            };
+        } else {
+            rectanguloVision = personajeJugador.getRectanguloVision();
+        }
         return getProyeccion(rectanguloVision[0], rectanguloVision[1]);
     }
 

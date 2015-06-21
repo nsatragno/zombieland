@@ -3,6 +3,7 @@ package com.rzg.zombieland.server.comunicacion.controlador;
 import java.util.UUID;
 
 import com.google.gson.Gson;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOUnirsePartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
 import com.rzg.zombieland.comunes.misc.Log;
@@ -32,12 +33,16 @@ public class ControladorUnirsePartida extends ControladorConSesion {
     @Override
     public String procesarAutenticado(String linea) {
         Gson gson = new Gson();
-        String idPartida = gson.fromJson(linea, String.class);
-        Partida partida = ServicioPartidas.getInstancia().getPartida(UUID.fromString(idPartida));
+        POJOUnirsePartida datosPartida = gson.fromJson(linea, POJOUnirsePartida.class);
+        UUID idPartida = UUID.fromString(datosPartida.getIdPartida());
+        Partida partida = ServicioPartidas.getInstancia().getPartida(idPartida);
         if (partida == null)
             return gson.toJson(new RespuestaGenerica(MENSAJE_PARTIDA_NO_EXISTENTE));
         try {
-            partida.addJugador(getSesion().getJugador());
+            if (datosPartida.esEspectador())
+                partida.addEspectador(getSesion().getJugador());
+            else
+                partida.addJugador(getSesion().getJugador());
             getSesion().setPartida(partida);
         } catch (ZombielandException e) {
             return gson.toJson(new RespuestaGenerica(e.getMessage()));

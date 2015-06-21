@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.junit.Test;
 
 import com.google.gson.Gson;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOUnirsePartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
@@ -16,6 +17,7 @@ import com.rzg.zombieland.server.comunicacion.controlador.ControladorUnirseParti
 import com.rzg.zombieland.server.meta.EnviaPeticionesImpl;
 import com.rzg.zombieland.server.meta.Partida;
 import com.rzg.zombieland.server.meta.ServicioPartidas;
+import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
 import com.rzg.zombieland.server.sesion.Sesion;
 
@@ -34,7 +36,8 @@ public class ControladorUnirsePartidaTest extends AbstractPartidasTest {
         
         ControladorUnirsePartida controlador = new ControladorUnirsePartida(manejador);
         String idPartida = partida.getId().toString();
-        String sRespuesta = controlador.procesarAutenticado(gson.toJson(idPartida, String.class));
+        POJOUnirsePartida pojo = new POJOUnirsePartida(idPartida, false);
+        String sRespuesta = controlador.procesarAutenticado(gson.toJson(pojo));
         RespuestaUnirsePartida respuesta = gson.fromJson(sRespuesta, RespuestaUnirsePartida.class);
         assertTrue("La respuesta no fue exitosa: " + respuesta.getMensajeError(),
                    respuesta.fuePeticionExitosa());
@@ -42,7 +45,66 @@ public class ControladorUnirsePartidaTest extends AbstractPartidasTest {
                                                                 respuesta.getPartida());
         assertEquals(2, manejador.getSesion().getPartida().getJugadores().size());
     }
+    
+    @Test
+    public void testUnirseLlena() throws ZombielandException {
+        Gson gson = new Gson();
+        Partida partida = crearPartida();
+        Sesion sesion = new Sesion(getUltimoAdmin(), new EnviaPeticionesImpl());
+        sesion.setPartida(partida);
+        ServicioSesion.getInstancia().addSesion(sesion);
+        
+        
+        
+        ManejadorSesionImpl manejador = new ManejadorSesionImpl();
+        manejador.crearSesion();
+        ServicioPartidas.getInstancia().addPartida(partida);
+        
+        llenarPartida(partida);
+        
+        ControladorUnirsePartida controlador = new ControladorUnirsePartida(manejador);
+        String idPartida = partida.getId().toString();
+        POJOUnirsePartida pojo = new POJOUnirsePartida(idPartida, false);
+        String sRespuesta = controlador.procesarAutenticado(gson.toJson(pojo));
+        RespuestaUnirsePartida respuesta = gson.fromJson(sRespuesta, RespuestaUnirsePartida.class);
+        assertFalse(respuesta.fuePeticionExitosa());
+        assertEquals(Partida.MENSAJE_PARTIDA_EN_PROGRESO, respuesta.getMensajeError());
+    }
 
+    @Test
+    public void testObservarLlena() throws ZombielandException {
+        Gson gson = new Gson();
+        Partida partida = crearPartida();
+        Sesion sesion = new Sesion(getUltimoAdmin(), new EnviaPeticionesImpl());
+        sesion.setPartida(partida);
+        ServicioSesion.getInstancia().addSesion(sesion);
+        
+        
+        
+        ManejadorSesionImpl manejador = new ManejadorSesionImpl();
+        manejador.crearSesion();
+        ServicioPartidas.getInstancia().addPartida(partida);
+        
+        llenarPartida(partida);
+        
+        ControladorUnirsePartida controlador = new ControladorUnirsePartida(manejador);
+        String idPartida = partida.getId().toString();
+        POJOUnirsePartida pojo = new POJOUnirsePartida(idPartida, true);
+        String sRespuesta = controlador.procesarAutenticado(gson.toJson(pojo));
+        RespuestaUnirsePartida respuesta = gson.fromJson(sRespuesta, RespuestaUnirsePartida.class);
+        assertTrue(respuesta.fuePeticionExitosa());
+    }
+    
+    private void llenarPartida(Partida partida) throws ParametrosNoValidosException,
+            ZombielandException {
+        while (partida.puedenUnirseJugadores()) {
+            Jugador otro = crearJugador();
+            Sesion otraSesion = new Sesion(otro, new EnviaPeticionesImpl());
+            otraSesion.setPartida(partida);
+            ServicioSesion.getInstancia().addSesion(otraSesion);
+            partida.addJugador(otro);
+        }
+    }
 
     @Test
     public void testUnirseNoExistente() throws ParametrosNoValidosException {
@@ -51,8 +113,8 @@ public class ControladorUnirsePartidaTest extends AbstractPartidasTest {
         manejador.crearSesion();
         
         ControladorUnirsePartida controlador = new ControladorUnirsePartida(manejador);
-        String sRespuesta = controlador.procesarAutenticado(
-                gson.toJson(UUID.randomUUID().toString(), String.class));
+        POJOUnirsePartida pojo = new POJOUnirsePartida(UUID.randomUUID().toString(), false);
+        String sRespuesta = controlador.procesarAutenticado(gson.toJson(pojo));
         RespuestaUnirsePartida respuesta = gson.fromJson(sRespuesta, RespuestaUnirsePartida.class);
         assertFalse(respuesta.fuePeticionExitosa());
         assertEquals(ControladorUnirsePartida.MENSAJE_PARTIDA_NO_EXISTENTE, respuesta.getMensajeError());

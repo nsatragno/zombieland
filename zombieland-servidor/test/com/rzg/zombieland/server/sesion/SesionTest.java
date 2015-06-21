@@ -93,6 +93,7 @@ public class SesionTest {
     @Test
     public void testAbandonarPartida() throws ParametrosNoValidosException, ZombielandException {
         Sesion sesion = new Sesion(jugadorValido, new EnviaPeticionesImpl());
+        ServicioSesion.getInstancia().addSesion(sesion);
         Partida partida = new Partida(jugadorValido, new POJOCreacionPartida(5, 5, "test"));
         assertEquals(1, partida.getJugadores().size());
         assertNull(sesion.getPartida());
@@ -100,6 +101,5 @@ public class SesionTest {
         assertEquals(partida, sesion.getPartida());
         sesion.cerrar();
         assertEquals(0, partida.getJugadores().size());
-        assertNull(sesion.getPartida());
     }
 }

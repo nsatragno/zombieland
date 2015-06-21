@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.HiloEscucha;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOUnirsePartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
 import com.rzg.zombieland.comunes.controlador.ControladorTest;
@@ -193,7 +194,8 @@ public class RecepecionPeticionTest extends AbstractPartidasTest {
                 salidaOtroJugador.write(Enviable.UNIRSE_PARTIDA);
                 UUID uuid = UUID.randomUUID();
                 salidaOtroJugador.println(uuid);
-                salidaOtroJugador.println(gson.toJson(partida.getId()));
+                POJOUnirsePartida pojo = new POJOUnirsePartida(partida.getId().toString(), false);
+                salidaOtroJugador.println(gson.toJson(pojo));
                 salidaOtroJugador.flush();
                 
                 // El segundo jugador recibe la respuesta exitosa.

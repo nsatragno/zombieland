@@ -73,6 +73,9 @@ public class Partida implements SesionListener {
          */
         void notificarPartidaVacia(Partida partida);
     }
+
+    public static final String MENSAJE_PARTIDA_EN_PROGRESO = 
+            "No se puede unir a una partida en progreso";
     
     // ID único que identifica la partida.
     private UUID id;
@@ -123,6 +126,9 @@ public class Partida implements SesionListener {
     public Partida(Jugador administrador, POJOCreacionPartida datosPartida) {
         this(administrador, datosPartida.getNombre(), getLista(administrador), new ArrayList<Jugador>(),
              datosPartida.getCantidadRondas(), datosPartida.getCantidadMaximaJugadores());
+        Sesion sesion = ServicioSesion.getInstancia().getSesion(administrador);
+        if (sesion != null)
+            sesion.addListener(this);
     }
     
     /**
@@ -205,8 +211,10 @@ public class Partida implements SesionListener {
      */
     private List<String> proyectarNombres(List<Jugador> jugadores) {
         List<String> nombresJugadores = new ArrayList<String>(jugadores.size());
-        for (Jugador jugador : jugadores)
-            nombresJugadores.add(jugador.getNombre());
+        synchronized (jugadores) {
+            for (Jugador jugador : jugadores)
+                nombresJugadores.add(jugador.getNombre());
+        }
         return nombresJugadores;
     }
     
@@ -241,8 +249,12 @@ public class Partida implements SesionListener {
      */
     public void addJugador(Jugador jugadorNuevo) throws ZombielandException {
         if (estado == Estado.ACTIVA)
-            throw new ZombielandException("No se puede unir a una partida en progreso");
-        jugadores.add(jugadorNuevo);
+            throw new ZombielandException(MENSAJE_PARTIDA_EN_PROGRESO);
+        synchronized (jugadores) {
+            if (jugadores.size() == cantidadMaximaJugadores)
+                throw new ZombielandException("La partida está llena");
+            jugadores.add(jugadorNuevo);
+        }
         Sesion sesion = ServicioSesion.getInstancia().getSesion(jugadorNuevo);
         if (sesion != null)
             sesion.addListener(this);
@@ -253,7 +265,18 @@ public class Partida implements SesionListener {
                 continue;
             jugador.notificarCambioPartida();
         }
+        notificarEspectadores();
         ServicioPartidas.getInstancia().notificarClientes();
+    }
+
+    /**
+     * Notifica a los espectadores del cambio de partida.
+     */
+    private void notificarEspectadores() {
+        synchronized (espectadores) {
+            for (Jugador espectador : espectadores)
+                espectador.notificarCambioPartida();
+        }
     }
 
     /**
@@ -330,6 +353,7 @@ public class Partida implements SesionListener {
                 tablero.removerJugador(jugadorEliminado);
             for (Jugador jugador : jugadores)
                 jugador.notificarCambioPartida();
+            notificarEspectadores();
         }
     }
     
@@ -362,15 +386,24 @@ public class Partida implements SesionListener {
     public void enviarProyeccion() {
         synchronized (jugadores) {
             for (Jugador jugador : jugadores) {
-                Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
-                if (sesion == null)
-                    continue;
-                try {
-                    sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
-                } catch (ZombielandException e) {
-                    Log.error("No llegó la proyección del tablero.");
-                }
+                enviarProyeccionTablero(jugador);
             }
+        }
+        synchronized (espectadores) {
+            for (Jugador espectador : espectadores) {
+                enviarProyeccionTablero(espectador);
+            }
+        }
+    }
+
+    private void enviarProyeccionTablero(Jugador jugador) {
+        Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
+        if (sesion == null)
+            return;
+        try {
+            sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
+        } catch (ZombielandException e) {
+            Log.error("No llegó la proyección del tablero.");
         }
     }
 
@@ -385,24 +418,50 @@ public class Partida implements SesionListener {
      * Arranca la siguiente ronda.
      */
     public void siguiente() {
-        estado = Estado.ACTIVA;
-        int cantidadCasilleros = new Random().nextInt(10) + 10;
-        int jugadorZombie = rondaActual % jugadores.size();
-        tablero = new Tablero(cantidadCasilleros, jugadores, jugadores.get(jugadorZombie));
-        BucleJuego bucle = new BucleJuego(this);
-        bucle.start();
-        ServicioJuego.getInstancia().agregarBucle(bucle);
-        rondaActual++;
+        // TODO verificar si la partida ya terminó.
+        synchronized (jugadores) {
+            if (jugadores.size() == 0)
+                return;  // TODO terminar partida... o algo.
+            estado = Estado.ACTIVA;
+            int cantidadCasilleros = new Random().nextInt(10) + 10;
+            int jugadorZombie = rondaActual % jugadores.size();
+            tablero = new Tablero(cantidadCasilleros, jugadores, jugadores.get(jugadorZombie));
+            // TODO no crear un bucle nuevo por cada ronda.
+            BucleJuego bucle = new BucleJuego(this);
+            bucle.start();
+            ServicioJuego.getInstancia().agregarBucle(bucle);
+            rondaActual++;
+        }
         
     }
 
     @Override
     public void notificarSesionCerrada(Sesion sesion) {
+        Jugador jugador = sesion.getJugador();
+        synchronized (espectadores) {
+            if (espectadores.contains(jugador)) {
+                espectadores.remove(jugador);
+                return;
+            }
+        }
         try {
             removerJugador(sesion.getJugador());
         } catch (ZombielandException e) {
             Log.error("El jugador no pudo quitarse de la lista al desconectarse:");
             Log.error(e.getMessage());
+        }
+    }
+
+    /**
+     * Agrega un espectador a la partida.
+     * @param espectador
+     */
+    public void addEspectador(Jugador espectador) {
+        Sesion sesion = ServicioSesion.getInstancia().getSesion(espectador);
+        if (sesion != null)
+            sesion.addListener(this);
+        synchronized (espectadores) {
+            espectadores.add(espectador);
         }
     }
 }

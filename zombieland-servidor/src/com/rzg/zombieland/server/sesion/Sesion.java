@@ -106,19 +106,19 @@ public class Sesion {
     }
     
     public void addListener(SesionListener listener) {
-        listeners.add(listener);
+        synchronized (listeners) {
+            listeners.add(listener);
+        }
     }
     
     /**
      * Cierra la sesión del jugador.
      */
     public void cerrar() {
-        try {
-            abandonarPartidaActual();
+        Log.info("El jugador " + jugador.getNombre() + " ha cerrado sesión.");
+        synchronized (listeners) {
             for (SesionListener listener : listeners)
                 listener.notificarSesionCerrada(this);
-        } catch (ZombielandException e) {
-            Log.error("Error al intentar cerrar sesión: " + e.getMessage());
         }
     }
 

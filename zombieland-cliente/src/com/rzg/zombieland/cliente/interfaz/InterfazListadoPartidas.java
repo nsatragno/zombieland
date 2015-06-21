@@ -30,6 +30,7 @@ import com.rzg.zombieland.cliente.meta.Estado.EscuchadorPartidas;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOUnirsePartida;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
@@ -131,7 +132,7 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
 		btnUnirse.setBounds(288, 430, 175, 40);
 		btnUnirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    unirse();
+			    unirse(false);
 			}
 		});
 		add(btnUnirse);
@@ -159,7 +160,7 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
 		JButton btnObservar = new JButton("Observar");
 		btnObservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main.irA(Main.LOBBY);
+			    unirse(true);
 			}
 		});
 		btnObservar.setBounds(512, 430, 175, 40);
@@ -195,7 +196,7 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
 		Estado.getInstancia().addEscuchadorPartidas(this);
 	}
 
-    private void unirse() {
+    private void unirse(boolean espectador) {
         int indicePartida = tablaPartidas.getSelectedRow();
         if (indicePartida == -1) {
             JOptionPane.showMessageDialog(this,
@@ -205,7 +206,8 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
             return;
         }
         String idPartida = modeloPartidas.getIdPartida(indicePartida);
-        PeticionUnirsePartida peticion = new PeticionUnirsePartida(idPartida);
+        PeticionUnirsePartida peticion = 
+                new PeticionUnirsePartida(new POJOUnirsePartida(idPartida, espectador));
         unirse(peticion);
     }
 

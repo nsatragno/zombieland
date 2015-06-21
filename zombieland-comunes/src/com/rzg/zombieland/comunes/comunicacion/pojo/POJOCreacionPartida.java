@@ -24,9 +24,8 @@ public class POJOCreacionPartida {
     
     /**
      * No puede haber, estrictamente, menos jugadores que este número.
-     * TODO cambiar a 4.
      */
-    public static final int CANTIDAD_MINIMA_JUGADORES = 4;
+    public static final int CANTIDAD_MINIMA_JUGADORES = 3;
     
     /**
      * No puede haber, estrictamente, más jugadores que este número.
