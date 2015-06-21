@@ -25,6 +25,8 @@ import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.ServicioEscucha;
 import com.rzg.zombieland.server.comunicacion.ServicioJuego;
+import com.rzg.zombieland.server.meta.ServicioPartidas;
+import com.rzg.zombieland.server.sesion.ServicioSesion;
 
 /**
  * Interfaz principal del servidor.
@@ -184,6 +186,8 @@ public class Principal implements EscuchaLog {
 			// Detenemos el servidor.
 			servicio.cerrar();
 			ServicioJuego.getInstancia().matarBucles();
+			ServicioPartidas.matarInstancia();
+			ServicioSesion.matarInstancia();
 			try {
 				servicio.join();
 				Log.info("Servidor cerrado con éxito");
