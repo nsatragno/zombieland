@@ -36,8 +36,6 @@ public class MenuZombieland extends JMenuBar {
 	private static JMenuItem mntmRegistrarse;
 	private static JMenuItem mntmDatos;
 	private static JMenuItem mntmEstadsticas;
-	private static JMenuItem mntmJugar;
-	private static JMenuItem mntmVerPartidas;
 	private static JMenuItem mntmEstadsticasGlob;
 
 	public MenuZombieland() {
@@ -67,27 +65,6 @@ public class MenuZombieland extends JMenuBar {
 			}
 		});
 		mnArchivo.add(mntmSalir);
-
-		JMenu mnPartida = new JMenu("Partida");
-		add(mnPartida);
-
-		mntmJugar = new JMenuItem("Jugar");
-		mntmJugar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO aca hay que hacer que entre a una partida de forma
-				// aleatoria.
-				Main.irA(Main.LOBBY);
-			}
-		});
-		mnPartida.add(mntmJugar);
-
-		mntmVerPartidas = new JMenuItem("Ver Partidas");
-		mntmVerPartidas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Main.irA(Main.LISTADO_PARTIDAS);
-			}
-		});
-		mnPartida.add(mntmVerPartidas);
 
 		JMenu mnCuenta = new JMenu("Cuenta");
 		add(mnCuenta);
@@ -172,8 +149,6 @@ public class MenuZombieland extends JMenuBar {
 		mntmRegistrarse.setEnabled(inicio);
 		mntmDatos.setEnabled(inicio);
 		mntmEstadsticas.setEnabled(inicio);
-		mntmJugar.setEnabled(inicio);
-		mntmVerPartidas.setEnabled(inicio);
 		mntmEstadsticasGlob.setEnabled(inicio);
 	}
 	/**
@@ -186,14 +161,10 @@ public class MenuZombieland extends JMenuBar {
 		mntmRegistrarse.setEnabled(!inicio);
 		mntmDatos.setEnabled(inicio);
 		mntmEstadsticas.setEnabled(inicio);
-		mntmJugar.setEnabled(inicio);
-		mntmVerPartidas.setEnabled(inicio);
-
 	}
 	
 	/**
-	 * 
-	 * @param estado, se habilitan los botones despues de 
+	 * @param estado - se habilitan los botones despues de 
 	 * iniciar el servidor correctamente
 	 */
 	public static void setConexcionServidor(boolean estado){
