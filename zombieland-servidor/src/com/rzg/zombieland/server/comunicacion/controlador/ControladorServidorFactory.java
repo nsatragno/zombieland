@@ -52,6 +52,8 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
             return new ControladorCerrarSesion(this);
         case Enviable.DEVOLVER_DATOS:
         	return new ControladorObtenerDatosJugador(this);
+        case Enviable.PREGUNTA_SEGURIDAD:
+        	return new ControladorObtenerPreguntaSeguridad();
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

@@ -82,7 +82,12 @@ public abstract class Enviable {
      * Solicitud para actualizar la proyección enviada por el servidor.
      */
 	public static final int ACTUALIZACION_PROYECCION = 0xE;
-    
+	
+	 /**
+     * Solicitud para Obtener la pregunta de seguridad de un Usuario especifico.
+     */
+	
+	public static final int PREGUNTA_SEGURIDAD = 0xF;
 	/**
      * Indica que ha habido un error en el proceso.
      */

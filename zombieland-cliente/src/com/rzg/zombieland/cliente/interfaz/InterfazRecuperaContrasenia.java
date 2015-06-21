@@ -3,6 +3,8 @@ package com.rzg.zombieland.cliente.interfaz;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -10,13 +12,26 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.jdeferred.DoneCallback;
+
+import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionInicioSesion;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionPreguntaSeguridad;
+import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJONombreUsuario;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
+import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaPreguntaSeg;
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
+import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
  * Interfaz de recuperar contraseña.
@@ -29,7 +44,7 @@ public class InterfazRecuperaContrasenia extends JFrame
     private static final long serialVersionUID = 5811662849518666164L;
     private JPanel contentPane;
 	private JTextField textFieldUsuario;
-	private JComboBox<String> preguntaSeguridad;
+	private JLabel preguntaSeguridad;
 	private JTextField textFieldResp;
 
 	/**
@@ -76,13 +91,10 @@ public class InterfazRecuperaContrasenia extends JFrame
 		contentPane.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 		
-		preguntaSeguridad = new JComboBox<String>();
+		preguntaSeguridad = new JLabel("");
 		preguntaSeguridad.setBackground(Color.BLACK);
 		preguntaSeguridad.setOpaque(false);
 		preguntaSeguridad.setForeground(Color.WHITE);
-        preguntaSeguridad.setModel(new DefaultComboBoxModel<String>(new String[] { "",
-                "Cual es su color favorito?", "Mejor amigo de la infancia?",
-                "A que escuela primaria fue?", "Nombre de su primer mascota?" }));
         preguntaSeguridad.setBounds(270, 115, 191, 20);
         getContentPane().add(preguntaSeguridad);
 		
@@ -100,6 +112,12 @@ public class InterfazRecuperaContrasenia extends JFrame
         getContentPane().add(lblRzg);
         
         JButton btnRecuperar = new JButton("Recuperar");
+    	btnRecuperar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RecuperarPreguntaSeguridad();
+			}
+		});
         btnRecuperar.setBounds(195, 205, 135, 30);
         contentPane.add(btnRecuperar);
         
@@ -119,4 +137,41 @@ public class InterfazRecuperaContrasenia extends JFrame
         lblFondo.setBounds(-400, 0, 925, 386);
         contentPane.add(lblFondo);
 	}
+	/**
+	 * Ingresa el nombre de usuario y debe encontrar la pregunta de seguridad
+	 * correspondiente y su respuesta.
+	 */
+	public void RecuperarPreguntaSeguridad() {
+		preguntaSeguridad.setText(" ");
+		try {
+			final POJONombreUsuario pojo = new POJONombreUsuario(
+					textFieldUsuario.getText());
+			PeticionPreguntaSeguridad peticion = new PeticionPreguntaSeguridad(pojo);
+			ServicioCliente.enviarPeticion(peticion);
+			final InterfazRecuperaContrasenia _this = this;
+			
+			peticion.getRespuesta().done(new DoneCallback<RespuestaPreguntaSeg>() {
+				@Override
+				public void onDone(RespuestaPreguntaSeg respuesta) {
+					if (respuesta.fuePeticionExitosa()) {
+						preguntaSeguridad.setText(
+								respuesta.getPreguntaSeguridad().getPreguntaSeguridad());
+						return;
+					}
+					JOptionPane.showMessageDialog(_this,
+							respuesta.getMensajeError(),
+							"Recuperar Contraseña Fallo",
+							JOptionPane.WARNING_MESSAGE);
+				}
+			});	
+			
+		} catch (ParametrosNoValidosException e) {
+			JOptionPane.showMessageDialog(this, e.getMensaje(),
+					"Recuperar Contraseña Fallo", JOptionPane.WARNING_MESSAGE);
+		} catch (ZombielandException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(),
+					"Recuperar Contraseña Fallo", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 }
