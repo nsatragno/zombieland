@@ -67,8 +67,13 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
     private JButton moveLeft;
 
     private JButton moveUp;
+    
+    // True si es la primera vez que se va a pintar el tablero para una partida, false de lo 
+    // contrario.
+    private boolean primeraVez;
 
 	public InterfazTablero() {
+	    primeraVez = true;
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(null);
 		setBounds(100, 100, 800, 600);
@@ -247,8 +252,8 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		
 		ProyeccionTablero proyeccion = Estado.getInstancia().getEstadoLobby()
 				.getProyeccion();
-		proyeccion.paint(g, img, DIMENSION, MARGEN_IZQUIERDO, MARGEN_SUPERIOR,
-				fondo);
+		proyeccion.paint(g, img, DIMENSION, MARGEN_IZQUIERDO, MARGEN_SUPERIOR, fondo, primeraVez);
+		primeraVez = false;
 	}
 
 	/**
@@ -280,6 +285,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 	@Override
 	public void notificarCambioEstadoEspectador(boolean espectador) {
+	    primeraVez = true;
 	    moveDown.setVisible(!espectador);
 	    moveUp.setVisible(!espectador);
 	    moveRight.setVisible(!espectador);

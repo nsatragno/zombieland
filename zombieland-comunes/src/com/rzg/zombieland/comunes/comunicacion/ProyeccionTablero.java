@@ -112,8 +112,6 @@ public class ProyeccionTablero extends Enviable {
 	// Entidades visibles del tablero.
 	private List<POJOEntidad> entidades;
 
-	private boolean primeraVez = true;
-
 	/**
 	 * @param casilleros
 	 *            ancho / largo en casilleros
@@ -149,7 +147,7 @@ public class ProyeccionTablero extends Enviable {
 	 * @param fondo
 	 */
 	public void paint(Graphics g, Map<Avatar, Image> img, int anchoTablero,
-			int margenIzquierdo, int margenSuperior, ImageIcon fondo) {
+			int margenIzquierdo, int margenSuperior, ImageIcon fondo, boolean primeraVez) {
 		int anchoCasillero = anchoTablero / casilleros;
 		int anchoReal = getAnchoEfectivo(anchoTablero);
 		Graphics2D g2D = (Graphics2D) g;
@@ -222,7 +220,6 @@ public class ProyeccionTablero extends Enviable {
                 + ((esquinaInferiorDerecha == null) ? 0 : esquinaInferiorDerecha.hashCode());
         result = prime * result
                 + ((esquinaSuperiorIzquierda == null) ? 0 : esquinaSuperiorIzquierda.hashCode());
-        result = prime * result + (primeraVez ? 1231 : 1237);
         return result;
     }
 
