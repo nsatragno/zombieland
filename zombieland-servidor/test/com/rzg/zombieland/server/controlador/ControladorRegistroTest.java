@@ -1,6 +1,7 @@
 package com.rzg.zombieland.server.controlador;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -68,7 +69,13 @@ public class ControladorRegistroTest {
                 controlador.procesar(gson.toJson(registro)), RespuestaGenerica.class);
         Assert.assertTrue(respuesta.fuePeticionExitosa());
         Assert.assertEquals(null, respuesta.getMensajeError());
-        assertEquals(new Jugador(registro), dao.getJugadorPorNombre(NOMBRE_JUGADOR_VALIDO));
+        Jugador modelo = new Jugador(registro);
+        Jugador db = dao.getJugadorPorNombre(NOMBRE_JUGADOR_VALIDO);
+        assertEquals(modelo.getNombre(), db.getNombre());
+        assertEquals(modelo.getClave(), db.getClave());
+        assertEquals(modelo.getPreguntaSecreta(), db.getPreguntaSecreta());
+        assertEquals(modelo.getRespuestaSecreta(), db.getRespuestaSecreta());
+        assertNotEquals(0, db.getId().intValue());
         dao.cerrarSesion();
     }
     
