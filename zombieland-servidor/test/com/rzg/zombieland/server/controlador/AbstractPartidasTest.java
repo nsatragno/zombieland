@@ -106,11 +106,13 @@ public abstract class AbstractPartidasTest {
 
     protected Jugador crearJugador() throws ParametrosNoValidosException {
         String clave = UUID.randomUUID().toString();
-        return new Jugador(UUID.randomUUID().toString(), 
-                clave,
-                clave,
-                UUID.randomUUID().toString(),
-                UUID.randomUUID().toString());
+        Jugador jugador = new Jugador(UUID.randomUUID().toString(), 
+                                      clave,
+                                      clave,
+                                      UUID.randomUUID().toString(),
+                                      UUID.randomUUID().toString());
+        jugador.setId(new Random().nextInt());
+        return jugador;
     }
 
 

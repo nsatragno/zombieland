@@ -236,7 +236,7 @@ public class Tablero {
             Iterator<Personaje> iterator = personajes.iterator();
             while (iterator.hasNext()) {
                 Personaje personaje = iterator.next();
-                if (personaje.getJugador().getNombre().equals(jugadorEliminado.getNombre())) {
+                if (personaje.getJugador().getId().equals(jugadorEliminado.getId())) {
                     iterator.remove();
                     matriz[personaje.getPosicion().getX()][personaje.getPosicion().getY()] = null;
                 } else if (personaje.esZombie()) {
@@ -277,7 +277,7 @@ public class Tablero {
         synchronized (personajes) {
             for (int i = 0; i < personajes.size(); i++) {
             Personaje personaje = personajes.get(i);
-            if (personaje.getJugador().getNombre().equals(zombie.getJugador().getNombre()))
+            if (personaje.getJugador().getId().equals(zombie.getJugador().getId()))
                 personajes.set(i, zombie);
             }
         }
@@ -288,7 +288,7 @@ public class Tablero {
         Personaje personajeJugador = null;
         synchronized (personajes) {
             for (Personaje personaje : personajes) {
-                if (personaje.getJugador().getNombre().equals(jugador.getNombre())) {
+                if (personaje.getJugador().getId().equals(jugador.getId())) {
                     personajeJugador = personaje;
                     break;
                 }

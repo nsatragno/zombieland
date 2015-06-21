@@ -254,4 +254,13 @@ public class Jugador {
     public Integer getId() {
         return id;
     }
+
+    /**
+     * Establece manualmente el ID del jugador.
+     * (Para test).
+     * @param id
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 }
