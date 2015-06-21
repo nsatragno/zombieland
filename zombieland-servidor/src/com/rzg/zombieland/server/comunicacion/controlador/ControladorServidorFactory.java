@@ -56,6 +56,8 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
         	return new ControladorObtenerPreguntaSeguridad();
         case Enviable.Cambio_Pass:
         	return new ControladorCambioPass();
+        case Enviable.CAMBIO_DATOS:
+        	return new ControladorCambioDatos(this);
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

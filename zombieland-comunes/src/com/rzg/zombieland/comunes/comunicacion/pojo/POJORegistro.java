@@ -100,8 +100,8 @@ public class POJORegistro extends Enviable {
      * 
      * @return el sprite del avatar del jugador.
      */
-    public String getSpriteAvatarJugador(){
-    	return avatarJugador.getSprite();
+    public Avatar getAvatarJugador(){
+    	return avatarJugador;
     }
     
     @Override

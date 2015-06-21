@@ -6,10 +6,8 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,13 +20,9 @@ import javax.swing.border.LineBorder;
 import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
-import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionInicioSesion;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionPreguntaSeguridad;
-import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOInicioSesion;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJONombreUsuario;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaPreguntaSeg;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;

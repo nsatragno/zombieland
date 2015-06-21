@@ -36,6 +36,7 @@ import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.Avatar;
+import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
 /**
@@ -151,8 +152,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 		JButton btnModificar = new JButton("Modificar Datos");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Aqui se realizan los cambios efectuados
-				//
+				modificarDatos();
 			}
 		});
 		btnModificar.setBounds(62, 456, 175, 40);
@@ -270,7 +270,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 					preguntaSeguridad.setSelectedIndex(indice);
 					textRta.setText(datos.getRespuestaSecreta());
 					
-					int indiceBoton = spriteAvatares.indexOf(datos.getSpriteAvatarJugador());
+					int indiceBoton = spriteAvatares.indexOf(datos.getAvatarJugador().getSprite());
 					botonesPantalla.get(indiceBoton).setSelected(true);
 
 				}
@@ -336,7 +336,7 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 					indice++;
 			}
 			
-			Avatar avatar;
+			Avatar avatar = null;
 			for(Avatar av : Avatar.values()) {
 				if(av.getSprite().equals(spriteAvatares.get(indice))) {
 					avatar = av;
@@ -355,7 +355,30 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 				public void onDone(RespuestaGenerica respuesta) {
 					manejarRespuestaGenerica(respuesta);
 				}
+
 			});
+		}catch(ParametrosNoValidosException e) {
+			JOptionPane.showMessageDialog(getParent(), e.getMensaje(), "Cambio de datos de Usuario",
+                    JOptionPane.WARNING_MESSAGE);
+		} catch(ZombielandException e2) {
+			JOptionPane.showMessageDialog(getParent(), e2.getMessage(), "Cambio de datos de Usuario",
+                    JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	/**
+	 * Maneja la respuesta de cambio de datos
+	 * @param respuesta
+	 */
+	private void manejarRespuestaGenerica(RespuestaGenerica respuesta) {
+		if(respuesta.fuePeticionExitosa()) {
+			JOptionPane.showMessageDialog(getParent(), "Cambio de datos exitoso",
+								"Cambio de datos de Usuario", JOptionPane.INFORMATION_MESSAGE);
+			this.dispose();
+			return;
+		}
+		JOptionPane.showMessageDialog(getParent(),
+                "No se pudo realizar el cambio de datos: " + respuesta.getMensajeError(),
+                "Cambio de datos de Usuario", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

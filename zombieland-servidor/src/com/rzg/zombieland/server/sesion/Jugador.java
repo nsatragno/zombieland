@@ -145,6 +145,8 @@ public class Jugador {
 	public Jugador(POJORegistro registro) throws ParametrosNoValidosException {
 		this(registro.getNombre(), registro.getClave(), registro.getClave(),
 				registro.getPreguntaSecreta(), registro.getRespuestaSecreta());
+		if(registro.getAvatarJugador() != null)
+			this.avatar = registro.getAvatarJugador();
 	}
 
 	/**

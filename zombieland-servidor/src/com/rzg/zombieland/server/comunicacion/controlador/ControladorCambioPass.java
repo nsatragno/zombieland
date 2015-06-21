@@ -2,13 +2,9 @@ package com.rzg.zombieland.server.comunicacion.controlador;
 
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCambioPass;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJONombreUsuario;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPreguntaSeguridad;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaPreguntaSeg;
 import com.rzg.zombieland.comunes.controlador.Controlador;
 import com.rzg.zombieland.comunes.misc.Log;
-import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 import com.rzg.zombieland.server.sesion.Jugador;
 
@@ -26,7 +22,6 @@ public class ControladorCambioPass extends Controlador {
 		if (jugador == null) {
 	            return gson.toJson(new RespuestaGenerica("El usuario no existe"));
 	        }
-		
 			jugador.setClave(pass);
 			dao.actualizarObjeto(jugador);
 			dao.cerrarSesion();
