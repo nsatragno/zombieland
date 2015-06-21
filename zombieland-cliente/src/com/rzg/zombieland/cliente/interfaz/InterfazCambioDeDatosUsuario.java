@@ -41,12 +41,9 @@ import javax.swing.SwingConstants;
  *
  */
 public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListener {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4342197949176383612L;
-	private JPanel contentPane;
+	
+    private static final long serialVersionUID = 7837393531603880737L;
+    private JPanel contentPane;
 	private JTextField textUsuario;
 	private JTextField textRta;
 	private ButtonGroup Avatar = new ButtonGroup();
@@ -220,9 +217,6 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 
 	}
 	
-	private void cambiarDatos(){
-		
-	}
 
 	@Override
 	public void windowActivated(WindowEvent arg0)
@@ -247,10 +241,6 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 					}
 					preguntaSeguridad.setSelectedIndex(indice);
 					textRta.setText(datos.getRespuestaSecreta());
-					HashMap<Avatar, JRadioButton> mapa = new HashMap<Avatar, JRadioButton>();
-					mapa.put(Avatar.POLICIA, rdbtnPJ1);
-					mapa.put(Avatar.HOMBRE, rdbtnPJ2);
-					mapa.put(Avatar.MUJER, rdbtnPJ3);
 				}
 			});
 		} catch (ZombielandException e1) {

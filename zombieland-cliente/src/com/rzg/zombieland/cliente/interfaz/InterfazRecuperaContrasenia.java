@@ -26,7 +26,8 @@ import com.rzg.zombieland.cliente.misc.RutaImagen;
 
 public class InterfazRecuperaContrasenia extends JFrame
 {
-	private JPanel contentPane;
+    private static final long serialVersionUID = 5811662849518666164L;
+    private JPanel contentPane;
 	private JTextField textFieldUsuario;
 	private JComboBox<String> preguntaSeguridad;
 	private JTextField textFieldResp;

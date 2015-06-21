@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
-import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionRegistro;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
@@ -46,7 +45,7 @@ public class PeticionRegistroTest extends PeticionTestHarness {
 				latch.countDown();
 			}
 		});
-        Assert.assertTrue(latch.await(5, TimeUnit.SECONDS));
+        Assert.assertTrue(latch.await(15, TimeUnit.SECONDS));
         JugadorDao dao = new JugadorDao();
         Jugador jugador = dao.getListado().get(0);
         assertEquals(jugador.getNombre(), registro.getNombre());

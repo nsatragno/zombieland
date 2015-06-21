@@ -110,6 +110,7 @@ public class InterfazConexionServidor extends JPanel {
 	private void conectar() {
 	    try {
 	        ServicioCliente.crearInstancia(Integer.parseInt(puerto.getText()), host.getText());
+	        MenuZombieland.setConexcionServidor(true);
 	        Main.irA(Main.INICIO_SESION);
 	    } catch (NumberFormatException e) {
 	        JOptionPane.showMessageDialog(this,

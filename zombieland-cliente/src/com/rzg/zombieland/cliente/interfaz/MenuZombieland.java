@@ -29,6 +29,7 @@ public class MenuZombieland extends JMenuBar {
 	private InterfazCambioDeDatosUsuario cambioDatos;
 	/**
 	 * Atributos necesarios para poder modificar el bloqueo de los botones.
+	 * @inicio se inicializa en false los botones estan desabilitados
 	 */
 	public static boolean inicio = false;
 	private static JMenuItem iniciarSesion;
@@ -37,6 +38,7 @@ public class MenuZombieland extends JMenuBar {
 	private static JMenuItem mntmEstadsticas;
 	private static JMenuItem mntmJugar;
 	private static JMenuItem mntmVerPartidas;
+	private static JMenuItem mntmEstadsticasGlob;
 
 	public MenuZombieland() {
 
@@ -114,7 +116,7 @@ public class MenuZombieland extends JMenuBar {
 
 		});
 
-		final JMenuItem mntmEstadsticasGlob = new JMenuItem(
+		mntmEstadsticasGlob = new JMenuItem(
 				"Estad\u00EDsticas Globales");
 		mntmEstadsticasGlob.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -166,14 +168,18 @@ public class MenuZombieland extends JMenuBar {
 		});
 		mnAyuda.add(mntmGoogleame);
 
-		iniciarSesion.setEnabled(!inicio);
-		mntmRegistrarse.setEnabled(!inicio);
+		iniciarSesion.setEnabled(inicio);
+		mntmRegistrarse.setEnabled(inicio);
 		mntmDatos.setEnabled(inicio);
 		mntmEstadsticas.setEnabled(inicio);
 		mntmJugar.setEnabled(inicio);
 		mntmVerPartidas.setEnabled(inicio);
+		mntmEstadsticasGlob.setEnabled(inicio);
 	}
-
+	/**
+	 * 
+	 * @param inicio ->true, la casilla esta habilitada
+	 */
 	public static void setInicioSesion(boolean estado) {
 		inicio = estado;
 	    iniciarSesion.setText(estado ? "Cerrar sesión" : "Iniciar sesión");
@@ -183,6 +189,18 @@ public class MenuZombieland extends JMenuBar {
 		mntmJugar.setEnabled(inicio);
 		mntmVerPartidas.setEnabled(inicio);
 
+	}
+	
+	/**
+	 * 
+	 * @param estado, se habilitan los botones despues de 
+	 * iniciar el servidor correctamente
+	 */
+	public static void setConexcionServidor(boolean estado){
+		inicio = estado;
+		iniciarSesion.setEnabled(inicio);
+		mntmRegistrarse.setEnabled(inicio);
+		mntmEstadsticasGlob.setEnabled(inicio);
 	}
 	
 	/**

@@ -1,7 +1,5 @@
 package com.rzg.zombieland.server.comunicacion.controlador;
 
-import java.util.UUID;
-
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaUnirsePartida;
@@ -32,7 +30,6 @@ public class ControladorUnirseRapido extends ControladorConSesion {
     @Override
     public String procesarAutenticado(String linea) {
         Gson gson = new Gson();
-        String idPartida = gson.fromJson(linea, String.class);
         Partida partida = ServicioPartidas.getInstancia().getPartidaAleatoria();
         if (partida == null)
             return gson.toJson(new RespuestaGenerica(MENSAJE_SIN_PARTIDAS));
