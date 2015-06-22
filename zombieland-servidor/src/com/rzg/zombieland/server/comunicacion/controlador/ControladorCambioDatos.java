@@ -24,10 +24,17 @@ public class ControladorCambioDatos extends ControladorConSesion
 		POJORegistro registro = gson.fromJson(linea, POJORegistro.class);
 		JugadorDao dao = new JugadorDao();
 		try {
-			Jugador jugador = new Jugador(registro);
+			Jugador jugador = dao.getJugadorPorNombre(getSesion().getJugador().getNombre());
 			Jugador existente = dao.getJugadorPorNombre(jugador.getNombre());
 			if(existente != null && jugador.getId() != existente.getId())
 				throw new ZombielandException("El nombre de usuario ya fue elegido");
+			
+			jugador.setNombre(registro.getNombre());
+			jugador.setClave(registro.getClave());
+			jugador.setPreguntaSecreta(registro.getPreguntaSecreta());
+			jugador.setRespuestaSecreta(registro.getRespuestaSecreta());
+			jugador.setAvatar(registro.getAvatarJugador());
+			
 			dao.actualizarObjeto(jugador);
 			Log.info("El jugador: " + jugador.getNombre() + " ha cambiado sus datos");
 			return gson.toJson(new RespuestaGenerica());

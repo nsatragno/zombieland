@@ -210,6 +210,15 @@ public class Jugador {
 	public String getClave() {
 		return clave;
 	}
+	
+	/**
+	 * Establece el nombre del jugador
+	 * 
+	 * @param nombre
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	/**
 	 * Establece la clave del jugador.
@@ -218,6 +227,33 @@ public class Jugador {
 	 */
 	public void setClave(String clave) {
 		this.clave = clave;
+	}
+	
+	/**
+	 * Establece la pregunta secreta del jugador
+	 * 
+	 * @param preguntaSecreta
+	 */
+	public void setPreguntaSecreta(String preguntaSecreta) {
+		this.preguntaSecreta = preguntaSecreta;
+	}
+	
+	/**
+	 * Establece la respuesta secreta del jugador
+	 * 
+	 * @param respuestaSecreta
+	 */
+	public void setRespuestaSecreta(String respuestaSecreta) {
+		this.respuestaSecreta = respuestaSecreta;
+	}
+	
+	/**
+	 * Establece el avatar del jugador
+	 * 
+	 * @param avatar
+	 */
+	public void setAvatar (Avatar avatar) {
+		this.avatar = avatar;
 	}
 
 	/**

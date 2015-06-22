@@ -4,6 +4,11 @@ import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
 import com.rzg.zombieland.server.sesion.ManejadorSesion;
 
+/**
+ * 
+ * @author Ivan
+ * 
+ */
 public class ControladorObtenerDatosJugador extends ControladorConSesion {
 
 	public ControladorObtenerDatosJugador(ManejadorSesion manejadorSesion) {
