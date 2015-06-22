@@ -372,9 +372,9 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 	 */
 	private void manejarRespuestaGenerica(RespuestaGenerica respuesta) {
 		if(respuesta.fuePeticionExitosa()) {
-			JOptionPane.showMessageDialog(getParent(), "Cambio de datos exitoso",
+			JOptionPane.showMessageDialog(this, "Cambio de datos exitoso",
 								"Cambio de datos de Usuario", JOptionPane.INFORMATION_MESSAGE);
-			this.dispose();
+			setVisible(false);
 			return;
 		}
 		JOptionPane.showMessageDialog(getParent(),
