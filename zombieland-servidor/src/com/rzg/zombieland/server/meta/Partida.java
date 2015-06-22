@@ -19,14 +19,16 @@ import com.rzg.zombieland.server.sesion.Sesion;
 import com.rzg.zombieland.server.sesion.Sesion.SesionListener;
 
 /**
- * Define una partida. La partida empieza cuando es creada por un jugador y termina cuando el
- * último jugador es convertido en zombie.
+ * Define una partida. La partida empieza cuando es creada por un jugador y
+ * termina cuando el último jugador es convertido en zombie.
+ * 
  * @author nicolas
  *
  */
 public class Partida implements SesionListener {
     /**
      * Estado de la partida actual.
+     * 
      * @author nicolas
      *
      */
@@ -34,25 +36,25 @@ public class Partida implements SesionListener {
         /**
          * Todavía no ha arrancado, está en la fase de espera de jugadores.
          */
-        EN_ESPERA("En espera"), 
-        
+        EN_ESPERA("En espera"),
+
         /**
-         *  La partida está en progreso.
+         * La partida está en progreso.
          */
         ACTIVA("Activa"),
-        
+
         /**
          * La partida ha finalizado.
          */
         FINALIZADA("Finalizada");
-        
+
         // Una descripción amigable para el usuario del estado.
         private String descripcion;
-        
+
         private Estado(String descripcion) {
             this.descripcion = descripcion;
         }
-        
+
         /**
          * @return una descripción amigable para el usuario.
          */
@@ -60,79 +62,86 @@ public class Partida implements SesionListener {
             return descripcion;
         }
     }
-    
+
     /**
      * Interfaz para escuchar cambios en la vida de la partida.
+     * 
      * @author nicolas
      *
      */
     public interface PartidaListener {
         /**
          * Notifica que la partida ha quedado vacía.
-         * @param partida - la partida que se ha quedado vacía.
+         * 
+         * @param partida
+         *            - la partida que se ha quedado vacía.
          */
         void notificarPartidaVacia(Partida partida);
     }
 
-    public static final String MENSAJE_PARTIDA_EN_PROGRESO = 
-            "No se puede unir a una partida en progreso";
-    
+    public static final String MENSAJE_PARTIDA_EN_PROGRESO = "No se puede unir a una partida en progreso";
+
     // ID único que identifica la partida.
     private UUID id;
-    
+
     // Jugador que creó la partida.
     private Jugador administrador;
-    
+
     // El nombre de la partida.
     private String nombre;
-    
+
     // Listado de jugadores unidos a la partida. Incluye al |administrador|.
     private List<Jugador> jugadores;
-    
+
     // Listado de espectadores viendo la partida.
     private List<Jugador> espectadores;
-    
+
     // Indica el estado actual de la partida.
     private Estado estado;
-    
-    // Resultados de las partidas. 
+
+    // Resultados de las partidas.
     private List<ResultadoRonda> resultados;
-    
-    // La cantidad máxima de jugadores permitida. La partida arrancará cuando se alcance.
+
+    // La cantidad máxima de jugadores permitida. La partida arrancará cuando se
+    // alcance.
     private int cantidadMaximaJugadores;
-    
+
     // La cantidad de rondas.
     private int cantidadRondas;
-    
+
     // El número de ronda actual. Empieza por cero.
     private int rondaActual;
-    
-    // Indica el momento en el que se inició la partida, expresados como tiempo UNIX.
-    private long tiempoArranque;
-    
+
     // El objeto que escucha los cambios en la vida de la partida.
     private PartidaListener listener;
-    
+
     // El tablero de partida.
     private Tablero tablero;
-    
+
     /**
      * Crea una partida nueva a partir de un administrador.
-     * @param administrador - el jugador que crea la partida.
-     * @param nombre - el nombre de la partida, arbitrario.
-     * @param datosPartida - el POJO que viene del cliente con los datos de la partida.
-     * @throws NullPointerException si el administrador o los datos de partida son null.
+     * 
+     * @param administrador
+     *            - el jugador que crea la partida.
+     * @param nombre
+     *            - el nombre de la partida, arbitrario.
+     * @param datosPartida
+     *            - el POJO que viene del cliente con los datos de la partida.
+     * @throws NullPointerException
+     *             si el administrador o los datos de partida son null.
      */
     public Partida(Jugador administrador, POJOCreacionPartida datosPartida) {
-        this(administrador, datosPartida.getNombre(), getLista(administrador), new ArrayList<Jugador>(),
-             datosPartida.getCantidadRondas(), datosPartida.getCantidadMaximaJugadores());
+        this(administrador, datosPartida.getNombre(), getLista(administrador),
+                new ArrayList<Jugador>(), datosPartida.getCantidadRondas(), datosPartida
+                        .getCantidadMaximaJugadores());
         Sesion sesion = ServicioSesion.getInstancia().getSesion(administrador);
         if (sesion != null)
             sesion.addListener(this);
     }
-    
+
     /**
-     * @param administrador - el administrador que creó la partida.
+     * @param administrador
+     *            - el administrador que creó la partida.
      * @return una lista de jugadores a partir del administrador.
      */
     private static List<Jugador> getLista(Jugador administrador) {
@@ -142,25 +151,27 @@ public class Partida implements SesionListener {
     }
 
     /**
-     * Crea una partida nueva a partir de la partida anterior.
-     * TODO determinar si lo vamos a usar, o vamos a reutilizar la misma partida.
+     * Crea una partida nueva a partir de la partida anterior. TODO determinar
+     * si lo vamos a usar, o vamos a reutilizar la misma partida.
+     * 
      * @param partida
      */
     public Partida(Partida partida) {
         this(partida.administrador, partida.nombre, partida.jugadores, partida.espectadores,
-             partida.cantidadRondas, partida.cantidadMaximaJugadores);
+                partida.cantidadRondas, partida.cantidadMaximaJugadores);
     }
-    
+
     /**
      * Constructor por parámetros.
+     * 
      * @param administrador
      * @param jugadores
      * @param espectadores
      * @param cantidadRondas
      * @param cantidadMaximaJugadores
      */
-    private Partida(Jugador administrador, String nombre, List<Jugador> jugadores, List<Jugador> espectadores,
-                    int cantidadRondas, int cantidadMaximaJugadores) {
+    private Partida(Jugador administrador, String nombre, List<Jugador> jugadores,
+            List<Jugador> espectadores, int cantidadRondas, int cantidadMaximaJugadores) {
         if (administrador == null)
             throw new NullPointerException();
         if (nombre == null || nombre.isEmpty())
@@ -175,10 +186,12 @@ public class Partida implements SesionListener {
         this.estado = Estado.EN_ESPERA;
         resultados = new ArrayList<ResultadoRonda>(cantidadRondas);
     }
-    
+
     /**
      * Devuelve el resultado de una partida para un jugador.
-     * @param jugador - el jugador para el que se quieren obtener los resultados.
+     * 
+     * @param jugador
+     *            - el jugador para el que se quieren obtener los resultados.
      * @return el resultado de la partida.
      */
     public ResultadoJugador getResultadoPartida(Jugador jugador) {
@@ -187,24 +200,18 @@ public class Partida implements SesionListener {
     }
 
     /**
-     * @param jugador - el jugador que solicita el POJO. Puede ser null, en cuyo caso no se
-     *                  enviará la proyección del tablero.
+     * @param jugador
+     *            - el jugador que solicita el POJO. Puede ser null, en cuyo
+     *            caso no se enviará la proyección del tablero.
      * @return un pojo con los datos de la partida.
      */
     public POJOPartida getPOJO(Jugador jugador) {
-        return new POJOPartida(id.toString(),
-                               administrador.getNombre(),
-                               proyectarNombres(jugadores),
-                               proyectarNombres(espectadores), 
-                               cantidadRondas, 
-                               cantidadMaximaJugadores, 
-                               nombre,
-                               estado.getDescripcion(),
-                               tablero == null || jugador == null ? 
-                                   null 
-                                 : tablero.getProyeccionJugador(jugador));
+        return new POJOPartida(id.toString(), administrador.getNombre(),
+                proyectarNombres(jugadores), proyectarNombres(espectadores), cantidadRondas,
+                cantidadMaximaJugadores, nombre, estado.getDescripcion(), tablero == null
+                        || jugador == null ? null : tablero.getProyeccionJugador(jugador));
     }
-    
+
     /**
      * @param jugadores
      * @return un listado con los nombres de los jugadores.
@@ -217,14 +224,14 @@ public class Partida implements SesionListener {
         }
         return nombresJugadores;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
         if (!(obj instanceof Partida))
             return false;
-        Partida otro = (Partida)obj;
+        Partida otro = (Partida) obj;
         return otro.id.equals(id);
     }
 
@@ -244,8 +251,9 @@ public class Partida implements SesionListener {
 
     /**
      * Agrega un jugador a la partida.
+     * 
      * @param jugadorNuevo
-     * @throws ZombielandException 
+     * @throws ZombielandException
      */
     public void addJugador(Jugador jugadorNuevo) throws ZombielandException {
         if (estado == Estado.ACTIVA)
@@ -281,14 +289,17 @@ public class Partida implements SesionListener {
 
     /**
      * Establece el estado de la partida.
+     * 
      * @param activa
      */
     private void setEstado(Estado estado) {
         this.estado = estado;
         switch (estado) {
         case ACTIVA:
-            // TODO ver si le permitimos cambiar la cantida de casilleros al admin.
+            BucleJuego bucle = new BucleJuego(this);
+            ServicioJuego.getInstancia().agregarBucle(bucle);
             siguiente();
+            bucle.start();
             break;
         case EN_ESPERA:
             resultados.add(tablero.getResultado());
@@ -312,7 +323,7 @@ public class Partida implements SesionListener {
     public int getCantidadRondas() {
         return cantidadRondas;
     }
-    
+
     /**
      * @return la cantidad máxima de jugadores admitida por la partida.
      */
@@ -326,9 +337,10 @@ public class Partida implements SesionListener {
     public String getNombre() {
         return nombre;
     }
-    
+
     /**
      * Establece el objeto que recibirá notificaciones sobre la partida.
+     * 
      * @param listener
      */
     public void setListener(PartidaListener listener) {
@@ -337,8 +349,10 @@ public class Partida implements SesionListener {
 
     /**
      * Quita un jugador de la partida.
+     * 
      * @param jugadorEliminado
-     * @throws ZombielandException si el jugador no estaba unido a la partida.
+     * @throws ZombielandException
+     *             si el jugador no estaba unido a la partida.
      */
     public void removerJugador(Jugador jugadorEliminado) throws ZombielandException {
         synchronized (espectadores) {
@@ -351,6 +365,7 @@ public class Partida implements SesionListener {
             if (!jugadores.remove(jugadorEliminado))
                 throw new ZombielandException("El jugador no estaba unido a la partida");
             if (jugadores.isEmpty()) {
+                estado = Estado.FINALIZADA;
                 if (listener != null)
                     listener.notificarPartidaVacia(this);
                 return;
@@ -362,7 +377,7 @@ public class Partida implements SesionListener {
             notificarEspectadores();
         }
     }
-    
+
     /**
      * Mueve todos los jugadores.
      */
@@ -376,7 +391,8 @@ public class Partida implements SesionListener {
     }
 
     /**
-     * @return true si se pueden unir jugadores a esta partida, false de lo contrario.
+     * @return true si se pueden unir jugadores a esta partida, false de lo
+     *         contrario.
      */
     public boolean puedenUnirseJugadores() {
         return jugadores.size() < cantidadMaximaJugadores && estado == Estado.EN_ESPERA;
@@ -390,18 +406,28 @@ public class Partida implements SesionListener {
     }
 
     public void enviarProyeccion() {
+        enviarProyeccionYDepurar(jugadores);
+        enviarProyeccionYDepurar(espectadores);
+    }
+
+    /**
+     * Envía las proyecciones a un listado de jugadores y los quita del listado
+     * si no les llegó.
+     * 
+     * @param jugadores
+     */
+    private void enviarProyeccionYDepurar(List<Jugador> jugadores) {
         synchronized (jugadores) {
-            for (Jugador jugador : jugadores) {
+            for (Jugador jugador : jugadores)
                 enviarProyeccionTablero(jugador);
-            }
-        }
-        synchronized (espectadores) {
-            for (Jugador espectador : espectadores) {
-                enviarProyeccionTablero(espectador);
-            }
         }
     }
 
+    /**
+     * Envía la proyección del tablero a un jugador.
+     * 
+     * @param jugador
+     */
     private void enviarProyeccionTablero(Jugador jugador) {
         Sesion sesion = ServicioSesion.getInstancia().getSesion(jugador);
         if (sesion == null)
@@ -409,7 +435,7 @@ public class Partida implements SesionListener {
         try {
             sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
         } catch (ZombielandException e) {
-            Log.error("No llegó la proyección del tablero.");
+            Log.error("No le llegó la proyección del tablero a un espectador.");
         }
     }
 
@@ -417,28 +443,27 @@ public class Partida implements SesionListener {
      * @return true si la partida está siendo jugada, false de lo contrario.
      */
     public boolean activa() {
-        return estado == Estado.ACTIVA; 
+        return estado == Estado.ACTIVA;
     }
 
     /**
      * Arranca la siguiente ronda.
+     * 
+     * @return true si la partida debe continuar, false si la partida terminó.
      */
-    public void siguiente() {
-        // TODO verificar si la partida ya terminó.
+    public boolean siguiente() {
         synchronized (jugadores) {
-            if (jugadores.size() == 0)
-                return;  // TODO terminar partida... o algo.
+            if (jugadores.size() == 0 || rondaActual >= cantidadRondas) {
+                // La partida terminó.
+                return false;
+            }
             estado = Estado.ACTIVA;
             int cantidadCasilleros = new Random().nextInt(10) + 10;
             int jugadorZombie = rondaActual % jugadores.size();
             tablero = new Tablero(cantidadCasilleros, jugadores, jugadores.get(jugadorZombie));
-            // TODO no crear un bucle nuevo por cada ronda.
-            BucleJuego bucle = new BucleJuego(this);
-            bucle.start();
-            ServicioJuego.getInstancia().agregarBucle(bucle);
             rondaActual++;
         }
-        
+        return true;
     }
 
     @Override
@@ -453,6 +478,7 @@ public class Partida implements SesionListener {
 
     /**
      * Agrega un espectador a la partida.
+     * 
      * @param espectador
      */
     public void addEspectador(Jugador espectador) {
