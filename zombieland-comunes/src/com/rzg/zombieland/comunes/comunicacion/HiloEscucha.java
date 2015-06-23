@@ -43,6 +43,9 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
     // Lista a la que se le avisa cuando ocurren distintos eventos en el hilo de escucha.
     private List<HiloListener> listeners;
     
+    // True si se debe notificar a los listeners del corte de la conexión cuando se cierra.
+    private boolean notificarAlCierre;
+    
     /**
      * Comienza a escuchar en el socket dado, delegando las peticiones a la fábrica de
      * controladores. El socket ya debe estar abierto.
@@ -52,6 +55,7 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
     public HiloEscucha(Socket socket, ControladorFactory controladorFactory) {
         super("HiloEscucha: " + socket.getInetAddress());
         corriendo = true;
+        notificarAlCierre = true;
         Log.debug("Estableciendo nueva conexión con " + socket.getInetAddress());
         this.socket = socket;
         this.controladorFactory = controladorFactory;
@@ -78,7 +82,11 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
                     // -1 indica que el otro extremo cerró la conexión.
                     if (codigo == -1) {
                         Log.debug("Cerrando hilo escucha: llegó el -1");
-                        cerrar(true);
+                        if (notificarAlCierre) {
+                            Log.debug("Notificando listeners");
+                            notificarCierre();
+                        }
+                        socket.close();
                         return;
                     }
                     // Si llegamos acá, la petición no viene de una respuesta. Obtenemos el ID
@@ -136,7 +144,8 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
         } catch (SocketException e) {
             Log.info("Cerrando hilo de escucha " + getName() + ":");
             Log.info("Motivo: " + e.getMessage());
-            // Esperada, se usa para cerrar el Thread.
+            if (notificarAlCierre)
+                notificarCierre();
             return;
         } catch (IOException e) {
             Log.error("Error en hilo de escucha " + getName() + ":");
@@ -182,18 +191,24 @@ public class HiloEscucha extends Thread implements EnviaPeticiones {
      */
     public void cerrar(boolean notificar) {
         corriendo = false;
+        notificarAlCierre = notificar;
         try {
             socket.close();
         } catch (IOException e) {
         }
-        if (notificar) {
+    }
+
+    private void notificarCierre() {
+        synchronized (listeners) {
             for (HiloListener listener : listeners)
                 listener.hiloCerrado(this);
         }
     }
     
     public void addListener(HiloListener listener) {
-        this.listeners.add(listener);
+        synchronized (listeners) {
+            listeners.add(listener);
+        }
     }
 
     /**
