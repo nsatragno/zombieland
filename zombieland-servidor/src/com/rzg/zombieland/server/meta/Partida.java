@@ -46,7 +46,12 @@ public class Partida implements SesionListener {
         /**
          * La partida ha finalizado.
          */
-        FINALIZADA("Finalizada");
+        FINALIZADA("Finalizada"), 
+        
+        /**
+         * Una ronda terminó y estamos esperando a la siguiente.
+         */
+        ENTRE_RONDAS("Entre rondas");
 
         // Una descripción amigable para el usuario del estado.
         private String descripcion;
@@ -256,7 +261,7 @@ public class Partida implements SesionListener {
      * @throws ZombielandException
      */
     public void addJugador(Jugador jugadorNuevo) throws ZombielandException {
-        if (estado == Estado.ACTIVA)
+        if (estado != Estado.EN_ESPERA)
             throw new ZombielandException(MENSAJE_PARTIDA_EN_PROGRESO);
         synchronized (jugadores) {
             if (jugadores.size() == cantidadMaximaJugadores)
@@ -386,9 +391,11 @@ public class Partida implements SesionListener {
         if (estado != Estado.ACTIVA)
             throw new ZombielandException("La partida debe estar activa para mover a todos");
         tablero.moverTodos();
-        if (tablero.partidaFinalizada())
-            estado = Estado.EN_ESPERA;
-        // TODO agregar un estado nuevo.
+        if (tablero.partidaFinalizada()) {
+            estado = Estado.ENTRE_RONDAS;
+            resultados.add(tablero.getResultado());
+        }
+        // TODO agregar un estado nuevo, entre activa y finalizada.
     }
 
     /**

@@ -104,13 +104,15 @@ public class Main extends JFrame implements HiloListener {
 		contentPane.add(new InterfazInicioSesion(), INICIO_SESION);
 		contentPane.add(new InterfazRegistro(), REGISTRO);
 		contentPane.add(new InterfazListadoPartidas(), LISTADO_PARTIDAS);
-		contentPane.add(new InterfazLobby(), LOBBY);
+		InterfazLobby interfazLobby = new InterfazLobby();
+		contentPane.add(interfazLobby, LOBBY);
 		contentPane.add(new InterfazTablero(), TABLERO);
 		contentPane.add(new InterfazCrearPartida(), CREAR_PARTIDA);
 		contentPane.add(new InterfazRankingGeneral(), RANKING_GENERAL);
 		setJMenuBar(new MenuZombieland());
 		setContentPane(contentPane);
 		ServicioCliente.setListener(this);
+		interfazLobby.setBotonEnviarMensajeComoDefault();
 	}
 
     @Override

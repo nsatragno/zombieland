@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +18,13 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListDataEvent;
@@ -152,6 +156,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, Escu
     private JLabel lblTitulo;
     private JTextArea chat;
     private JTextField mensaje;
+    private JButton botonEnviarMensaje;
 	/**
 	 * Create the frame.
 	 */
@@ -263,6 +268,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, Escu
 		
         chat = new JTextArea();
         chat.setEditable(false);
+        chat.setLineWrap(true);
         DefaultCaret caret = (DefaultCaret)chat.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         
@@ -275,16 +281,19 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, Escu
         mensaje.setBounds(320, 445, 350, 30);
         add(mensaje);
         
-        JButton botonEnviarMensaje = new JButton();
+        botonEnviarMensaje = new JButton();
         botonEnviarMensaje.setText("Enviar");
         botonEnviarMensaje.setBounds(670, 445, 80, 30);
         add(botonEnviarMensaje);
+        
+        final InterfazLobby _this = this;
         
         botonEnviarMensaje.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                enviarMensaje();
+                if (_this.isVisible())
+                    enviarMensaje();
             }
         });
         
@@ -310,6 +319,23 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, Escu
 		add(lblFondo);
 		Estado.getInstancia().addEscuchador(this);
 		Estado.getInstancia().setEscuchadorChat(this);
+		
+		addComponentListener(new ComponentListener() {
+            
+            @Override
+            public void componentShown(ComponentEvent e) {
+                chat.setText("");
+            }
+            
+            @Override
+            public void componentResized(ComponentEvent e) { }
+            
+            @Override
+            public void componentMoved(ComponentEvent e) { }
+            
+            @Override
+            public void componentHidden(ComponentEvent e) { }
+        });
 	}
 	
     @Override
@@ -354,6 +380,8 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, Escu
      * @param text
      */
     private void enviarMensaje() {
+        if (mensaje.getText().isEmpty())
+            return;
         final Component _this = this;
         PeticionMensajeChat peticion = new PeticionMensajeChat(mensaje.getText());
         try {
@@ -383,5 +411,13 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, Escu
     @Override
     public void recibidoMensaje(String mensaje) {
         chat.append(mensaje + "\n");
+    }
+    
+    /**
+     * Hace que el botón de envío de mensaje sea el predeterminado.
+     */
+    public void setBotonEnviarMensajeComoDefault() {
+        JRootPane rootPane = SwingUtilities.getRootPane(botonEnviarMensaje); 
+        rootPane.setDefaultButton(botonEnviarMensaje);
     }
 }
