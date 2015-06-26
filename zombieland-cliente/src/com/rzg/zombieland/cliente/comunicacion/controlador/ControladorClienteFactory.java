@@ -21,6 +21,8 @@ public class ControladorClienteFactory implements ControladorFactory {
             return new ControladorActualizacionLobby();
         case Enviable.ACTUALIZACION_PROYECCION:
             return new ControladorActualizacionProyeccion();
+        case Enviable.RECIBIR_MENSAJE_CHAT:
+            return new ControladorRecibirMensaje();
         default:
             throw new ComandoDesconocidoException(
                     "El comando " + codigo + " no es conocido por el cliente");

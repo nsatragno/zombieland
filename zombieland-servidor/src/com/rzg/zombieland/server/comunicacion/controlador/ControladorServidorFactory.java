@@ -54,10 +54,12 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
         	return new ControladorObtenerDatosJugador(this);
         case Enviable.PREGUNTA_SEGURIDAD:
         	return new ControladorObtenerPreguntaSeguridad();
-        case Enviable.Cambio_Pass:
+        case Enviable.CAMBIOS_CONTRASEÑA:
         	return new ControladorCambioPass();
         case Enviable.CAMBIO_DATOS:
         	return new ControladorCambioDatos(this);
+        case Enviable.ENVIAR_MENSAJE_CHAT:
+            return new ControladorEnviarMensajeChat(this);
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -25,12 +26,15 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.text.DefaultCaret;
 
 import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionAbandonarPartida;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionMensajeChat;
 import com.rzg.zombieland.cliente.meta.Estado;
+import com.rzg.zombieland.cliente.meta.Estado.EscuchadorChat;
 import com.rzg.zombieland.cliente.meta.Estado.EscuchadorEstadoLobby;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
@@ -42,7 +46,7 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  * @author Ivan
  */
 
-public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
+public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, EscuchadorChat
 {
     private class ModeloParametros extends AbstractTableModel {
 
@@ -146,6 +150,8 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
     private ModeloParametros modeloTablaParametros;
     private ModeloLista modeloListaJugadores;
     private JLabel lblTitulo;
+    private JTextArea chat;
+    private JTextField mensaje;
 	/**
 	 * Create the frame.
 	 */
@@ -255,12 +261,17 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
         labelChat.setForeground(Color.WHITE);
         add(labelChat);
 		
-        JTextArea chat = new JTextArea();
-        chat.setBounds(320, 340, 430, 100);
+        chat = new JTextArea();
         chat.setEditable(false);
-        add(chat);
+        DefaultCaret caret = (DefaultCaret)chat.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         
-        JTextField mensaje = new JTextField();
+        JScrollPane scroll = new JScrollPane(chat);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setBounds(320, 340, 430, 100);
+        add(scroll);
+        
+        mensaje = new JTextField();
         mensaje.setBounds(320, 445, 350, 30);
         add(mensaje);
         
@@ -268,6 +279,14 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
         botonEnviarMensaje.setText("Enviar");
         botonEnviarMensaje.setBounds(670, 445, 80, 30);
         add(botonEnviarMensaje);
+        
+        botonEnviarMensaje.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enviarMensaje();
+            }
+        });
         
         JButton botonAbandonar = new JButton("Abandonar");
         botonAbandonar.addActionListener(new ActionListener() {
@@ -290,6 +309,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
 		lblFondo.setBounds(0, 0, 800, 600);
 		add(lblFondo);
 		Estado.getInstancia().addEscuchador(this);
+		Estado.getInstancia().setEscuchadorChat(this);
 	}
 	
     @Override
@@ -327,5 +347,41 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
                                           "Lobby",
                                           JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    /**
+     * Envía una petición de chat al servidor.
+     * @param text
+     */
+    private void enviarMensaje() {
+        final Component _this = this;
+        PeticionMensajeChat peticion = new PeticionMensajeChat(mensaje.getText());
+        try {
+            ServicioCliente.enviarPeticion(peticion);
+            peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
+                
+                @Override
+                public void onDone(RespuestaGenerica respuesta) {
+                    if (respuesta.fuePeticionExitosa()) {
+                        mensaje.setText("");
+                    } else {
+                        JOptionPane.showMessageDialog(_this,
+                                                      respuesta.getMensajeError(),
+                                                      "Lobby", 
+                                                      JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        } catch (ZombielandException e) {
+            JOptionPane.showMessageDialog(this,
+                    "No se pudo enviar el mensaje de error: " + e.getMessage(),
+                    "Lobby",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
+    public void recibidoMensaje(String mensaje) {
+        chat.append(mensaje + "\n");
     }
 }

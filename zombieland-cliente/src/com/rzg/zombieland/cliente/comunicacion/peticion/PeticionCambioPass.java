@@ -25,7 +25,7 @@ public class PeticionCambioPass extends Peticion<POJOCambioPass, RespuestaGeneri
 
     @Override
     protected int getCodigoPeticion() {
-        return Enviable.Cambio_Pass;
+        return Enviable.CAMBIOS_CONTRASEÑA;
     }
 
 

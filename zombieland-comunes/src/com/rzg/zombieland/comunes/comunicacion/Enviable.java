@@ -89,15 +89,30 @@ public abstract class Enviable {
 	
 	public static final int PREGUNTA_SEGURIDAD = 0xF;
 	
-	 /**
+	/**
      * Solicitud para realizar un cambio de contraseña de un usuario que no la recuerda.
      */
 	
-	public static final int Cambio_Pass = 0x10;
+	public static final int CAMBIOS_CONTRASEÑA = 0x10;
+	
+	/**
+	 * Solicitud para enviar un mensaje de chat.
+	 */
+	public static final int ENVIAR_MENSAJE_CHAT = 0x11;
+	
+	/**
+	 * Solicitud para recibir un mensaje de chat. 
+	 */
+	public static final int RECIBIR_MENSAJE_CHAT = 0x12;
+	
 	/**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
+
+    
+
+    
 
 
 }

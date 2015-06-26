@@ -65,6 +65,19 @@ public class Estado {
         public void notificarCambioEstadoEspectador(boolean espectador);
     }
     
+    /**
+     * Escuchador para los mensajes de chat.
+     * @author nicolas
+     *
+     */
+    public interface EscuchadorChat {
+        /**
+         * Indica que se recibió un mensaje de chat.
+         * @param mensaje
+         */
+        public void recibidoMensaje(String mensaje);
+    }
+    
     
     private static Estado instancia;
     
@@ -77,6 +90,8 @@ public class Estado {
     private List<EscuchadorPartidas> escuchadoresPartidas;
 
     private List<EscuchadorProyeccion> escuchadoresProyeccion;
+    
+    private EscuchadorChat escuchadorChat;
     
     // True si se está observando una partida, false de lo contrario.
     private boolean espectador;
@@ -111,6 +126,14 @@ public class Estado {
      */
     public void addEscuchador(EscuchadorProyeccion escuchador) {
         this.escuchadoresProyeccion.add(escuchador);
+    }
+    
+    /**
+     * Establece el escuchador de chat.
+     * @param escuchador
+     */
+    public void setEscuchadorChat(EscuchadorChat escuchador) {
+        this.escuchadorChat = escuchador;
     }
     
     /**
@@ -171,5 +194,13 @@ public class Estado {
      */
     public boolean isEspectador() {
         return espectador;
+    }
+
+    /**
+     * Indica que se recibió un mensaje de chat.
+     * @param mensaje
+     */
+    public void recibidoMensajeChat(String mensaje) {
+        escuchadorChat.recibidoMensaje(mensaje);
     }
 }

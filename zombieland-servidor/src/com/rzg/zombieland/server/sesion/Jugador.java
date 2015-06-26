@@ -18,6 +18,7 @@ import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.peticion.PeticionActualizacionLobby;
+import com.rzg.zombieland.server.comunicacion.peticion.PeticionRecibirMensajeChat;
 import com.rzg.zombieland.server.meta.ResultadoJugador;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 
@@ -300,5 +301,20 @@ public class Jugador {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Envía un mensaje de chat al jugador.
+     * @param mensaje
+     */
+    public void enviarMensajeChat(String mensaje) {
+        Sesion sesion = ServicioSesion.getInstancia().getSesion(this);
+        try {
+            sesion.enviarPeticion(
+                    new PeticionRecibirMensajeChat(mensaje));
+        } catch (ZombielandException e) {
+            Log.error("No se pudo enviar la notificación de cambio de partida al cliente");
+            e.printStackTrace();
+        }
     }
 }

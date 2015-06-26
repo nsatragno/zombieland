@@ -490,4 +490,21 @@ public class Partida implements SesionListener {
             espectadores.add(espectador);
         }
     }
+
+    /**
+     * Envía un mensaje de chat a todos los jugadores y espectadores de la partida.
+     * @param mensaje
+     */
+    public void enviarMensajeChat(String mensaje) {
+        synchronized (jugadores) {
+            for (Jugador jugador : jugadores) {
+                jugador.enviarMensajeChat(mensaje);
+            }
+        }
+        synchronized (espectadores) {
+            for (Jugador espectador : espectadores) {
+                espectador.enviarMensajeChat(mensaje);
+            }
+        }
+    }
 }
