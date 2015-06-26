@@ -3,9 +3,7 @@ package com.rzg.zombieland.cliente.comunicacion.peticion;
 import com.rzg.zombieland.comunes.comunicacion.Enviable;
 import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCambioPass;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJONombreUsuario;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaPreguntaSeg;
 
 /**
  * Peticion para realizar un cambio en la contraseña de un usuario que la olvidó.

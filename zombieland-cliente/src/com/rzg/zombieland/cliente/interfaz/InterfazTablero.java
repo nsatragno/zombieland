@@ -3,19 +3,26 @@ package com.rzg.zombieland.cliente.interfaz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.Rectangle;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,7 +35,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.JTableHeader;
 
 import org.jdeferred.DoneCallback;
 
@@ -36,8 +44,10 @@ import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionMovimiento;
 import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.meta.Estado.EscuchadorProyeccion;
+import com.rzg.zombieland.cliente.meta.Estado.EscuchadorPuntaje;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOResultadoRonda;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Movimiento.Direccion;
@@ -53,14 +63,14 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTable table;
-
 	private final Timer timer = new Timer();
 	// Constantes
 	private static final int DIMENSION = 500; // Dimension en pixeles del
 												// tablero
 	private static final int MARGEN_IZQUIERDO = 10;
 	private static final int MARGEN_SUPERIOR = 30;
+
+    private static final int TAMAÑO_FILA = 15;
 
 	private Map<Avatar, Image> img; // Avatares
 	private ImageIcon fondo;
@@ -76,6 +86,8 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
     // Tenemos una referencia al dispatcher de flechas para activarlo solamente cuando se muestra
     // la pantalla.
     private DispatcherFlechas dispatcher;
+
+    private JPanel panelJugadores;
 
     private class DispatcherFlechas implements KeyEventDispatcher {
 
@@ -104,6 +116,65 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
             return false;
         }
         
+    }
+    
+    private class ModeloPuntaje extends AbstractTableModel implements EscuchadorPuntaje {
+
+        private static final long serialVersionUID = -4290128679203618750L;
+        private static final int COLUMNA_JUGADOR = 0;
+        private static final int CANTIDAD_COLUMNAS = 2;
+        
+        private List<Entry<String, Integer>> jugadores;
+        
+        @Override
+        public int getRowCount() {
+            if (jugadores == null)
+                return 0;
+            return jugadores.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return CANTIDAD_COLUMNAS;
+        }
+        
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if (jugadores == null)
+                return null;
+            if (columnIndex == COLUMNA_JUGADOR) {
+                return jugadores.get(rowIndex).getKey();
+            } else {
+                return jugadores.get(rowIndex).getValue();
+            }
+        }
+
+        @Override
+        public void recibidoPuntaje(POJOResultadoRonda puntaje) {
+            jugadores = new ArrayList<Entry<String, Integer>>();
+            for (Entry<String, Integer> entry : puntaje.getPuntajes().entrySet())
+                jugadores.add(entry);
+            Collections.sort(jugadores, new Comparator<Entry<String, Integer>>() {
+
+                @Override
+                public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
+            });
+            Rectangle rect = panelJugadores.getBounds();
+            Dimension dim = rect.getSize();
+            dim.setSize(dim.getWidth(), TAMAÑO_FILA * (jugadores.size() + 1));
+            rect.setSize(dim);
+            panelJugadores.setBounds(rect);
+            fireTableDataChanged();
+        }
+        
+        @Override
+        public String getColumnName(int column) {
+            if (column == COLUMNA_JUGADOR)
+                return "Jugador";
+            return "Puntaje";
+        }
     }
     
 	public InterfazTablero() {
@@ -184,43 +255,38 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		labelTemporizador.setBounds(641, 220, 159, 45);
 		add(labelTemporizador);
 
-		JPanel panelJug = new JPanel();
-		panelJug.setBounds(561, 34, 193, 175);
-		add(panelJug);
-		panelJug.setLayout(new BorderLayout());
+		panelJugadores = new JPanel();
+		panelJugadores.setBounds(561, 34, 193, TAMAÑO_FILA);
+		add(panelJugadores);
+		panelJugadores.setLayout(new BorderLayout());
 
-		table = new JTable();
+		ModeloPuntaje modelo = new ModeloPuntaje();
+		Estado.getInstancia().setEscuchadorPuntaje(modelo);
+		
+		JTable table = new JTable();
 		table.setRowSelectionAllowed(false);
 		table.setGridColor(Color.BLACK);
-		table.setRowHeight(31);
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null }, { null, null },
-						{ null, null }, { null, null }, { null, null }, },
-				new String[] { "Personaje", "Puntaje" }) {
-			private static final long serialVersionUID = 1L;
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] { String.class, Object.class };
+		table.setRowHeight(TAMAÑO_FILA);
+		table.setTableHeader(new JTableHeader(table.getColumnModel()) {
+            private static final long serialVersionUID = 7787996933499011913L;
 
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-
-			boolean[] columnEditables = new boolean[] { false, false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
+            @Override
+		    public Dimension getPreferredSize() {
+		        Dimension dim = super.getPreferredSize();
+		        dim.height = TAMAÑO_FILA;
+		        return dim;
+		    }
 		});
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table.setModel(modelo);
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(120);
 		table.getColumnModel().getColumn(0).setMinWidth(50);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.setFocusable(false);
 		table.setBounds(0, 0, 193, 304);
-		panelJug.add(table.getTableHeader(), BorderLayout.NORTH);
-		panelJug.add(table, BorderLayout.CENTER);
+		panelJugadores.add(table.getTableHeader(), BorderLayout.NORTH);
+		panelJugadores.add(table, BorderLayout.CENTER);
 
 		JLabel labelFondo = new JLabel("");
 		labelFondo.setIcon(new ImageIcon(RutaImagen

@@ -28,6 +28,7 @@ public class Zombie extends Personaje {
 		        Coordenada posicion = entidad.getPosicion();
 		        Zombie zombie = new Zombie(personaje.getJugador(), posicion, getTablero()); 
 		        getTablero().remplazarEntidadEn(posicion, zombie);
+		        getTablero().addPersonajeConvertido(zombie);
 			}
 		}
 	}

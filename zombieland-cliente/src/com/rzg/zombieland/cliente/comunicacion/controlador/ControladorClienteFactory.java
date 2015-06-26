@@ -23,6 +23,8 @@ public class ControladorClienteFactory implements ControladorFactory {
             return new ControladorActualizacionProyeccion();
         case Enviable.RECIBIR_MENSAJE_CHAT:
             return new ControladorRecibirMensaje();
+        case Enviable.RECIBIR_PUNTAJE_PARTIDA:
+            return new ControladorRecibirPuntaje();
         default:
             throw new ComandoDesconocidoException(
                     "El comando " + codigo + " no es conocido por el cliente");

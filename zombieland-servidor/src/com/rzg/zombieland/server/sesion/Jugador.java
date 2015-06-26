@@ -13,12 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJORegistro;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOResultadoRonda;
 import com.rzg.zombieland.comunes.misc.Avatar;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.peticion.PeticionActualizacionLobby;
 import com.rzg.zombieland.server.comunicacion.peticion.PeticionRecibirMensajeChat;
+import com.rzg.zombieland.server.comunicacion.peticion.PeticionRecibirPuntajePartida;
 import com.rzg.zombieland.server.meta.ResultadoJugador;
 import com.rzg.zombieland.server.persistencia.JugadorDao;
 
@@ -313,7 +315,22 @@ public class Jugador {
             sesion.enviarPeticion(
                     new PeticionRecibirMensajeChat(mensaje));
         } catch (ZombielandException e) {
-            Log.error("No se pudo enviar la notificación de cambio de partida al cliente");
+            Log.error("No se pudo enviar el mensaje de chat al cliente");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Envía un mensaje con el puntaje parcial de la partida.
+     * @param resultado
+     */
+    public void notificarPuntajePartida(POJOResultadoRonda resultado) {
+        Sesion sesion = ServicioSesion.getInstancia().getSesion(this);
+        try {
+            sesion.enviarPeticion(
+                    new PeticionRecibirPuntajePartida(resultado));
+        } catch (ZombielandException e) {
+            Log.error("No se pudo enviar el puntajde de partida al cliente");
             e.printStackTrace();
         }
     }

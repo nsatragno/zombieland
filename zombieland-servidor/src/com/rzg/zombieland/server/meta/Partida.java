@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOResultadoRonda;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.ServicioJuego;
@@ -104,8 +105,8 @@ public class Partida implements SesionListener {
     // Indica el estado actual de la partida.
     private Estado estado;
 
-    // Resultados de las partidas.
-    private List<ResultadoRonda> resultados;
+    // Resultado acumulado de las rondas.
+    private ResultadoRonda resultado;
 
     // La cantidad máxima de jugadores permitida. La partida arrancará cuando se
     // alcance.
@@ -189,7 +190,6 @@ public class Partida implements SesionListener {
         this.cantidadMaximaJugadores = cantidadMaximaJugadores;
         this.cantidadRondas = cantidadRondas;
         this.estado = Estado.EN_ESPERA;
-        resultados = new ArrayList<ResultadoRonda>(cantidadRondas);
     }
 
     /**
@@ -303,11 +303,12 @@ public class Partida implements SesionListener {
         case ACTIVA:
             BucleJuego bucle = new BucleJuego(this);
             ServicioJuego.getInstancia().agregarBucle(bucle);
+            resultado = new ResultadoRonda(jugadores);
+            notificarPuntajes();
             siguiente();
             bucle.start();
             break;
         case EN_ESPERA:
-            resultados.add(tablero.getResultado());
             tablero = null;
             break;
         default:
@@ -393,9 +394,12 @@ public class Partida implements SesionListener {
         tablero.moverTodos();
         if (tablero.partidaFinalizada()) {
             estado = Estado.ENTRE_RONDAS;
-            resultados.add(tablero.getResultado());
+            if (jugadores.size() > 1) {
+                resultado.addPuntaje(tablero.getJugadorConvertidoNumero(jugadores.size() - 1), 3);
+                resultado.addPuntaje(tablero.getJugadorConvertidoNumero(jugadores.size() - 2), 2);
+                notificarPuntajes();
+            }
         }
-        // TODO agregar un estado nuevo, entre activa y finalizada.
     }
 
     /**
@@ -494,6 +498,8 @@ public class Partida implements SesionListener {
         if (sesion != null)
             sesion.addListener(this);
         synchronized (espectadores) {
+            if (estado != Estado.EN_ESPERA)
+                espectador.notificarPuntajePartida(resultado.getPojo());
             espectadores.add(espectador);
         }
     }
@@ -511,6 +517,23 @@ public class Partida implements SesionListener {
         synchronized (espectadores) {
             for (Jugador espectador : espectadores) {
                 espectador.enviarMensajeChat(mensaje);
+            }
+        }
+    }
+    
+    /**
+     * Envía una notificación con los puntajes a los jugadores y espectadores.
+     */
+    private void notificarPuntajes() {
+        POJOResultadoRonda resultado = this.resultado.getPojo();
+        synchronized (jugadores) {
+            for (Jugador jugador : jugadores) {
+                jugador.notificarPuntajePartida(resultado);
+            }
+        }
+        synchronized (espectadores) {
+            for (Jugador espectador : espectadores) {
+                espectador.notificarPuntajePartida(resultado);
             }
         }
     }

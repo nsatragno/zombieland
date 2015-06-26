@@ -7,6 +7,7 @@ import javax.swing.DefaultComboBoxModel;
 
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOResultadoRonda;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.POJOListadoPartidas;
 
 /**
@@ -78,6 +79,18 @@ public class Estado {
         public void recibidoMensaje(String mensaje);
     }
     
+    /**
+     * Escuchador para las actualizaciones de puntaje.
+     * @author nicolas
+     *
+     */
+    public interface EscuchadorPuntaje {
+        /**
+         * Indica que se recibió una actualización de puntaje.
+         * @param mensaje
+         */
+        public void recibidoPuntaje(POJOResultadoRonda puntaje);
+    }
     
     private static Estado instancia;
     
@@ -95,6 +108,8 @@ public class Estado {
     
     // True si se está observando una partida, false de lo contrario.
     private boolean espectador;
+
+    private EscuchadorPuntaje escuchadorPuntaje;
     
     public Estado() {
         escuchadoresLobby = new ArrayList<EscuchadorEstadoLobby>();
@@ -171,6 +186,10 @@ public class Estado {
     public void addEscuchadorPartidas(EscuchadorPartidas escuchador) {
         this.escuchadoresPartidas.add(escuchador);
     }
+    
+    public void setEscuchadorPuntaje(EscuchadorPuntaje escuchador) {
+        escuchadorPuntaje = escuchador;
+    }
 
     public void setListadoPartidas(POJOListadoPartidas listado) {
         for (EscuchadorPartidas escuchador : escuchadoresPartidas)
@@ -202,5 +221,13 @@ public class Estado {
      */
     public void recibidoMensajeChat(String mensaje) {
         escuchadorChat.recibidoMensaje(mensaje);
+    }
+
+    /**
+     * Indica que se recibió una actualización de puntaje. 
+     * @param resultado
+     */
+    public void recibidoPuntaje(POJOResultadoRonda puntaje) {
+        escuchadorPuntaje.recibidoPuntaje(puntaje);
     }
 }

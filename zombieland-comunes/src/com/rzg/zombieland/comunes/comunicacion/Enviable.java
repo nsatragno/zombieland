@@ -106,9 +106,16 @@ public abstract class Enviable {
 	public static final int RECIBIR_MENSAJE_CHAT = 0x12;
 	
 	/**
+	 * Solicitud para actualizar el puntaje de la partida.
+	 */
+	public static final int RECIBIR_PUNTAJE_PARTIDA = 0x13;
+	
+	/**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
+
+    
 
     
 

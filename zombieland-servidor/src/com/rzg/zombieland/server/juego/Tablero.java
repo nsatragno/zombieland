@@ -11,7 +11,6 @@ import java.util.Random;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero.POJOEntidad;
 import com.rzg.zombieland.comunes.misc.Coordenada;
-import com.rzg.zombieland.server.meta.ResultadoRonda;
 import com.rzg.zombieland.server.sesion.Jugador;
 
 /**
@@ -27,11 +26,9 @@ public class Tablero {
     // Jugadores que participan - Humanos solamente.
     private List<Personaje> personajes;
 
-    // Posición en el listado de personajes del que se moverá primero.
-    private int primerPersonaje;
-
-    // Personaje de la ronda que arranca como zombi.
-    private Personaje zombi;
+    // Listado de personajes convertidos en el orden en el que se convirtieron. El primero siempre
+    // es el zombie original.
+    private List<Personaje> jugadoresConvertidos;
 
     /**
      * Constructor por defecto. Aquí se generarán los obstáculos en forma
@@ -39,6 +36,7 @@ public class Tablero {
      */
     public Tablero(int casilleros, List<Jugador> jugadores, Jugador zombi) {
         personajes = new ArrayList<Personaje>();
+        jugadoresConvertidos = new ArrayList<Personaje>();
         Random rnd = new Random(); // Que quede claro que va a ser una cuestión
                                    // de suerte
         boolean resuelto = false; // Flag que me indica si ya posicione o no a
@@ -49,6 +47,7 @@ public class Tablero {
         matriz = new EntidadTablero[casilleros][casilleros];
         // Ponemos al zombi - primero le asignamos el nombre.
         Zombie personajeZombie = new Zombie(zombi, new Coordenada(casilleros / 2, casilleros / 2), this);
+        jugadoresConvertidos.add(personajeZombie);
         personajes.add(personajeZombie);
         // Siempre arranca en el medio.
         matriz[casilleros / 2][casilleros / 2] = personajeZombie; // Lo ponemos
@@ -200,14 +199,6 @@ public class Tablero {
     }
 
     /**
-     * @return el resultado de la partida.
-     */
-    public ResultadoRonda getResultado() {
-        // TODO implementar.
-        return null;
-    }
-
-    /**
      * Mueve a todos los personajes.
      */
     public void moverTodos() {
@@ -312,5 +303,21 @@ public class Tablero {
      */
     public Coordenada getEsquinaInferiorDerecha() {
         return new Coordenada(matriz.length - 1, matriz.length - 1);
+    }
+
+    /**
+     * @param numero - una posición N de jugador.
+     * @return el jugador que fue convertido en N lugar.
+     */
+    public Jugador getJugadorConvertidoNumero(int numero) {
+        return jugadoresConvertidos.get(numero).getJugador();
+    }
+    
+    /**
+     * Añade uno al listado de personajes convertidos.
+     * @param personaje
+     */
+    public void addPersonajeConvertido(Personaje personaje) {
+        jugadoresConvertidos.add(personaje);
     }
 }

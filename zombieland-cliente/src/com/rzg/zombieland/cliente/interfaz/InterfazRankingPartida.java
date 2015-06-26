@@ -97,10 +97,10 @@ public class InterfazRankingPartida {
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
-			Class[] columnTypes = new Class[] {
+			Class<?>[] columnTypes = new Class[] {
 				String.class, Integer.class
 			};
-			public Class getColumnClass(int columnIndex) {
+			public Class<?> getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});

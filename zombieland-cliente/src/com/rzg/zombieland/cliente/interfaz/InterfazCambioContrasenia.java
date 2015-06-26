@@ -1,36 +1,28 @@
 package com.rzg.zombieland.cliente.interfaz;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JButton;
+import javax.swing.border.EmptyBorder;
 
 import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionCambioPass;
-import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionPreguntaSeguridad;
-import com.rzg.zombieland.cliente.meta.Estado;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCambioPass;
-import com.rzg.zombieland.comunes.comunicacion.pojo.POJONombreUsuario;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
-import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaPreguntaSeg;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * 

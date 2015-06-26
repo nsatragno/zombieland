@@ -1,8 +1,5 @@
 package com.rzg.zombieland.comunes.comunicacion.pojo;
 
-import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
-
-
 /**
  * Engloba los datos necesarios para unirse a una partida.
  * @author nicolas
