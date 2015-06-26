@@ -84,7 +84,7 @@ public class ControladorUnirsePartidaTest extends AbstractPartidasTest {
         ManejadorSesionImpl manejador = new ManejadorSesionImpl();
         manejador.crearSesion();
         ServicioPartidas.getInstancia().addPartida(partida);
-        
+        ServicioSesion.getInstancia().addSesion(manejador.getSesion());
         llenarPartida(partida);
         
         ControladorUnirsePartida controlador = new ControladorUnirsePartida(manejador);
