@@ -17,6 +17,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -155,55 +157,55 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
 		JLabel lblRecomendacion1 = new JLabel("- El juego comenzar\u00E1 cuando la cantidad de jugadores requerida esten en l\u00EDnea.");
 		lblRecomendacion1.setForeground(Color.WHITE);
 		lblRecomendacion1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion1.setBounds(320, 114, 497, 30);
+		lblRecomendacion1.setBounds(320, 84, 497, 30);
 		add(lblRecomendacion1);
 		
 		JLabel lblRecomendacion2 = new JLabel("- El juego consistir\u00E1 de las rondas indicadas por el administrador.");
 		lblRecomendacion2.setForeground(Color.WHITE);
 		lblRecomendacion2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion2.setBounds(320, 139, 386, 30);
+		lblRecomendacion2.setBounds(320, 109, 386, 30);
 		add(lblRecomendacion2);
 		
 		JLabel lblRecomendacion3 = new JLabel("- El zombi busca humanos, el humano escapa de los zombies.");
 		lblRecomendacion3.setForeground(Color.WHITE);
 		lblRecomendacion3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion3.setBounds(320, 164, 389, 30);
+		lblRecomendacion3.setBounds(320, 134, 389, 30);
 		add(lblRecomendacion3);
 		
 		JLabel lblRecomendacion4 = new JLabel("- Evita los obst\u00E1culos!");
 		lblRecomendacion4.setForeground(Color.WHITE);
 		lblRecomendacion4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion4.setBounds(320, 189, 389, 30);
+		lblRecomendacion4.setBounds(320, 159, 389, 30);
 		add(lblRecomendacion4);
 		
 		JLabel lblRecomendacion5 = new JLabel("- Los turnos son de 5 segundos cada uno, as\u00ED que pensa tu movimiento r\u00E1pido!");
 		lblRecomendacion5.setForeground(Color.WHITE);
 		lblRecomendacion5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion5.setBounds(320, 214, 466, 30);
+		lblRecomendacion5.setBounds(320, 184, 466, 30);
 		add(lblRecomendacion5);
 		
 		JLabel lblRecomendacion6 = new JLabel("- Si un humano es convertido la nueva tarea del jugador ser\u00E1 atrapar a los humanos.");
 		lblRecomendacion6.setForeground(Color.WHITE);
 		lblRecomendacion6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion6.setBounds(320, 239, 497, 30);
+		lblRecomendacion6.setBounds(320, 209, 497, 30);
 		add(lblRecomendacion6);
 		
 		JLabel lblRecomendacion9 = new JLabel("- Acordate que tenes la opci\u00F3n de no hacer ning\u00FAn movimiento.");
 		lblRecomendacion9.setForeground(Color.WHITE);
 		lblRecomendacion9.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion9.setBounds(320, 264, 402, 30);
+		lblRecomendacion9.setBounds(320, 234, 402, 30);
 		add(lblRecomendacion9);
 		
 		JLabel lblRecomendacion7 = new JLabel("- Una ronda termina cuando todos los humanos fueron convertidos a zombies.");
 		lblRecomendacion7.setForeground(Color.WHITE);
 		lblRecomendacion7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion7.setBounds(320, 289, 466, 30);
+		lblRecomendacion7.setBounds(320, 259, 466, 30);
 		add(lblRecomendacion7);
 		
 		JLabel lblRecomendacion8 = new JLabel("- El juego termina cuando todas las rondas fueron terminadas.");
 		lblRecomendacion8.setForeground(Color.WHITE);
 		lblRecomendacion8.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRecomendacion8.setBounds(320, 314, 415, 30);
+		lblRecomendacion8.setBounds(320, 284, 415, 30);
 		add(lblRecomendacion8);
 		
 		lblTitulo = new JLabel();
@@ -213,7 +215,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
 		add(lblTitulo);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 87, 300, 271);
+		panel.setBounds(10, 87, 300, 220);
 		panel.setLayout(new BorderLayout());
 		// El BorderLayout es para poder poner luego los encabezados de columna sin la necesidad
 		// de usar un JScrollPane.
@@ -229,24 +231,44 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
 		tableParametros.getColumnModel().getColumn(0).setMinWidth(140);
 		tableParametros.getColumnModel().getColumn(1).setPreferredWidth(225);
 		tableParametros.getColumnModel().getColumn(1).setMinWidth(200);
-		tableParametros.setBounds(0, 50, 290, 250);
-		tableParametros.setRowHeight(50);
+		tableParametros.setRowHeight(40);
+		tableParametros.setBounds(0, 50, 290, 240);
 		tableParametros.getTableHeader().setReorderingAllowed(false);
+		
 		panel.add(tableParametros.getTableHeader(), BorderLayout.NORTH);
 		panel.add(tableParametros, BorderLayout.CENTER);
 		
 		JLabel jugadores = new JLabel("Jugadores");
-		jugadores.setBounds(10, 360, 300, 20);
+		jugadores.setBounds(10, 320, 300, 20);
 		jugadores.setForeground(Color.WHITE);
 		add(jugadores);
 		
 		modeloListaJugadores = new ModeloLista();
 		JList<String> listaJugadores = new JList<String>();
 		listaJugadores.setBorder(new LineBorder(new Color(0, 0, 0)));
-		listaJugadores.setBounds(10, 380, 300, 150);
+		listaJugadores.setBounds(10, 340, 300, 140);
 		listaJugadores.setModel(modeloListaJugadores);
 		add(listaJugadores, BorderLayout.CENTER);
 		
+		JLabel labelChat = new JLabel("Chat");
+        labelChat.setBounds(320, 320, 300, 20);
+        labelChat.setForeground(Color.WHITE);
+        add(labelChat);
+		
+        JTextArea chat = new JTextArea();
+        chat.setBounds(320, 340, 430, 100);
+        chat.setEditable(false);
+        add(chat);
+        
+        JTextField mensaje = new JTextField();
+        mensaje.setBounds(320, 445, 350, 30);
+        add(mensaje);
+        
+        JButton botonEnviarMensaje = new JButton();
+        botonEnviarMensaje.setText("Enviar");
+        botonEnviarMensaje.setBounds(670, 445, 80, 30);
+        add(botonEnviarMensaje);
+        
         JButton botonAbandonar = new JButton("Abandonar");
         botonAbandonar.addActionListener(new ActionListener() {
             
@@ -255,7 +277,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby
                 abandonarPartida();
             }
         });
-        botonAbandonar.setBounds(400, 490, 150, 40);
+        botonAbandonar.setBounds(300, 490, 150, 40);
         add(botonAbandonar);
 		
 		JLabel label = new JLabel("RZG - 2015");

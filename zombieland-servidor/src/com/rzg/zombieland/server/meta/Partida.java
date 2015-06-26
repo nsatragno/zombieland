@@ -376,6 +376,7 @@ public class Partida implements SesionListener {
                 jugador.notificarCambioPartida();
             notificarEspectadores();
         }
+        ServicioPartidas.getInstancia().notificarClientes();
     }
 
     /**
