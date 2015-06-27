@@ -1,6 +1,7 @@
 package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -373,8 +374,13 @@ public class InterfazCambioDeDatosUsuario extends JFrame implements WindowListen
 	private void manejarRespuestaGenerica(RespuestaGenerica respuesta) {
 		if(respuesta.fuePeticionExitosa()) {
 			JOptionPane.showMessageDialog(this, "Cambio de datos exitoso",
-								"Cambio de datos de Usuario", JOptionPane.INFORMATION_MESSAGE);
-			setVisible(false);
+			        "Cambio de datos de Usuario", JOptionPane.INFORMATION_MESSAGE);
+			EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    dispose();
+                }
+            });
 			return;
 		}
 		JOptionPane.showMessageDialog(getParent(),
