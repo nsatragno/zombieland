@@ -168,7 +168,7 @@ public class POJOPartida {
                otro.espectadores.equals(espectadores) &&
                otro.jugadores.equals(jugadores) &&
                otro.nombre.equals(nombre) &&
-               proyeccion == null ? otro.proyeccion == null : proyeccion.equals(otro.proyeccion);
+               (proyeccion == null ? otro.proyeccion == null : proyeccion.equals(otro.proyeccion));
     }
     
     @Override

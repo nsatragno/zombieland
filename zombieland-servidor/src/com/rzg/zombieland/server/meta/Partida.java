@@ -280,6 +280,9 @@ public class Partida implements SesionListener {
         }
         notificarEspectadores();
         ServicioPartidas.getInstancia().notificarClientes();
+        BucleJuego bucle = new BucleJuego(this);
+        ServicioJuego.getInstancia().agregarBucle(bucle);
+        bucle.start();
     }
 
     /**
@@ -301,12 +304,9 @@ public class Partida implements SesionListener {
         this.estado = estado;
         switch (estado) {
         case ACTIVA:
-            BucleJuego bucle = new BucleJuego(this);
-            ServicioJuego.getInstancia().agregarBucle(bucle);
             resultado = new ResultadoRonda(jugadores);
             notificarPuntajes();
             siguiente();
-            bucle.start();
             break;
         case EN_ESPERA:
             tablero = null;
