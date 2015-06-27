@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.server.meta.ResultadoJugador;
 import com.rzg.zombieland.server.sesion.Jugador;
 
@@ -72,5 +73,18 @@ public class HibernateSingleton {
     public static void cerrarConexion() {
         getInstancia().sessionFactory.close();
         instancia = null;
+    }
+
+    /**
+     * "Calienta" la base de datos con una consulta para no tener que esperar que se verifiquen 
+     * todas las tablas con la primera consulta.
+     */
+    public static void prepararDB() {
+        Log.info("Preparando base de datos");
+        Session session = getInstancia().sessionFactory.openSession();
+        session.createCriteria(Jugador.class);
+        session.get(Jugador.class, 1);
+        session.close();
+        Log.info("Base de datos lista");
     }
 }

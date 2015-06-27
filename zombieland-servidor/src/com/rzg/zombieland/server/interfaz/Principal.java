@@ -18,6 +18,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultCaret;
 
+import org.hibernate.Hibernate;
+
 import net.miginfocom.swing.MigLayout;
 
 import com.rzg.zombieland.comunes.misc.EscuchaLog;
@@ -26,6 +28,7 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.comunicacion.ServicioEscucha;
 import com.rzg.zombieland.server.comunicacion.ServicioJuego;
 import com.rzg.zombieland.server.meta.ServicioPartidas;
+import com.rzg.zombieland.server.persistencia.HibernateSingleton;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
 
 /**
@@ -176,6 +179,7 @@ public class Principal implements EscuchaLog {
 				servicio = new ServicioEscucha(puerto);
 				servicio.start();
 				this.puerto.setEditable(false);
+				HibernateSingleton.prepararDB();
 				botonIniciar.setText(TEXTO_DETENER_SERVIDOR);
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(frame, "El puerto no es válido");
