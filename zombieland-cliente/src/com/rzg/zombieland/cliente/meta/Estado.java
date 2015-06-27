@@ -159,6 +159,9 @@ public class Estado {
         estadoLobby = pojo;
         for (EscuchadorEstadoLobby escuchador : escuchadoresLobby)
             escuchador.notificarLobbyActualizado(pojo);
+        if (pojo.getProyeccion() != null)
+            for (EscuchadorProyeccion escuchador : escuchadoresProyeccion)
+                escuchador.notificarProyeccionActualizada(pojo.getProyeccion());
     }
     
     /**

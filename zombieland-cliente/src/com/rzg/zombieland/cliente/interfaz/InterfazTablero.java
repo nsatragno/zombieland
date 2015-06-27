@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -88,6 +89,10 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
     private DispatcherFlechas dispatcher;
 
     private JPanel panelJugadores;
+
+    private int tiempoProyeccion;
+
+    private JLabel labelTemporizador;
 
     private class DispatcherFlechas implements KeyEventDispatcher {
 
@@ -247,7 +252,7 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		label.setBounds(700, 515, 63, 14);
 		add(label);
 
-		final JLabel labelTemporizador = new JLabel("LALALA");
+		labelTemporizador = new JLabel("LALALA");
 		labelTemporizador.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTemporizador.setBackground(Color.RED);
 		labelTemporizador.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -294,25 +299,6 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		labelFondo.setBounds(0, 0, 800, 600);
 		add(labelFondo);
 
-		TimerTask task = new TimerTask() {
-			int tic = 0;
-
-			// Acá va la lógica del temporizador. Ajustar el tiempo del tic al
-			// tiempo del juego.
-			@Override
-			public void run() {
-				if (tic == 500) {
-					labelTemporizador.setText("0");
-					tic = 0;
-				} else {
-					labelTemporizador.setText("" + tic);
-					tic++;
-				}
-			}
-		};
-		// Programo el timer para que actúe cada 1ms.
-		timer.schedule(task, 0, 1);
-
 		addComponentListener(new ComponentListener() {
             
 		    final KeyboardFocusManager manager = 
@@ -320,9 +306,22 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		    
 		    @Override
             public void componentShown(ComponentEvent e) {
-                if (Estado.getInstancia().isEspectador())
-                    return;
-                manager.addKeyEventDispatcher(dispatcher);
+		        TimerTask task = new TimerTask() {
+		            
+		            @Override
+		            public void run() {
+		                EventQueue.invokeLater(new Runnable() {
+		                    @Override
+		                    public void run() {
+		                        labelTemporizador.setText(Integer.toString(tic()));
+		                    }
+		                });
+		            }
+		        };
+		        // Programo el timer para que actúe cada 1000ms.
+		        timer.schedule(task, 0, 1000);
+                if (!Estado.getInstancia().isEspectador())
+                    manager.addKeyEventDispatcher(dispatcher);
             }
             
             @Override
@@ -377,6 +376,16 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 		}
 	}
 
+	/**
+	 * Llamado cuando pasó una unidad de tiempo.
+	 * @return el tiempo restante al siguiente turno.
+	 */
+    private int tic() {
+        if (tiempoProyeccion == 0)
+            return 0;
+        return tiempoProyeccion--;
+    }
+
 	@Override
 	public void notificarCambioEstadoEspectador(boolean espectador) {
 		moveDown.setVisible(!espectador);
@@ -387,6 +396,8 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 
 	@Override
 	public void notificarProyeccionActualizada(ProyeccionTablero proyeccion) {
+	    tiempoProyeccion = proyeccion.getTiempoParaElSiguientePaso() / 1000;
+	    labelTemporizador.setText(Integer.toString(tiempoProyeccion));
 		repaint();
 	}
 }

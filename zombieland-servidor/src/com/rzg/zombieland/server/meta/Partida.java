@@ -214,7 +214,15 @@ public class Partida implements SesionListener {
         return new POJOPartida(id.toString(), administrador.getNombre(),
                 proyectarNombres(jugadores), proyectarNombres(espectadores), cantidadRondas,
                 cantidadMaximaJugadores, nombre, estado.getDescripcion(), tablero == null
-                        || jugador == null ? null : tablero.getProyeccionJugador(jugador));
+                        || jugador == null ? null : 
+                                             tablero.getProyeccionJugador(
+                                                     jugador, getTiempoJuego()));
+    }
+
+    private int getTiempoJuego() {
+        if (estado == Estado.ENTRE_RONDAS)
+            return BucleJuego.TIEMPO_ENTRE_PARTIDAS;
+        return BucleJuego.TIEMPO_TURNO;
     }
 
     /**
@@ -271,8 +279,17 @@ public class Partida implements SesionListener {
         Sesion sesion = ServicioSesion.getInstancia().getSesion(jugadorNuevo);
         if (sesion != null)
             sesion.addListener(this);
-        if (jugadores.size() == cantidadMaximaJugadores)
-            setEstado(Estado.ACTIVA);
+
+        
+        if (jugadores.size() == cantidadMaximaJugadores) {
+            BucleJuego bucle = new BucleJuego(this);
+            resultado = new ResultadoRonda(jugadores);
+            notificarPuntajes();
+            siguiente();
+            ServicioJuego.getInstancia().agregarBucle(bucle);
+            bucle.start();
+        }
+        
         for (Jugador jugador : jugadores) {
             if (jugador == jugadorNuevo)
                 continue;
@@ -280,9 +297,6 @@ public class Partida implements SesionListener {
         }
         notificarEspectadores();
         ServicioPartidas.getInstancia().notificarClientes();
-        BucleJuego bucle = new BucleJuego(this);
-        ServicioJuego.getInstancia().agregarBucle(bucle);
-        bucle.start();
     }
 
     /**
@@ -292,27 +306,6 @@ public class Partida implements SesionListener {
         synchronized (espectadores) {
             for (Jugador espectador : espectadores)
                 espectador.notificarCambioPartida();
-        }
-    }
-
-    /**
-     * Establece el estado de la partida.
-     * 
-     * @param activa
-     */
-    private void setEstado(Estado estado) {
-        this.estado = estado;
-        switch (estado) {
-        case ACTIVA:
-            resultado = new ResultadoRonda(jugadores);
-            notificarPuntajes();
-            siguiente();
-            break;
-        case EN_ESPERA:
-            tablero = null;
-            break;
-        default:
-            break;
         }
     }
 
@@ -418,17 +411,15 @@ public class Partida implements SesionListener {
     }
 
     public void enviarProyeccion() {
-        enviarProyeccionYDepurar(jugadores);
-        enviarProyeccionYDepurar(espectadores);
+        enviarProyeccion(jugadores);
+        enviarProyeccion(espectadores);
     }
 
     /**
-     * Envía las proyecciones a un listado de jugadores y los quita del listado
-     * si no les llegó.
-     * 
+     * Envía las proyecciones a un listado de jugadores.
      * @param jugadores
      */
-    private void enviarProyeccionYDepurar(List<Jugador> jugadores) {
+    private void enviarProyeccion(List<Jugador> jugadores) {
         synchronized (jugadores) {
             for (Jugador jugador : jugadores)
                 enviarProyeccionTablero(jugador);
@@ -445,7 +436,9 @@ public class Partida implements SesionListener {
         if (sesion == null)
             return;
         try {
-            sesion.enviarPeticion(new PeticionProyeccion(tablero.getProyeccionJugador(jugador)));
+            sesion.enviarPeticion(
+                    new PeticionProyeccion(tablero.getProyeccionJugador(jugador,
+                                                                        getTiempoJuego())));
         } catch (ZombielandException e) {
             Log.error("No le llegó la proyección del tablero a un espectador.");
         }

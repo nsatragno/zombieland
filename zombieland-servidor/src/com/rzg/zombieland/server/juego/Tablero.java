@@ -107,9 +107,12 @@ public class Tablero {
     /**
      * @param superiorIzquierda
      * @param inferiorDerecha
+     * @param tiempoTurno - el tiempo en milisegundos para que arranque el siguiente turno.
      * @return la proyección del tablero entre las dos esquinas dadas.
      */
-    private ProyeccionTablero getProyeccion(Coordenada superiorIzquierda, Coordenada inferiorDerecha) {
+    private ProyeccionTablero getProyeccion(Coordenada superiorIzquierda,
+                                            Coordenada inferiorDerecha, 
+                                            int tiempoTurno) {
         superiorIzquierda =  normalizar(superiorIzquierda);
         inferiorDerecha = normalizar(inferiorDerecha);
         List<POJOEntidad> entidades = new ArrayList<POJOEntidad>();
@@ -127,7 +130,8 @@ public class Tablero {
             }
         }
         // Devuelvo la proyección. Chiche bombón.
-        return new ProyeccionTablero(matriz.length, superiorIzquierda, inferiorDerecha, entidades);
+        return new ProyeccionTablero(
+                matriz.length, superiorIzquierda, inferiorDerecha, entidades, tiempoTurno);
     }
 
     /**
@@ -275,7 +279,7 @@ public class Tablero {
         matriz[posicion.getX()][posicion.getY()] = zombie;
     }
 
-    public ProyeccionTablero getProyeccionJugador(Jugador jugador) {
+    public ProyeccionTablero getProyeccionJugador(Jugador jugador, int tiempoTurno) {
         Personaje personajeJugador = null;
         synchronized (personajes) {
             for (Personaje personaje : personajes) {
@@ -295,7 +299,7 @@ public class Tablero {
         } else {
             rectanguloVision = personajeJugador.getRectanguloVision();
         }
-        return getProyeccion(rectanguloVision[0], rectanguloVision[1]);
+        return getProyeccion(rectanguloVision[0], rectanguloVision[1], tiempoTurno);
     }
 
     /**

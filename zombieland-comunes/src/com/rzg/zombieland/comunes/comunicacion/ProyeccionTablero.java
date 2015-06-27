@@ -119,6 +119,9 @@ public class ProyeccionTablero extends Enviable {
 
 	// Entidades visibles del tablero.
 	private List<POJOEntidad> entidades;
+	
+	// El tiempo, en milisegundos, para que arranque el próximo paso.
+	private int tiempoParaElSiguientePaso;
 
 	/**
 	 * @param casilleros
@@ -128,14 +131,18 @@ public class ProyeccionTablero extends Enviable {
 	 * @param esquinaInferiorDerecha
 	 *            de la proyeccion
 	 * @param entidades
+	 * @param tiempoParaElSiguientePaso
 	 */
 	public ProyeccionTablero(int casilleros,
 			Coordenada esquinaSuperiorIzquierda,
-			Coordenada esquinaInferiorDerecha, List<POJOEntidad> entidades) {
+			Coordenada esquinaInferiorDerecha,
+			List<POJOEntidad> entidades,
+			int tiempoParaElSiguientePaso) {
 		this.casilleros = casilleros;
 		this.esquinaSuperiorIzquierda = esquinaSuperiorIzquierda;
 		this.esquinaInferiorDerecha = esquinaInferiorDerecha;
 		this.entidades = entidades;
+        this.tiempoParaElSiguientePaso = tiempoParaElSiguientePaso;
 	}
 
 	/**
@@ -217,6 +224,10 @@ public class ProyeccionTablero extends Enviable {
 	 */
 	public int getAnchoEfectivo(int dimension) {
 		return dimension - dimension % casilleros;
+	}
+	
+	public int getTiempoParaElSiguientePaso() {
+	    return tiempoParaElSiguientePaso;
 	}
 
 	/*

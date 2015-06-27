@@ -7,8 +7,8 @@ import com.rzg.zombieland.server.meta.Partida;
 public class BucleJuego extends Thread implements Runnable {
 
     private Partida partida;
-    private static final long TIEMPO_TURNO = 100;
-    private static final long TIEMPO_ENTRE_PARTIDAS = 10_000;
+    public static final int TIEMPO_TURNO = 2000;
+    public static final int TIEMPO_ENTRE_PARTIDAS = 10_000;
 
     public BucleJuego(Partida partida) {
         this.partida = partida;
