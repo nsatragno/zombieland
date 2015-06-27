@@ -18,10 +18,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultCaret;
 
-import org.hibernate.Hibernate;
-
-import net.miginfocom.swing.MigLayout;
-
 import com.rzg.zombieland.comunes.misc.EscuchaLog;
 import com.rzg.zombieland.comunes.misc.Log;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
@@ -30,6 +26,8 @@ import com.rzg.zombieland.server.comunicacion.ServicioJuego;
 import com.rzg.zombieland.server.meta.ServicioPartidas;
 import com.rzg.zombieland.server.persistencia.HibernateSingleton;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
+
+import net.miginfocom.swing.MigLayout;
 
 /**
  * Interfaz principal del servidor.
@@ -171,21 +169,29 @@ public class Principal implements EscuchaLog {
 	/**
 	 * Arranca y detiene al servidor.
 	 */
-	private void toggleServidor() {
+	private synchronized void toggleServidor() {
 		if (servicio == null) {
-			// Arrancamos el servidor.
-			try {
-				int puerto = Integer.parseInt(this.puerto.getText());
-				servicio = new ServicioEscucha(puerto);
-				servicio.start();
-				this.puerto.setEditable(false);
-				HibernateSingleton.prepararDB();
-				botonIniciar.setText(TEXTO_DETENER_SERVIDOR);
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(frame, "El puerto no es válido");
-			} catch (ZombielandException e) {
-				servicio = null;
-			}
+		    botonIniciar.setEnabled(false);
+			new Thread() {
+                @Override
+                public void run() {
+                    // Arrancamos el servidor.
+                    try {
+                        int numeroPuerto = Integer.parseInt(puerto.getText());
+                        servicio = new ServicioEscucha(numeroPuerto);
+                        servicio.start();
+                        puerto.setEditable(false);
+                        HibernateSingleton.prepararDB();
+                        botonIniciar.setText(TEXTO_DETENER_SERVIDOR);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(frame, "El puerto no es válido");
+                    } catch (ZombielandException e) {
+                        servicio = null;
+                    } finally {
+                        botonIniciar.setEnabled(true);
+                    }
+                }
+            }.start();
 		} else {
 			// Detenemos el servidor.
 			servicio.cerrar();
@@ -205,9 +211,14 @@ public class Principal implements EscuchaLog {
 	}
 
 	@Override
-	public void onLog(String mensaje, int nivel) {
+	public void onLog(final String mensaje, int nivel) {
 		if (nivel >= nivelLog) {
-			log.append(mensaje + "\n");
+		    EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    log.append(mensaje + "\n");
+                }
+            });
 		}
 	}
 
