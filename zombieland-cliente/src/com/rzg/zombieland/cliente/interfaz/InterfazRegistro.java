@@ -1,6 +1,7 @@
 package com.rzg.zombieland.cliente.interfaz;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -174,28 +175,39 @@ public class InterfazRegistro extends JPanel {
             JOptionPane.showMessageDialog(getParent(), "Las claves no son iguales");
             return;
         }
+        EventQueue.invokeLater(new Runnable() {
+            
+            @Override
+            public void run() {
+                imagenCargando.setVisible(true);
+            }
+        });
 
-        try {
-            POJORegistro pojoRegistro;
-            pojoRegistro = new POJORegistro(nombreDeUsuario.getText(), new String(
-                    password.getPassword()), (String) preguntaSeguridad.getSelectedItem(),
-                    respuestaSeguridad.getText(), null);
-            PeticionRegistro peticion = new PeticionRegistro(pojoRegistro);
-            ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
-            imagenCargando.setVisible(true);
-            peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
-				@Override
-				public void onDone(RespuestaGenerica respuesta) {
-					manejarRespuestaGenerica(respuesta);
-				};
-            });
-        } catch (ParametrosNoValidosException e) {
-            JOptionPane.showMessageDialog(getParent(), e.getMensaje(), "Registro Zombieland",
-                    JOptionPane.WARNING_MESSAGE);
-        } catch (ZombielandException e) {
-            JOptionPane.showMessageDialog(getParent(), e.getMessage(), "Registro Zombieland",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    POJORegistro pojoRegistro;
+                    pojoRegistro = new POJORegistro(nombreDeUsuario.getText(), new String(
+                            password.getPassword()), (String) preguntaSeguridad.getSelectedItem(),
+                            respuestaSeguridad.getText(), null);
+                    PeticionRegistro peticion = new PeticionRegistro(pojoRegistro);
+                    ServicioCliente.getInstancia().getHiloEscucha().enviarPeticion(peticion);
+                    peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
+                        @Override
+                        public void onDone(RespuestaGenerica respuesta) {
+                            manejarRespuestaGenerica(respuesta);
+                        };
+                    });
+                } catch (ParametrosNoValidosException e) {
+                    JOptionPane.showMessageDialog(getParent(), e.getMensaje(), "Registro Zombieland",
+                            JOptionPane.WARNING_MESSAGE);
+                } catch (ZombielandException e) {
+                    JOptionPane.showMessageDialog(getParent(), e.getMessage(), "Registro Zombieland",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            };
+        }.start();
     }
 
     /**
@@ -204,14 +216,19 @@ public class InterfazRegistro extends JPanel {
      * @param registro
      */
     private void manejarRespuestaGenerica(RespuestaGenerica registro) {
-        imagenCargando.setVisible(false);
+        EventQueue.invokeLater(new Runnable() {
+            
+            @Override
+            public void run() {
+                imagenCargando.setVisible(false);
+            }
+        });
         if (registro.fuePeticionExitosa()) {
             JOptionPane.showMessageDialog(getParent(), "Registro exitoso", "Registro Zombieland",
                     JOptionPane.INFORMATION_MESSAGE);
             Main.irA(Main.INICIO_SESION);
             return;
         }
-        // TODO enviar mensaje de error desde el server.
         JOptionPane.showMessageDialog(getParent(),
                 "No se pudo realizar el registro: " + registro.getMensajeError(),
                 "Registro Zombieland", JOptionPane.INFORMATION_MESSAGE);
