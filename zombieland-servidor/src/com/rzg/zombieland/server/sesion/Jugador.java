@@ -133,6 +133,7 @@ public class Jugador {
 		        avatares.add(avatar);
 		}
 		this.avatar = avatares.get(new Random().nextInt(avatares.size()));
+		this.historicoPartidas = new ArrayList<ResultadoJugador>();
 		
 		if (errores.size() > 0)
 			throw new ParametrosNoValidosException("Jugador", errores);
@@ -151,6 +152,23 @@ public class Jugador {
 		if(registro.getAvatarJugador() != null)
 			this.avatar = registro.getAvatarJugador();
 	}
+	
+
+    /**
+     * Clona al jugador. Deberíamos refactorizar para no repetir código.
+     *
+     * @param jugador
+     */
+    public Jugador(Jugador jugador) {
+        this.nombre = jugador.nombre;
+        this.clave = jugador.clave;
+        this.preguntaSecreta = jugador.preguntaSecreta;
+        this.respuestaSecreta = jugador.respuestaSecreta;
+        this.avatar = jugador.avatar;
+        this.ranking = jugador.ranking;
+        this.historicoPartidas = jugador.historicoPartidas;
+        this.id = jugador.id;
+    }
 
 	/**
 	 * @return las partidas que lleva jugadas históricamente.
@@ -168,23 +186,63 @@ public class Jugador {
 		return 0;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Jugador))
-			return false;
-		Jugador otro = (Jugador) obj;
-		return nombre.equals(otro.nombre) && clave.equals(otro.clave)
-				&& preguntaSecreta.equals(otro.preguntaSecreta)
-				&& respuestaSecreta.equals(otro.respuestaSecreta)
-				&& ranking == otro.ranking && id == otro.id;
-	}
+	/* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public final boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Jugador))
+            return false;
+        Jugador other = (Jugador) obj;
+        if (avatar != other.avatar)
+            return false;
+        if (clave == null) {
+            if (other.clave != null)
+                return false;
+        } else if (!clave.equals(other.clave))
+            return false;
+        if (id != other.id)
+            return false;
+        if (nombre == null) {
+            if (other.nombre != null)
+                return false;
+        } else if (!nombre.equals(other.nombre))
+            return false;
+        if (preguntaSecreta == null) {
+            if (other.preguntaSecreta != null)
+                return false;
+        } else if (!preguntaSecreta.equals(other.preguntaSecreta))
+            return false;
+        if (ranking != other.ranking)
+            return false;
+        if (respuestaSecreta == null) {
+            if (other.respuestaSecreta != null)
+                return false;
+        } else if (!respuestaSecreta.equals(other.respuestaSecreta))
+            return false;
+        return true;
+    }
 	
-	@Override
-	public int hashCode() {
-		return nombre.hashCode();
-	}
+	/* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((avatar == null) ? 0 : avatar.hashCode());
+        result = prime * result + ((clave == null) ? 0 : clave.hashCode());
+        result = prime * result + id;
+        result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+        result = prime * result + ((preguntaSecreta == null) ? 0 : preguntaSecreta.hashCode());
+        result = prime * result + ranking;
+        result = prime * result + ((respuestaSecreta == null) ? 0 : respuestaSecreta.hashCode());
+        return result;
+    }
 
 	/**
 	 * @return el nombre del jugador.

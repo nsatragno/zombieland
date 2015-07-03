@@ -60,6 +60,8 @@ public class ControladorServidorFactory implements ControladorFactory, Manejador
         	return new ControladorCambioDatos(this);
         case Enviable.ENVIAR_MENSAJE_CHAT:
             return new ControladorEnviarMensajeChat(this);
+        case Enviable.CAMBIAR_LISTO_PARTIDA:
+            return new ControladorCambiarListoPartida(this);
         default:
             throw new ComandoDesconocidoException(
                     String.format("El código 0x%X no corresponde con "

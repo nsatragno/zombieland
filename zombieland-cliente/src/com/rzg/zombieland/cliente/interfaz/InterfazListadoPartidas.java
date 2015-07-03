@@ -107,7 +107,7 @@ public class InterfazListadoPartidas extends JPanel implements EscuchadorPartida
             case CANTIDAD_JUGADORES:
                 return partida.getJugadores().size();
             case ESTADO:
-                return partida.getEstado();
+                return partida.getEstado().getDescripcion();
             default:
                 throw new ArrayIndexOutOfBoundsException();
             }

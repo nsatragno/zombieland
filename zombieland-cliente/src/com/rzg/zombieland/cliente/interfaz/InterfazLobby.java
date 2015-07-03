@@ -107,8 +107,10 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, Escu
             parametros[CANTIDAD_JUGADORES] = Integer.toString(pojo.getJugadores().size());
             parametros[CANTIDAD_REQUERIDA] = Integer.toString(pojo.getCantidadMaximaJugadores());
             parametros[CANTIDAD_RONDAS] = Integer.toString(pojo.getCantidadRondas());
-            // TODO ver si es posible tener otro estado en este punto.
-            parametros[ESTADO] = pojo.getEstado();
+            if (pojo.getEstado() == null)
+                parametros[ESTADO] = "";
+            else
+                parametros[ESTADO] = pojo.getEstado().getDescripcion();
             fireTableDataChanged();
         }
     }
@@ -317,7 +319,7 @@ public class InterfazLobby extends JPanel implements EscuchadorEstadoLobby, Escu
 		lblFondo.setIcon(new ImageIcon(RutaImagen.get("imagenes/Fondos/fondo-lobby.png")));
 		lblFondo.setBounds(0, 0, 800, 600);
 		add(lblFondo);
-		Estado.getInstancia().addEscuchador(this);
+		Estado.getInstancia().addEscuchadorLobby(this);
 		Estado.getInstancia().setEscuchadorChat(this);
 		
 		addComponentListener(new ComponentListener() {

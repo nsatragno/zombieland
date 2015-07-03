@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
+import com.rzg.zombieland.comunes.misc.EstadoPartida;
 
 /**
  * Representa el estado actual de un lobby: cantidad de jugadores, nombres, etc.
@@ -26,7 +27,7 @@ public class POJOPartida {
                                 0, 
                                 0, 
                                 "", 
-                                "",
+                                null,
                                 null);
     }
 
@@ -56,7 +57,7 @@ public class POJOPartida {
     
     private String nombre;
     
-    private String estado;
+    private EstadoPartida estado;
     
     // La proyección del tablero asociada a la partida, si existe.
     private ProyeccionTablero proyeccion;
@@ -73,7 +74,7 @@ public class POJOPartida {
      */
     public POJOPartida(String id, String administrador, List<String> jugadores,
                        List<String> espectadores, int cantidadRondas, int cantidadJugadores,
-                       String nombre, String estado, ProyeccionTablero proyeccion) {
+                       String nombre, EstadoPartida estado, ProyeccionTablero proyeccion) {
         this.id = id;
         this.administrador = administrador;
         this.jugadores = jugadores;
@@ -93,7 +94,7 @@ public class POJOPartida {
     public POJOPartida(POJOCreacionPartida pojo, String nombreAdmin) {
         this(null, nombreAdmin, crearListadoJugadores(nombreAdmin), new ArrayList<String>(), 
              pojo.getCantidadRondas(), pojo.getCantidadMaximaJugadores(), pojo.getNombre(), 
-             "En espera", null);
+             EstadoPartida.EN_ESPERA, null);
     }
 
     /**
@@ -179,7 +180,7 @@ public class POJOPartida {
                 + "]";
     }
 
-    public String getEstado() {
+    public EstadoPartida getEstado() {
         return estado;
     }
     

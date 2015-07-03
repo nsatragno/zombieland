@@ -85,8 +85,14 @@ public class Main extends JFrame implements HiloListener {
 	 * Navega a la pantalla dada.
 	 * @param pantalla - obtener a partir de las constantes definidas en esta clase.
 	 */
-	public static void irA(String pantalla) {
-		frame.cardLayout.show(frame.getContentPane(), pantalla);
+	public static void irA(final String pantalla) {
+	    EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.cardLayout.show(frame.getContentPane(), pantalla);
+            }
+        });
+		
 	}
 
 	/**

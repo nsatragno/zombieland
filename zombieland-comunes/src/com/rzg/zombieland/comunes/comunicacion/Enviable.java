@@ -111,15 +111,12 @@ public abstract class Enviable {
 	public static final int RECIBIR_PUNTAJE_PARTIDA = 0x13;
 	
 	/**
+	 * Cambia el estado del jugador en la partida a "listo" o "no listo".
+	 */
+	public static final int CAMBIAR_LISTO_PARTIDA = 0x14;
+	
+	/**
      * Indica que ha habido un error en el proceso.
      */
     public static final String LINEA_ERROR = "__!!__ERROR__!!__";
-
-    
-
-    
-
-    
-
-
 }

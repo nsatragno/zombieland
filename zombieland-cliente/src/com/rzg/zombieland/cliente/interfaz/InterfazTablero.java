@@ -42,15 +42,21 @@ import javax.swing.table.JTableHeader;
 import org.jdeferred.DoneCallback;
 
 import com.rzg.zombieland.cliente.comunicacion.ServicioCliente;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionAbandonarPartida;
+import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionCambiarListoPartida;
 import com.rzg.zombieland.cliente.comunicacion.peticion.PeticionMovimiento;
 import com.rzg.zombieland.cliente.meta.Estado;
+import com.rzg.zombieland.cliente.meta.Estado.EscuchadorEstadoLobby;
 import com.rzg.zombieland.cliente.meta.Estado.EscuchadorProyeccion;
 import com.rzg.zombieland.cliente.meta.Estado.EscuchadorPuntaje;
 import com.rzg.zombieland.cliente.misc.RutaImagen;
+import com.rzg.zombieland.comunes.comunicacion.Peticion;
 import com.rzg.zombieland.comunes.comunicacion.ProyeccionTablero;
+import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOResultadoRonda;
 import com.rzg.zombieland.comunes.comunicacion.respuesta.RespuestaGenerica;
 import com.rzg.zombieland.comunes.misc.Avatar;
+import com.rzg.zombieland.comunes.misc.EstadoPartida;
 import com.rzg.zombieland.comunes.misc.Movimiento.Direccion;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 
@@ -60,7 +66,7 @@ import com.rzg.zombieland.comunes.misc.ZombielandException;
  * @author Manuel
  */
 
-public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
+public class InterfazTablero extends JPanel implements EscuchadorProyeccion, EscuchadorEstadoLobby {
 
 	private static final long serialVersionUID = 1L;
 
@@ -335,7 +341,8 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
                 manager.removeKeyEventDispatcher(dispatcher);
             }
         });
-		Estado.getInstancia().addEscuchador(this);
+		Estado.getInstancia().addEscuchadorLobby(this);
+		Estado.getInstancia().addEscuchadorProyeccion(this);
 	}
 
 	public void paint(Graphics g) {
@@ -400,4 +407,42 @@ public class InterfazTablero extends JPanel implements EscuchadorProyeccion {
 	    labelTemporizador.setText(Integer.toString(tiempoProyeccion));
 		repaint();
 	}
+
+    @Override
+    public void notificarLobbyActualizado(POJOPartida pojo) {
+        if (pojo.getEstado() == EstadoPartida.FINALIZADA) {
+            int respuesta = JOptionPane.showConfirmDialog(this,
+                  "La partida ha terminado ¿Desea continuar?",
+                  "Partida Zombieland",
+                  JOptionPane.YES_NO_OPTION);
+            Peticion<?, RespuestaGenerica> peticion;
+            if (respuesta == JOptionPane.YES_OPTION) {
+                peticion = new PeticionCambiarListoPartida(true);
+                Main.irA(Main.LOBBY);
+            } else {
+                peticion = new PeticionAbandonarPartida();
+                Main.irA(Main.LISTADO_PARTIDAS);
+            }
+            try {
+                ServicioCliente.enviarPeticion(peticion);
+                peticion.getRespuesta().then(new DoneCallback<RespuestaGenerica>() {
+                    
+                    @Override
+                    public void onDone(RespuestaGenerica respuesta) {
+                        if (!respuesta.fuePeticionExitosa()) {
+                            JOptionPane.showMessageDialog(getParent(),
+                                                          respuesta.getMensajeError(),
+                                                          "Partida Zombieland",
+                                                          JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+            } catch (ZombielandException e) {
+                JOptionPane.showMessageDialog(this,
+                                              e.getMessage(),
+                                              "Partida Zombieland",
+                                              JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 }

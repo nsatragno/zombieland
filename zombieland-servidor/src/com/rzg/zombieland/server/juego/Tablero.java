@@ -34,7 +34,7 @@ public class Tablero {
      * Constructor por defecto. Aquí se generarán los obstáculos en forma
      * 'aleatoria'
      */
-    public Tablero(int casilleros, List<Jugador> jugadores, Jugador zombi) {
+    public Tablero(int casilleros, List<? extends Jugador> jugadores, Jugador zombi) {
         personajes = new ArrayList<Personaje>();
         jugadoresConvertidos = new ArrayList<Personaje>();
         Random rnd = new Random(); // Que quede claro que va a ser una cuestión

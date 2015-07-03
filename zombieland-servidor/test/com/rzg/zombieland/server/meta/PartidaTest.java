@@ -11,10 +11,10 @@ import org.junit.Test;
 import com.google.gson.Gson;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOCreacionPartida;
 import com.rzg.zombieland.comunes.comunicacion.pojo.POJOPartida;
+import com.rzg.zombieland.comunes.misc.EstadoPartida;
 import com.rzg.zombieland.comunes.misc.ParametrosNoValidosException;
 import com.rzg.zombieland.comunes.misc.ZombielandException;
 import com.rzg.zombieland.server.controlador.AbstractPartidasTest;
-import com.rzg.zombieland.server.meta.Partida.Estado;
 import com.rzg.zombieland.server.sesion.Jugador;
 import com.rzg.zombieland.server.sesion.ServicioSesion;
 import com.rzg.zombieland.server.sesion.Sesion;
@@ -148,7 +148,7 @@ public class PartidaTest extends AbstractPartidasTest {
         ServicioSesion.getInstancia().addSesion(sesion);
         
         for (int i = 1; i < getUltimaCantidadJugadores(); i++) {
-            assertEquals(Estado.EN_ESPERA, partida.getEstado());
+            assertEquals(EstadoPartida.EN_ESPERA, partida.getEstado());
             
             // Hasta que no arranca, no se pueden mover.
             try {
@@ -164,7 +164,7 @@ public class PartidaTest extends AbstractPartidasTest {
             ServicioSesion.getInstancia().addSesion(sesion);
             partida.addJugador(jugador);
         }
-        assertEquals(Estado.ACTIVA, partida.getEstado());
-        partida.moverTodos();  // No lanza excepción.
+        assertEquals(EstadoPartida.ACTIVA, partida.getEstado());
+        partida.moverTodos();
     }
 }

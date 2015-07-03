@@ -131,7 +131,7 @@ public class Estado {
      * Agrega un escuchador de estado de lobby.
      * @param escuchador
      */
-    public void addEscuchador(EscuchadorEstadoLobby escuchador) {
+    public void addEscuchadorLobby(EscuchadorEstadoLobby escuchador) {
         this.escuchadoresLobby.add(escuchador);
     }
     
@@ -139,7 +139,7 @@ public class Estado {
      * Agrega un escuchador de estado de partida.
      * @param escuchador
      */
-    public void addEscuchador(EscuchadorProyeccion escuchador) {
+    public void addEscuchadorProyeccion(EscuchadorProyeccion escuchador) {
         this.escuchadoresProyeccion.add(escuchador);
     }
     

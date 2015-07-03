@@ -20,7 +20,7 @@ public class ResultadoRonda {
     /**
      * Crea un resultado de partida vacío. Por defecto todos los jugadores tienen cero puntos.
      */
-    public ResultadoRonda(Collection<Jugador> jugadores) {
+    public ResultadoRonda(Collection<? extends Jugador> jugadores) {
         puntos = new HashMap<Jugador, Integer>();
         for (Jugador jugador : jugadores)
             puntos.put(jugador, 0);
