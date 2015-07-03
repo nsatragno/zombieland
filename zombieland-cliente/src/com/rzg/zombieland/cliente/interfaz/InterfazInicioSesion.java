@@ -1,5 +1,6 @@
 package com.rzg.zombieland.cliente.interfaz;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.SystemColor;
@@ -116,7 +117,12 @@ public class InterfazInicioSesion extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (recupera == null)
 					recupera = new InterfazRecuperaContrasenia();
-				recupera.setVisible(true);
+				EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        recupera.setVisible(true);
+                    }
+                });
 			}
 		});
 		btnO.setBounds(445, 292, 175, 40);

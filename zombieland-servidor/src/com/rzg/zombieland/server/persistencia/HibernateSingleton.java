@@ -49,7 +49,7 @@ public class HibernateSingleton {
     /**
      * @return la instancia de HibernateSingleton.
      */
-    public static HibernateSingleton getInstancia() {
+    public synchronized static HibernateSingleton getInstancia() {
         if (instancia == null) {
             if (test)
                 instancia = new HibernateSingleton("db/test.db");
